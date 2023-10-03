@@ -1,4 +1,11 @@
+*{
+    font-family: 'Open Sans', sans-serif;
+}
 .blue-login{
     background-color: #1F1E5B;
     height: 100vh;
+}
+.card-login{
+    width: 50vh;
+    height: 50vh;
 }
