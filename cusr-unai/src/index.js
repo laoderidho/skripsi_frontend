@@ -13,10 +13,6 @@ root.render(
   </React.StrictMode>
 );
 
-function toggleSidedbar(){
-  const sidebar = document.querySelector('.sidebar');
-  sidebar.classList.toggle('active');
-}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

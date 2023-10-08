@@ -34,7 +34,9 @@
 .sidebar{
     width: 17rem;
     background-color:#1F1E5B;
-    height: 55rem;
+    height: 100vh;
+    margin-top: 4.5rem;
+    position: fixed;
 }
 
 .sidebar a{
@@ -43,10 +45,17 @@
     color: #fff;
     padding: 1rem;
     font-size: 1rem;
-
 }
 
 .sidebar a:hover{
     background-color:#fff;
     color: #1F1E5B;
+}
+
+.navbar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
 }
