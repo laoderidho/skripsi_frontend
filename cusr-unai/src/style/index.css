@@ -15,7 +15,7 @@
     border-color:#1F1E5B;
 }
 
-.btn{
+.loginbutton{
     background-color: #1F1E5B;
     border-color: #1F1E5B;
     border-radius: 2rem;
@@ -24,4 +24,29 @@
 
 .image-logo{
     padding: rem;
+}
+
+.sidebarbutton{
+    background-color: #fff;
+    height: 4rem;
+}
+
+.sidebar{
+    width: 17rem;
+    background-color:#1F1E5B;
+    height: 55rem;
+}
+
+.sidebar a{
+    text-decoration: none;
+    display: block;
+    color: #fff;
+    padding: 1rem;
+    font-size: 1rem;
+
+}
+
+.sidebar a:hover{
+    background-color:#fff;
+    color: #1F1E5B;
 }
