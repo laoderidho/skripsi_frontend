@@ -19,7 +19,7 @@ export default function login() {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Enter username" />
         </Form.Group>
-        <Button variant="primary" type="submit" className='w-100 mt-3'>
+        <Button variant="primary" type="submit" className='w-100 mt-3 loginbutton'>
           Login
         </Button>
         </Form>
