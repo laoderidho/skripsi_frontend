@@ -37,9 +37,7 @@
     height: 100vh;
     margin-top: 4.5rem;
     position: fixed;
-    transition: left 0.3s ease-in-out;
-    overflow-x: hidden;
-    left: -17rem;
+    transition: all 0.3s ease-in-out;
 }
 
 .sidebar a {
@@ -65,4 +63,8 @@
     right: 0;
     left: 0;
     z-index: 100;
+}
+
+.sidebar-false{
+    margin-left: -17rem;
 }
