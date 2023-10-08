@@ -15,6 +15,10 @@
     border-color:#1F1E5B;
 }
 
+.form-control::placeholder {
+    color:#cacaca;
+}
+
 .loginbutton {
     background-color: #1F1E5B;
     border-color: #1F1E5B;
@@ -37,7 +41,7 @@
     height: 100vh;
     margin-top: 4.5rem;
     position: fixed;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
 .sidebar a {
@@ -68,3 +72,33 @@
 .sidebar-false{
     margin-left: -17rem;
 }
+
+.content {
+    padding-top: 6.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.backbutton {
+    width: 1.5rem;
+    margin-left: 0.5rem;
+    margin-top: 0.1rem;
+    position: fixed;
+    
+}
+
+#tableSearch {
+    border-color: #cacaca;
+    margin-top: 4rem;
+}
+
+#tableLayout {
+    margin-top: 2rem;
+}
+
+.table-bordered {
+    border-radius: 1rem;
+}
+
+
+
