@@ -1,6 +1,7 @@
 import React from 'react'
 import Sidebar from './Sidebar';
-import {Form, Button, Table} from 'react-bootstrap'
+// import {Form, Table} from 'react-bootstrap'
+
 
 
 export default function DaftarPasien() {
@@ -27,11 +28,17 @@ export default function DaftarPasien() {
 
             {/* Search */}
 
-            <Form className="container">
-                <Form.Control id="tableSearch" type="text" placeholder="Search">
-                </Form.Control>
+            <div class="autocomplete">
+                <input class="search-input" type="text" placeholder="Search"/>
+                <ul class="suggestions">
+                    
+                </ul>
 
-                <Table className="table table-bordered table-striped custom-table" id="tableLayout">
+                
+            </div>
+                
+            <div class="table-container">
+                <table class="custom-table">
                     <thead>
                         <tr>
                             <th>Nama</th>
@@ -52,10 +59,10 @@ export default function DaftarPasien() {
                             </td>
                         </tr>
                     </tbody>
-                </Table>
-            </Form>
-
+                </table>
+            </div>
         </div>
+        
     </div>
   )
 }
