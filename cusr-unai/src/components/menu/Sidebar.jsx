@@ -1,19 +1,42 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
+import { useLocation, Link } from 'react-router-dom';
+import ConfigMenu from '../../data/ConfigMenu';
 
-export default function Sidebar(){
+
+export default function Sidebar(props){
 
     const [sidebar, setSidebar] = useState(false);
+    const [dataMenu, setDataMenu] = useState([]);
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+
+    const adminRoute = currentPath.includes("/admin");
+
+    useEffect(()=>{
+        ChangeRoute(adminRoute);
+      }, [adminRoute])
+
+   const ChangeRoute = (path) => {
+       if (path) {
+         setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "admin"));
+       } else {
+         setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "perawat"));
+       }
+   };
 
     const getClick = () => {
         setSidebar(!sidebar);
     }
 
+
+
     return (
       <div>
-        <nav class="navbar navbar-expand-lg">
-          <div class="container-fluid shadow-sm">
+        <nav className="navbar navbar-expand-lg">
+          <div className="container-fluid shadow-sm">
             <button
-              class="btn sidebarbutton"
+              className="btn sidebarbutton"
               onClick={getClick}
               type="button"
               data-toggle="collapse"
@@ -61,13 +84,12 @@ export default function Sidebar(){
             </div>) : (<div></div>)} */}
 
         <div className={`sidebar ${sidebar ? "" : "sidebar-false"}`}>
-          <a href="#">Profile</a>
-          <a href="#">Daftar Pasien</a>
-          <a href="#">Laporan</a>
-          <a href="#">Pemeriksaan Awal</a>
-          <a href="#">Ganti Kata Sandi</a>
-          <a href="#">Logout</a>
+            {dataMenu.map((item, index) => (
+              <Link key={index} to={item.path}>{item.name}</Link>
+            ))}
         </div>
+
+        <div className="content">{props.children}</div>
       </div>
     );
 }
