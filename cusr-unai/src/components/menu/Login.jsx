@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {Form, Button} from 'react-bootstrap'
 import axios from '../../axios'
 import { useNavigate } from 'react-router-dom'
@@ -9,12 +9,14 @@ export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const ref = useRef(null)
 
   useEffect(()=>{
     if(localStorage.getItem('token')){
-      localStorage.removeItem('token')
+      return localStorage.removeItem('token')
     }
   },[])
+
   const loginForm = async (e) => {
     e.preventDefault()
       try {

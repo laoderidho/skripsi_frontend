@@ -24,7 +24,7 @@ export default function DashboardPage() {
   };
 
   useEffect(()=>{
-    getDataUser(localStorage.getItem('token'))
+    return () => getDataUser(localStorage.getItem('token'))
   }, [])
 
 
