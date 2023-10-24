@@ -92,16 +92,8 @@ export default function Sidebar(props){
             </button>
           </div>
         </nav>
-        {/* conditional sidebar */}
-        {/* {sidebar ? (<div className="sidebar">
-                <a href="#">Profile</a>
-                <a href="#">Daftar Pasien</a>
-                <a href="#">Laporan</a>
-                <a href="#">Pemeriksaan Awal</a>
-                <a href="#">Ganti Kata Sandi</a>
-                <a href="#">Logout</a>
-            </div>) : (<div></div>)} */}
 
+        {/* sidebar Menu */}
         <div className={`sidebar ${sidebar ? "" : "sidebar-false"}`}>
             {dataMenu.map((item, index) => (
               item.child ? componentChild(item) :
@@ -109,6 +101,7 @@ export default function Sidebar(props){
             ))}
         </div>
 
+        {/* Content */}
         <div className="content">{props.children}</div>
       </div>
     );
