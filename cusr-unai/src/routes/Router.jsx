@@ -24,8 +24,7 @@ export default function Router() {
           <Route path="/admin/dashboard" element={<DashboardPage />} />
 
           {/* perawat Route*/}
-          <Route path="/perawat" element={<PerawatDashboard />} />
-          <Route path="/notfound" element={<h1>Not Found</h1>} />
+          <Route path="/perawat/dashboard" element={<PerawatDashboard />} />
         </Route>
 
         {/* Route not found */}

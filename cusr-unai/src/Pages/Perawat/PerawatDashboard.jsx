@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from '../../axios'
 import AuthorizationRoute from '../../AuthorizationRoute'
+import Sidebar from '../../components/menu/Sidebar'
 
 export default function PerawatDashboard() {
 
@@ -29,14 +30,15 @@ export default function PerawatDashboard() {
             setHello(res.data)
             console.log(res.data)
         } catch (error) {
-            console.log(error.response.status)
             AuthorizationRoute(error.response.status)
         }
     }
 
   return (
-    <div>
+    <>
+        <Sidebar>
 
-    </div>
+        </Sidebar>
+    </>
   )
 }

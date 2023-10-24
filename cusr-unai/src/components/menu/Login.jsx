@@ -26,7 +26,7 @@ export default function Login() {
           if (role === 'admin') {
             navigate("/admin/dashboard");
           }else if(role === 'perawat'){
-            navigate('/perawat')
+            navigate('/perawat/dashboard')
           }
           localStorage.setItem('token', res.data.access_token)
       } catch (error) {

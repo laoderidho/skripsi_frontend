@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { useLocation, Link } from 'react-router-dom';
 import ConfigMenu from '../../data/ConfigMenu';
+import { Accordion } from 'react-bootstrap';
 
 
 export default function Sidebar(props){
@@ -25,10 +26,28 @@ export default function Sidebar(props){
        }
    };
 
+   console.log(dataMenu);
+
     const getClick = () => {
         setSidebar(!sidebar);
     }
 
+    const componentChild = (item)=>{
+        return (
+          <Accordion defaultActiveKey="0">
+            <Accordion.Item>
+              <Accordion.Header>{item.name}</Accordion.Header>
+              <Accordion.Body>
+                {item.child.map((item, index) => (
+                  <Link key={index} to={item.path}>
+                    {item.name}
+                  </Link>
+                ))}
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        );
+    }
 
 
     return (
@@ -85,6 +104,7 @@ export default function Sidebar(props){
 
         <div className={`sidebar ${sidebar ? "" : "sidebar-false"}`}>
             {dataMenu.map((item, index) => (
+              item.child ? componentChild(item) :
               <Link key={index} to={item.path}>{item.name}</Link>
             ))}
         </div>
