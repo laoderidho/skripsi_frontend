@@ -35,10 +35,8 @@ export default function PerawatDashboard() {
     }
 
   return (
-    <>
-        <Sidebar>
+    <Sidebar>
 
-        </Sidebar>
-    </>
+    </Sidebar>
   )
 }

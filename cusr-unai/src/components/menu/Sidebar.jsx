@@ -25,8 +25,10 @@ export default function Sidebar(props){
          setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "perawat"));
        }
    };
-
-   console.log(dataMenu);
+   
+   const iconStyle = {
+    marginRight: "1rem",
+   }
 
     const getClick = () => {
         setSidebar(!sidebar);
@@ -36,10 +38,11 @@ export default function Sidebar(props){
         return (
           <Accordion defaultActiveKey="0">
             <Accordion.Item>
-              <Accordion.Header>{item.name}</Accordion.Header>
+              <Accordion.Header> <i className={item.icon} style={iconStyle}></i> {item.name}</Accordion.Header>
               <Accordion.Body>
                 {item.child.map((item, index) => (
                   <Link  to={item.path}>
+                    <i className={item.icon} style={iconStyle}></i>
                     {item.name}
                   </Link>
                 ))}
@@ -97,12 +100,14 @@ export default function Sidebar(props){
         <div className={`sidebar ${sidebar ? "" : "sidebar-false"}`}>
             {dataMenu.map((item, index) => (
               item.child ? componentChild(item) :
-              <Link key={index} to={item.path}>{item.name}</Link>
+              <Link key={index} to={item.path}> <i className={item.icon} style={iconStyle}></i> {item.name}</Link>
             ))}
         </div>
 
         {/* Content */}
-        <div className="content">{props.children}</div>
+        <div className="content">
+          {props.children}
+        </div>
       </div>
     );
 }
