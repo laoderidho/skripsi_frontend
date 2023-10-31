@@ -7,8 +7,20 @@
 }
 .card-login {
     width: 23rem;
-    height: 25rem;
 }
+
+nav{
+    z-index: 100;
+} 
+
+.btn{
+    --bs-btn-border-width: none
+}
+
+.btn:hover{
+    background-color: #F0F0F0;
+}
+
 .form-control {
     border-radius: 0.2rem;
     height: 3.2rem;
@@ -99,6 +111,7 @@
     padding-top: 6.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    margin-bottom: 8rem;
 }
 
 .backbutton {
@@ -158,6 +171,14 @@
     background-color: #f7f7f7;
 }
 
+.breadcrumb-item > a{
+    margin-left: .5rem;
+    text-decoration: none;
+}
+
+.form-control{
+    border: 1px solid #cacaca;
+}
 
 
 /* Buat Mobile */
