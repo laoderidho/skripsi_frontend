@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const instance = axios.create({
-   baseURL: "http://127.0.0.1:8000/api", // Sesuaikan dengan URL API Laravel Anda
-  // baseURL: "https://0d1c-103-149-116-67.ngrok-free.app /api", // Ganti dengan URL API Laravel Anda
+  //  baseURL: "http://127.0.0.1:8000/api", // Sesuaikan dengan URL API Laravel Anda
+  baseURL: "https://a8a6-103-149-116-67.ngrok-free.app/api", // Ganti dengan URL API Laravel Anda
   timeout: 10000, // Sesuaikan dengan kebutuhan Anda
   headers: {
     "Content-Type": "application/json",
