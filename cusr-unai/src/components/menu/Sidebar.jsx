@@ -1,19 +1,64 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
+import { useLocation, Link } from 'react-router-dom';
+import ConfigMenu from '../../data/ConfigMenu';
+import { Accordion } from 'react-bootstrap';
 
-export default function Sidebar(){
+
+export default function Sidebar(props){
 
     const [sidebar, setSidebar] = useState(false);
+    const [dataMenu, setDataMenu] = useState([]);
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+
+    const adminRoute = currentPath.includes("/admin");
+
+    useEffect(()=>{
+        ChangeRoute(adminRoute);
+      }, [adminRoute])
+
+   const ChangeRoute = (path) => {
+       if (path) {
+         setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "admin"));
+       } else {
+         setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "perawat"));
+       }
+   };
+   
+   const iconStyle = {
+    marginRight: "1rem",
+   }
 
     const getClick = () => {
         setSidebar(!sidebar);
     }
 
+    const componentChild = (item)=>{
+        return (
+          <Accordion defaultActiveKey="0">
+            <Accordion.Item>
+              <Accordion.Header> <i className={item.icon} style={iconStyle}></i> {item.name}</Accordion.Header>
+              <Accordion.Body>
+                {item.child.map((item, index) => (
+                  <Link  to={item.path}>
+                    <i className={item.icon} style={iconStyle}></i>
+                    {item.name}
+                  </Link>
+                ))}
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        );
+    }
+
+
     return (
       <div>
-        <nav class="navbar navbar-expand-lg">
-          <div class="container-fluid shadow-sm">
+        <nav className="navbar navbar-expand-lg">
+          <div className="container-fluid shadow-sm">
             <button
-              class="btn sidebarbutton"
+              className="btn sidebarbutton"
               onClick={getClick}
               type="button"
               data-toggle="collapse"
@@ -50,23 +95,18 @@ export default function Sidebar(){
             </button>
           </div>
         </nav>
-        {/* conditional sidebar */}
-        {/* {sidebar ? (<div className="sidebar">
-                <a href="#">Profile</a>
-                <a href="#">Daftar Pasien</a>
-                <a href="#">Laporan</a>
-                <a href="#">Pemeriksaan Awal</a>
-                <a href="#">Ganti Kata Sandi</a>
-                <a href="#">Logout</a>
-            </div>) : (<div></div>)} */}
 
+        {/* sidebar Menu */}
         <div className={`sidebar ${sidebar ? "" : "sidebar-false"}`}>
-          <a href="#">Profile</a>
-          <a href="#">Daftar Pasien</a>
-          <a href="#">Laporan</a>
-          <a href="#">Pemeriksaan Awal</a>
-          <a href="#">Ganti Kata Sandi</a>
-          <a href="#">Logout</a>
+            {dataMenu.map((item, index) => (
+              item.child ? componentChild(item) :
+              <Link key={index} to={item.path}> <i className={item.icon} style={iconStyle}></i> {item.name}</Link>
+            ))}
+        </div>
+
+        {/* Content */}
+        <div className="content">
+          {props.children}
         </div>
       </div>
     );
