@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
-import Sidebar from "../../../components/menu/Sidebar";
+import Sidebar from "../../../../components/menu/Sidebar";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "../../../axios";
-import AuthorizationRoute from "../../../AuthorizationRoute";
+import axios from '../../../../axios'
 
-export default function DaftarPasien() {
 
-    // Autocomplete
+
+
+export default function Diagnosis() {
 
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -28,44 +28,39 @@ export default function DaftarPasien() {
         ];
     };
 
-    // Table
+    const [diagnosa, setDiagnosa] = useState([])
 
-    const [pasien, setPasien] = useState([])
-
-    const getPasien = async (token) => {
+    const getDiagnosa = async (token) => {
         try {
-            await axios
-            .post("/admin/daftarpasien", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            await axios.post("/admin/standarkeperawatan/diagnosis", {
+                headers: { Authorization : `Bearer $(token)`,
                 },
             })
             .then((res) => {
                 console.log(res)
-                setPasien(res?.data?.data);
+                setDiagnosa(res?.data?.data);
             });
         } catch (error) {
-            // AuthorizationRoute(error.response.status);
+            
         }
     };
 
     useEffect(()=>{
-        getPasien(localStorage.getItem('token'))
+        getDiagnosa(localStorage.getItem('token'))
     }, [])
 
-    console.log(pasien)
-    
+    console.log(diagnosa)
 
-  return (
-      <Sidebar>
+    return (
+        <Sidebar>
         {/* Title */}
         <div className="container">
-            <h2>Daftar Pasien</h2>
+            <h2>Data Standar Diagnosis Keperawatan Indonesia</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
-                    Daftar Pasien
+                    Data Diagnosis
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/daftarpasien/tambah">Tambah</Breadcrumb.Item>
+                <Breadcrumb.Item href="/admin/diagnosa/tambah">Tambah</Breadcrumb.Item>
             </Breadcrumb>
         </div>
 
@@ -75,7 +70,7 @@ export default function DaftarPasien() {
             <div className="search-container">
                     <input className="form-control" type="text" placeholder="Search" value={inputValue} onChange={handleInputChange} />
 
-                    <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
+                    <Link to="/admin/diagnosa/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
                         Tambah
                     </Link>
                     <ul className="suggestions">
@@ -89,30 +84,30 @@ export default function DaftarPasien() {
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>Medical Record</th>
+                        <th>Kode Diagnosis</th>
+                        <th>Nama Diagnosis</th>
                         <th className="button-space"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {pasien.map((item, index) => (
-                    <tr key={index}>
+                    {diagnosa.map((item, index) => (
+                        <tr key={index}>
                         <td>{item.id}</td>
-                        <td>{item.nama_lengkap}</td>
-                        <td>{item.no_medical_record}</td>
+                        <td>{item.kode_diagnosa}</td>
+                        <td>{item.nama_diagnosa}</td>
                         <td>
                             <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
+                                to={`/admin/standarkeperawatan/diagnosis/${item.id}`}
                                 class="btn d-flex justify-content-center align-items-center simple-button">
-                                Lihat Profil
+                                Lihat 
                             </Link>
                         </td>
                     </tr>
                     ))}
+                    
                 </tbody>
             </Table>
         </Form>
-      </Sidebar>
-      
-  );
+        </Sidebar>
+    );
 }

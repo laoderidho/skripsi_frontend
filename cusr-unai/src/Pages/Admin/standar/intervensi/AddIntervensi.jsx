@@ -1,79 +1,155 @@
-import React from 'react'
-import Sidebar from '../../../../components/menu/Sidebar'
-import { Breadcrumb, Form, Button } from 'react-bootstrap'
+import React, { useState } from "react";
+import Sidebar from "../../../../components/menu/Sidebar";
+import { Breadcrumb, Form, Col, Row, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import AuthorizationRoute from "../../../../AuthorizationRoute";
+import axios from "../../../../axios";
 
 const AddIntervensi = () => {
+  const [kode_intervensi, setKodeIntervensi] = useState("");
+  const [nama_intervensi, setNamaIntervensi] = useState("");
+  const [observasi, setObservasi] = useState("");
+  const [terapeutik, setTerapeutik] = useState("");
+  const [edukasi, setEdukasi] = useState("");
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [submitted, setSubmitted] = useState(false);
+
+  // const [array, setArray] = useState("");
+  // const [inputValue, setInputValue] = useState("");
+
+ 
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    const handleObservasi = observasi.split("\n");
+    const handleTerapeutik = terapeutik.split("\n");
+    const handleEdukasi = edukasi.split("\n");
+
+    console.log(handleObservasi);
+
+    try {
+      const res = await axios.post(
+         "/admin/intervensi/tambah",
+         {
+          kode_intervensi: kode_intervensi,
+          nama_intervensi: nama_intervensi,
+          observasi: handleObservasi,
+          terapeutik: handleTerapeutik,
+          edukasi: handleEdukasi,
+         },
+         {
+           headers: { Authorization: `Bearer ${token}` },
+         }
+       );
+       console.log(res);
+      navigate("/admin/standarkeperawatan/intervensi");
+    } catch (error) {
+      console.log(error);
+      // AuthorizationRoute(error.response.status)
+    }
+  };
+
   return (
     <Sidebar>
       <div className="container">
         <h2>Tambah Intervensi</h2>
         <Breadcrumb>
-          <Breadcrumb.Item href="/admin/intervensi">Diagnosa</Breadcrumb.Item>
-          <Breadcrumb.Item active>
-            Tambah
+          <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">
+            Intervensi
           </Breadcrumb.Item>
+          <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
         </Breadcrumb>
       </div>
 
-      <Form className="container mt-5">
-        <Form.Group className="w-80 mb-3">
-          <Form.Label>Kode Intervensi</Form.Label>
-          <Form.Control type="text" placeholder="Masukkan Kode Intervensi" />
-        </Form.Group>
-        <Form.Group className="w-80 mb-3">
-          <Form.Label>Nama Intervensi</Form.Label>
-          <Form.Control type="text" placeholder="Masukkan Nama Intervensi" />
-        </Form.Group>
+      <Form className="container mt-5" onSubmit={submitForm}>
+        <Row>
+          <Form.Group as={Col}>
+            <Form.Label>Kode Intervensi</Form.Label>
+            <Form.Control
+              id="form-control-input"
+              type="text"
+              placeholder="Masukkan Kode Intervensi"
+              value={kode_intervensi}
+              onChange={(e) => setKodeIntervensi(e.target.value)}
+              required
+              style={{
+                color: submitted ? "#ff0000" : "",
+                fontWeight: submitted ? "bold" : "",
+              }}
+            />
+          </Form.Group>
 
-        <h3 className="mb-3 mt-3">Tindakan</h3>
-        <Form.Group className="w-80 mb-3">
-          <Form.Label>Observasi</Form.Label>
-          <Form.Control
-            as="textarea"
-            type="text"
-            placeholder="Masukkan Observasi dari intervensi ini"
-            style={{ height: "7rem" }}
-          />
-        </Form.Group>
+          <Form.Group as={Col}>
+            <Form.Label>Nama Intervensi</Form.Label>
+            <Form.Control
+              id="form-control-input"
+              type="text"
+              placeholder="Masukkan Nama Intervensi"
+              onChange={(e) => setNamaIntervensi(e.target.value)}
+              value={nama_intervensi}
+              required
+            />
+          </Form.Group>
+        </Row>
 
-        <Form.Group className="w-80 mb-3">
-          <Form.Label>Teraupetik</Form.Label>
-          <Form.Control
-            as="textarea"
-            type="text"
-            placeholder="Masukkan Teraupetik dari intervensi ini"
-            style={{ height: "7rem" }}
-          />
-        </Form.Group>
+        <Row className="mt-5">
+        <h4 className="mb-3">Tindakan</h4>
 
-        <Form.Group className="w-80 mb-3">
-          <Form.Label>Edukasi</Form.Label>
-          <Form.Control
-            as="textarea"
-            type="text"
-            placeholder="Masukkan Edukasi dari intervensi ini"
-            style={{ height: "7rem" }}
-          />
-        </Form.Group>
+          <Form.Group as={Col}>
+            <Form.Label>Observasi</Form.Label>
+            <Form.Control
+              id="form-control-input"
+              as="textarea"
+              rows={5}
+              style={{
+                height: "7rem",
+              }}
+              value={observasi}
+              onChange={(e) => setObservasi(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="w-80 mb-3">
-          <Form.Label>Kolaborasi</Form.Label>
-          <Form.Control
-            as="textarea"
-            type="text"
-            placeholder="Masukkan Kolaborasi dari intervensi ini"
-            style={{ height: "7rem" }}
-          />
-        </Form.Group>
+          <Form.Group as={Col}>
+            <Form.Label>Terapeutik</Form.Label>
+            <Form.Control 
+              id="form-control-input"
+              as="textarea"
+              rows={5}
+              style={{
+                height: "7rem",
+              }}
+              value={terapeutik}
+              onChange={(e) => setTerapeutik(e.target.value)}
+            />
+          </Form.Group>
+          </Row>
+          <Form.Group as={Col} className="mt-3">
+            <Form.Label>Edukasi</Form.Label>
+            <Form.Control
+              id="form-control-input"
+              as="textarea"
+              rows={5}
+              style={{
+                height: "7rem",
+              }}
+              value={edukasi}
+              onChange={(e) => setEdukasi(e.target.value)}
+              />
+          </Form.Group>
 
-      <div className="d-flex justify-content-end">
-        <Button variant="primary" type="submit" className="mt-3 bg-primary" size='lg'>
-          Submit
-        </Button>
-      </div>
+        <div className="d-flex justify-content-end">
+          <Button
+            variant="primary"
+            type="submit"
+            className="btn justify-content-center align-items-center blue-button"
+          >
+            Submit
+          </Button>
+        </div>
       </Form>
     </Sidebar>
   );
-}
+};
 
-export default AddIntervensi
+export default AddIntervensi;

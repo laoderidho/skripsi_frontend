@@ -1,0 +1,9 @@
+.search-autocomplete {
+    display: flex;
+    align-items:center;
+}
+
+.search-input {
+    width: auto;
+    
+}

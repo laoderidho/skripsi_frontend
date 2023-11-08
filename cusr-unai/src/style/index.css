@@ -13,6 +13,10 @@ nav{
     z-index: 100;
 } 
 
+#sidebar:hover {
+    background-color: transparent;
+}
+
 .btn{
     --bs-btn-border-width: none
 }
@@ -21,10 +25,43 @@ nav{
     background-color: #F0F0F0;
 }
 
+#form-control-login {
+    width: 100%;
+    max-width: 100%;
+}
+
+#form-control-input {
+    width: 100%;
+    max-width: 100%;
+}
+
+
+
 .form-control {
+    width: 40%;
+    max-width: 40%;
     border-radius: 0.2rem;
     height: 3.2rem;
     border-color:#1F1E5B;
+    display: block;
+    box-shadow: none !important;
+}
+
+.form-select {
+    border-radius: 0.2rem;
+    height: 3.2rem;
+    box-shadow: none !important;
+    border-color: #cacaca;
+}
+
+.form-select option {
+    background-color: #ffffff;
+    color: #000;
+    height: 3.2rem;
+}
+
+.form-select::placeholder {
+    color:#cacaca;
 }
 
 .form-control::placeholder {
@@ -42,6 +79,7 @@ nav{
     padding: rem;
 }
 
+
 .sidebarbutton {
     background-color: #fff;
     height: 4rem;
@@ -51,10 +89,11 @@ nav{
     width: 17rem;
     background-color:#1F1E5B;
     height: 100vh;
-    margin-top: 4.5rem;
+    margin-top: 5rem;
     position: fixed;
     transition: all 0.4s ease-in-out;
 }
+
 
 .sidebar a {
     text-decoration: none;
@@ -122,54 +161,94 @@ nav{
     
 }
 
-.search-container {
-    display: flex;
-    align-items: center;
-}
-
 .search-input {
+    width: 100%;
+    max-width: 100%;
+    height: 3.2rem;
     border: 1px solid #cacaca;
     border-radius: 0.2rem;
-    height: 3.2rem;
-    flex-grow: 1;
-    width: auto;
-    padding: 1rem;
-    margin-top: 4rem;
+    padding-left: 1rem;
 }
 
-.table-container {
-    max-width: 100%;
-    overflow-x: auto;
-    margin-top: 2rem;  
+.search-input-admin {
+    width: 40%;
+    max-width: 40%;
+    height: 3.2rem;
+    border: 1px solid #cacaca;
     border-radius: 0.2rem;
+    padding-left: 1rem;
+}
 
+.search-container {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
 }
 
 
 .custom-table {
     width: 100%;
+    max-width: 100%;
+    border : 1px solid #cacaca;
     border-collapse: collapse;
+    border-spacing: 0;
+    
+}
+
+.custom-table thead th {
+    background-color: #f7f7f7;
+    border: 1px solid #cacaca;
+    color: #000000;
+    padding-left: 1rem;
+    text-align: left;
+    height: 3.2rem;
+    width: 100%;
+
+}
+
+
+.custom-table tbody td{
+    border:  1px solid #cacaca;
+    color: #000000;
+    padding-left: 1rem;
+    height: 3.2rem;
+    width: 100%;
+}
+
+
+.custom-table-rounded {
     border: 1px solid #cacaca;
     border-radius: 0.2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
-.custom-table th {
-    background-color: #f7f7f7;
-    border: 1px solid #cacaca;
-    padding: 1rem;
-
+.custom-table-rounded thead th {
+    border: none;
+    color: #000000;
 }
 
-.custom-table td {
-    border: 1px solid #cacaca;
-    padding: 1rem;
+.custom-table-rounded thead th:first-child {
+    border-radius: 0.2rem 0 0 0;
 }
 
-.custom-table tbody tr:nth-child(even) {
-    background-color: #f7f7f7;
+.custom-table-rounded thead th:last-child {
+    border-radius: 0 0.2rem 0 0;
 }
+
+.custom-table-rounded tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 0.2rem;
+}
+
+.custom-table-rounded tbody tr:last-child td:last-child {
+    border-radius: 0 0 0.2rem 0;
+}
+
+.custom-table-rounded tbody td {
+    border: none;
+    border-top: 1px solid #cacaca;
+}
+
+
 
 .breadcrumb-item > a{
     margin-left: .5rem;
@@ -180,9 +259,134 @@ nav{
     border: 1px solid #cacaca;
 }
 
+th, td {
+    justify-content: center;
+}
+
+.table {
+    margin-top: 2rem;
+}
+
+
+.simple-button {
+    background-color: #ffffff;
+    height: 2rem;
+    text-align: center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 0.2rem;
+    border: 1px solid #cacaca;
+}
+
+.green-active-button {
+    background-color: #4ed14e;
+    height: 1rem;
+    text-align: center;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    color: #fff
+}
+
+.red-nonactive-button {
+    background-color: #ff0000;
+    height: 1rem;
+    text-align: center;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    color: #fff;
+}
+
+
+
+.simple-button:hover {
+    border: 1px solid #cacaca;
+    background-color: #F0F0F0;
+}
+
+.blue-button {
+    background-color: #007BFF;
+    color: #ffffff;
+    border-radius: 0.2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    float: right;
+}
+
+.red-button {
+    background-color: #ff0000;
+    color: #ffffff;
+    border-radius: 0.2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    float: right;
+}
+
+.red-button:hover {
+    background-color: #e02807;
+    color: #ffffff;
+}
+
+.white-button {
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 0.2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    float: right;
+    border-radius: 0.2rem;
+    border: 1px solid #cacaca;
+}
+
+#visibility-button {
+    font-size: smaller;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    color: #007BFF;
+}
+
+#visibility-button:hover {
+    color: #cacaca;
+}
+
+#custom-margin {
+    margin-right: 1.5rem ;
+}
+
+#custom-row {
+    margin-top: 1rem;
+}
+
+.blue-button:hover {
+    background-color: #0069D9;
+    color: #ffffff;
+
+}
+
+.table-striped tbody tr:nth-last-of-type(odd) {
+    background-color: #f7f7f7;
+}
+
+
+
 
 /* Buat Mobile */
 @media (max-width: 600px) {
+    .form-control {
+        width: 100%;
+        max-width: 100%;
+    }
+    .search-input-admin {
+        width: 100%;
+        max-width: 100%;
+    }
+
     .custom-table th:nth-child(1),
     .custom-table td:nth-child(1) {
         width: auto;

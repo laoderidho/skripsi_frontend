@@ -54,7 +54,8 @@ export default function Login() {
         <Form className="container" onSubmit={loginForm}>
           <Form.Group>
             <Form.Label>Username</Form.Label>
-            <Form.Control
+            <Form.Control 
+              id="form-control-login"
               type="text"
               placeholder="Enter username"
               value={username}
@@ -65,6 +66,7 @@ export default function Login() {
           <Form.Group className="pt-2">
             <Form.Label>Password</Form.Label>
             <Form.Control
+              id="form-control-login"
               type="password"
               placeholder="Enter username"
               value={password}

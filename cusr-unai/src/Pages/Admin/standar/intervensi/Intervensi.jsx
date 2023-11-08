@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from "react";
-import Sidebar from "../../../components/menu/Sidebar";
+import Sidebar from "../../../../components/menu/Sidebar";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "../../../axios";
-import AuthorizationRoute from "../../../AuthorizationRoute";
+import axios from '../../../../axios';
 
-export default function DaftarPasien() {
-
-    // Autocomplete
+export default function Intervensi() {
 
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -28,44 +25,38 @@ export default function DaftarPasien() {
         ];
     };
 
-    // Table
+    const [intervensi, setIntervensi] = useState([])
 
-    const [pasien, setPasien] = useState([])
-
-    const getPasien = async (token) => {
+    const getIntervensi = async (token) => {
         try {
-            await axios
-            .post("/admin/daftarpasien", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+            await axios.post("/admin/intervensi", {
+                headers: { Authorization: `Bearer ${token}` }
             })
             .then((res) => {
                 console.log(res)
-                setPasien(res?.data?.data);
-            });
+                setIntervensi(res?.data?.data);
+            })
         } catch (error) {
-            // AuthorizationRoute(error.response.status);
+            
         }
     };
 
-    useEffect(()=>{
-        getPasien(localStorage.getItem('token'))
-    }, [])
+    useEffect(() => {
+        getIntervensi(localStorage.getItem('token'))
+    },[])
 
-    console.log(pasien)
-    
+    console.log(intervensi)
 
-  return (
-      <Sidebar>
+    return (
+        <Sidebar>
         {/* Title */}
         <div className="container">
-            <h2>Daftar Pasien</h2>
+            <h2>Data Standar Intervensi Keperawatan Indonesia</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
-                    Daftar Pasien
+                    Data Intervensi
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/daftarpasien/tambah">Tambah</Breadcrumb.Item>
+                <Breadcrumb.Item href="/admin/intervensi/tambah">Tambah</Breadcrumb.Item>
             </Breadcrumb>
         </div>
 
@@ -75,7 +66,7 @@ export default function DaftarPasien() {
             <div className="search-container">
                     <input className="form-control" type="text" placeholder="Search" value={inputValue} onChange={handleInputChange} />
 
-                    <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
+                    <Link to="/admin/intervensi/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
                         Tambah
                     </Link>
                     <ul className="suggestions">
@@ -89,30 +80,29 @@ export default function DaftarPasien() {
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>Medical Record</th>
+                        <th>Kode Intervensi</th>
+                        <th>Nama Intervensi</th>
                         <th className="button-space"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {pasien.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.id}</td>
-                        <td>{item.nama_lengkap}</td>
-                        <td>{item.no_medical_record}</td>
-                        <td>
-                            <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
-                                class="btn d-flex justify-content-center align-items-center simple-button">
-                                Lihat Profil
-                            </Link>
-                        </td>
+                    {intervensi.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.id}</td>
+                            <td>{item.kode_intervensi}</td>
+                            <td>{item.nama_intervensi}</td>
+                            <td>
+                                <Link 
+                                    to={`/admin/standarkeperawatan/intervensi/${item.id}`}
+                                    class="btn d-flex justify-content-center align-items-center simple-button">
+                                    Lihat 
+                                </Link>
+                            </td>
                     </tr>
                     ))}
                 </tbody>
             </Table>
         </Form>
-      </Sidebar>
-      
-  );
+        </Sidebar>
+    );
 }

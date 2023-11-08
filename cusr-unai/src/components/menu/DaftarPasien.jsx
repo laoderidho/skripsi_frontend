@@ -1,11 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Sidebar from './Sidebar';
-// import {Form, Table} from 'react-bootstrap'
+import "../../style/autocomplete.css";
 
 
 
 export default function DaftarPasien() {
-  return (
+
+    const [inputValue, setInputValue] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [selectedSuggestion, setSelectedSuggestion] = useState (null);
+    const [tableData, setTableData] = useState([]);
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setInputValue(value);
+
+        const fetchedSuggestions = setSuggestions(value);
+        setSuggestions(fetchedSuggestions);
+    };
+
+    const handleSuggestionClick = (suggestion) => {
+        setInputValue(suggestion);
+        setSelectedSuggestion(suggestion);
+        setSuggestions([]);
+
+        setTableData([...tableData, suggestion]);
+    };
+
+    
+
+    
+    return (
+
+
     <div>
         <Sidebar/>
         <div className="content">
@@ -26,19 +53,31 @@ export default function DaftarPasien() {
           
             </div>
 
-            {/* Search */}
+            {/* Autocomplete Search */}
 
-            <div class="autocomplete">
-                <input class="search-input" type="text" placeholder="Search"/>
-                <ul class="suggestions">
-                    
+            <div className="autocomplete">
+                <input 
+                    type='text'
+                    id="search-input"
+                    placeholder='Search'
+                    value={inputValue}
+                    onChange={handleInputChange}
+                />
+
+                <ul className="suggestions">
+                    {suggestions.map((suggestion, index) => (
+                        <li
+                            key={index}
+                            onClick={() => handleSuggestionClick(suggestion)}
+                        >
+                            {suggestion}
+                        </li>
+                    ))}
                 </ul>
-
-                
             </div>
-                
-            <div class="table-container">
-                <table class="custom-table">
+               
+            <div className="table-container">
+                <table className="custom-table">
                     <thead>
                         <tr>
                             <th>Nama</th>

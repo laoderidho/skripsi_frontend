@@ -27,7 +27,7 @@ export default function Sidebar(props){
    };
    
    const iconStyle = {
-    marginRight: "1rem",
+    marginRight: "2rem",
    }
 
     const getClick = () => {
@@ -58,10 +58,12 @@ export default function Sidebar(props){
         <nav className="navbar bg-white shadow-sm">
           <button
             className="btn sidebarbutton"
+            id="sidebar"
             onClick={getClick}
             type="button"
             data-toggle="collapse"
             data-target
+            style={{marginLeft: "1rem"}}
           >
             <svg
               width="25"
