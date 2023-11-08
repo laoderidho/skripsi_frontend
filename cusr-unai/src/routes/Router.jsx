@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 // Menu Components Import
 import Home from "../Pages/Home";
-import Login from "../Pages/Menu/Login";
-import GantiSandi from "../Pages/Menu/GantiSandi";
+import Login from "../Pages/menu/Login";
+import GantiSandi from "../Pages/menu/GantiSandi";
 
 // Admin Component Import
 import DaftarPasien from "../Pages/Admin/data-pasien/DaftarPasien";
