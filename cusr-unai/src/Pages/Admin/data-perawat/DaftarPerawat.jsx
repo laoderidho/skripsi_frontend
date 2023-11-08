@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
 
-export default function DaftarPasien() {
+export default function DaftarPerawat() {
 
     // Autocomplete
 
@@ -30,19 +30,19 @@ export default function DaftarPasien() {
 
     // Table
 
-    const [pasien, setPasien] = useState([])
+    const [perawat, setPerawat] = useState([])
 
     const getPasien = async (token) => {
         try {
             await axios
-            .post("/admin/daftarpasien", {
+            .post(`/admin/users`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
             .then((res) => {
                 console.log(res)
-                setPasien(res?.data?.data);
+                setPerawat(res?.data?.data);
             });
         } catch (error) {
             // AuthorizationRoute(error.response.status);
@@ -53,19 +53,19 @@ export default function DaftarPasien() {
         getPasien(localStorage.getItem('token'))
     }, [])
 
-    console.log(pasien)
+    console.log(perawat)
     
 
   return (
       <Sidebar>
         {/* Title */}
         <div className="container">
-            <h2>Daftar Pasien</h2>
+            <h2>Daftar Perawat</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
-                    Daftar Pasien
+                    Daftar Perawat
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/daftarpasien/tambah">Tambah</Breadcrumb.Item>
+                <Breadcrumb.Item href="/admin/daftarperawat/tambah">Tambah</Breadcrumb.Item>
             </Breadcrumb>
         </div>
 
@@ -75,7 +75,7 @@ export default function DaftarPasien() {
             <div className="search-container">
                     <input className="form-control" type="text" placeholder="Search" value={inputValue} onChange={handleInputChange} />
 
-                    <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
+                    <Link to="/admin/daftarperawat/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
                         Tambah
                     </Link>
                     <ul className="suggestions">
@@ -90,19 +90,27 @@ export default function DaftarPasien() {
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Medical Record</th>
+                        <th>Status</th>
                         <th className="button-space"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {pasien.map((item, index) => (
+                    {perawat.map((item, index) => (
                     <tr key={index}>
                         <td>{item.id}</td>
                         <td>{item.nama_lengkap}</td>
-                        <td>{item.no_medical_record}</td>
+                        <td>
+                            {item.status === 'aktif' ? (
+                                <button className="btn green-active-button">{item.status}</button>
+                            ) : item.status === 'nonaktif' ? (
+                                <button className="btn red-active-button">{item.status}</button>
+                            ) : (
+                                <span>{item.status}</span>
+                            )}
+                        </td> 
                         <td>
                             <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
+                                to={`/admin/daftarperawat/${item.id}`}
                                 class="btn d-flex justify-content-center align-items-center simple-button">
                                 Lihat Profil
                             </Link>

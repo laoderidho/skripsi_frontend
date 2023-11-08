@@ -7,39 +7,39 @@ const ConfigMenu = [
     child: null,
   },
   {
-    path: "/admin/daftar-pasien",
+    path: "/admin/daftarpasien",
     name: "Daftar Pasien",
     role: "admin",
     icon: "fa-solid fa-bed",
     child: null,
   },
   {
-    path: "/admin/daftar-perawat",
+    path: "/admin/daftarperawat",
     name: "Daftar Perawat",
     role: "admin",
     icon: "fa-solid fa-user-nurse",
     child: null,
   },
   {
-    path: "/standar",
+    path: "/",
     name: "Standar Keperawatan",
     role: "admin",
     icon: "fa-solid fa-hospital-user",
     child: [
       {
-        path: "admin/Standar-keperawatan/diagnosa",
+        path: "/admin/standarkeperawatan/diagnosis",
         name: "Diagnosa",
         role: "admin",
         icon: "fa-solid fa-stethoscope",
       },
       {
-        path: "admin/standar-keperawatan/Intervensi",
+        path: "/admin/standarkeperawatan/intervensi",
         name: "Intervensi",
         role: "admin",
         icon: "fa-solid fa-person-dots-from-line",
       },
       {
-        path: "admin/standar-keperawatan/Luaran",
+        path: "/admin/standarkeperawatan/luaran",
         name: "Luaran",
         role: "admin",
         icon: "fa-solid fa-clipboard-user"

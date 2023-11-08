@@ -10,12 +10,13 @@ export default function DashboardPage() {
     const getDataUser = async (token) => {
         try {
         await axios
-            .get("/admin", {
+            .post("/admin", {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
             })
             .then((res) => {
+            console.log(res)
             setUsers(res?.data?.data);
             });
         } catch (error) {
@@ -24,12 +25,12 @@ export default function DashboardPage() {
   };
 
   useEffect(()=>{
-    return () => getDataUser(localStorage.getItem('token'))
+    getDataUser(localStorage.getItem('token'))
   }, [])
 
+  console.log(users)
 
   return (
-    <>
       <Sidebar>
         {users.map((item, index) => (
           <div key={index}>
@@ -37,6 +38,6 @@ export default function DashboardPage() {
           </div>
         ))}
       </Sidebar>
-    </>
+  
   );
 }

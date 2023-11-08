@@ -27,7 +27,7 @@ export default function Sidebar(props){
    };
    
    const iconStyle = {
-    marginRight: "1rem",
+    marginRight: "2rem",
    }
 
     const getClick = () => {
@@ -55,59 +55,63 @@ export default function Sidebar(props){
 
     return (
       <div>
-        <nav className="navbar navbar-expand-lg">
-          <div className="container-fluid shadow-sm">
-            <button
-              className="btn sidebarbutton"
-              onClick={getClick}
-              type="button"
-              data-toggle="collapse"
-              data-target
+        <nav className="navbar bg-white shadow-sm">
+          <button
+            className="btn sidebarbutton"
+            id="sidebar"
+            onClick={getClick}
+            type="button"
+            data-toggle="collapse"
+            data-target
+            style={{marginLeft: "1rem"}}
+          >
+            <svg
+              width="25"
+              viewBox="0 0 25 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <svg
+              <rect
+                y="0.1698"
                 width="25"
-                viewBox="0 0 25 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  y="0.1698"
-                  width="25"
-                  height="4.13208"
-                  rx="2.06604"
-                  fill="#1F1E5B"
-                />
-                <rect
-                  y="8.30188"
-                  width="25"
-                  height="4.13208"
-                  rx="2.06604"
-                  fill="#1F1E5B"
-                />
-                <rect
-                  y="16.434"
-                  width="25"
-                  height="4.13208"
-                  rx="2.06604"
-                  fill="#1F1E5B"
-                />
-              </svg>
-            </button>
-          </div>
+                height="4.13208"
+                rx="2.06604"
+                fill="#1F1E5B"
+              />
+              <rect
+                y="8.30188"
+                width="25"
+                height="4.13208"
+                rx="2.06604"
+                fill="#1F1E5B"
+              />
+              <rect
+                y="16.434"
+                width="25"
+                height="4.13208"
+                rx="2.06604"
+                fill="#1F1E5B"
+              />
+            </svg>
+          </button>
         </nav>
 
         {/* sidebar Menu */}
         <div className={`sidebar ${sidebar ? "" : "sidebar-false"}`}>
-            {dataMenu.map((item, index) => (
-              item.child ? componentChild(item) :
-              <Link key={index} to={item.path}> <i className={item.icon} style={iconStyle}></i> {item.name}</Link>
-            ))}
+          {dataMenu.map((item, index) =>
+            item.child ? (
+              componentChild(item)
+            ) : (
+              <Link key={index} to={item.path}>
+                {" "}
+                <i className={item.icon} style={iconStyle}></i> {item.name}
+              </Link>
+            )
+          )}
         </div>
 
         {/* Content */}
-        <div className="content">
-          {props.children}
-        </div>
+        <div className="content">{props.children}</div>
       </div>
     );
 }
