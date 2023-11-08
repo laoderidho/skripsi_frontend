@@ -46,7 +46,7 @@ const AddIntervensi = () => {
       navigate("/admin/standarkeperawatan/intervensi");
     } catch (error) {
       console.log(error);
-      // AuthorizationRoute(error.response.status)
+       AuthorizationRoute(error.response.status)
     }
   };
 

@@ -17,13 +17,13 @@ nav{
     background-color: transparent;
 }
 
-.btn{
+/* .btn{
     --bs-btn-border-width: none
 }
 
 .btn:hover{
     background-color: #F0F0F0;
-}
+} */
 
 #form-control-login {
     width: 100%;

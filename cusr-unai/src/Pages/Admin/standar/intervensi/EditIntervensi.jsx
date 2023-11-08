@@ -18,8 +18,6 @@ const EditIntervensi = () => {
   const [submitted, setSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const [array, setArray] = useState("");
-  const [inputValue, setInputValue] = useState("");
 
 
   useEffect(() => {
@@ -33,35 +31,53 @@ const EditIntervensi = () => {
         })
         setKodeIntervensi(res.data.data.kode_intervensi)
         setNamaIntervensi(res.data.data.nama_intervensi)
-        setObservasi(res.data.data.observasi)
-        setTerapeutik(res.data.data.terapeutik)
-        setEdukasi(res.data.data.edukasi)
+        setObservasi(res.data.observasi.join('\n'))
+        setTerapeutik(res.data.terapeutik.join('\n'))
+        setEdukasi(res.data.edukasi.join('\n'))
     } catch (error) {
         
     }
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (inputValue.trim() !== '') {
-        const lines = inputValue.split('\n');
-        const filteredLines = lines.filter((line) => line.trim() !== '');
-        setArray((prevArray) => [...prevArray, ...filteredLines]);
-        setInputValue('');
+  const editSubmit = async (e) => {
+    e.preventDefault();
+
+    const handleObservasi = observasi.split("\n");
+    const handleTerapeutik = terapeutik.split("\n");
+    const handleEdukasi = edukasi.split("\n");
+
+    try {
+      const res = await axios.post(
+         `/admin/intervensi/edit/${id}`,
+         {
+          kode_intervensi: kode_intervensi,
+          nama_intervensi: nama_intervensi,
+          observasi: handleObservasi,
+          terapeutik: handleTerapeutik,
+          edukasi: handleEdukasi,
+         },
+         {
+           headers: { Authorization: `Bearer ${token}` },
+         }
+       );
+       console.log(res);
+      navigate("/admin/standarkeperawatan/intervensi");
+    } catch (error) {
+      console.log(error);
+       AuthorizationRoute(error.response.status)
     }
   };
 
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  }
+
 
   const deleteIntervensi = async () => {
     try {
         await axios.post(`/admin/intervensi/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}`}
         })
+        navigate('/admin/standarkeperawatan/intervensi')
     } catch (error) {
-        
+        AuthorizationRoute(error.response.status)
     }
   };
 
@@ -79,13 +95,14 @@ const EditIntervensi = () => {
         </Breadcrumb>
       </div>
 
-      <Form className="container mt-5" onSubmit={handleSubmit}>
+      <Form className="container mt-5" onSubmit={editSubmit}>
         <Row>
           <Form.Group as={Col}>
             <Form.Label>Kode Intervensi</Form.Label>
             <Form.Control 
               id="form-control-input"
               type="text" 
+              value={kode_intervensi}
               placeholder="Masukkan Kode Intervensi" 
               onChange={(e) => setKodeIntervensi(e.target.value)}
               required
@@ -101,6 +118,7 @@ const EditIntervensi = () => {
             <Form.Control 
               id="form-control-input"
               type="text" 
+              value={nama_intervensi}
               placeholder="Masukkan Nama Intervensi"  
               onChange={(e) => setNamaIntervensi(e.target.value)}
               required/>
@@ -115,6 +133,7 @@ const EditIntervensi = () => {
               id="form-control-input"
               as="textarea"
               type="text"
+              value={observasi}
               placeholder="Masukkan Tindakan Observasi"
               style={{ height: "7rem" }}
               onChange={(e) => setObservasi(e.target.value)}
@@ -129,6 +148,7 @@ const EditIntervensi = () => {
               id="form-control-input"
               as="textarea"
               type="text"
+              value={terapeutik}
               placeholder="Masukkan Tindakan Terapeutik"
               style={{ height: "7rem" }}
               onChange={(e) => setTerapeutik(e.target.value)}
@@ -144,6 +164,7 @@ const EditIntervensi = () => {
               <Form.Control
                 id="form-control-input"
                 as="textarea"
+                value={edukasi}
                 type="text"
                 placeholder="Masukkan Tindakan Edukasi"
                 style={{ height: "7rem" }}
@@ -162,7 +183,8 @@ const EditIntervensi = () => {
         <div className='d-flex justify-content-end mt-3'>
             <Button
                 id="custom-margin"
-                variant='primary'  
+                variant='primary' 
+                type="submit" 
                 className='btn justify-content-center align-items-center white-button'>
                   Edit
             </Button>
