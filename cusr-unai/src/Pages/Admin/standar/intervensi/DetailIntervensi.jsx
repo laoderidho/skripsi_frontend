@@ -102,11 +102,13 @@ const AddIntervensi = () => {
           <Form.Group as={Col}>
             <Form.Label>Kode Intervensi</Form.Label>
             <p style={{ color:  '#ff0000', fontWeight:  'bold' }} >
-                {item.kode_intervensi}
+                {/* {item.kode_intervensi} */}
               </p>
           </Form.Group>
 
-          <Form.Group as={Col}>
+          <hr className="mt-3"></hr>
+
+          <Form.Group as={Col} >
             {/* Empty */}
           </Form.Group>
         </Row>
@@ -115,28 +117,49 @@ const AddIntervensi = () => {
         <Form.Group as={Col}>
             <Form.Label>Nama Intervensi</Form.Label>
             <p>
-              {item.nama_intervensi}
+              {/* {item.nama_intervensi} */}
               </p>
           </Form.Group>
+
+          <hr className="mt-3"></hr>
           <Form.Group>
             {/* Empty */}
           </Form.Group>
         </Row> 
+        
+        <Row>
+          <Form.Group>
+            <Form.Label>Obvservasi</Form.Label>
+              <ul>
+                {/* <li>{item.observasi}</li> */}
+              </ul>
+          </Form.Group>
 
-        {intervensi.map((item, index) => (
-           <div key={index}>
-              <Row>
-                <Form.Group>
-                  <Form.Label>Obvservasi</Form.Label>
-                    <ul>
-                      <li key={index}>{item.observasi}</li>
-                    </ul>
-                </Form.Group>
-              </Row>
+          <hr></hr>
+        </Row>
 
-              
-           </div>
-        ))}
+        <Row>
+          <Form.Group>
+            <Form.Label>Terapeutik</Form.Label>
+              <ul>
+                {/* <li>{item.observasi}</li> */}
+              </ul>
+          </Form.Group>
+
+          <hr></hr>
+        </Row>
+
+        <Row>
+          <Form.Group>
+            <Form.Label>Edukasi</Form.Label>
+              <ul>
+                {/* <li>{item.observasi}</li> */}
+              </ul>
+          </Form.Group>
+
+        
+        </Row>
+   
           <div className='d-flex justify-content-end mt-3'>
             <Link
                 // to={`/admin/intervensi/edit/}`}

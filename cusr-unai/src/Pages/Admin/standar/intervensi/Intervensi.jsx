@@ -17,13 +17,24 @@ export default function Intervensi() {
         setSuggestions(fetchedSuggestions);
     };
 
+    const filteredIntervensi = (value) => {
+        return intervensi.filter((item) => {
+            for (let key in item) {
+                if (item[key] && typeof item[key] === "string") {
+                    if (item[key].toLowerCase().includes(value.toLowerCase())) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+    }
+
     const getSuggestions = (value) => {
-        return [
-            'Suggestion 1',
-            'Suggestion 2',
-            'Suggestion 3',
-        ];
+        const filteredIntervensi = filteredIntervensi(value);
+        setSuggestions(filteredIntervensi);
     };
+
 
     const [intervensi, setIntervensi] = useState([])
 
@@ -70,9 +81,15 @@ export default function Intervensi() {
                         Tambah
                     </Link>
                     <ul className="suggestions">
-                        {suggestions.map((suggestion, index) => (
-                            <li key={index}>{suggestion}</li>
-                        ))}
+                    { suggestions.length > 0 ? (
+                        suggestions.map((item, index) => (
+                            <li key={index}>
+                                {`ID: ${item.id}, Kode Intervensi: ${item.kode_intervensi}, Nama Intervensi: ${item.nama_intervensi}`}
+                            </li>
+                        ))
+                    ) : (
+                        <li>No suggestions found</li>
+                    )}
                     </ul>
             </div>
 
