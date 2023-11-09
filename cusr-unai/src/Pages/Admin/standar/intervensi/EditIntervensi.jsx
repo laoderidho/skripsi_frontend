@@ -61,7 +61,7 @@ const EditIntervensi = () => {
          }
        );
        console.log(res);
-      navigate("/admin/standarkeperawatan/intervensi/${id}");
+      navigate("/admin/standarkeperawatan/intervensi/");
     } catch (error) {
       console.log(error);
        AuthorizationRoute(error.response.status)

@@ -29,7 +29,7 @@ export default function Luaran() {
 
     const getLuaran = async (token) => {
         try {
-            await axios.post("/admin/diagnosa", {
+            await axios.post("/admin/luaran", {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then((res) => {

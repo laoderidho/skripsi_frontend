@@ -70,6 +70,7 @@ const DetailIntervensi = () => {
         await axios.post(`/admin/intervensi/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}`}
         })
+        navigate("/admin/standarkeperawatan/intervensi");
     } catch (error) {
         
     }

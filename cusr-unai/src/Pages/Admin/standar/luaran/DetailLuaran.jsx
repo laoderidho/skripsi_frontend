@@ -23,7 +23,7 @@ const DetailLuaran = () => {
 
   const getLuaran = async (token) => {
     try {
-      await axios.post(`/admin/luaran`, {
+      await axios.post(`/admin/luaran/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((res) => {
@@ -48,7 +48,7 @@ const DetailLuaran = () => {
         })
         setKodeLuaran(res.data.data.kode_luaran)
         setNamaLuaran(res.data.data.nama_luaran)
-        setNamaKriteriaLuaran(res.data.nama_kriteria_luaran)
+        setNamaKriteriaLuaran(res.data.data.nama_kriteria_luaran)
         console.log(res)
     } catch (error) {
         
@@ -131,7 +131,7 @@ const DetailLuaran = () => {
    
           <div className='d-flex justify-content-end mt-3'>
             <Link
-                to={`/admin/luaran/${id}`}
+                to={`/admin/luaran/edit/${id}`}
                 id="custom-margin"
                 variant='primary'  
                 className='btn justify-content-center align-items-center white-button'>

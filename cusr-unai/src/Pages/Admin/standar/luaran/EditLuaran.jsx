@@ -18,22 +18,23 @@ const EditLuaran = () => {
 
 
 
-  useEffect(() => {
+  useEffect(()=>{
     getDataById();
-  },[]);
+  }, [])
 
   const getDataById = async () => {
     try {
         const res = await axios.post(`/admin/luaran/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
-        setKodeLuaran(res.data.data.kode_intervensi)
-        setNamaLuaran(res.data.data.nama_intervensi)
-        setNamaKriteriaLuaran(res.data.observasi.join('\n'))
+        setKodeLuaran(res.data.data.kode_luaran)
+        setNamaLuaran(res.data.data.nama_luaran)
+        setNamaKriteriaLuaran(res.data.data.nama_kriteria_luaran.join("\n"));
     } catch (error) {
         
     }
   }
+
 
   const editSubmit = async (e) => {
     e.preventDefault();
@@ -41,8 +42,8 @@ const EditLuaran = () => {
     const handleNamaKriteriaLuaran = nama_kriteria_luaran.split("\n");
     
     try {
-      const res = await axios.post(
-         `/admin/intervensi/edit/${id}`,
+      const res = await axios.put(
+         `/admin/luaran/${id}`,
          {
           kode_luaran: kode_luaran,
           nama_luaran: nama_luaran,
@@ -53,10 +54,10 @@ const EditLuaran = () => {
          }
        );
        console.log(res);
-      navigate("/admin/standarkeperawatan/luaran/${id}");
+      // navigate("/admin/standarkeperawatan/luaran");
     } catch (error) {
       console.log(error);
-       AuthorizationRoute(error.response.status)
+      //  AuthorizationRoute(error.response.status)
     }
   };
 
