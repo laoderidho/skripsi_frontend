@@ -5,13 +5,11 @@ import { useNavigate, useParams, Link } from 'react-router-dom'
 import AuthorizationRoute from '../../../../AuthorizationRoute'
 import axios from '../../../../axios'
 
-const DetailIntervensi = () => {
+const DetailLuaran = () => {
 
-  const [kode_intervensi, setKodeIntervensi] = useState("");
-  const [nama_intervensi, setNamaIntervensi] = useState("");
-  const [observasi, setObservasi] = useState("");
-  const [terapeutik, setTerapeutik] = useState("");
-  const [edukasi, setEdukasi] = useState("");
+  const [kode_luaran, setKodeLuaran] = useState("");
+  const [nama_luaran, setNamaLuaran] = useState("");
+  const [nama_kriteria_luaran, setNamaKriteriaLuaran] = useState("");
   const {id} = useParams();
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
@@ -21,16 +19,16 @@ const DetailIntervensi = () => {
   const [array, setArray] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
-  const [intervensi, setIntervensi] = useState([]);
+  const [luaran, setLuaran] = useState([]);
 
-  const getIntervensi = async (token) => {
+  const getLuaran = async (token) => {
     try {
-      await axios.post(`/admin/intervensi`, {
+      await axios.post(`/admin/luaran`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then((res) => {
         console.log(res)
-        setIntervensi(res?.data?.data);
+        setLuaran(res?.data?.data);
       }) 
     } catch (error) {
       
@@ -40,19 +38,17 @@ const DetailIntervensi = () => {
 
   useEffect(() => {
     getDataById();
-    getIntervensi(localStorage.getItem('token'))
+    getLuaran(localStorage.getItem('token'))
   },[]);
 
   const getDataById = async () => {
     try {
-        const res = await axios.post(`/admin/intervensi/detail/${id}`, {
+        const res = await axios.post(`/admin/luaran/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
-        setKodeIntervensi(res.data.data.kode_intervensi)
-        setNamaIntervensi(res.data.data.nama_intervensi)
-        setObservasi(res.data.observasi)
-        setTerapeutik(res.data.terapeutik)
-        setEdukasi(res.data.edukasi)
+        setKodeLuaran(res.data.data.kode_luaran)
+        setNamaLuaran(res.data.data.nama_luaran)
+        setNamaKriteriaLuaran(res.data.nama_kriteria_luaran)
         console.log(res)
     } catch (error) {
         
@@ -65,9 +61,9 @@ const DetailIntervensi = () => {
     setInputValue(event.target.value);
   }
 
-  const deleteIntervensi = async () => {
+  const deleteLuaran = async () => {
     try {
-        await axios.post(`/admin/intervensi/delete/${id}`, {
+        await axios.post(`/admin/luaran/${id}`, {
             headers: { Authorization: `Bearer ${token}`}
         })
     } catch (error) {
@@ -80,9 +76,9 @@ const DetailIntervensi = () => {
   return (
     <Sidebar>
       <div className="container">
-        <h2>{kode_intervensi} - {nama_intervensi}</h2>
+        <h2>{kode_luaran} - {nama_luaran}</h2>
         <Breadcrumb>
-          <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">Intervensi</Breadcrumb.Item>
+          <Breadcrumb.Item href="/admin/standarkeperawatan/luaran">Luaran</Breadcrumb.Item>
           <Breadcrumb.Item active>
             Tambah
           </Breadcrumb.Item>
@@ -92,9 +88,9 @@ const DetailIntervensi = () => {
       <Form className="container mt-5">
         <Row>
           <Form.Group as={Col}>
-            <Form.Label id="bold-font" className="mt-4" >Kode Intervensi</Form.Label>
+            <Form.Label id="bold-font" className="mt-4" >Kode Luaran</Form.Label>
             <p style={{ color:  '#ff0000', fontWeight:  'bold' }} >
-                {kode_intervensi}
+                {kode_luaran}
               </p>
           </Form.Group>
 
@@ -107,9 +103,9 @@ const DetailIntervensi = () => {
 
         <Row>
         <Form.Group as={Col}>
-            <Form.Label id="bold-font" className="mt-4">Nama Intervensi</Form.Label>
+            <Form.Label id="bold-font" className="mt-4">Nama Luaran</Form.Label>
             <p >
-              {nama_intervensi}
+              {nama_luaran}
               </p>
           </Form.Group>
 
@@ -121,47 +117,21 @@ const DetailIntervensi = () => {
         
         <Row>
           <Form.Group>
-            <h4 className="mt-3">Tindakan</h4>
-            <Form.Label id="bold-font" className="mt-4">Observasi</Form.Label>
+            <h4 className="mt-3">Kriteria</h4>
+            <Form.Label id="bold-font" className="mt-4">Kriteria</Form.Label>
               <ul>
-                {observasi && observasi.map((item, index) => (
+                {nama_kriteria_luaran && nama_kriteria_luaran.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
           </Form.Group>
 
           <hr></hr>
-        </Row>
-
-        <Row>
-          <Form.Group>
-            <Form.Label id="bold-font" className="mt-4">Terapeutik</Form.Label>
-              <ul>
-                {terapeutik && terapeutik.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-          </Form.Group>
-
-          <hr></hr>
-        </Row>
-
-        <Row>
-          <Form.Group>
-            <Form.Label id="bold-font" className="mt-4">Edukasi</Form.Label>
-              <ul>
-                {edukasi && edukasi.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-          </Form.Group>
-
-        
         </Row>
    
           <div className='d-flex justify-content-end mt-3'>
             <Link
-                to={`/admin/intervensi/edit/${id}`}
+                to={`/admin/luaran/${id}`}
                 id="custom-margin"
                 variant='primary'  
                 className='btn justify-content-center align-items-center white-button'>
@@ -194,7 +164,7 @@ const DetailIntervensi = () => {
                   </Button>
                   <Button 
                     variant='primary'
-                    onClick={deleteIntervensi}
+                    onClick={deleteLuaran}
                     className='btn justify-content-center align-items-center red-button'>
                       Hapus
                   </Button>
@@ -208,4 +178,4 @@ const DetailIntervensi = () => {
   );
 };
 
-export default DetailIntervensi;
+export default DetailLuaran;

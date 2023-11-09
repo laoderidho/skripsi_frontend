@@ -65,7 +65,7 @@ export default function Intervensi() {
             <h2>Data Standar Intervensi Keperawatan Indonesia</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
-                    Data Intervensi
+                    Intervensi
                 </Breadcrumb.Item>
                 <Breadcrumb.Item href="/admin/intervensi/tambah">Tambah</Breadcrumb.Item>
             </Breadcrumb>

@@ -3,8 +3,8 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 // Menu Components Import
 import Home from "../Pages/Home";
-import Login from "../Pages/menu/Login";
-import GantiSandi from "../Pages/menu/GantiSandi";
+import Login from "../Pages/Menu/Login";
+import GantiSandi from "../Pages/Menu/Login";
 
 // Admin Component Import
 import DaftarPasien from "../Pages/Admin/data-pasien/DaftarPasien";
@@ -25,6 +25,9 @@ import AddPerawat from "../Pages/Admin/data-perawat/AddPerawat";
 import DetailPerawat from "../Pages/Admin/data-perawat/DetailPerawat";
 import DetailIntervensi from "../Pages/Admin/standar/intervensi/DetailIntervensi";
 import EditIntervensi from "../Pages/Admin/standar/intervensi/EditIntervensi";
+import EditDiagnosa from "../Pages/Admin/standar/diagnosa/EditDiagnosa";
+import DetailLuaran from "../Pages/Admin/standar/luaran/DetailLuaran";
+import EditLuaran from "../Pages/Admin/standar/luaran/EditLuaran";
 
 // Perawat Component Import
 import PerawatDashboard from "../Pages/Perawat/PerawatDashboard";
@@ -58,6 +61,7 @@ export default function Router() {
           <Route path="/admin/standarkeperawatan/diagnosis" element={<Diagnosis/>} />
           <Route path="/admin/diagnosa/tambah" element={<AddDiagnosa />} />
           <Route path="/admin/standarkeperawatan/diagnosis/:id" element={<DetailDiagnosa />} />
+          <Route path="/admin/diagnosa/edit/:id" element={<EditDiagnosa />} />
 
           {/* Admin | Daftar Intervensi */}
           <Route path="/admin/standarkeperawatan/intervensi" element={<Intervensi/>} />
@@ -65,14 +69,17 @@ export default function Router() {
           <Route path="/admin/standarkeperawatan/intervensi/:id" element={<DetailIntervensi />} />
           <Route path="/admin/intervensi/edit/:id" element={<EditIntervensi />} />
           
-
+          {/* Admin | Daftar Luaran */}
+          <Route path="/admin/standarkeperawatan/luaran" element={<Luaran/>} />   
+          <Route path="/admin/luaran/tambah" element={<AddLuaran />} />
+          <Route path="/admin/standarkeperawatan/luaran/:id" element={<DetailLuaran />} />
+          <Route path="/admin/luaran/edit/:id" element={<EditLuaran />} />
         
 
           <Route path="/admin/dashboard" element={<DashboardPage />} />
           <Route path="/admin/logout" element={<Logout />} />
           <Route path="/admin/ganti-sandi" element={<GantiSandi />} />
-          <Route path="/admin/standarkeperawatan/luaran" element={<Luaran/>} />   
-          <Route path="/admin/luaran/tambah" element={<AddLuaran />} />
+          
           
           
 

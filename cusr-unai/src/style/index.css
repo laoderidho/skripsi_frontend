@@ -79,6 +79,9 @@ nav{
     padding: rem;
 }
 
+#bold-font {
+    font-weight: bold;
+}
 
 .sidebarbutton {
     background-color: #fff;

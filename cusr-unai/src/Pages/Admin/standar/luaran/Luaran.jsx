@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Sidebar from "../../../../components/menu/Sidebar";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from '../../../../axios';
 
 export default function Luaran() {
 
@@ -24,6 +25,28 @@ export default function Luaran() {
         ];
     };
 
+    const [luaran, setLuaran] = useState([])
+
+    const getLuaran = async (token) => {
+        try {
+            await axios.post("/admin/diagnosa", {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            .then((res) => {
+                console.log(res)
+                setLuaran(res?.data?.data);
+            })
+        } catch (error) {
+            
+        }
+    };
+
+    useEffect(() => {
+        getLuaran(localStorage.getItem('token'))
+    },[])
+
+    console.log(luaran)
+
     return (
         <Sidebar>
         {/* Title */}
@@ -31,9 +54,9 @@ export default function Luaran() {
             <h2>Data Standar Luaran Keperawatan Indonesia</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
-                    Data Luaran
+                    Luaran
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/daftarpasien/tambah">Tambah</Breadcrumb.Item>
+                <Breadcrumb.Item href="/admin/luaran/tambah">Tambah</Breadcrumb.Item>
             </Breadcrumb>
         </div>
 
@@ -63,16 +86,20 @@ export default function Luaran() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>D.0001</td>
-                        <td>Diare</td>
-                        <td>
-                            <button class="btn d-flex justify-content-center align-items-center simple-button">
-                                Lihat 
-                            </button>
-                        </td>
+                    {luaran.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.id}</td>
+                            <td>{item.kode_luaran}</td>
+                            <td>{item.nama_luaran}</td>
+                            <td>
+                                <Link 
+                                    to={`/admin/standarkeperawatan/luaran/${item.id}`}
+                                    class="btn d-flex justify-content-center align-items-center simple-button">
+                                    Lihat 
+                                </Link>
+                            </td>
                     </tr>
+                    ))}
                 </tbody>
             </Table>
         </Form>

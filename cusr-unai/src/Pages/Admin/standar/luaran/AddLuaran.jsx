@@ -20,22 +20,22 @@ const AddLuaran = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
+
+    const handleKriteriaLuaran = nama_kriteria_luaran.split("\n");
+
     try {
-      const res = await axios.post("/admin/intervensi/add", {
+      const res = await axios.post("/admin/luaran/add", {
         kode_luaran: kode_luaran,
         nama_luaran: nama_luaran,
-        nama_kriteria_luaran: nama_kriteria_luaran,
+        nama_kriteria_luaran: handleKriteriaLuaran,
       },
       { 
         headers: { Authorization: `Bearer ${token}`}
       });
-      if (res.status === 201) {
-        setSubmitted(true)
-        navigate("/admin/standarkeperawatan/intervensi");
-      }
-      
+        console.log(res);
+        navigate("/admin/standarkeperawatan/luaran");
     } catch (error) {
-      
+      AuthorizationRoute(error.response.status)
     }
   };
 
@@ -62,6 +62,7 @@ const AddLuaran = () => {
               id="form-control-input"
               type="text" 
               placeholder="Masukkan Kode Luaran" 
+              value={kode_luaran}
               onChange={(e) => setKodeLuaran(e.target.value)}
               required
               style={{
@@ -77,6 +78,7 @@ const AddLuaran = () => {
               id="form-control-input"
               type="text" 
               placeholder="Masukkan Nama Luaran"  
+              value={nama_luaran}
               onChange={(e) => setNamaLuaran(e.target.value)}
               required/>
           </Form.Group>
@@ -92,6 +94,7 @@ const AddLuaran = () => {
               type="text"
               placeholder="Masukkan Kriteria"
               style={{ height: "7rem" }}
+              value={nama_kriteria_luaran}
               onChange={(e) => setNamaKriteriaLuaran(e.target.value)}
              
             />

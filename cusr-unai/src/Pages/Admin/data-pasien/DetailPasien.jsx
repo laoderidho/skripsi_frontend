@@ -89,7 +89,6 @@ const DetailPasien = () => {
     }
   
     
-  
     return (
       <Sidebar>
         <div className="container">

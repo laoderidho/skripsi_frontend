@@ -32,7 +32,7 @@ export default function Diagnosis() {
 
     const getDiagnosa = async (token) => {
         try {
-            await axios.post("/admin/standarkeperawatan/diagnosis", {
+            await axios.post("/admin/diagnosa", {
                 headers: { Authorization : `Bearer $(token)`,
                 },
             })
@@ -58,7 +58,7 @@ export default function Diagnosis() {
             <h2>Data Standar Diagnosis Keperawatan Indonesia</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
-                    Data Diagnosis
+                    Diagnosis
                 </Breadcrumb.Item>
                 <Breadcrumb.Item href="/admin/diagnosa/tambah">Tambah</Breadcrumb.Item>
             </Breadcrumb>

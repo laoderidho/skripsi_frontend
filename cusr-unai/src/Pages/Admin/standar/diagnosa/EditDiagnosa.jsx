@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../../../components/menu/Sidebar";
-import { Breadcrumb, Form, Col, Row, Button } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom'
+import { Breadcrumb, Form, Col, Row, Button, Modal} from "react-bootstrap";
+import { useNavigate, useParams } from 'react-router-dom'
 import AuthorizationRoute from '../../../../AuthorizationRoute'
 import axios from '../../../../axios'
 
-const AddDiagnosa = () => {
+const EditDiagnosa = () => {
 
   const [kode_diagnosa, setKodeDiagnosa] = useState("");
   const [nama_diagnosa, setNamaDiagnosa] = useState("");
@@ -17,12 +17,39 @@ const AddDiagnosa = () => {
   const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState("");
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState("");
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState("");
+  const {id} = useParams();
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
   const [submitted, setSubmitted] = useState(false);
-  
+  const [showModal, setShowModal] = useState(false);
 
-  const submitForm = async (e) => {
+
+
+  useEffect(() => {
+    getDataById();
+  },[]);
+
+  const getDataById = async () => {
+    try {
+        const res = await axios.post(`/admin/diagnosa/${id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+        setKodeDiagnosa(res.data.data.kode_diagnosa)
+        setNamaDiagnosa(res.data.data.nama_diagnosa)
+        setFaktorRisiko(res.data.faktor_risiko.join('\n'))
+        setPenyebabFisiologis(res.data.penyebab_fisiologis.join('\n'))
+        setPenyebabSituasional(res.data.penyebab_situasional.join('\n'))
+        setPenyebabPsikologis(res.data.penyebab_psikologis.join('\n'))
+        setGejalaMayorSubjektif(res.data.gejala_mayor_subjektif.join('\n'))
+        setGejalaMayorObjektif(res.data.gejala_mayor_objektif.join('\n'))
+        setGejalaMinorSubjektif(res.data.gejala_minor_subjektif.join('\n'))
+        setGejalaMinorObjektif(res.data.gejala_minor_objektif.join('\n'))
+    } catch (error) {
+        
+    }
+  }
+
+  const editSubmit = async (e) => {
     e.preventDefault();
 
     const handleFaktorRisiko = faktor_risiko.split("\n");
@@ -35,41 +62,60 @@ const AddDiagnosa = () => {
     const handleGejalaMinorObjektif = gejala_minor_objektif.split("\n");
 
     try {
-      const res = await axios.post(`/admin/diagnosa/add`, {
-        kode_diagnosa: kode_diagnosa,
-        nama_diagnosa: nama_diagnosa,
-        faktor_risiko: handleFaktorRisiko,
-        penyebab_fisiologis: handlePenyebabFisiologis,
-        penyebab_situasional: handlePenyebabSituasional,
-        penyebab_psikologis: handlePenyebabPsikologis,
-        gejala_mayor_subjektif: handleGejalaMayorSubjektif,
-        gejala_mayor_objektif: handleGejalaMayorObjektif,
-        gejala_minor_subjektif: handleGejalaMinorSubjektif,
-        gejala_minor_objektif: handleGejalaMinorObjektif,
-      },
-      { 
-        headers: { Authorization: `Bearer ${token}`}
-      });
-      console.log(res);
-      navigate("/admin/standarkeperawatan/diagnosis");
+      const res = await axios.post(
+         `/admin/diagnosa/${id}`,
+         {
+          kode_diagnosa: kode_diagnosa,
+          nama_diagnosa: nama_diagnosa,
+          faktor_risiko : handleFaktorRisiko,
+          penyebab_fisiologis : handlePenyebabFisiologis,
+          penyebab_situasional : handlePenyebabSituasional,
+          penyebab_psikologis : handlePenyebabPsikologis,
+          gejala_mayor_subjektif : handleGejalaMayorSubjektif,
+          gejala_mayor_objektif : handleGejalaMayorObjektif,
+          gejala_minor_subjektif : handleGejalaMinorSubjektif,
+          gejala_minor_objektif : handleGejalaMinorObjektif,
+         },
+         {
+           headers: { Authorization: `Bearer ${token}` },
+         }
+       );
+       console.log(res);
+      navigate("/admin/standarkeperawatan/diagnosis/${id}");
     } catch (error) {
-      AuthorizationRoute(error.response.status)
+      console.log(error);
+       AuthorizationRoute(error.response.status)
     }
   };
+
+
+
+  const deleteIntervensi = async () => {
+    try {
+        await axios.post(`/admin/diagnosa/${id}`, {
+            headers: { Authorization: `Bearer ${token}`}
+        })
+        navigate('/admin/standarkeperawatan/diagnosis')
+    } catch (error) {
+        AuthorizationRoute(error.response.status)
+    }
+  };
+
+  
   
   return (
     <Sidebar>
       <div className="container">
-        <h2>Tambah Diagnosa</h2>
+        <h2>Edit Diagnosis</h2>
         <Breadcrumb>
-          <Breadcrumb.Item href="/admin/standarkeperawatan/diagnosis">Diagnosa</Breadcrumb.Item>
+          <Breadcrumb.Item href="/admin/standarkeperawatan/diagnosis">Diagnosis</Breadcrumb.Item>
           <Breadcrumb.Item active>
-            Tambah
+            Edit
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
 
-      <Form className="container mt-5" onSubmit={submitForm}>
+      <Form className="container mt-5" onSubmit={editSubmit}>
         <Row>
           <Form.Group as={Col}>
             <Form.Label>Kode Diagnosis</Form.Label>
@@ -231,4 +277,4 @@ const AddDiagnosa = () => {
   );
 };
 
-export default AddDiagnosa;
+export default EditDiagnosa;
