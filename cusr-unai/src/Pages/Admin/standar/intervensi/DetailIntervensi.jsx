@@ -81,7 +81,9 @@ const DetailIntervensi = () => {
   return (
     <Sidebar>
       <div className="container">
-        <h2>{kode_intervensi} - {nama_intervensi}</h2>
+      <h2>
+          <span id="kode_intervensi">{kode_intervensi}</span> - <span>{nama_intervensi}</span>
+        </h2>
         <Breadcrumb>
           <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">Intervensi</Breadcrumb.Item>
           <Breadcrumb.Item active>
@@ -94,7 +96,7 @@ const DetailIntervensi = () => {
         <Row>
           <Form.Group as={Col}>
             <Form.Label id="bold-font" className="mt-4" >Kode Intervensi</Form.Label>
-            <p style={{ color:  '#ff0000', fontWeight:  'bold' }} >
+            <p style={{ color:  '#161f7d', fontWeight:  'bold' }} >
                 {kode_intervensi}
               </p>
           </Form.Group>

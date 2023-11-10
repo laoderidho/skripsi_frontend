@@ -42,7 +42,7 @@ export default function Sidebar(props){
               <Accordion.Body>
                 {item.child.map((item, index) => (
                   <Link  to={item.path}>
-                    <i className={item.icon} style={iconStyle}></i>
+                    <i className={item.icon} id="inner-accordion" style={iconStyle}></i>
                     {item.name}
                   </Link>
                 ))}

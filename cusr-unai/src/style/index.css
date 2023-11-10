@@ -97,6 +97,10 @@ nav{
     transition: all 0.4s ease-in-out;
 }
 
+.btn, .sidebarbutton {
+    --bs-btn-border-width: 0 !important;
+}
+
 
 .sidebar a {
     text-decoration: none;
@@ -127,18 +131,35 @@ nav{
     margin-left: -17rem;
 }
 
+#inner-accordion {
+    margin-left: 3rem;
+}
+
+.accordion-body {
+    padding: 0 !important;
+}
+
+
 .accordion{
     --bs-accordion-bg:#1F1E5B;
     --bs-accordion-color: #fff;
+    --bs-accordion-border-width: 0 !important;
+
 }
 
 .accordion-button:not(.collapsed){
     background-color: #1F1E5B;
     color: #fff;
+    box-shadow: none;
 }
 
 .accordion-button{
     color: #fff;
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
 }
 
 .accordion-button::after {
@@ -251,8 +272,6 @@ nav{
     border-top: 1px solid #cacaca;
 }
 
-
-
 .breadcrumb-item > a{
     margin-left: .5rem;
     text-decoration: none;
@@ -270,6 +289,17 @@ th, td {
     margin-top: 2rem;
 }
 
+#kode_luaran {
+    color: #006918;
+}
+
+#kode_intervensi {
+    color: #161f7d ;
+}
+
+#kode_diagnosa {
+    color: #4f0b0a;
+}
 
 .simple-button {
     background-color: #ffffff;
@@ -300,10 +330,13 @@ th, td {
 }
 
 
-
 .simple-button:hover {
     border: 1px solid #cacaca;
     background-color: #F0F0F0;
+}
+
+.cancel {
+    margin-right: 1rem;
 }
 
 .blue-button {
@@ -315,10 +348,12 @@ th, td {
     margin-top: 5rem;
     margin-bottom: 1rem;
     float: right;
+    border: 1px solid #007BFF;
 }
 
 .red-button {
     background-color: #ff0000;
+    border: 1px solid #ff0000;
     color: #ffffff;
     border-radius: 0.2rem;
     padding-left: 2rem;

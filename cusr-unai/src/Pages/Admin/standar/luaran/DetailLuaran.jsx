@@ -76,7 +76,9 @@ const DetailLuaran = () => {
   return (
     <Sidebar>
       <div className="container">
-        <h2>{kode_luaran} - {nama_luaran}</h2>
+        <h2>
+          <span id="kode_luaran">{kode_luaran}</span> - <span>{nama_luaran}</span>
+        </h2>
         <Breadcrumb>
           <Breadcrumb.Item href="/admin/standarkeperawatan/luaran">Luaran</Breadcrumb.Item>
           <Breadcrumb.Item active>
@@ -89,7 +91,7 @@ const DetailLuaran = () => {
         <Row>
           <Form.Group as={Col}>
             <Form.Label id="bold-font" className="mt-4" >Kode Luaran</Form.Label>
-            <p style={{ color:  '#ff0000', fontWeight:  'bold' }} >
+            <p style={{ color:  '#006918', fontWeight:  'bold' }} >
                 {kode_luaran}
               </p>
           </Form.Group>

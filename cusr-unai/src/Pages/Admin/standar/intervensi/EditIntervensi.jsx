@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../../../components/menu/Sidebar";
 import { Breadcrumb, Form, Col, Row, Button, Modal} from "react-bootstrap";
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import AuthorizationRoute from '../../../../AuthorizationRoute'
 import axios from '../../../../axios'
 
@@ -86,7 +86,9 @@ const EditIntervensi = () => {
   return (
     <Sidebar>
       <div className="container">
-        <h2>Edit Intervensi</h2>
+        <h2>
+          <span>Edit Intervensi</span> - <span id="kode_intervensi">{kode_intervensi}</span>
+        </h2>
         <Breadcrumb>
           <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">Intervensi</Breadcrumb.Item>
           <Breadcrumb.Item active>
@@ -181,46 +183,22 @@ const EditIntervensi = () => {
 
         
         <div className='d-flex justify-content-end mt-3'>
+
+            <Link
+              to={`/admin/standarkeperawatan/intervensi/${id}`}
+              variant='primary'
+              type="button"
+              className='btn justify-content-center align-items-center red-button cancel'>
+                Cancel
+            </Link>
             <Button
                 id="custom-margin"
                 variant='primary' 
                 type="submit" 
-                className='btn justify-content-center align-items-center white-button'>
-                  Edit
-            </Button>
-
-            <Button
-              onClick={() => setShowModal(true)}
-              variant='primary'
-              type="button"
-              className='btn justify-content-center align-items-center red-button'>
-                Delete
+                className='btn justify-content-center align-items-center blue-button'>
+                  Submit
             </Button>
             
-            <Modal
-              show={showModal}
-              onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Konfirmasi</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Apakah Anda yakin ingin menghapus data ini?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button 
-                    variant='secondary'
-                    onClick={() => setShowModal(false)}
-                    className='btn justify-content-center align-items-center white-button'>
-                      Batal
-                  </Button>
-                  <Button 
-                    variant='primary'
-                    onClick={deleteIntervensi}
-                    className='btn justify-content-center align-items-center red-button'>
-                      Hapus
-                  </Button>
-                </Modal.Footer>
-            </Modal>
           </div>
       </Form>
     </Sidebar>
