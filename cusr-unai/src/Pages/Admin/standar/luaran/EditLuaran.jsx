@@ -42,7 +42,7 @@ const EditLuaran = () => {
     const handleNamaKriteriaLuaran = nama_kriteria_luaran.split("\n");
     
     try {
-      const res = await axios.put(
+      const res = await axios.post(
          `/admin/luaran/${id}`,
          {
           kode_luaran: kode_luaran,
