@@ -32,7 +32,8 @@ import EditLuaran from "../Pages/Admin/standar/luaran/EditLuaran";
 // Perawat Component Import
 import PerawatDashboard from "../Pages/Perawat/PerawatDashboard";
 import DaftarPasienPerawat from "../Pages/Perawat/data-pasien/DaftarPasienPerawat";
-import ProfilPasienPerawat from "../Pages/Perawat/data-pasien/ProfilPasienPerawat";
+import ProfilPasien from "../Pages/Perawat/data-pasien/ProfilPasien";
+import FormDiagnosa from "../Pages/Perawat/form-ski/FormDiagnosa";
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
@@ -86,8 +87,15 @@ export default function Router() {
           {/* Perawat Route*/}
           <Route path="/perawat/dashboard" element={<PerawatDashboard />} />
           <Route path="/perawat/ganti-sandi" element={<GantiSandi />} />
+
+          {/* Asuhan Keperawatan */}
           <Route path="/perawat/daftarpasien" element={<DaftarPasienPerawat />} />
-          <Route path="/perawat/profilpasien" element={<ProfilPasienPerawat />} />
+          <Route path="/perawat/profilpasien/:id" element={<ProfilPasien />} />
+          <Route path="/perawat/formdiagnosa" element={<FormDiagnosa />} />
+
+
+          {/* Form SKI*/}
+          <Route path="/perawat/formdiagnosa" element={<FormDiagnosa />} />
 
         </Route>
 

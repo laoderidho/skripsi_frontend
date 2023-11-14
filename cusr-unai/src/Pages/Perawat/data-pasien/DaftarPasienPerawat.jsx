@@ -94,7 +94,7 @@ export default function DaftarPasien() {
                         <td>
                             <Link 
                                 to={`/admin/daftarpasien/${item.id}`}
-                                class="btn d-flex justify-content-center align-items-center simple-button">
+                                class="d-flex justify-content-center align-items-center">
                                 Lihat Profil
                             </Link>
                         </td>

@@ -90,7 +90,9 @@ const DetailDiagnosa = () => {
   return (
     <Sidebar>
       <div className="container">
-        <h2>{kode_diagnosa} - {nama_diagnosa}</h2>
+      <h2>
+          <span id="kode_diagnosa">{kode_diagnosa}</span> - <span>{nama_diagnosa}</span>
+      </h2>
         <Breadcrumb>
           <Breadcrumb.Item href="/admin/standarkeperawatan/diagnosis">Diagnosis</Breadcrumb.Item>
           <Breadcrumb.Item active>
@@ -236,7 +238,7 @@ const DetailDiagnosa = () => {
    
           <div className='d-flex justify-content-end mt-3'>
             <Link
-                to={`/admin/diagnosa/${id}`}
+                to={`/admin/diagnosa/edit/${id}`}
                 id="custom-margin"
                 variant='primary'  
                 className='btn justify-content-center align-items-center white-button'>

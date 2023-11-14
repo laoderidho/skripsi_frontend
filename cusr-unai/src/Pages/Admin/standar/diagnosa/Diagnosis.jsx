@@ -33,8 +33,7 @@ export default function Diagnosis() {
     const getDiagnosa = async (token) => {
         try {
             await axios.post("/admin/diagnosa", {
-                headers: { Authorization : `Bearer $(token)`,
-                },
+                headers: { Authorization : `Bearer $(token)`}
             })
             .then((res) => {
                 console.log(res)

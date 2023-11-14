@@ -83,7 +83,7 @@ const DetailIntervensi = () => {
       <div className="container">
       <h2>
           <span id="kode_intervensi">{kode_intervensi}</span> - <span>{nama_intervensi}</span>
-        </h2>
+      </h2>
         <Breadcrumb>
           <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">Intervensi</Breadcrumb.Item>
           <Breadcrumb.Item active>

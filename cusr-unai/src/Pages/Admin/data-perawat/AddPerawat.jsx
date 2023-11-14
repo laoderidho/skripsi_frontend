@@ -99,7 +99,6 @@ const AddPerawat = () => {
               <Form.Label>Jenis Kelamin</Form.Label>
               <Form.Select 
                 id="form-control-input"
-                type="text" 
                 placeholder="Tentukan Jenis Kelamin"
                 value={jenis_kelamin}
                 onChange={(e) => setJenisKelamin(e.target.value)}
