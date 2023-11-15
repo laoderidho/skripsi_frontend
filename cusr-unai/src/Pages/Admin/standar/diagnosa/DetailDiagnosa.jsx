@@ -28,29 +28,29 @@ const DetailDiagnosa = () => {
 
   const [diagnosa, setDiagnosa] = useState([]);
 
-  const getDiagnosa = async (token) => {
-    try {
-      await axios.post(`/admin/diagnosa`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then((res) => {
-        console.log(res)
-        setDiagnosa(res?.data?.data);
-      }) 
-    } catch (error) {
+  // const getDiagnosa = async (token) => {
+  //   try {
+  //     await axios.post(`/admin/diagnosa`, {
+  //       headers: { Authorization: `Bearer ${token}` }
+  //     })
+  //     .then((res) => {
+  //       console.log(res)
+  //       setDiagnosa(res?.data?.data);
+  //     }) 
+  //   } catch (error) {
       
-    }
-  }
+  //   }
+  // }
 
 
   useEffect(() => {
     getDataById();
-    getDiagnosa(localStorage.getItem('token'))
+    // getDiagnosa(localStorage.getItem('token'))
   },[]);
 
   const getDataById = async () => {
     try {
-        const res = await axios.post(`/admin/detail/${id}`, {
+        const res = await axios.post(`/admin/diagnosa/detail/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         setKodeDiagnosa(res.data.data.kode_diagnosa)

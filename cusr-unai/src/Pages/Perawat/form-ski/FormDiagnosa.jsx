@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Accordion, Button, Card, Form} from 'react-bootstrap';
 import axios from '../../../axios'
+import "../../../../src/style/accordion.css";
 
 export default function FormDiagnosa() {
 
@@ -67,7 +68,7 @@ export default function FormDiagnosa() {
             <Accordion defaultActiveKey="0">
                 <Accordion.Item>
                     <Accordion.Header>Diagnosa</Accordion.Header>
-                        <Accordion.Body>
+                        <Accordion.Body className='accordion-form'>
                             <Card>
                                 <Card.Body>
                                     <Form className='container'>

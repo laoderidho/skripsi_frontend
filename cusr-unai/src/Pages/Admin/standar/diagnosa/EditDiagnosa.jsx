@@ -31,19 +31,21 @@ const EditDiagnosa = () => {
 
   const getDataById = async () => {
     try {
-        const res = await axios.post(`/admin/diagnosa/${id}`, {
+        const res = await axios.post(`/admin/diagnosa/detail/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
+        console.log(res.data.data.penyebab_situasional)
         setKodeDiagnosa(res.data.data.kode_diagnosa)
         setNamaDiagnosa(res.data.data.nama_diagnosa)
-        setFaktorRisiko(res.data.faktor_risiko.join('\n'))
-        setPenyebabFisiologis(res.data.penyebab_fisiologis.join('\n'))
-        setPenyebabSituasional(res.data.penyebab_situasional.join('\n'))
-        setPenyebabPsikologis(res.data.penyebab_psikologis.join('\n'))
-        setGejalaMayorSubjektif(res.data.gejala_mayor_subjektif.join('\n'))
-        setGejalaMayorObjektif(res.data.gejala_mayor_objektif.join('\n'))
-        setGejalaMinorSubjektif(res.data.gejala_minor_subjektif.join('\n'))
-        setGejalaMinorObjektif(res.data.gejala_minor_objektif.join('\n'))
+        setFaktorRisiko(res.data.data.faktor_risiko.join('\n'))
+        setPenyebabFisiologis(res.data.data.penyebab_fisiologis.join('\n'))
+        setPenyebabSituasional(res.data.data.penyebab_situasional.join('\n'))
+        setPenyebabPsikologis(res.data.data.penyebab_psikologis.join('\n'))
+        setGejalaMayorSubjektif(res.data.data.gejala_mayor_subjektif.join('\n'))
+        setGejalaMayorObjektif(res.data.data.gejala_mayor_objektif.join('\n'))
+        setGejalaMinorSubjektif(res.data.data.gejala_minor_subjektif.join('\n'))
+        setGejalaMinorObjektif(res.data.data.gejala_minor_objektif.join('\n'))
+        
     } catch (error) {
         
     }
@@ -63,7 +65,7 @@ const EditDiagnosa = () => {
 
     try {
       const res = await axios.post(
-         `/admin/diagnosa/${id}`,
+         `/admin/diagnosa/update/${id}`,
          {
           kode_diagnosa: kode_diagnosa,
           nama_diagnosa: nama_diagnosa,
@@ -81,7 +83,7 @@ const EditDiagnosa = () => {
          }
        );
        console.log(res);
-      navigate("/admin/standarkeperawatan/diagnosis/${id}");
+      navigate("/admin/standarkeperawatan/diagnosis");
     } catch (error) {
       console.log(error);
        AuthorizationRoute(error.response.status)
