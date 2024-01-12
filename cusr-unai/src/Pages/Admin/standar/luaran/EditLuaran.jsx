@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../../../components/menu/Sidebar";
-import { Breadcrumb, Form, Col, Row, Button, Modal} from "react-bootstrap";
+import { Breadcrumb, Form, Col, Row, Button} from "react-bootstrap";
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import AuthorizationRoute from '../../../../AuthorizationRoute'
+import ConfirmModal from '../../../../components/menu/ConfirmModal'
 import axios from '../../../../axios'
 
 const EditLuaran = () => {
@@ -36,14 +37,13 @@ const EditLuaran = () => {
   }
 
 
-  const editSubmit = async (e) => {
-    e.preventDefault();
+  const editSubmit = async () => {
 
     const handleNamaKriteriaLuaran = nama_kriteria_luaran.split("\n");
     
     try {
       const res = await axios.post(
-         `/admin/luaran/${id}`,
+         `/admin/luaran/update/${id}`,
          {
           kode_luaran: kode_luaran,
           nama_luaran: nama_luaran,
@@ -60,20 +60,6 @@ const EditLuaran = () => {
       //  AuthorizationRoute(error.response.status)
     }
   };
-
-
-
-  const deleteLuaran = async () => {
-    try {
-        await axios.post(`/admin/luaran/${id}`, {
-            headers: { Authorization: `Bearer ${token}`}
-        })
-        navigate('/admin/standarkeperawatan/luaran')
-    } catch (error) {
-        AuthorizationRoute(error.response.status)
-    }
-  };
-
   
   
   return (
@@ -147,18 +133,16 @@ const EditLuaran = () => {
 
             <Link
               to={`/admin/standarkeperawatan/luaran/${id}`}
-              variant='primary'
               type="button"
-              className='btn justify-content-center align-items-center red-button cancel'>
+              className='btn btn-danger mx-3'>
                 Cancel
             </Link>
-            <Button
-                id="custom-margin"
-                variant='primary' 
-                type="submit" 
-                className='btn justify-content-center align-items-center blue-button'>
-                  Submit
-            </Button>
+            <ConfirmModal
+              onConfirm={editSubmit}
+              successMessage="Luaran berhasil diedit"
+              cancelMessage="Luaran batal diedit"
+              buttonText="simpan"
+            />
             
           </div>
       </Form>

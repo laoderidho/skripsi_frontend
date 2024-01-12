@@ -4,6 +4,7 @@ import { Breadcrumb, Form, Col, Row, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import AuthorizationRoute from "../../../../AuthorizationRoute";
 import axios from "../../../../axios";
+import ConfirmModal from "../../../../components/menu/ConfirmModal";
 
 const AddIntervensi = () => {
   const [kode_intervensi, setKodeIntervensi] = useState("");
@@ -11,6 +12,7 @@ const AddIntervensi = () => {
   const [observasi, setObservasi] = useState("");
   const [terapeutik, setTerapeutik] = useState("");
   const [edukasi, setEdukasi] = useState("");
+  const [kolaborasi, setKolaborasi] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [submitted, setSubmitted] = useState(false);
@@ -19,14 +21,11 @@ const AddIntervensi = () => {
   // const [inputValue, setInputValue] = useState("");
 
  
-  const submitForm = async (e) => {
-    e.preventDefault();
-
-    const handleObservasi = observasi.split("\n");
-    const handleTerapeutik = terapeutik.split("\n");
-    const handleEdukasi = edukasi.split("\n");
-
-    console.log(handleObservasi);
+  const submitForm = async () => {
+    const handleObservasi = observasi ? observasi.split("\n") : null;
+    const handleTerapeutik = terapeutik ? terapeutik.split("\n") : null;
+    const handleEdukasi = edukasi ? edukasi.split("\n") : null;
+    const handleKolaborasi = kolaborasi ? kolaborasi.split("\n") : null;
 
     try {
       const res = await axios.post(
@@ -37,9 +36,13 @@ const AddIntervensi = () => {
           observasi: handleObservasi,
           terapeutik: handleTerapeutik,
           edukasi: handleEdukasi,
+          kolaborasi: handleKolaborasi,
          },
          {
-           headers: { Authorization: `Bearer ${token}` },
+           headers: { 
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", 
+          },
          }
        );
        console.log(res);
@@ -49,6 +52,7 @@ const AddIntervensi = () => {
        AuthorizationRoute(error.response.status)
     }
   };
+
 
   return (
     <Sidebar>
@@ -94,7 +98,7 @@ const AddIntervensi = () => {
         </Row>
 
         <Row className="mt-5">
-        <h4 className="mb-3">Tindakan</h4>
+          <h4 className="mb-3">Tindakan</h4>
 
           <Form.Group as={Col}>
             <Form.Label>Observasi</Form.Label>
@@ -112,7 +116,7 @@ const AddIntervensi = () => {
 
           <Form.Group as={Col}>
             <Form.Label>Terapeutik</Form.Label>
-            <Form.Control 
+            <Form.Control
               id="form-control-input"
               as="textarea"
               rows={5}
@@ -123,7 +127,9 @@ const AddIntervensi = () => {
               onChange={(e) => setTerapeutik(e.target.value)}
             />
           </Form.Group>
-          </Row>
+        </Row>
+
+        <Row className="mt-5">
           <Form.Group as={Col} className="mt-3">
             <Form.Label>Edukasi</Form.Label>
             <Form.Control
@@ -135,17 +141,31 @@ const AddIntervensi = () => {
               }}
               value={edukasi}
               onChange={(e) => setEdukasi(e.target.value)}
-              />
+            />
           </Form.Group>
 
-        <div className="d-flex justify-content-end">
-          <Button
-            variant="primary"
-            type="submit"
-            className="btn justify-content-center align-items-center blue-button"
-          >
-            Submit
-          </Button>
+          <Form.Group as={Col} className="mt-3">
+            <Form.Label>Kolaborasi</Form.Label>
+            <Form.Control
+              id="form-control-input"
+              as="textarea"
+              rows={5}
+              style={{
+                height: "7rem",
+              }}
+              value={kolaborasi}
+              onChange={(e) => setKolaborasi(e.target.value)}
+            />
+          </Form.Group>
+        </Row>
+
+        <div className="d-flex justify-content-end mt-5">
+          <ConfirmModal 
+            onConfirm={submitForm}
+            successMessage="Intervensi berhasil ditambahkan"
+            cancelMessage="Intervensi gagal ditambahkan"
+            buttonText="Tambah"
+          />
         </div>
       </Form>
     </Sidebar>

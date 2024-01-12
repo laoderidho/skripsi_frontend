@@ -57,15 +57,12 @@ const DetailLuaran = () => {
 
 
 
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  }
-
   const deleteLuaran = async () => {
     try {
-        await axios.post(`/admin/luaran/${id}`, {
+        await axios.post(`/admin/luaran/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}`}
         })
+        navigate("/admin/standarkeperawatan/luaran");
     } catch (error) {
         
     }

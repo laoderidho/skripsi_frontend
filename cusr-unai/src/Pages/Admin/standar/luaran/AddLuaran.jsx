@@ -3,6 +3,7 @@ import Sidebar from "../../../../components/menu/Sidebar";
 import { Breadcrumb, Form, Col, Row, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import AuthorizationRoute from '../../../../AuthorizationRoute'
+import ConfirmModal from '../../../../components/menu/ConfirmModal'
 import axios from '../../../../axios'
 
 const AddLuaran = () => {
@@ -18,10 +19,9 @@ const AddLuaran = () => {
   // const [inputValue, setInputValue] = useState("");
 
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  const submitForm = async () => {
 
-    const handleKriteriaLuaran = nama_kriteria_luaran.split("\n");
+    const handleKriteriaLuaran = nama_kriteria_luaran ? nama_kriteria_luaran.split("\n"): null;
 
     try {
       const res = await axios.post("/admin/luaran/add", {
@@ -35,11 +35,9 @@ const AddLuaran = () => {
         console.log(res);
         navigate("/admin/standarkeperawatan/luaran");
     } catch (error) {
-      AuthorizationRoute(error.response.status)
+      // AuthorizationRoute(error.response.status)
     }
   };
-
-
   
   
   return (
@@ -108,7 +106,12 @@ const AddLuaran = () => {
         </Row>
         
       <div className="d-flex justify-content-end">
-        <Button variant="primary" type="submit" className="btn justify-content-center align-items-center blue-button">Submit</Button>
+        <ConfirmModal
+            onConfirm = {submitForm}
+            successMessage={"Luaran berhasil ditambahkan"}
+            cancelMessage={"Luaran gagal ditambahkan"}
+            buttonText={"Tambah"}
+        />
       </div>
       </Form>
     </Sidebar>

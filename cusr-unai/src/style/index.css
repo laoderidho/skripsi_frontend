@@ -16,7 +16,6 @@ nav{
 #sidebar:hover {
     background-color: transparent;
 }
-
 /* .btn{
     --bs-btn-border-width: none
 }
@@ -371,12 +370,6 @@ th, td {
 .white-button {
     background-color: #ffffff;
     color: #000;
-    border-radius: 0.2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-top: 5rem;
-    margin-bottom: 1rem;
-    float: right;
     border-radius: 0.2rem;
     border: 1px solid #cacaca;
 }

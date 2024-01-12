@@ -25,20 +25,7 @@ const EditPasien = () => {
     // useEffect(() => {
     //   getDataById();
     // },[]);
-    
-    const updateData = async (e) => {
-      e.preventDefault();
-      try {
-        await axios.post(`/admin/daftarpasien/edit/${id}`, {nama_lengkap, tanggal_lahir, jenis_kelamin, no_telepon, alamat, status_pernikahan, nik, alergi, nama_asuransi, nomor_asuransi, no_medical_record },
-        {
-          headers: { Authorization: `Bearer ${token}`}
-        })
-        alert(`Data berhasil diubah`)
-      } catch (error) {
-        
-      }
-    }
-
+    console.log(test)
     const submitForm = async (e) => {
       e.preventDefault();
       try {

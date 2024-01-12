@@ -4,6 +4,7 @@ import { Breadcrumb, Form, Col, Row, Button, Modal} from "react-bootstrap";
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import AuthorizationRoute from '../../../../AuthorizationRoute'
 import axios from '../../../../axios'
+import ConfirmModal from "../../../../components/menu/ConfirmModal";
 
 const EditIntervensi = () => {
 
@@ -12,13 +13,11 @@ const EditIntervensi = () => {
   const [observasi, setObservasi] = useState("");
   const [terapeutik, setTerapeutik] = useState("");
   const [edukasi, setEdukasi] = useState("");
+  const [kolaborasi, setKolaborasi] = useState("");
   const {id} = useParams();
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
   const [submitted, setSubmitted] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-
-
 
   useEffect(() => {
     getDataById();
@@ -34,17 +33,18 @@ const EditIntervensi = () => {
         setObservasi(res.data.observasi.join('\n'))
         setTerapeutik(res.data.terapeutik.join('\n'))
         setEdukasi(res.data.edukasi.join('\n'))
+        setKolaborasi(res.data.kolaborasi.join('\n'))
     } catch (error) {
         
     }
   }
 
-  const editSubmit = async (e) => {
-    e.preventDefault();
+  const editSubmit = async () => {
 
-    const handleObservasi = observasi.split("\n");
-    const handleTerapeutik = terapeutik.split("\n");
-    const handleEdukasi = edukasi.split("\n");
+    const handleObservasi = observasi ? observasi.split("\n") : null;
+    const handleTerapeutik = terapeutik ? terapeutik.split("\n") : null;
+    const handleEdukasi =  edukasi ? edukasi.split("\n") : null;
+    const handleKolaborasi = kolaborasi ? kolaborasi.split("\n") : null;
 
     try {
       const res = await axios.post(
@@ -55,6 +55,7 @@ const EditIntervensi = () => {
           observasi: handleObservasi,
           terapeutik: handleTerapeutik,
           edukasi: handleEdukasi,
+          kolaborasi: handleKolaborasi,
          },
          {
            headers: { Authorization: `Bearer ${token}` },
@@ -68,32 +69,20 @@ const EditIntervensi = () => {
     }
   };
 
-
-
-  const deleteIntervensi = async () => {
-    try {
-        await axios.post(`/admin/intervensi/delete/${id}`, {
-            headers: { Authorization: `Bearer ${token}`}
-        })
-        navigate('/admin/standarkeperawatan/intervensi')
-    } catch (error) {
-        AuthorizationRoute(error.response.status)
-    }
-  };
-
   
   
   return (
     <Sidebar>
       <div className="container">
         <h2>
-          <span>Edit Intervensi</span> - <span id="kode_intervensi">{kode_intervensi}</span>
+          <span>Edit Intervensi</span> -{" "}
+          <span id="kode_intervensi">{kode_intervensi}</span>
         </h2>
         <Breadcrumb>
-          <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">Intervensi</Breadcrumb.Item>
-          <Breadcrumb.Item active>
-            Edit
+          <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">
+            Intervensi
           </Breadcrumb.Item>
+          <Breadcrumb.Item active>Edit</Breadcrumb.Item>
         </Breadcrumb>
       </div>
 
@@ -101,34 +90,35 @@ const EditIntervensi = () => {
         <Row>
           <Form.Group as={Col}>
             <Form.Label>Kode Intervensi</Form.Label>
-            <Form.Control 
+            <Form.Control
               id="form-control-input"
-              type="text" 
+              type="text"
               value={kode_intervensi}
-              placeholder="Masukkan Kode Intervensi" 
+              placeholder="Masukkan Kode Intervensi"
               onChange={(e) => setKodeIntervensi(e.target.value)}
               required
               style={{
-                color: submitted ? '#ff0000' : '',
-                fontWeight: submitted ? 'bold' : ''
+                color: submitted ? "#ff0000" : "",
+                fontWeight: submitted ? "bold" : "",
               }}
-              />
+            />
           </Form.Group>
 
           <Form.Group as={Col}>
             <Form.Label>Nama Intervensi</Form.Label>
-            <Form.Control 
+            <Form.Control
               id="form-control-input"
-              type="text" 
+              type="text"
               value={nama_intervensi}
-              placeholder="Masukkan Nama Intervensi"  
+              placeholder="Masukkan Nama Intervensi"
               onChange={(e) => setNamaIntervensi(e.target.value)}
-              required/>
+              required
+            />
           </Form.Group>
         </Row>
 
         <Row id="custom-row" style={{ marginTop: "3rem" }}>
-        <h4>Tindakan</h4>
+          <h4>Tindakan</h4>
           <Form.Group as={Col}>
             <Form.Label>Observasi</Form.Label>
             <Form.Control
@@ -139,9 +129,7 @@ const EditIntervensi = () => {
               placeholder="Masukkan Tindakan Observasi"
               style={{ height: "7rem" }}
               onChange={(e) => setObservasi(e.target.value)}
-             
             />
-            
           </Form.Group>
 
           <Form.Group as={Col}>
@@ -154,52 +142,54 @@ const EditIntervensi = () => {
               placeholder="Masukkan Tindakan Terapeutik"
               style={{ height: "7rem" }}
               onChange={(e) => setTerapeutik(e.target.value)}
-              
             />
-            
           </Form.Group>
         </Row>
 
         <Row id="custom-row">
           <Form.Group as={Col}>
             <Form.Label>Edukasi</Form.Label>
-              <Form.Control
-                id="form-control-input"
-                as="textarea"
-                value={edukasi}
-                type="text"
-                placeholder="Masukkan Tindakan Edukasi"
-                style={{ height: "7rem" }}
-                onChange={(e) => setEdukasi(e.target.value)}
-              
-              />
-              
+            <Form.Control
+              id="form-control-input"
+              as="textarea"
+              value={edukasi}
+              type="text"
+              placeholder="Masukkan Tindakan Edukasi"
+              style={{ height: "7rem" }}
+              onChange={(e) => setEdukasi(e.target.value)}
+            />
           </Form.Group>
 
           <Form.Group as={Col}>
-            {/* Empty Column */}
+            <Form.Label>Kolaborasi</Form.Label>
+            <Form.Control
+              id="form-control-input"
+              as="textarea"
+              value={kolaborasi}
+              type="text"
+              placeholder="Masukkan Tindakan Kolaborasi"
+              style={{ height: "7rem" }}
+              onChange={(e) => setKolaborasi(e.target.value)}
+            />
           </Form.Group>
         </Row>
 
-        
-        <div className='d-flex justify-content-end mt-3'>
-
-            <Link
-              to={`/admin/standarkeperawatan/intervensi/${id}`}
-              variant='primary'
-              type="button"
-              className='btn justify-content-center align-items-center red-button cancel'>
-                Cancel
-            </Link>
-            <Button
-                id="custom-margin"
-                variant='primary' 
-                type="submit" 
-                className='btn justify-content-center align-items-center blue-button'>
-                  Submit
-            </Button>
+        <div className="mt-3 d-flex justify-content-end">
+          <Link
+            to={`/admin/standarkeperawatan/intervensi/${id}`}
+            type="button"
             
-          </div>
+            className="btn btn-danger mx-3"
+          >
+            Cancel
+          </Link>
+          <ConfirmModal 
+              onConfirm={editSubmit}
+              successMessage="Intervensi berhasil diedit"
+              cancelMessage="Intervensi batal diedit"
+              buttonText="edit"
+          />
+        </div>
       </Form>
     </Sidebar>
   );

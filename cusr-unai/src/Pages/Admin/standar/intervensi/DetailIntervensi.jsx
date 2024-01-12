@@ -12,6 +12,7 @@ const DetailIntervensi = () => {
   const [observasi, setObservasi] = useState("");
   const [terapeutik, setTerapeutik] = useState("");
   const [edukasi, setEdukasi] = useState("");
+  const [kolaborasi, setKolaborasi] = useState("");
   const {id} = useParams();
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
@@ -53,7 +54,7 @@ const DetailIntervensi = () => {
         setObservasi(res.data.observasi)
         setTerapeutik(res.data.terapeutik)
         setEdukasi(res.data.edukasi)
-        console.log(res)
+        setKolaborasi(res.data.kolaborasi)
     } catch (error) {
         
     }
@@ -81,56 +82,56 @@ const DetailIntervensi = () => {
   return (
     <Sidebar>
       <div className="container">
-      <h2>
-          <span id="kode_intervensi">{kode_intervensi}</span> - <span>{nama_intervensi}</span>
+        <h2>
+          <span id="kode_intervensi">{kode_intervensi}</span> -{" "}
+          <span>{nama_intervensi}</span>
         </h2>
         <Breadcrumb>
-          <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">Intervensi</Breadcrumb.Item>
-          <Breadcrumb.Item active>
-            Tambah
+          <Breadcrumb.Item href="/admin/standarkeperawatan/intervensi">
+            Intervensi
           </Breadcrumb.Item>
+          <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
         </Breadcrumb>
       </div>
 
       <Form className="container mt-5">
         <Row>
           <Form.Group as={Col}>
-            <Form.Label id="bold-font" className="mt-4" >Kode Intervensi</Form.Label>
-            <p style={{ color:  '#161f7d', fontWeight:  'bold' }} >
-                {kode_intervensi}
-              </p>
+            <Form.Label id="bold-font" className="mt-4">
+              Kode Intervensi
+            </Form.Label>
+            <p style={{ color: "#161f7d", fontWeight: "bold" }}>
+              {kode_intervensi}
+            </p>
           </Form.Group>
 
           <hr></hr>
 
-          <Form.Group as={Col} >
-            {/* Empty */}
-          </Form.Group>
+          <Form.Group as={Col}>{/* Empty */}</Form.Group>
         </Row>
 
         <Row>
-        <Form.Group as={Col}>
-            <Form.Label id="bold-font" className="mt-4">Nama Intervensi</Form.Label>
-            <p >
-              {nama_intervensi}
-              </p>
+          <Form.Group as={Col}>
+            <Form.Label id="bold-font" className="mt-4">
+              Nama Intervensi
+            </Form.Label>
+            <p>{nama_intervensi}</p>
           </Form.Group>
 
           <hr></hr>
-          <Form.Group>
-            {/* Empty */}
-          </Form.Group>
-        </Row> 
-        
+          <Form.Group>{/* Empty */}</Form.Group>
+        </Row>
+
         <Row>
           <Form.Group>
             <h4 className="mt-3">Tindakan</h4>
-            <Form.Label id="bold-font" className="mt-4">Observasi</Form.Label>
-              <ul>
-                {observasi && observasi.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+            <Form.Label id="bold-font" className="mt-4">
+              Observasi
+            </Form.Label>
+            <ul>
+              {observasi &&
+                observasi.map((item, index) => <li key={index}>{item}</li>)}
+            </ul>
           </Form.Group>
 
           <hr></hr>
@@ -138,12 +139,13 @@ const DetailIntervensi = () => {
 
         <Row>
           <Form.Group>
-            <Form.Label id="bold-font" className="mt-4">Terapeutik</Form.Label>
-              <ul>
-                {terapeutik && terapeutik.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+            <Form.Label id="bold-font" className="mt-4">
+              Terapeutik
+            </Form.Label>
+            <ul>
+              {terapeutik &&
+                terapeutik.map((item, index) => <li key={index}>{item}</li>)}
+            </ul>
           </Form.Group>
 
           <hr></hr>
@@ -151,62 +153,72 @@ const DetailIntervensi = () => {
 
         <Row>
           <Form.Group>
-            <Form.Label id="bold-font" className="mt-4">Edukasi</Form.Label>
-              <ul>
-                {edukasi && edukasi.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+            <Form.Label id="bold-font" className="mt-4">
+              Edukasi
+            </Form.Label>
+            <ul>
+              {edukasi &&
+                edukasi.map((item, index) => <li key={index}>{item}</li>)}
+            </ul>
           </Form.Group>
-
-        
+          <hr></hr>
         </Row>
-   
-          <div className='d-flex justify-content-end mt-3'>
-            <Link
-                to={`/admin/intervensi/edit/${id}`}
-                id="custom-margin"
-                variant='primary'  
-                className='btn justify-content-center align-items-center white-button'>
-                  Edit
-            </Link>
 
-            <Button
-              onClick={() => setShowModal(true)}
-              variant='primary'
-              type="button"
-              className='btn justify-content-center align-items-center red-button'>
-                Delete
-            </Button>
-            
-            <Modal
-              show={showModal}
-              onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Konfirmasi</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Apakah Anda yakin ingin menghapus data ini?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button 
-                    variant='secondary'
-                    onClick={() => setShowModal(false)}
-                    className='btn justify-content-center align-items-center white-button'>
-                      Batal
-                  </Button>
-                  <Button 
-                    variant='primary'
-                    onClick={deleteIntervensi}
-                    className='btn justify-content-center align-items-center red-button'>
-                      Hapus
-                  </Button>
-                </Modal.Footer>
-            </Modal>
-          </div>
+        <Row>
+          <Form.Group>
+            <Form.Label id="bold-font" className="mt-4">
+              Kolaborasi
+            </Form.Label>
+            <ul>
+              {kolaborasi &&
+                kolaborasi.map((item, index) => <li key={index}>{item}</li>)}
+            </ul>
+          </Form.Group>
+        </Row>
+
+        <div className="d-flex justify-content-end mt-3">
+          <Link
+            to={`/admin/intervensi/edit/${id}`}
+            id="custom-margin"
+            variant="primary"
+            className="btn justify-content-center align-items-center white-button"
+          >
+            Edit
+          </Link>
+
+          <Button
+            onClick={() => setShowModal(true)}
+            variant="primary"
+            type="button"
+            className="btn justify-content-center align-items-center red-button"
+          >
+            Delete
+          </Button>
+
+          <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Konfirmasi</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Apakah Anda yakin ingin menghapus data ini?</Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={() => setShowModal(false)}
+                className="btn justify-content-center align-items-center white-button"
+              >
+                Batal
+              </Button>
+              <Button
+                variant="primary"
+                onClick={deleteIntervensi}
+                className="btn justify-content-center align-items-center red-button"
+              >
+                Hapus
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </Form>
-
-
     </Sidebar>
   );
 };
