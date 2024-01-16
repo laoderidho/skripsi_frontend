@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Accordion, Button, Card, Form} from 'react-bootstrap';
 import axios from '../../../axios'
 import "../../../../src/style/accordion.css";
+import { Combobox } from '@headlessui/react';
 
 export default function FormDiagnosa() {
 
@@ -74,7 +75,16 @@ export default function FormDiagnosa() {
                                     <Form className='container'>
                                         <Form.Group className='mt-4'>
                                             <Form.Label>Diagnosa</Form.Label>
-                                            <Form.Select
+
+                                            {/* <Combobox value={selectedDiagnosa} onChange={handleDiagnosaChange}>
+                                                <Combobox.Input onChange={(event) => setQuery(event.target.value)} />
+                                                
+
+
+
+                                        
+                                            </Combobox> */}
+                                            {/* <Form.Select
                                                 id="form-control-input"
                                                 onChange={handleDiagnosaChange}
                                                 value={selectedDiagnosa}
@@ -85,7 +95,7 @@ export default function FormDiagnosa() {
                                                     <span>{item.kode_diagnosa}</span> - <span>{item.nama_diagnosa}</span>
                                                 </option>
                                             ))}
-                                            </Form.Select>
+                                            </Form.Select> */}
                                         </Form.Group>
 
                                         <Form.Group className='mt-3'>
@@ -134,6 +144,8 @@ export default function FormDiagnosa() {
                 </Accordion.Item>
                 
             </Accordion> 
+
+            
         </div>
     );
 }

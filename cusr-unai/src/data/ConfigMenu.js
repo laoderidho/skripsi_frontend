@@ -54,7 +54,7 @@ const ConfigMenu = [
     child: null,
   },
   {
-    path: "/admin/logout",
+    path: "/logout",
     name: "Logout",
     role: "admin",
     icon: "fa-solid fa-right-from-bracket",
@@ -75,7 +75,7 @@ const ConfigMenu = [
     child: null,
   },
   {
-    path: "/perawat/Laporan",
+    path: "/perawat/laporan",
     name: "Laporan",
     role: "perawat",
     icon: "fa-solid fa-file-invoice",
@@ -89,14 +89,14 @@ const ConfigMenu = [
     child: null,
   },
   {
-    path: "/perawat/ganti-kata-sandi",
+    path: "/perawat/ganti-sandi",
     name: "Ganti Kata Sandi",
     role: "perawat",
     icon: "fa-solid fa-key",
     child: null,
   },
   {
-    path: "/perawat/logout",
+    path: "/logout",
     name: "Logout",
     role: "perawat",
     icon: "fa-solid fa-right-from-bracket",

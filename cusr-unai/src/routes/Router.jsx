@@ -34,9 +34,16 @@ import PerawatDashboard from "../Pages/Perawat/PerawatDashboard";
 import DaftarPasienPerawat from "../Pages/Perawat/data-pasien/DaftarPasienPerawat";
 import ProfilPasien from "../Pages/Perawat/data-pasien/ProfilPasien";
 import FormDiagnosa from "../Pages/Perawat/form-ski/FormDiagnosa";
+import ProfilPemeriksaan from "../Pages/Perawat/pemeriksaan-awal/ProfilPemeriksaan";
+import DiagnostikTambah from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
+import KeteranganAskep from "../Pages/Perawat/keterangan/KeteranganAskep";
+import PerawatGantiSandi from "../Pages/Perawat/PerawatGantiSandi";
+import DaftarPemeriksaanAwal from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
+import AddDiagnostik from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
+import DaftarPasienAwal from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
 
 export default function Router() {
   return (
@@ -76,26 +83,42 @@ export default function Router() {
           <Route path="/admin/standarkeperawatan/luaran/:id" element={<DetailLuaran />} />
           <Route path="/admin/luaran/edit/:id" element={<EditLuaran />} />
         
-
+          {/* Admin */}
           <Route path="/admin/dashboard" element={<DashboardPage />} />
-          <Route path="/admin/logout" element={<Logout />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/admin/ganti-sandi" element={<GantiSandi />} />
+
+          {/* Perawat */}
+          <Route path="/perawat/ganti-sandi" element={<PerawatGantiSandi />} />
+
+
           
           
           
 
           {/* Perawat Route*/}
-          <Route path="/perawat/dashboard" element={<PerawatDashboard />} />
+          <Route path="/perawat/profile" element={<PerawatDashboard />} />
           <Route path="/perawat/ganti-sandi" element={<GantiSandi />} />
 
           {/* Asuhan Keperawatan */}
           <Route path="/perawat/daftarpasien" element={<DaftarPasienPerawat />} />
-          <Route path="/perawat/profilpasien/:id" element={<ProfilPasien />} />
+          <Route path="/perawat/profilpasien" element={<ProfilPasien />} />
           <Route path="/perawat/formdiagnosa" element={<FormDiagnosa />} />
+
+          {/* Keterangan Askep */}
+          <Route path="/perawat/keteranganaskep" element={<KeteranganAskep />} />
 
 
           {/* Form SKI*/}
           <Route path="/perawat/formdiagnosa" element={<FormDiagnosa />} />
+
+          {/* Profil Pemeriksaan */}
+          <Route path="/perawat/profil/pemeriksaan" element={<ProfilPemeriksaan />} />
+          <Route path="/perawat/diagnostik/tambah" element={<AddDiagnostik />} />
+          <Route path="/perawat/pemeriksaan-awal" element={<DaftarPasienAwal/>} />
+          
+
+
 
         </Route>
 

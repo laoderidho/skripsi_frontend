@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
 
-export default function ProfilPasien() {
+export default function DaftarPasienAwal() {
 
     // Autocomplete
 
@@ -60,16 +60,23 @@ export default function ProfilPasien() {
       <Sidebar>
         {/* Title */}
         <div className="container">
-            <h2>Profil Pasien</h2>
+            <h2>Daftar Pasien</h2>
         </div>
 
         {/* Search */}
 
         <Form className="container">
-            <div>
-                <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button-lg">
-                        Lihat Pencatatan
-                </Link>      
+            <div className="search-container">
+                    <input className="form-control" type="text" placeholder="Search" value={inputValue} onChange={handleInputChange} />
+
+                    {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
+                        Tambah
+                    </Link> */}
+                    <ul className="suggestions">
+                        {suggestions.map((suggestion, index) => (
+                            <li key={index}>{suggestion}</li>
+                        ))}
+                    </ul>
             </div>
 
             <Table className="table table-striped table-hover">
@@ -83,7 +90,8 @@ export default function ProfilPasien() {
                 <tbody>
                     {pasien.map((item, index) => (
                     <tr key={index}>
-                        <td>{item.nama_lengkap}</td>
+                        {/* <td>{item.nama_lengkap}</td> */}
+                        <td>Sharon Venicia</td>
                         <td>
                             <Link 
                                 to={`/admin/daftarpasien/${item.id}`}
