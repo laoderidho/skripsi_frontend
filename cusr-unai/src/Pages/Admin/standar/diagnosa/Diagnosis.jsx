@@ -6,60 +6,50 @@ import axios from "../../../../axios";
 
 export default function Intervensi() {
   const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+  const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
+  const [diagnosa, setDiagnosa] = useState([]);
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
 
-    const fetchedSuggestions = getSuggestions(value);
-    setSuggestions(fetchedSuggestions);
-  };
-
-  const filteredIntervensi = (value) => {
-    return intervensi.filter((item) => {
-      for (let key in item) {
-        if (item[key] && typeof item[key] === "string") {
-          if (item[key].toLowerCase().includes(value.toLowerCase())) {
-            return true;
-          }
-        }
-      }
-      return false;
+  const FilterSearchValue = () => {
+    const filteredDiagnosa = diagnosa.filter((item) => {
+      return (
+        item.id.toString().includes(inputValue) ||
+        item.kode_diagnosa.toString().toLowerCase().includes(inputValue.toLowerCase()) ||
+        item.nama_diagnosa.toString().toLowerCase().includes(inputValue.toLowerCase())
+      );
     });
+    setFilterDataDiagnosa(filteredDiagnosa);
   };
 
-  const getSuggestions = (value) => {
-    const filteredIntervensi = filteredIntervensi(value);
-    setSuggestions(filteredIntervensi);
-  };
+  useEffect(()=>{
+    FilterSearchValue()
+  }, [inputValue])
 
-  const [intervensi, setIntervensi] = useState([]);
 
-  const getIntervensi = async (token) => {
+
+  const getDiagnosa = async (token) => {
     try {
       await axios
-        .post("/admin/intervensi", {
+        .post("/admin/diagnosa", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
           console.log(res);
-          setIntervensi(res?.data?.data);
+          setDiagnosa(res?.data?.data);
         });
     } catch (error) {}
   };
 
   useEffect(() => {
-    getIntervensi(localStorage.getItem("token"));
+    getDiagnosa(localStorage.getItem("token"));
   }, []);
 
-  console.log(intervensi);
 
   return (
     <Sidebar>
       {/* Title */}
       <div className="container">
-    <h2>Data Standar Diagnosa Keperawatan Indonesia</h2>
+        <h2>Data Standar Diagnosa Keperawatan Indonesia</h2>
         <Breadcrumb>
           <Breadcrumb.Item active>Intervensi</Breadcrumb.Item>
           <Breadcrumb.Item href="/admin/diagnosa/tambah">
@@ -77,7 +67,7 @@ export default function Intervensi() {
             type="text"
             placeholder="Search"
             value={inputValue}
-            onChange={handleInputChange}
+            onChange={(e) => setInputValue(e.target.value)}
           />
 
           <Link
@@ -86,17 +76,6 @@ export default function Intervensi() {
           >
             Tambah
           </Link>
-          <ul className="suggestions">
-            {suggestions.length > 0 ? (
-              suggestions.map((item, index) => (
-                <li key={index}>
-                  {`ID: ${item.id}, Kode Intervensi: ${item.kode_intervensi}, Nama Intervensi: ${item.nama_intervensi}`}
-                </li>
-              ))
-            ) : (
-              <li>No suggestions found</li>
-            )}
-          </ul>
         </div>
 
         <Table className="table table-striped table-hover">
@@ -109,21 +88,37 @@ export default function Intervensi() {
             </tr>
           </thead>
           <tbody>
-            {intervensi.map((item, index) => (
-              <tr key={index}>
-                <td>{item.id}</td>
-                <td>{item.kode_intervensi}</td>
-                <td>{item.nama_intervensi}</td>
-                <td>
-                  <Link
-                    to={`/admin/standarkeperawatan/intervensi/${item.id}`}
-                    class="btn d-flex justify-content-center align-items-center simple-button"
-                  >
-                    Lihat
-                  </Link>
-                </td>
-              </tr>
-            ))}
+            {inputValue
+              ? filterDataDiagnosa.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.id}</td>
+                    <td>{item.kode_diagnosa}</td>
+                    <td>{item.nama_diagnosa}</td>
+                    <td>
+                      <Link
+                        to={`/admin/standarkeperawatan/diagnosis/${item.id}`}
+                        class="btn d-flex justify-content-center align-items-center simple-button"
+                      >
+                        Lihat
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              : diagnosa.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.id}</td>
+                    <td>{item.kode_diagnosa}</td>
+                    <td>{item.nama_diagnosa}</td>
+                    <td>
+                      <Link
+                        to={`/admin/standarkeperawatan/diagnosis/${item.id}`}
+                        class="btn d-flex justify-content-center align-items-center simple-button"
+                      >
+                        Lihat
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </Table>
       </Form>

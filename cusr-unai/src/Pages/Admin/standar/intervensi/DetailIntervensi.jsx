@@ -188,9 +188,9 @@ const DetailIntervensi = () => {
 
           <Button
             onClick={() => setShowModal(true)}
-            variant="primary"
+            variant="danger"
             type="button"
-            className="btn justify-content-center align-items-center red-button"
+            className="btn justify-content-center align-items-center"
           >
             Delete
           </Button>
@@ -209,9 +209,9 @@ const DetailIntervensi = () => {
                 Batal
               </Button>
               <Button
-                variant="primary"
+                variant="danger"
                 onClick={deleteIntervensi}
-                className="btn justify-content-center align-items-center red-button"
+                className="btn justify-content-center align-items-center "
               >
                 Hapus
               </Button>
