@@ -41,7 +41,7 @@ export default function FormDiagnosa() {
             const selectedDiagnosaData = res.data;
             
             setSelectedFaktorRisiko(selectedDiagnosaData.selectedFaktorRisiko);
-            setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
+            setSelectedPenyebabFisiologis(selectedDiagnosaData.selected);
             setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
             setSelectedPenyebabPsikologis(selectedDiagnosaData.penyebab_psikologis);
             // console.log(selectedDiagnosaData.penyebab_fisiologis)
@@ -111,7 +111,14 @@ export default function FormDiagnosa() {
                                                 value={selectedFaktorRisiko}
                                                 disabled={!selectedDiagnosa}
                                             >
-                                            <option value={selectedFaktorRisiko}>{selectedFaktorRisiko}</option>
+                                            {selectedFaktorRisiko && (
+                                                selectedFaktorRisiko.map((faktorRisiko, index) => (
+                                                    <option key={index} value={faktorRisiko}>
+                                                        {faktorRisiko}
+                                                    </option>
+                                                ))
+                                            )}
+                                            {/* <option value={selectedFaktorRisiko}>{selectedFaktorRisiko}</option> */}
                                             </Form.Select>
                                         </Form.Group>
 
