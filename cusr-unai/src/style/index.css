@@ -100,6 +100,11 @@ nav{
     --bs-btn-border-width: 0 !important;
 }
 
+.table-height {
+    height: 4.5rem;
+    vertical-align: middle;
+}
+
 
 .sidebar a {
     text-decoration: none;
@@ -107,6 +112,8 @@ nav{
     color: #fff;
     padding: 1rem;
     font-size: 1rem;
+    
+
 }
 
 .sidebar.open {
@@ -350,6 +357,18 @@ th, td {
     border: 1px solid #007BFF;
 }
 
+.blue-button-lg {
+    background-color: #007BFF;
+    color: #ffffff;
+    border-radius: 0.2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    float: right;
+    border: 1px solid #007BFF;
+}
+
 .red-button {
     background-color: #ff0000;
     border: 1px solid #ff0000;
@@ -372,6 +391,43 @@ th, td {
     color: #000;
     border-radius: 0.2rem;
     border: 1px solid #cacaca;
+}
+
+.box {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #cacaca;
+    border-radius: 0.2rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#suhu {
+    width: 20%;
+    max-width: 20%;
+}
+
+#small-box-left {
+    width: 10%;
+    max-width: 10%;
+    border-right-color: #fff;
+}
+
+#small-box-right {
+    width: 10%;
+    max-width: 10%;
+    border-left-color: #fff;
+}
+
+#invisible {
+    background-color: #fff !important;
+    border-top-color: #cacaca;
+    border-bottom-color: #cacaca;
+    border-left-color: #fff;
+    border-right-color: #fff;
 }
 
 #visibility-button {
@@ -404,18 +460,43 @@ th, td {
     background-color: #f7f7f7;
 }
 
+.modal-content {
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 
 
 
 /* Buat Mobile */
 @media (max-width: 600px) {
-    .container {
+    /* .container {
         width: auto !important;
         --bs-gutter-x: 0 !important;
-    }
-    
+    } */
+
     h2 {
         text-align: center !important;
+    }
+    #suhu {
+        width: 88%;
+        max-width: 88%;
+    }
+
+    #small-box-left, #small-box-right {
+        width: 35%;
+        max-width:37%;
+    }
+
+    .blue-button-lg {
+        width: 100%;
+        max-width: 100%;
     }
     
     .table td {
@@ -441,6 +522,10 @@ th, td {
     .custom-table th:nth-child(2),
     .custom-table td:nth-child(2) {
         width: auto;
+    }
+
+    .table-height {
+        height: 3rem;
     }
     
 }

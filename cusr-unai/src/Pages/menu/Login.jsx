@@ -33,7 +33,7 @@ export default function Login() {
       if (role === "admin") {
         navigate("/admin/dashboard");
       } else if (role === "perawat") {
-        navigate("/perawat/dashboard");
+        navigate("/perawat/profile");
       }
       localStorage.setItem("token", res.data.access_token);
       setShowAnimate(false);

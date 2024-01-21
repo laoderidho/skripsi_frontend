@@ -36,6 +36,7 @@ const EditDiagnosa = () => {
         const res = await axios.post(`/admin/diagnosa/detail/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
+        console.log(res.data.data.penyebab_situasional)
         setKodeDiagnosa(res.data.data.kode_diagnosa)
         setNamaDiagnosa(res.data.data.nama_diagnosa)
         setFaktorRisiko(res.data.data.faktor_risiko.join("\n"));

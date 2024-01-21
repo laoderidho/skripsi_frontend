@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
 
-export default function DaftarPasien() {
+export default function DaftarPasienAwal() {
 
     // Autocomplete
 
@@ -90,7 +90,8 @@ export default function DaftarPasien() {
                 <tbody>
                     {pasien.map((item, index) => (
                     <tr key={index}>
-                        <td>{item.nama_lengkap}</td>
+                        {/* <td>{item.nama_lengkap}</td> */}
+                        <td>Sharon Venicia</td>
                         <td>
                             <Link 
                                 to={`/admin/daftarpasien/${item.id}`}
