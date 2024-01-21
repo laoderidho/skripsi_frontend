@@ -10,27 +10,30 @@ export default function DaftarPasien() {
     // Autocomplete
 
     const [inputValue, setInputValue] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
-
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setInputValue(value);
-
-        const fetchedSuggestions = getSuggestions(value);
-        setSuggestions(fetchedSuggestions);
-    };
-
-    const getSuggestions = (value) => {
-        return [
-            'Suggestion 1',
-            'Suggestion 2',
-            'Suggestion 3',
-        ];
-    };
-
-    // Table
-
+    const [filterPasien, setFilterPasien] = useState([]);
     const [pasien, setPasien] = useState([])
+
+    const filteredPasien = () =>{
+         const filteredDiagnosa = pasien.filter((item) => {
+           return (
+             item.id.toString().includes(inputValue) ||
+             item.nama_lengkap
+               .toString()
+               .toLowerCase()
+               .includes(inputValue.toLowerCase()) ||
+             item.no_medical_record
+               .toString()
+               .toLowerCase()
+               .includes(inputValue.toLowerCase())
+           );
+         });
+         setFilterPasien(filteredDiagnosa);
+    }    
+
+    useEffect(()=>{
+        filteredPasien()
+    },[inputValue])
+
 
     const getPasien = async (token) => {
         try {
@@ -45,7 +48,7 @@ export default function DaftarPasien() {
                 setPasien(res?.data?.data);
             });
         } catch (error) {
-            // AuthorizationRoute(error.response.status);
+            AuthorizationRoute(error.response.status);
         }
     };
 
@@ -57,62 +60,82 @@ export default function DaftarPasien() {
     
 
   return (
-      <Sidebar>
-        {/* Title */}
-        <div className="container">
-            <h2>Daftar Pasien</h2>
-            <Breadcrumb>
-                <Breadcrumb.Item active>
-                    Daftar Pasien
-                </Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/daftarpasien/tambah">Tambah</Breadcrumb.Item>
-            </Breadcrumb>
+    <Sidebar>
+      {/* Title */}
+      <div className="container">
+        <h2>Daftar Pasien</h2>
+        <Breadcrumb>
+          <Breadcrumb.Item active>Daftar Pasien</Breadcrumb.Item>
+          <Breadcrumb.Item href="/admin/daftarpasien/tambah">
+            Tambah
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </div>
+
+      {/* Search */}
+
+      <Form className="container">
+        <div className="search-container">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Search"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+
+          <Link
+            to="/admin/daftarpasien/tambah"
+            className="btn d-flex justify-content-center align-items-center blue-button"
+          >
+            Tambah
+          </Link>
         </div>
 
-        {/* Search */}
-
-        <Form className="container">
-            <div className="search-container">
-                    <input className="form-control" type="text" placeholder="Search" value={inputValue} onChange={handleInputChange} />
-
-                    <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
-                        Tambah
-                    </Link>
-                    <ul className="suggestions">
-                        {suggestions.map((suggestion, index) => (
-                            <li key={index}>{suggestion}</li>
-                        ))}
-                    </ul>
-            </div>
-
-            <Table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Medical Record</th>
-                        <th className="button-space"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pasien.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.id}</td>
-                        <td>{item.nama_lengkap}</td>
-                        <td>{item.no_medical_record}</td>
-                        <td>
-                            <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
-                                class="btn d-flex justify-content-center align-items-center simple-button">
-                                Lihat Profil
-                            </Link>
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Form>
-      </Sidebar>
-      
+        <Table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Medical Record</th>
+              <th className="button-space"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {inputValue
+              ? filterPasien.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.id}</td>
+                    <td>{item.nama_lengkap}</td>
+                    <td>{item.no_medical_record}</td>
+                    <td>
+                      <Link
+                        to={`/admin/daftarpasien/${item.id}`}
+                        class="btn d-flex justify-content-center align-items-center simple-button"
+                      >
+                        Lihat Profil
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              : pasien.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.id}</td>
+                    <td>{item.nama_lengkap}</td>
+                    <td>{item.no_medical_record}</td>
+                    <td>
+                      <Link
+                        to={`/admin/daftarpasien/${item.id}`}
+                        class="btn d-flex justify-content-center align-items-center simple-button"
+                      >
+                        Lihat Profil
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+          </tbody>
+        </Table>
+      </Form>
+    </Sidebar>
   );
 }
