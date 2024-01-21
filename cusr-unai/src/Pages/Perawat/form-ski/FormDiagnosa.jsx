@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Accordion, Button, Card, Form} from 'react-bootstrap';
 import axios from '../../../axios'
 import "../../../../src/style/accordion.css";
-import { AutoComplete } from 'primereact/autocomplete';
+import { AutoComplete }  from 'primereact/autocomplete'
 
 export default function FormDiagnosa() {
 
@@ -30,13 +30,16 @@ export default function FormDiagnosa() {
     const token=localStorage.getItem("token");
     
 
-    const handleDiagnosaChange = async (e) => {
-        setSelectedDiagnosa(e.target.value);
-
+     const handleDiagnosaChange = async () => {
         try {
-            const res = await axios.post(`/perawat/diagnosa/detail/${e.target.value}`, {},{
-                headers: { Authorization: `Bearer ${localStorage.getItem(token)}`}
-            });
+            const res = await axios.post(
+              `/perawat/diagnosa/detail/${selectedDiagnosa}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(token)}`,
+                },
+              }
+            );
 
             const selectedDiagnosaData = res.data;
             
@@ -51,11 +54,27 @@ export default function FormDiagnosa() {
                // setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
                // setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
                 
-            // } 
+            // }
+        
         } catch (error) {
             
         }
     } 
+
+    useEffect(()=>{
+        const fetchData = async () => {
+          try {
+            await handleDiagnosaChange(selectedDiagnosa);
+            console.log(selectedDiagnosa);
+            console.log(selectedPenyebabFisiologis);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+
+        fetchData();
+    },[selectedDiagnosa])
+
 
     const getDiagnosa = async (token) => {
         try {
@@ -79,79 +98,91 @@ export default function FormDiagnosa() {
     // console.log(diagnosa)
 
     return (
-        <div>
-            <Accordion defaultActiveKey="0">
-                <Accordion.Item>
-                    <Accordion.Header>Diagnosa</Accordion.Header>
-                        <Accordion.Body className='accordion-form'>
-                            <Card>
-                                <Card.Body>
-                                    <Form className='container'>
-                                        <Form.Group className='mt-4'>
-                                            <Form.Label>Diagnosa</Form.Label>
+      <div>
+        <Accordion defaultActiveKey="0">
+          <Accordion.Item>
+            <Accordion.Header>Diagnosa</Accordion.Header>
+            <Accordion.Body className="accordion-form">
+              <Card>
+                <Card.Body>
+                  <Form className="container">
+                    <Form.Group className="mt-4">
+                      <Form.Label>Diagnosa</Form.Label>
 
-                                            <Form.Select
-                                                id="form-control-input"
-                                                onChange={handleDiagnosaChange}
-                                                value={selectedDiagnosa}
-                                                required
-                                            >
-                                            {diagnosa.map((item, index) => (
-                                                <option key={index} value={item.id}>
-                                                    <span>{item.kode_diagnosa}</span> - <span>{item.nama_diagnosa}</span>
-                                                </option>
-                                            ))}
-                                            </Form.Select>
-                                        </Form.Group>
+                      <Form.Select
+                        id="form-control-input"
+                        value={selectedDiagnosa}
+                        onChange={(e) => setSelectedDiagnosa(e.target.value)}
+                        required
+                      >
+                        <option value="">Masukkan Diagnosa Pasien</option>
+                        {diagnosa.map((item, index) => (
+                          <option key={index} value={item.id}>
+                            <span>{item.kode_diagnosa}</span> -{" "}
+                            <span>{item.nama_diagnosa}</span>
+                          </option>
+                        ))}
+                      </Form.Select>
 
-                                        <Form.Group className='mt-3'>
-                                            <Form.Label>Faktor Risiko</Form.Label>
-                                            <Form.Select
-                                                id="form-control-input"
-                                                value={selectedFaktorRisiko}
-                                                disabled={!selectedDiagnosa}
-                                            >
-                                            <option value={selectedFaktorRisiko}>{selectedFaktorRisiko}</option>
-                                            </Form.Select>
-                                        </Form.Group>
+                      <Form.Group className="mt-3">
+                        <Form.Label>Faktor Risiko</Form.Label>
+                        <Form.Select
+                          id="form-control-input"
+                          value={selectedFaktorRisiko}
+                          disabled={!selectedDiagnosa}
+                        >
+                          {selectedFaktorRisiko &&
+                            selectedFaktorRisiko.map((item, index) => (
+                              <option key={index} value={item.id}>
+                                {item.nama}
+                              </option>
+                            ))}
+                        </Form.Select>
+                      </Form.Group>
+                      <Form.Group className="mt-5">
+                        <h6>Penyebab</h6>
+                        <Form.Label>Penyebab Fisiologis</Form.Label>
+                        <Form.Select
+                          id="form-control-input"
+                          value={selectedPenyebabFisiologis}
+                          disabled={!selectedDiagnosa}
+                        >
+                          <option value="">Pilih Penyebab Fisiologis</option>
+                          {selectedPenyebabFisiologis &&
+                            selectedPenyebabFisiologis.map((item, index) => (
+                              <option key={index} value={item.id}>
+                                {item.nama_penyebab}
+                              </option>
+                            ))}
+                        </Form.Select>
+                      </Form.Group>
 
-                                        <Form.Group className='mt-5'>
-                                            <h6>Penyebab</h6>
-                                            <Form.Label>Penyebab Fisiologis</Form.Label>
-                                            <Form.Select
-                                                id="form-control-input"
-                                                value={selectedPenyebabFisiologis}
-                                                disabled={!selectedDiagnosa}
-                                            >
-                                            <option value={selectedPenyebabFisiologis}>{selectedPenyebabFisiologis}</option>
-                                            </Form.Select>
-                                        </Form.Group>
+                      <Form.Group className="mt-3">
+                        <Form.Label>Penyebab Situasional</Form.Label>
+                        <Form.Select
+                          id="form-control-input"
+                          value={selectedPenyebabSituasional}
+                          disabled={!selectedDiagnosa}
+                        >
+                        <option value="">Pilih Penyebab Situasional</option>
+                        {selectedPenyebabSituasional && selectedPenyebabSituasional.map(
+                            (item, index) => (
+                              <option key={index} value={item.id}>
+                                {item.nama_penyebab}
+                              </option>
+                            )
+                          
+                        )}
+                        </Form.Select>
+                      </Form.Group>
 
-                                        <Form.Group className='mt-3'>
-                                            <Form.Label>Penyebab Situasional</Form.Label>
-                                            <Form.Select
-                                                id="form-control-input"
-                                                value={selectedPenyebabSituasional}
-                                                disabled={!selectedDiagnosa}
-                                            >
-                                            <option value={selectedPenyebabSituasional}>{selectedPenyebabSituasional}</option>
-                                            </Form.Select>
-                                        </Form.Group>
-                                        
-                                        
-                                            
-                                            
-                                        
-                                    </Form>
-                                        
-                                </Card.Body>
-                            </Card>
-                        </Accordion.Body>
-                </Accordion.Item>
-                
-            </Accordion> 
-
-            
-        </div>
+                    </Form.Group>
+                  </Form>
+                </Card.Body>
+              </Card>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      </div>
     );
 }
