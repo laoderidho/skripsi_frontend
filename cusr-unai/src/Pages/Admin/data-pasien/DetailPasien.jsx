@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/menu/Sidebar'
-import { Breadcrumb, Form, Row, Col, Button, Modal, ModalBody } from 'react-bootstrap'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Breadcrumb, Form, Row, Col, Button, Modal, } from 'react-bootstrap'
+import { useNavigate, useParams } from 'react-router-dom'
+import ConfirmModal from '../../../components/menu/ConfirmModal'
 import AuthorizationRoute from '../../../AuthorizationRoute'
 import axios from '../../../axios'
 
@@ -51,8 +52,8 @@ const DetailPasien = () => {
     };
     
   
-    const submitForm = async (e) => {
-      e.preventDefault();
+    const submitForm = async () => {
+     
       try {
         const res = await axios.post(`/admin/daftarpasien/edit/${id}`, {
           nama_lengkap: nama_lengkap,
@@ -72,7 +73,7 @@ const DetailPasien = () => {
         });
         navigate("/admin/daftarpasien");
       } catch (error){
-        // AuthorizationRoute(error.response.status)
+         AuthorizationRoute(error.response.status)
       }
       
     };
@@ -262,28 +263,26 @@ const DetailPasien = () => {
             {!isEditing ? (
               <Button
                 onClick={() => setIsEditing(true)}
-                id="custom-margin"
-                variant='primary'  
-                className='btn justify-content-center align-items-center white-button'>
+                id="custom-margin"  
+                className='btn white-button'>
                   Edit
               </Button>
             ) : 
             (
-              <input
-                 type="submit"
-                 id="custom-margin"
-                 variant='primary' 
-                 className='btn justify-content-center align-items-center blue-button'
-                 />
-             
+              <ConfirmModal
+                onConfirm={submitForm}
+                successMessage={"Data Pasien berhasil diubah"}
+                cancelMessage={"Data Pasien gagal diubah"}
+                buttonText={"Simpan"}
+               />
             )
             }
 
             <Button
               onClick={() => setShowModal(true)}
-              variant='primary'
+              variant='danger'
               type="button"
-              className='btn justify-content-center align-items-center red-button'>
+              className='mx-3'>
                 Delete
             </Button>
             

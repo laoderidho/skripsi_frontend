@@ -16,7 +16,6 @@ nav{
 #sidebar:hover {
     background-color: transparent;
 }
-
 /* .btn{
     --bs-btn-border-width: none
 }
@@ -99,6 +98,11 @@ nav{
 
 .btn, .sidebarbutton {
     --bs-btn-border-width: 0 !important;
+}
+
+.table-height {
+    height: 4.5rem;
+    vertical-align: middle;
 }
 
 
@@ -386,12 +390,6 @@ th, td {
     background-color: #ffffff;
     color: #000;
     border-radius: 0.2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-top: 5rem;
-    margin-bottom: 1rem;
-    float: right;
-    border-radius: 0.2rem;
     border: 1px solid #cacaca;
 }
 
@@ -524,6 +522,10 @@ th, td {
     .custom-table th:nth-child(2),
     .custom-table td:nth-child(2) {
         width: auto;
+    }
+
+    .table-height {
+        height: 3rem;
     }
     
 }

@@ -96,7 +96,7 @@ export default function DaftarPasien() {
                 </thead>
                 <tbody>
                     {pasien.map((item, index) => (
-                    <tr key={index}>
+                    <tr key={index} className="table-height">
                         <td>{item.id}</td>
                         <td>{item.nama_lengkap}</td>
                         <td>{item.no_medical_record}</td>

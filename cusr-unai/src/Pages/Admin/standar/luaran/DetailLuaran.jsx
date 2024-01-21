@@ -57,15 +57,12 @@ const DetailLuaran = () => {
 
 
 
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  }
-
   const deleteLuaran = async () => {
     try {
-        await axios.post(`/admin/luaran/${id}`, {
+        await axios.post(`/admin/luaran/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}`}
         })
+        navigate("/admin/standarkeperawatan/luaran");
     } catch (error) {
         
     }
@@ -142,9 +139,9 @@ const DetailLuaran = () => {
 
             <Button
               onClick={() => setShowModal(true)}
-              variant='primary'
+              variant='danger'
               type="button"
-              className='btn justify-content-center align-items-center red-button'>
+              className='btn justify-content-center align-items-center'>
                 Delete
             </Button>
             
@@ -165,9 +162,9 @@ const DetailLuaran = () => {
                       Batal
                   </Button>
                   <Button 
-                    variant='primary'
+                    variant='danger'
                     onClick={deleteLuaran}
-                    className='btn justify-content-center align-items-center red-button'>
+                    className='btn justify-content-center align-items-center'>
                       Hapus
                   </Button>
                 </Modal.Footer>

@@ -26,14 +26,15 @@ const GantiSandi = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            // Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
       setMessage(res.data.message)
       navigate('/login')
     } catch (error) {
-        AuthorizationRoute(error.response.status)
+        // AuthorizationRoute(error.response.status)
+        alert(error.response.data.message)
     }
   }
 
@@ -47,9 +48,9 @@ const GantiSandi = () => {
 
       <Form
         onSubmit={submitChangePassword}
-        className="d-flex align-items-center flex-column"
+        className="w-100 d-flex flex-column align-items-center"
       >
-        <Form.Group className="w-75 mb-4">
+        <Form.Group className="w-75 mb-4 mt-5 d-flex align-items-center flex-column">
           <Form.Label>Kata Sandi Lama</Form.Label>
           <Form.Control
             type="password"
@@ -59,7 +60,7 @@ const GantiSandi = () => {
           />
         </Form.Group>
 
-        <Form.Group className="w-75 mb-4">
+        <Form.Group className="w-75 mb-4 d-flex align-items-center flex-column">
           <Form.Label>Kata Sandi Baru</Form.Label>
           <Form.Control
             type="password"
@@ -69,7 +70,7 @@ const GantiSandi = () => {
           />
         </Form.Group>
 
-        <Form.Group className="w-75 mb-4">
+        <Form.Group className="w-75 mb-4 d-flex align-items-center flex-column">
           <Form.Label>Konfirmasi Kata Sandi Baru</Form.Label>
           <Form.Control
             type="password"

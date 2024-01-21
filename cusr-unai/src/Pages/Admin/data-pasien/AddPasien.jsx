@@ -3,6 +3,7 @@ import Sidebar from '../../../components/menu/Sidebar'
 import { Breadcrumb, Form, Row, Col, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import AuthorizationRoute from '../../../AuthorizationRoute'
+import ConfirmModal from '../../../components/menu/ConfirmModal'
 import axios from '../../../axios'
 
 const AddPasien = () => {
@@ -21,8 +22,7 @@ const AddPasien = () => {
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  const submitForm = async () => {
     try {
       const res = await axios.post("/admin/daftarpasien/tambah", {
         nama_lengkap: nama_lengkap,
@@ -34,7 +34,7 @@ const AddPasien = () => {
         nik: nik,
         alergi: alergi,
         nama_asuransi: nama_asuransi,
-        nomor_asuransi: nomor_asuransi,
+        no_asuransi: nomor_asuransi,
         no_medical_record: no_medical_record,
       },
       { 
@@ -42,7 +42,7 @@ const AddPasien = () => {
       });
       navigate("/admin/daftarpasien");
     } catch (error){
-      // AuthorizationRoute(error.response.status)
+      AuthorizationRoute(error.response.status)
     }
     
   };
@@ -207,10 +207,12 @@ const AddPasien = () => {
         </Row>
 
         <div className='d-flex justify-content-end mt-3'>
-          <Button 
-            variant='primary' 
-            type="submit" 
-            className='btn justify-content-center align-items-center blue-button'>Simpan</Button>
+          <ConfirmModal 
+            onConfirm={submitForm}
+            successMessage="Pasien berhasil ditambahkan"
+            cancelMessage="Pasien gagal ditambahkan"
+            buttonText="Tambah"
+          />
         </div>
       </Form>
     </Sidebar>

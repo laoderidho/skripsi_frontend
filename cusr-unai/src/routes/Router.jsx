@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 // Menu Components Import
 import Home from "../Pages/Home";
 import Login from "../Pages/Menu/Login";
-import GantiSandi from "../Pages/Menu/Login";
+import GantiSandi from "../Pages/Menu/GantiSandi";
 
 // Admin Component Import
 import DaftarPasien from "../Pages/Admin/data-pasien/DaftarPasien";
@@ -38,12 +38,13 @@ import ProfilPemeriksaan from "../Pages/Perawat/pemeriksaan-awal/ProfilPemeriksa
 import DiagnostikTambah from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
 import KeteranganAskep from "../Pages/Perawat/keterangan/KeteranganAskep";
 import PerawatGantiSandi from "../Pages/Perawat/PerawatGantiSandi";
-import DaftarPemeriksaanAwal from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
+import DaftarPasienAwal from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
+import DaftarPasienLaporan from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
 import AddDiagnostik from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
-import DaftarPasienAwal from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
+
 
 export default function Router() {
   return (
@@ -91,7 +92,6 @@ export default function Router() {
           {/* Perawat */}
           <Route path="/perawat/ganti-sandi" element={<PerawatGantiSandi />} />
 
-
           
           
           
@@ -116,6 +116,9 @@ export default function Router() {
           <Route path="/perawat/profil/pemeriksaan" element={<ProfilPemeriksaan />} />
           <Route path="/perawat/diagnostik/tambah" element={<AddDiagnostik />} />
           <Route path="/perawat/pemeriksaan-awal" element={<DaftarPasienAwal/>} />
+
+          {/* Laporan */}
+          <Route path="/perawat/laporan" element={<DaftarPasienLaporan />} />
           
 
 

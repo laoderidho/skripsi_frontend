@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Accordion, Button, Card, Form} from 'react-bootstrap';
 import axios from '../../../axios'
 import "../../../../src/style/accordion.css";
-import { Combobox } from '@headlessui/react';
+import { AutoComplete } from 'primereact/autocomplete';
 
 export default function FormDiagnosa() {
 
@@ -14,6 +14,19 @@ export default function FormDiagnosa() {
     const [selectedPenyebabSituasional, setSelectedPenyebabSituasional] = useState([]);
     const [selectedPenyebabPsikologis, setSelectedPenyebabPsikologis] = useState([]);
 
+    const [inputValue, setInputValue] = useState("");
+    const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
+
+    const FilterSearchValue = () => {
+        const filteredDiagnosa = diagnosa.filter((item) => {
+            return (
+                item.kode_diagnosa.toString().toLowerCase().includes(inputValue.toLowerCase()) ||
+                item.nama_diagnosa.toString().toLowerCase().includes(inputValue.toLowerCase())
+            );
+        });
+        setFilterDataDiagnosa(filteredDiagnosa);
+    };
+
     const token=localStorage.getItem("token");
     
 
@@ -21,15 +34,17 @@ export default function FormDiagnosa() {
         setSelectedDiagnosa(e.target.value);
 
         try {
-            const res = await axios.post(`/perawat/diagnosa/detail/${e.target.value}`, {
+            const res = await axios.post(`/perawat/diagnosa/detail/${e.target.value}`, {},{
                 headers: { Authorization: `Bearer ${localStorage.getItem(token)}`}
             });
 
             const selectedDiagnosaData = res.data;
             
-            setSelectedFaktorRisiko(selectedDiagnosaData.selectedFaktorRisiko)
-            // setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis)
-            console.log(selectedDiagnosaData.penyebab_fisiologis)
+            setSelectedFaktorRisiko(selectedDiagnosaData.selectedFaktorRisiko);
+            setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
+            setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
+            setSelectedPenyebabPsikologis(selectedDiagnosaData.penyebab_psikologis);
+            // console.log(selectedDiagnosaData.penyebab_fisiologis)
 
             // if (selectedDiagnosaData) {
                 // setSelectedFaktorRisiko(selectedDiagnosaData.faktor_risiko);
@@ -40,13 +55,11 @@ export default function FormDiagnosa() {
         } catch (error) {
             
         }
-    }
-
-    
+    } 
 
     const getDiagnosa = async (token) => {
         try {
-            await axios.post("/perawat/diagnosa", {
+            await axios.post("/perawat/diagnosa", {}, {
                 headers: { Authorization: `Bearer $(token)`}
             })
             .then((res) => {
@@ -60,7 +73,8 @@ export default function FormDiagnosa() {
 
     useEffect(() => {
         getDiagnosa(localStorage.getItem('token'))
-    }, [])
+    }, []);
+
 
     // console.log(diagnosa)
 
@@ -76,15 +90,7 @@ export default function FormDiagnosa() {
                                         <Form.Group className='mt-4'>
                                             <Form.Label>Diagnosa</Form.Label>
 
-                                            {/* <Combobox value={selectedDiagnosa} onChange={handleDiagnosaChange}>
-                                                <Combobox.Input onChange={(event) => setQuery(event.target.value)} />
-                                                
-
-
-
-                                        
-                                            </Combobox> */}
-                                            {/* <Form.Select
+                                            <Form.Select
                                                 id="form-control-input"
                                                 onChange={handleDiagnosaChange}
                                                 value={selectedDiagnosa}
@@ -95,7 +101,7 @@ export default function FormDiagnosa() {
                                                     <span>{item.kode_diagnosa}</span> - <span>{item.nama_diagnosa}</span>
                                                 </option>
                                             ))}
-                                            </Form.Select> */}
+                                            </Form.Select>
                                         </Form.Group>
 
                                         <Form.Group className='mt-3'>

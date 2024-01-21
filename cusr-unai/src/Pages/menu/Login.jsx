@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import axios from "../../axios";
 import { useNavigate } from "react-router-dom";
 import ErrorModal from "../../components/menu/ErrorModal";
@@ -9,9 +9,12 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [show, setShow] = useState(false);
-  const navigate = useNavigate();
-  // const ref = useRef(null);
+  const [showAnimate, setShowAnimate] = useState(false);
+  const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
 
+  const navigate = useNavigate();
+ 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       return localStorage.removeItem("token");
@@ -20,6 +23,7 @@ export default function Login() {
 
   const loginForm = async (e) => {
     e.preventDefault();
+    setShowAnimate(true);
     try {
       const res = await axios.post("/login", {
         email: username,
@@ -32,8 +36,10 @@ export default function Login() {
         navigate("/perawat/profile");
       }
       localStorage.setItem("token", res.data.access_token);
+      setShowAnimate(false);
     } catch (error) {
       setShow(true);
+      setShowAnimate(false);
       setError(error.response.data.message);
     }
   };
@@ -54,12 +60,18 @@ export default function Login() {
         <Form className="container" onSubmit={loginForm}>
           <Form.Group>
             <Form.Label>Username</Form.Label>
-            <Form.Control 
+            <Form.Control
               id="form-control-login"
               type="text"
               placeholder="Enter username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  passwordRef.current.focus();
+                }
+              }}
+              ref={usernameRef}
             />
             <Form.Text className="text-danger">{`${error}`}</Form.Text>
           </Form.Group>
@@ -68,9 +80,15 @@ export default function Login() {
             <Form.Control
               id="form-control-login"
               type="password"
-              placeholder="Enter username"
+              placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  loginForm(e);
+                }
+              }}
+              ref={passwordRef}
             />
             <Form.Text className="text-danger">{`${error}`}</Form.Text>
           </Form.Group>
@@ -78,8 +96,9 @@ export default function Login() {
             variant="primary"
             type="submit"
             className="w-100 mt-3 loginbutton mb-3"
+            disabled={username === "" || password === "" || showAnimate}
           >
-            Login
+            {showAnimate ? "Loading..." : "Login"}
           </Button>
         </Form>
       </div>
