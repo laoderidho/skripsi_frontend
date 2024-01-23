@@ -17,6 +17,11 @@ export default function FormDiagnosa() {
 
     const [inputValue, setInputValue] = useState("");
     const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
+
+    // form input diagnose
+    
+    const [penyebab_fisiologis, setPenyebabFisiologis] = useState([]);
+    const [penyebab_situasional, setPenyebabSituasional] = useState(null);
     
     const createDiagnosaOptions = () => {
       if (!diagnosa || diagnosa.length === 0) {
@@ -188,31 +193,23 @@ export default function FormDiagnosa() {
                       </Form.Select> */}
 
                       <Dropdown
-                        
                         value={selectedDiagnosa}
                         onChange={(e) => setSelectedDiagnosa(e.target.value)}
                         options={createDiagnosaOptions()}
-                        placeholder='Pilih Diagnosa'
+                        placeholder="Pilih Diagnosa"
                         filter
                         required
-                      >
-  
- 
-                      </Dropdown>
-
+                      ></Dropdown>
 
                       <Form.Group className="mt-3">
                         <Form.Label>Faktor Risiko</Form.Label>
 
-                        <MultiSelect 
+                        <MultiSelect
                           value={selectedFaktorRisiko}
                           disabled={!selectedDiagnosa}
                           options={createFaktorRisikoOptions()}
-                          placeholder='Pilih Faktor Risiko'
-
-                          >
-
-                        </MultiSelect>
+                          placeholder="Pilih Faktor Risiko"
+                        ></MultiSelect>
                         {/* <Form.Select
                           id="form-control-input"
                           value={selectedFaktorRisiko}
@@ -231,8 +228,11 @@ export default function FormDiagnosa() {
                         <Form.Label>Penyebab Fisiologis</Form.Label>
                         <Form.Select
                           id="form-control-input"
-                          value={selectedPenyebabFisiologis}
+                          value={penyebab_fisiologis}
                           disabled={!selectedDiagnosa}
+                          onChange={(e) =>
+                            setPenyebabFisiologis(e.target.value)
+                          }
                         >
                           <option value="">Pilih Penyebab Fisiologis</option>
                           {selectedPenyebabFisiologis &&
@@ -247,15 +247,16 @@ export default function FormDiagnosa() {
                       <Form.Group className="mt-3">
                         <Form.Label>Penyebab Situasional</Form.Label>
 
-                        <MultiSelect 
-                          value={selectedPenyebabSituasional}
+                        <MultiSelect
+                          value={penyebab_situasional}
                           disabled={!selectedDiagnosa}
-                          options={createPenyebabSituasionalOptions()}
-                          placeholder='Pilih Penyebab Situasional'
-                          
-                          >
-
-                        </MultiSelect>
+                          options={selectedPenyebabSituasional}
+                          optionLabel="nama_penyebab"
+                          placeholder="Pilih Penyebab Situasional"
+                          filter
+                          onChange={(e) =>setPenyebabSituasional(e.value)}
+                          maxSelectedLabels={3}
+                        ></MultiSelect>
                         {/* <Form.Select
                           id="form-control-input"
                           value={selectedPenyebabSituasional}
@@ -272,7 +273,6 @@ export default function FormDiagnosa() {
                         )}
                         </Form.Select> */}
                       </Form.Group>
-
                     </Form.Group>
                   </Form>
                 </Card.Body>
