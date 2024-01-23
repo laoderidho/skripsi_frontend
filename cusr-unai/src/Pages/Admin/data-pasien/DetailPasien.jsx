@@ -303,9 +303,9 @@ const DetailPasien = () => {
                       Batal
                   </Button>
                   <Button 
-                    variant='primary'
+                    variant='danger'
                     onClick={deletePasien}
-                    className='btn justify-content-center align-items-center red-button'>
+                    className='btn justify-content-center align-items-center'>
                       Hapus
                   </Button>
                 </Modal.Footer>
