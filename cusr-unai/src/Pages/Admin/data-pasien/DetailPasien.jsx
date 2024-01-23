@@ -25,8 +25,14 @@ const DetailPasien = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
+    // modal rawatInap
+    const [showModalRawatInap, setShowModalRawatInap] = useState(false);
+    const [dataRawatInap, setDataRawatInap] = useState('');
+    const [triase, setTriase] = useState('');
+
     useEffect(() => {
         getDataById();
+        detailStatus();
     },[]);
     
     const getDataById = async () => {
@@ -89,6 +95,31 @@ const DetailPasien = () => {
       }
     }
   
+    const detailStatus = async () => {
+      try{
+        const res = await axios.post(`/pasien/rawat-inap/detailStatus/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDataRawatInap(res.data.message)
+      }catch(error){
+        AuthorizationRoute(error.response.status)
+      }
+    }
+
+    const addRawatInap = async () =>{
+      try {
+        const res = await axios.post(`/pasien/rawat-inap/${id}`, {
+          triase: triase,
+          status: 1
+        },
+        { 
+          headers: { Authorization: `Bearer ${token}`}
+        });
+        // navigate("/admin/rawatinap");
+      } catch (error){
+         AuthorizationRoute(error.response.status)
+      }
+    }
     
     return (
       <Sidebar>
@@ -101,7 +132,40 @@ const DetailPasien = () => {
             <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-  
+
+        <Modal
+          show={showModalRawatInap}
+          onHide={() => setShowModalRawatInap(!showModalRawatInap)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Rawat Inap?</Modal.Title>
+          </Modal.Header>
+          <Form onSubmit={addRawatInap}>
+            <Modal.Body>
+              <Form.Group className="mb-3">
+                <Form.Select name="triase" id="" value={triase} onChange={(e)=>setTriase(e.target.value)}>
+                  <option value="">masukkan Triase</option>
+                  <option value="merah">Merah</option>
+                  <option value="kuning">Kuning</option>
+                  <option value="hijau">Hijau</option>
+                  <option value="hitam">Hitam</option>
+                </Form.Select>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={() => setShowModalRawatInap(!showModalRawatInap)}
+              >
+                Close
+              </Button>
+              <Button variant="primary" type="submit">
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal>
+
         <Form className="container mt-5" onSubmit={submitForm}>
           <Row>
             <Col>
@@ -109,58 +173,58 @@ const DetailPasien = () => {
                 <Form.Label>Nama Lengkap</Form.Label>
                 <Form.Control
                   id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan Nama Lengkap" 
+                  type="text"
+                  placeholder="Masukkan Nama Lengkap"
                   value={nama_lengkap}
                   onChange={(e) => setNamaLengkap(e.target.value)}
                   required
                   disabled={!isEditing}
-                  />
+                />
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>Tanggal Lahir</Form.Label>
-                <Form.Control 
+                <Form.Control
                   id="form-control-input"
-                  type="date" 
-                  placeholder="Masukkan Nama Lengkap" 
+                  type="date"
+                  placeholder="Masukkan Nama Lengkap"
                   value={tanggal_lahir}
                   onChange={(e) => setTanggalLahir(e.target.value)}
                   required
                   disabled={!isEditing}
-                  />
+                />
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>Jenis Kelamin</Form.Label>
-                <Form.Select 
+                <Form.Select
                   id="form-control-input"
-                  type="text" 
+                  type="text"
                   placeholder="Tentukan Jenis Kelamin"
                   value={jenis_kelamin}
                   onChange={(e) => setJenisKelamin(e.target.value)}
                   required
                   disabled={!isEditing}
-                  >
+                >
                   <option>Pilih</option>
                   <option value="1">Laki Laki</option>
                   <option value="0">Perempuan</option>
                 </Form.Select>
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>Nomor Telepon</Form.Label>
-                <Form.Control 
+                <Form.Control
                   id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan Nomor Telepon" 
+                  type="text"
+                  placeholder="Masukkan Nomor Telepon"
                   value={no_telepon}
                   onChange={(e) => setNoTelepon(e.target.value)}
                   required
                   disabled={!isEditing}
-                  />
+                />
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>Alamat</Form.Label>
                 <Form.Control
@@ -176,139 +240,168 @@ const DetailPasien = () => {
                 />
               </Form.Group>
             </Col>
-  
+
             <Col>
               <Form.Group className="mb-3">
                 <Form.Label>Status Pernikahan</Form.Label>
-                <Form.Select 
+                <Form.Select
                   id="form-control-input"
-                  type="text" 
+                  type="text"
                   placeholder="Tentukan Jenis Kelamin"
                   value={status_pernikahan}
                   onChange={(e) => setStatusPernikahan(e.target.value)}
                   required
                   disabled={!isEditing}
-                  >
+                >
                   <option>Pilih</option>
                   <option value="0">Belum Menikah</option>
                   <option value="1">Sudah Menikah</option>
                 </Form.Select>
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>NIK</Form.Label>
-                <Form.Control 
+                <Form.Control
                   id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan NIK" 
+                  type="text"
+                  placeholder="Masukkan NIK"
                   value={nik}
                   onChange={(e) => setNik(e.target.value)}
                   required
                   disabled={!isEditing}
-                  />
+                />
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>Alergi</Form.Label>
-                <Form.Control 
+                <Form.Control
                   id="form-control-input"
                   type="text"
-                  placeholder="Masukkan Alergi" 
+                  placeholder="Masukkan Alergi"
                   value={alergi}
                   onChange={(e) => setAlergi(e.target.value)}
                   disabled={!isEditing}
-                  />
+                />
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>Nama Asuransi</Form.Label>
-                <Form.Control 
+                <Form.Control
                   id="form-control-input"
-                  type="text" 
+                  type="text"
                   placeholder="Masukkan Asuransi"
                   value={nama_asuransi}
                   onChange={(e) => setNamaAsuransi(e.target.value)}
                   disabled={!isEditing}
-                  />
+                />
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>Nomor Asuransi</Form.Label>
-                <Form.Control 
+                <Form.Control
                   id="form-control-input"
-                  type="text" 
+                  type="text"
                   placeholder="Masukkan Nomor Asuransi"
                   value={no_asuransi}
                   onChange={(e) => setNomorAsuransi(e.target.value)}
                   disabled={!isEditing}
-                  />
+                />
               </Form.Group>
-  
+
               <Form.Group className="mb-3">
                 <Form.Label>No Medical Record</Form.Label>
-                <Form.Control 
+                <Form.Control
                   id="form-control-input"
-                  type="text" 
+                  type="text"
                   placeholder="Masukkan No Medical Record"
                   value={no_medical_record}
                   onChange={(e) => setMedicalRecord(e.target.value)}
                   required
                   disabled={!isEditing}
-                  />
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>
+                  {" "}
+                  Status Rawat Inap:{" "}
+                  {dataRawatInap === "merah" ? (
+                    <span className="bg-danger text-white p-1 rounded">
+                      Triase Merah
+                    </span>
+                  ) : dataRawatInap === "kuning" ? (
+                    <span className="bg-warning text-white p-1 rounded">
+                      Triase kuning
+                    </span>
+                  ) : dataRawatInap === "hijau" ? (
+                    <span className="bg-success text-white p-1 rounded">
+                      Triase hijau
+                    </span>
+                  ) : dataRawatInap === "hitam" ? (
+                    <span className="bg-dark text-white p-1 rounded">
+                      Triase Hitam
+                    </span>
+                  ) : (
+                    "Tidak Di Rawat Inap"
+                  )}
+                </Form.Label>
               </Form.Group>
             </Col>
           </Row>
-  
-          <div className='d-flex justify-content-end mt-3'>
+
+          <div className="d-flex justify-content-end mt-3">
             {!isEditing ? (
               <Button
                 onClick={() => setIsEditing(true)}
-                id="custom-margin"  
-                className='btn white-button'>
-                  Edit
+                id="custom-margin"
+                className="btn white-button"
+              >
+                Edit
               </Button>
-            ) : 
-            (
+            ) : (
               <ConfirmModal
                 onConfirm={submitForm}
                 successMessage={"Data Pasien berhasil diubah"}
                 cancelMessage={"Data Pasien gagal diubah"}
                 buttonText={"Simpan"}
-               />
-            )
-            }
+              />
+            )}
 
             <Button
               onClick={() => setShowModal(true)}
-              variant='danger'
+              variant="danger"
               type="button"
-              className='mx-3'>
-                Delete
+              className="mx-3"
+            >
+              Delete
             </Button>
-            
-            <Modal
-              show={showModal}
-              onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Konfirmasi</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Apakah Anda yakin ingin menghapus data ini?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button 
-                    variant='secondary'
-                    onClick={() => setShowModal(false)}
-                    className='btn justify-content-center align-items-center white-button'>
-                      Batal
-                  </Button>
-                  <Button 
-                    variant='danger'
-                    onClick={deletePasien}
-                    className='btn justify-content-center align-items-center'>
-                      Hapus
-                  </Button>
-                </Modal.Footer>
+
+            <Button onClick={() => setShowModalRawatInap(!showModalRawatInap)}>
+              Rawat Inap
+            </Button>
+
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Konfirmasi</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Apakah Anda yakin ingin menghapus data ini?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  onClick={() => setShowModal(false)}
+                  className="btn justify-content-center align-items-center white-button"
+                >
+                  Batal
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={deletePasien}
+                  className="btn justify-content-center align-items-center"
+                >
+                  Hapus
+                </Button>
+              </Modal.Footer>
             </Modal>
           </div>
         </Form>
