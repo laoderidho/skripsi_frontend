@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { Accordion, Button, Card, Form} from 'react-bootstrap';
 import axios from '../../../axios'
 import "../../../../src/style/accordion.css";
-import { AutoComplete }  from 'primereact/autocomplete'
+import { Dropdown }  from 'primereact/dropdown'
+import { MultiSelect } from 'primereact/multiselect';
 
 export default function FormDiagnosa() {
 
@@ -16,6 +17,68 @@ export default function FormDiagnosa() {
 
     const [inputValue, setInputValue] = useState("");
     const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
+    
+    const createDiagnosaOptions = () => {
+      if (!diagnosa || diagnosa.length === 0) {
+        return [
+          { value: '', label: 'Pilih Diagnosa'}
+        ];
+      } else {
+          const options = [
+            { value: '', label: '-'}
+          ];
+
+          diagnosa.forEach((item, index) => {
+            options.push({
+              value: item.id,
+              label: `${item.kode_diagnosa} - ${item.nama_diagnosa}`
+            });
+          });
+        return options;
+      }
+    };
+
+    const createFaktorRisikoOptions = () => {
+      if (!selectedFaktorRisiko || selectedFaktorRisiko === 0) {
+        return [
+          { value: '', label: 'Pilih Faktor Risiko'}
+        ];
+      } else {
+        const options = [
+          { value: '', label: '-'}
+        ];
+
+        selectedFaktorRisiko.forEach((item, index) => {
+          options.push({
+            value: item.id,
+            label: item.nama
+          });
+        });
+
+      return options; 
+      } 
+    };
+
+    const createPenyebabSituasionalOptions = () => {
+      if (!selectedPenyebabSituasional || selectedPenyebabSituasional === 0) {
+        return [
+          { value: '', label: 'Pilih Penyebab Situasional'}
+        ];
+      } else {
+        const options = [
+          { value: '', label: '-'}
+        ];
+
+        selectedPenyebabSituasional.forEach((item,index) => {
+          options.push({
+            value: item.id,
+            label: item.nama_penyebab
+          });
+        });
+
+        return options;
+      }
+    };
 
     const FilterSearchValue = () => {
         const filteredDiagnosa = diagnosa.filter((item) => {
@@ -44,7 +107,7 @@ export default function FormDiagnosa() {
             const selectedDiagnosaData = res.data;
             
             setSelectedFaktorRisiko(selectedDiagnosaData.selectedFaktorRisiko);
-            setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
+            setSelectedPenyebabFisiologis(selectedDiagnosaData.selected);
             setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
             setSelectedPenyebabPsikologis(selectedDiagnosaData.penyebab_psikologis);
             // console.log(selectedDiagnosaData.penyebab_fisiologis)
@@ -109,7 +172,7 @@ export default function FormDiagnosa() {
                     <Form.Group className="mt-4">
                       <Form.Label>Diagnosa</Form.Label>
 
-                      <Form.Select
+                      {/* <Form.Select
                         id="form-control-input"
                         value={selectedDiagnosa}
                         onChange={(e) => setSelectedDiagnosa(e.target.value)}
@@ -122,11 +185,35 @@ export default function FormDiagnosa() {
                             <span>{item.nama_diagnosa}</span>
                           </option>
                         ))}
-                      </Form.Select>
+                      </Form.Select> */}
+
+                      <Dropdown
+                        
+                        value={selectedDiagnosa}
+                        onChange={(e) => setSelectedDiagnosa(e.target.value)}
+                        options={createDiagnosaOptions()}
+                        placeholder='Pilih Diagnosa'
+                        filter
+                        required
+                      >
+  
+ 
+                      </Dropdown>
+
 
                       <Form.Group className="mt-3">
                         <Form.Label>Faktor Risiko</Form.Label>
-                        <Form.Select
+
+                        <MultiSelect 
+                          value={selectedFaktorRisiko}
+                          disabled={!selectedDiagnosa}
+                          options={createFaktorRisikoOptions()}
+                          placeholder='Pilih Faktor Risiko'
+
+                          >
+
+                        </MultiSelect>
+                        {/* <Form.Select
                           id="form-control-input"
                           value={selectedFaktorRisiko}
                           disabled={!selectedDiagnosa}
@@ -137,7 +224,7 @@ export default function FormDiagnosa() {
                                 {item.nama}
                               </option>
                             ))}
-                        </Form.Select>
+                        </Form.Select> */}
                       </Form.Group>
                       <Form.Group className="mt-5">
                         <h6>Penyebab</h6>
@@ -159,7 +246,17 @@ export default function FormDiagnosa() {
 
                       <Form.Group className="mt-3">
                         <Form.Label>Penyebab Situasional</Form.Label>
-                        <Form.Select
+
+                        <MultiSelect 
+                          value={selectedPenyebabSituasional}
+                          disabled={!selectedDiagnosa}
+                          options={createPenyebabSituasionalOptions()}
+                          placeholder='Pilih Penyebab Situasional'
+                          
+                          >
+
+                        </MultiSelect>
+                        {/* <Form.Select
                           id="form-control-input"
                           value={selectedPenyebabSituasional}
                           disabled={!selectedDiagnosa}
@@ -173,7 +270,7 @@ export default function FormDiagnosa() {
                             )
                           
                         )}
-                        </Form.Select>
+                        </Form.Select> */}
                       </Form.Group>
 
                     </Form.Group>
