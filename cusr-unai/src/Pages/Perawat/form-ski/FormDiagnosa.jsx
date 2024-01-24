@@ -4,6 +4,7 @@ import axios from '../../../axios'
 import "../../../../src/style/accordion.css";
 import { Dropdown }  from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect';
+import "primereact/resources/themes/saga-blue/theme.css";
 
 export default function FormDiagnosa() {
 
@@ -209,6 +210,7 @@ export default function FormDiagnosa() {
                           disabled={!selectedDiagnosa}
                           options={createFaktorRisikoOptions()}
                           placeholder="Pilih Faktor Risiko"
+                          className=" className='pt-1'"
                         ></MultiSelect>
                         {/* <Form.Select
                           id="form-control-input"
@@ -254,9 +256,11 @@ export default function FormDiagnosa() {
                           optionLabel="nama_penyebab"
                           placeholder="Pilih Penyebab Situasional"
                           filter
-                          onChange={(e) =>setPenyebabSituasional(e.value)}
+                          className="pt-1"
+                          onChange={(e) => setPenyebabSituasional(e.value)}
                           maxSelectedLabels={3}
                         ></MultiSelect>
+
                         {/* <Form.Select
                           id="form-control-input"
                           value={selectedPenyebabSituasional}
