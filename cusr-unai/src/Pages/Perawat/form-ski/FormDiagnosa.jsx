@@ -15,14 +15,25 @@ export default function FormDiagnosa() {
     const [selectedPenyebabFisiologis, setSelectedPenyebabFisiologis] = useState([]);
     const [selectedPenyebabSituasional, setSelectedPenyebabSituasional] = useState([]);
     const [selectedPenyebabPsikologis, setSelectedPenyebabPsikologis] = useState([]);
+    const [selectedGejalaMayorSubjektif, setSelectedGejalaMayorSubjektif] = useState([]);
+    const [selectedGejalaMayorObjektif, setSelectedGejalaMayorObjektif] = useState([]);
+    const [selectedGejalaMinorSubjektif, setSelectedGejalaMinorSubjektif] = useState([]);
+    const [selectedGejalaMinorObjektif, setSelectedGejalaMinorObjektif] = useState([]);
 
     const [inputValue, setInputValue] = useState("");
     const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
 
-    // form input diagnose
+    // VALUE
     
-    const [penyebab_fisiologis, setPenyebabFisiologis] = useState([]);
+    const [faktor_risiko, setFaktorRisiko] = useState(null);
+    const [penyebab_fisiologis, setPenyebabFisiologis] = useState(null);
     const [penyebab_situasional, setPenyebabSituasional] = useState(null);
+    const [penyebab_psikologis, setPenyebabPsikologis] = useState(null);
+    const [gejala_mayor_subjektif, setGejalaMayorSubjektif] = useState(null);
+    const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState(null);
+    const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState(null);
+    const [gejala_minor_objektif, setGejalaMinorObjektif] = useState(null);
+
     
     const createDiagnosaOptions = () => {
       if (!diagnosa || diagnosa.length === 0) {
@@ -44,47 +55,7 @@ export default function FormDiagnosa() {
       }
     };
 
-    const createFaktorRisikoOptions = () => {
-      if (!selectedFaktorRisiko || selectedFaktorRisiko === 0) {
-        return [
-          { value: '', label: 'Pilih Faktor Risiko'}
-        ];
-      } else {
-        const options = [
-          { value: '', label: '-'}
-        ];
-
-        selectedFaktorRisiko.forEach((item, index) => {
-          options.push({
-            value: item.id,
-            label: item.nama
-          });
-        });
-
-      return options; 
-      } 
-    };
-
-    const createPenyebabSituasionalOptions = () => {
-      if (!selectedPenyebabSituasional || selectedPenyebabSituasional === 0) {
-        return [
-          { value: '', label: 'Pilih Penyebab Situasional'}
-        ];
-      } else {
-        const options = [
-          { value: '', label: '-'}
-        ];
-
-        selectedPenyebabSituasional.forEach((item,index) => {
-          options.push({
-            value: item.id,
-            label: item.nama_penyebab
-          });
-        });
-
-        return options;
-      }
-    };
+    
 
     const FilterSearchValue = () => {
         const filteredDiagnosa = diagnosa.filter((item) => {
@@ -112,10 +83,15 @@ export default function FormDiagnosa() {
 
             const selectedDiagnosaData = res.data;
             
-            setSelectedFaktorRisiko(selectedDiagnosaData.selectedFaktorRisiko);
-            setSelectedPenyebabFisiologis(selectedDiagnosaData.selected);
+            setSelectedFaktorRisiko(selectedDiagnosaData.faktor_risiko);
+            setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
             setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
             setSelectedPenyebabPsikologis(selectedDiagnosaData.penyebab_psikologis);
+            setSelectedGejalaMayorSubjektif(selectedDiagnosaData.gejala_mayor_subjektif);
+            setSelectedGejalaMayorObjektif(selectedDiagnosaData.gejala_mayor_objektif);
+            setSelectedGejalaMinorSubjektif(selectedDiagnosaData.gejala_minor_subjektif);
+            setSelectedGejalaMinorObjektif(selectedDiagnosaData.gejala_minor_objektif);
+
             // console.log(selectedDiagnosaData.penyebab_fisiologis)
 
             // if (selectedDiagnosaData) {
@@ -136,6 +112,7 @@ export default function FormDiagnosa() {
             await handleDiagnosaChange(selectedDiagnosa);
             console.log(selectedDiagnosa);
             console.log(selectedPenyebabFisiologis);
+            console.log(selectedGejalaMinorObjektif);
           } catch (error) {
             console.error(error);
           }
@@ -178,21 +155,6 @@ export default function FormDiagnosa() {
                     <Form.Group className="mt-4">
                       <Form.Label>Diagnosa</Form.Label>
 
-                      {/* <Form.Select
-                        id="form-control-input"
-                        value={selectedDiagnosa}
-                        onChange={(e) => setSelectedDiagnosa(e.target.value)}
-                        required
-                      >
-                        <option value="">Masukkan Diagnosa Pasien</option>
-                        {diagnosa.map((item, index) => (
-                          <option key={index} value={item.id}>
-                            <span>{item.kode_diagnosa}</span> -{" "}
-                            <span>{item.nama_diagnosa}</span>
-                          </option>
-                        ))}
-                      </Form.Select> */}
-
                       <Dropdown
                         value={selectedDiagnosa}
                         onChange={(e) => setSelectedDiagnosa(e.target.value)}
@@ -200,55 +162,43 @@ export default function FormDiagnosa() {
                         placeholder="Pilih Diagnosa"
                         filter
                         required
+                        className='pt-1'
                       ></Dropdown>
 
                       <Form.Group className="mt-3">
                         <Form.Label>Faktor Risiko</Form.Label>
 
                         <MultiSelect
-                          value={selectedFaktorRisiko}
+                          value={faktor_risiko}
                           disabled={!selectedDiagnosa}
-                          options={createFaktorRisikoOptions()}
+                          options={selectedFaktorRisiko}
                           placeholder="Pilih Faktor Risiko"
-                          className=" className='pt-1'"
+                          optionLabel="faktor_risiko"
+                          className="pt-1"
+                          onChange={(e) => setFaktorRisiko(e.value)}
+                          filter
                         ></MultiSelect>
-                        {/* <Form.Select
-                          id="form-control-input"
-                          value={selectedFaktorRisiko}
-                          disabled={!selectedDiagnosa}
-                        >
-                          {selectedFaktorRisiko &&
-                            selectedFaktorRisiko.map((item, index) => (
-                              <option key={index} value={item.id}>
-                                {item.nama}
-                              </option>
-                            ))}
-                        </Form.Select> */}
                       </Form.Group>
                       <Form.Group className="mt-5">
                         <h6>Penyebab</h6>
                         <Form.Label>Penyebab Fisiologis</Form.Label>
-                        <Form.Select
-                          id="form-control-input"
+                        <MultiSelect
                           value={penyebab_fisiologis}
                           disabled={!selectedDiagnosa}
-                          onChange={(e) =>
-                            setPenyebabFisiologis(e.target.value)
-                          }
-                        >
-                          <option value="">Pilih Penyebab Fisiologis</option>
-                          {selectedPenyebabFisiologis &&
-                            selectedPenyebabFisiologis.map((item, index) => (
-                              <option key={index} value={item.id}>
-                                {item.nama_penyebab}
-                              </option>
-                            ))}
-                        </Form.Select>
+                          options={selectedPenyebabFisiologis}
+                          optionLabel="nama_penyebab"
+                          placeholder='Pilih Penyebab Fisiologis'
+                          filter
+                          className='pt-1'
+                          onChange={(e) => setPenyebabFisiologis(e.value)}
+                          maxSelectedLabels={3}
+                          > 
+                        </MultiSelect>
+                        
                       </Form.Group>
 
                       <Form.Group className="mt-3">
                         <Form.Label>Penyebab Situasional</Form.Label>
-
                         <MultiSelect
                           value={penyebab_situasional}
                           disabled={!selectedDiagnosa}
@@ -260,22 +210,83 @@ export default function FormDiagnosa() {
                           onChange={(e) => setPenyebabSituasional(e.value)}
                           maxSelectedLabels={3}
                         ></MultiSelect>
+                      </Form.Group>
 
-                        {/* <Form.Select
-                          id="form-control-input"
-                          value={selectedPenyebabSituasional}
+                      <Form.Group className="mt-3">
+                        <Form.Label>Penyebab Psikologis</Form.Label>
+                        <MultiSelect
+                          value={penyebab_psikologis}
                           disabled={!selectedDiagnosa}
-                        >
-                        <option value="">Pilih Penyebab Situasional</option>
-                        {selectedPenyebabSituasional && selectedPenyebabSituasional.map(
-                            (item, index) => (
-                              <option key={index} value={item.id}>
-                                {item.nama_penyebab}
-                              </option>
-                            )
-                          
-                        )}
-                        </Form.Select> */}
+                          options={selectedPenyebabPsikologis}
+                          optionLabel="nama_penyebab"
+                          placeholder="Pilih Penyebab Psikologis"
+                          filter
+                          className="pt-1"
+                          onChange={(e) => setPenyebabPsikologis(e.value)}
+                          maxSelectedLabels={3}
+                        ></MultiSelect>
+                      </Form.Group>
+
+                      <Form.Group className="mt-5">
+                        <h6>Gejala dan Tanda Mayor</h6>
+                        <Form.Label>Subjektif</Form.Label>
+                        <MultiSelect
+                          value={gejala_mayor_subjektif}
+                          disabled={!selectedDiagnosa}
+                          options={selectedGejalaMayorSubjektif}
+                          optionLabel="nama_gejala_mayor"
+                          placeholder="Pilih Subjektif"
+                          filter
+                          className="pt-1"
+                          onChange={(e) => setGejalaMayorSubjektif(e.value)}
+                          maxSelectedLabels={3}
+                        ></MultiSelect>
+                      </Form.Group>
+
+                      <Form.Group className="mt-3">
+                        <Form.Label>Objektif</Form.Label>
+                        <MultiSelect
+                          value={gejala_mayor_objektif}
+                          disabled={!selectedDiagnosa}
+                          options={selectedGejalaMayorObjektif}
+                          optionLabel="nama_gejala_mayor"
+                          placeholder="Pilih Objektif"
+                          filter
+                          className="pt-1"
+                          onChange={(e) => setGejalaMayorObjektif(e.value)}
+                          maxSelectedLabels={3}
+                        ></MultiSelect>
+                      </Form.Group>
+
+                      <Form.Group className="mt-5">
+                        <h6>Gejala dan Tanda Minor</h6>
+                        <Form.Label>Subjektif</Form.Label>
+                        <MultiSelect
+                          value={gejala_minor_subjektif}
+                          disabled={!selectedDiagnosa}
+                          options={selectedGejalaMinorSubjektif}
+                          optionLabel="nama_gejala_minor"
+                          placeholder="Pilih Subjektif"
+                          filter
+                          className="pt-1"
+                          onChange={(e) => setGejalaMinorSubjektif(e.value)}
+                          maxSelectedLabels={3}
+                        ></MultiSelect>
+                      </Form.Group>
+
+                      <Form.Group className="mt-3">
+                        <Form.Label>Objektif</Form.Label>
+                        <MultiSelect
+                          value={gejala_minor_objektif}
+                          disabled={!selectedDiagnosa}
+                          options={selectedGejalaMinorObjektif}
+                          optionLabel="nama_gejala_minor"
+                          placeholder="Pilih Objektif"
+                          filter
+                          className="pt-1"
+                          onChange={(e) => setGejalaMinorObjektif(e.value)}
+                          maxSelectedLabels={3}
+                        ></MultiSelect>
                       </Form.Group>
                     </Form.Group>
                   </Form>
