@@ -10,32 +10,31 @@ export default function DaftarPasienAwal() {
     // Autocomplete
 
     const [inputValue, setInputValue] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
+    const [filterPasien, setFilterPasien] = useState([]);
+    const [pasien, setPasien] = useState([]);
 
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setInputValue(value);
+    const filteredPasien = () => {
+        const filteredDiagnosa = pasien.filter((item) => {
+            return (
+                item.id.toString().includes(inputValue) ||
+                item.nama_lengkap
+                .toString()
+                .toLowerCase()
+                .includes(inputValue.toLowerCase()) 
+            );
+        });
+        setFilterPasien(filteredDiagnosa);
+    }
 
-        const fetchedSuggestions = getSuggestions(value);
-        setSuggestions(fetchedSuggestions);
-    };
+    useEffect(() => {
+        filteredPasien()
+    },[inputValue])
 
-    const getSuggestions = (value) => {
-        return [
-            'Suggestion 1',
-            'Suggestion 2',
-            'Suggestion 3',
-        ];
-    };
-
-    // Table
-
-    const [pasien, setPasien] = useState([])
 
     const getPasien = async (token) => {
         try {
             await axios
-            .post("/admin/daftarpasien", {
+            .post("/perawat/daftarpasien", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -45,7 +44,7 @@ export default function DaftarPasienAwal() {
                 setPasien(res?.data?.data);
             });
         } catch (error) {
-            // AuthorizationRoute(error.response.status);
+            AuthorizationRoute(error.response.status);
         }
     };
 
@@ -67,16 +66,12 @@ export default function DaftarPasienAwal() {
 
         <Form className="container">
             <div className="search-container">
-                    <input className="form-control" type="text" placeholder="Search" value={inputValue} onChange={handleInputChange} />
-
-                    {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
-                        Tambah
-                    </Link> */}
-                    <ul className="suggestions">
-                        {suggestions.map((suggestion, index) => (
-                            <li key={index}>{suggestion}</li>
-                        ))}
-                    </ul>
+                    <input 
+                        className="form-control" 
+                        type="text" 
+                        placeholder="Search" 
+                        value={inputValue} 
+                        onChange={(e) => setInputValue(e.target.value)} />
             </div>
 
             <Table className="table table-striped table-hover">
@@ -88,23 +83,34 @@ export default function DaftarPasienAwal() {
                     </tr>
                 </thead>
                 <tbody>
-                    {pasien.map((item, index) => (
-                    <tr key={index}>
-                        {/* <td>{item.nama_lengkap}</td> */}
-                        <td>Sharon Venicia</td>
-                        <td>
-                            <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
-                                class="d-flex justify-content-center align-items-center">
-                                Lihat Profil
-                            </Link>
-                        </td>
-                    </tr>
+                    {inputValue
+                    ? filterPasien.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.nama_lengkap}</td>
+                            <td>
+                                <Link
+                                    to={`/perawat/daftarpasien/${item.id}`}
+                                    >
+                                    Lihat
+                                </Link>
+                            </td>
+                        </tr>
+                    ))
+                    : pasien.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.nama_lengkap}</td>
+                            <td>
+                                <Link
+                                    to={`/perawat/daftarpasien/${item.id}`}
+                                    >
+                                    Lihat
+                                </Link>
+                            </td>
+                        </tr>
                     ))}
                 </tbody>
             </Table>
         </Form>
       </Sidebar>
-      
   );
 }

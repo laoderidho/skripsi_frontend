@@ -13,7 +13,7 @@ export default function DaftarPasien() {
     const [filterPasien, setFilterPasien] = useState([]);
     const [pasien, setPasien] = useState([])
 
-    const filteredPasien = () =>{
+    const filteredPasien = () => {
          const filteredDiagnosa = pasien.filter((item) => {
            return (
              item.id.toString().includes(inputValue) ||
