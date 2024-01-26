@@ -58,53 +58,58 @@ export default function DaftarPasien() {
     
 
   return (
-      <Sidebar>
-        {/* Title */}
-        <div className="container">
-            <h2>Daftar Pasien</h2>
-        </div>
+    <Sidebar>
+      {/* Title */}
+      <div className="container">
+        <h2>Daftar Pasien</h2>
+      </div>
 
-        {/* Search */}
+      {/* Search */}
 
-        <Form className="container">
-            <div className="search-container">
-                    <input className="form-control" type="text" placeholder="Search" value={inputValue} onChange={handleInputChange} />
+      <Form className="container">
+        <div className="search-container">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Search"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
 
-                    {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
+          {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
                         Tambah
                     </Link> */}
-                    <ul className="suggestions">
-                        {suggestions.map((suggestion, index) => (
-                            <li key={index}>{suggestion}</li>
-                        ))}
-                    </ul>
-            </div>
+          <ul className="suggestions">
+            {suggestions.map((suggestion, index) => (
+              <li key={index}>{suggestion}</li>
+            ))}
+          </ul>
+        </div>
 
-            <Table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                     
-                        <th>Nama</th>
-                        <th className="button-space"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pasien.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.nama_lengkap}</td>
-                        <td>
-                            <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
-                                class="d-flex justify-content-center align-items-center">
-                                Lihat Profil
-                            </Link>
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Form>
-      </Sidebar>
-      
+        <Table className="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th className="button-space"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {pasien.map((item, index) => (
+              <tr key={index}>
+                <td>{item.nama_lengkap}</td>
+                <td>
+                  <Link
+                    to={`/perawat/profilpasien/${item.id}`}
+                    class="d-flex justify-content-center align-items-center"
+                  >
+                    Lihat Profil
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Form>
+    </Sidebar>
   );
 }
