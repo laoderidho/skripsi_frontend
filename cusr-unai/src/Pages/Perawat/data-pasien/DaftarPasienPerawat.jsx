@@ -12,6 +12,8 @@ export default function DaftarPasien() {
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
 
+    const [pasien, setPasien] = useState([]);
+
     const handleInputChange = (e) => {
         const value = e.target.value;
         setInputValue(value);
@@ -19,6 +21,10 @@ export default function DaftarPasien() {
         const fetchedSuggestions = getSuggestions(value);
         setSuggestions(fetchedSuggestions);
     };
+
+    useEffect(()=>{
+       getdataPasien()
+    },[])
 
     const getSuggestions = (value) => {
         return [
@@ -28,30 +34,25 @@ export default function DaftarPasien() {
         ];
     };
 
+    const token = localStorage.getItem('token')
+
     // Table
 
-    const [pasien, setPasien] = useState([])
-
-    const getPasien = async (token) => {
-        try {
-            await axios
-            .post("/admin/daftarpasien", {
+    const getdataPasien = async () =>{
+        try{
+            const res = await axios.post("/perawat/pasien",{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .then((res) => {
-                console.log(res)
-                setPasien(res?.data?.data);
-            });
-        } catch (error) {
-            // AuthorizationRoute(error.response.status);
+            setPasien(res.data.data)
+        }catch(error){
+            // AuthorizationRoute(error.response.status)
         }
-    };
+    }
 
-    useEffect(()=>{
-        getPasien(localStorage.getItem('token'))
-    }, [])
+
+    
 
     console.log(pasien)
     
