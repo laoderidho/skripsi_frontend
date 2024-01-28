@@ -4,7 +4,7 @@ import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "../../../../axios";
 
-export default function Intervensi() {
+export default function Diagnosis() {
   const [inputValue, setInputValue] = useState("");
   const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
   const [diagnosa, setDiagnosa] = useState([]);
@@ -51,7 +51,7 @@ export default function Intervensi() {
       <div className="container">
         <h2>Data Standar Diagnosa Keperawatan Indonesia</h2>
         <Breadcrumb>
-          <Breadcrumb.Item active>Intervensi</Breadcrumb.Item>
+          <Breadcrumb.Item active>Diagnosis</Breadcrumb.Item>
           <Breadcrumb.Item href="/admin/diagnosa/tambah">
             Tambah
           </Breadcrumb.Item>

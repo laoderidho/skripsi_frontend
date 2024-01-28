@@ -67,34 +67,12 @@ export default function ProfilPasien() {
 
         <Form className="container">
             <div>
-                <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button-lg">
+                <Link to="/perawat/keteranganaskep" className="btn d-flex justify-content-center align-items-center blue-button-lg">
                         Lihat Pencatatan
                 </Link>      
             </div>
 
-            <Table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                     
-                        <th>Nama</th>
-                        <th className="button-space"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pasien.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.nama_lengkap}</td>
-                        <td>
-                            <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
-                                class="d-flex justify-content-center align-items-center">
-                                Lihat Profil
-                            </Link>
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
-            </Table>
+            
         </Form>
       </Sidebar>
       

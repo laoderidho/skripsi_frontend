@@ -39,7 +39,7 @@ import DiagnostikTambah from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
 import KeteranganAskep from "../Pages/Perawat/keterangan/KeteranganAskep";
 import PerawatGantiSandi from "../Pages/Perawat/PerawatGantiSandi";
 import DaftarPasienAwal from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
-import DaftarPasienLaporan from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
+import DaftarPasienLaporan from "../Pages/Perawat/laporan/DaftarPasienLaporan";
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
@@ -87,7 +87,7 @@ export default function Router() {
           {/* Admin */}
           <Route path="/admin/dashboard" element={<DashboardPage />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/admin/ganti-sandi" element={<GantiSandi />} />
+          <Route path="/admin/ganti-sandi" elemen t={<GantiSandi />} />
 
           {/* Perawat */}
           <Route path="/perawat/ganti-sandi" element={<PerawatGantiSandi />} />
@@ -113,8 +113,8 @@ export default function Router() {
           <Route path="/perawat/formdiagnosa" element={<FormDiagnosa />} />
 
           {/* Profil Pemeriksaan */}
-          <Route path="/perawat/profil/pemeriksaan" element={<ProfilPemeriksaan />} />
-          <Route path="/perawat/diagnostik/tambah" element={<AddDiagnostik />} />
+          <Route path="/perawat/profil/pemeriksaan/:id" element={<ProfilPemeriksaan />} />
+          <Route path="/perawat/diagnostik/tambah/:id" element={<AddDiagnostik />} />
           <Route path="/perawat/pemeriksaan-awal" element={<DaftarPasienAwal/>} />
 
           {/* Laporan */}

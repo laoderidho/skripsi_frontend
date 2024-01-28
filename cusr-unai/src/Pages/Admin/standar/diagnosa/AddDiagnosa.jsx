@@ -241,7 +241,7 @@ const AddDiagnosa = () => {
               onConfirm={submitForm}
               successMessage={"Diagnosa berhasil ditambahkan"}
               cancelMessage={"Diagnosa gagal ditambahkan"}
-              buttonText={"Tambah "}
+              buttonText={"Tambah"}
           />
         </div>
       </Form>

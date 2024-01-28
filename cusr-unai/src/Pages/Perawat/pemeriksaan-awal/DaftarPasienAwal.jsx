@@ -34,7 +34,7 @@ export default function DaftarPasienAwal() {
     const getPasien = async (token) => {
         try {
             await axios
-            .post("/perawat/daftarpasien", {
+            .post("/perawat/pasien", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -44,7 +44,7 @@ export default function DaftarPasienAwal() {
                 setPasien(res?.data?.data);
             });
         } catch (error) {
-            AuthorizationRoute(error.response.status);
+            // AuthorizationRoute(error.response.status);
         }
     };
 
@@ -89,7 +89,7 @@ export default function DaftarPasienAwal() {
                             <td>{item.nama_lengkap}</td>
                             <td>
                                 <Link
-                                    to={`/perawat/daftarpasien/${item.id}`}
+                                    to={`/perawat/profil/pemeriksaan/${item.id}`}
                                     >
                                     Lihat
                                 </Link>
@@ -101,7 +101,7 @@ export default function DaftarPasienAwal() {
                             <td>{item.nama_lengkap}</td>
                             <td>
                                 <Link
-                                    to={`/perawat/daftarpasien/${item.id}`}
+                                    to={`/perawat/profil/pemeriksaan/${item.id}`}
                                     >
                                     Lihat
                                 </Link>

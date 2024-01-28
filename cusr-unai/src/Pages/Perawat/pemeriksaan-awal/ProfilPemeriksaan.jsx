@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Sidebar from "../../../components/menu/Sidebar";
 import { Form, Button, Table, Container, Row, Col, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
 
@@ -10,8 +11,30 @@ export default function ProfilPemeriksaan() {
     // Autocomplete
 
     const [inputValue, setInputValue] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
     const [boxes, setBoxes] = useState([]);
+    const [tanggal, setTanggal] = useState([]);
+    const [filterTanggal, setFilterTanggal] = useState([]);
+    const [pasien, setPasien] = useState([]);
+    const [nama_lengkap, setNamaLengkap] = useState("");
+    const {id} = useParams();
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        getDataById();
+    },[]);
+
+    const getDataById = async () => {
+        try {
+            const res = await axios.post(`/perawat/pasien/detail/${id}`, {}, {
+                headers: { Authorization: `Bearer ${token}`}
+            });
+            setNamaLengkap(res.data.data.nama_lengkap)
+        } catch (error) {
+
+        }
+    };
+
 
     const handleAddBox = () => {
         const currentDate = new Date();
@@ -23,22 +46,23 @@ export default function ProfilPemeriksaan() {
         setBoxes([...boxes, formattedDate]);
     }
 
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setInputValue(value);
+    const filteredTanggal = () => {
+        const filteredTanggal = tanggal.filter((item) => {
+            return (
+                item.date
+                .toString()
+                .toLowerCase()
+                .includes(inputValue.toLowerCase())
+            );
+        });
+        setFilterTanggal(filteredTanggal);
+    }
 
-        const fetchedSuggestions = getSuggestions(value);
-        setSuggestions(fetchedSuggestions);
-    };
-
-    const getSuggestions = (value) => {
-        return [
-            'Suggestion 1',
-            'Suggestion 2',
-            'Suggestion 3',
-        ];
-    };
-
+    useEffect(() => {
+        filteredTanggal()
+    },[inputValue])
+    
+    
 
   return (
       <Sidebar>
@@ -49,30 +73,33 @@ export default function ProfilPemeriksaan() {
 
         {/* Search */}
 
-        <Form className="container">
-
-            {/* <div>
-                <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button-lg">
-                        Lihat Pencatatan
-                </Link>      
-            </div> */}
-
+        <div className="container">
             <Table className="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Nama</th>
-                        <th>
-                            <a href="#">Timbul Mahendra</a>
-                        </th>
+                            <th>
+                                <Link href="#">{nama_lengkap}</Link>
+                            </th>
                     </tr>
                 </thead>
             </Table>
-        </Form>
+
+            <input
+                className="form-control"
+                type="text"
+                placeholder="Search"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)} />
+
+        </div>
 
         <Container>
             <Row>
                 <Col>
-                    <Button onClick={handleAddBox} className="btn d-flex justify-content-center align-items-center blue-button-lg mt-1">Tambah</Button>
+                    <Link 
+                        to={`/perawat/diagnostik/tambah/${id}`}
+                        className="btn d-flex justify-content-center align-items-center blue-button-lg mt-1">Tambah</Link>
                 </Col>
             </Row>
             {boxes.map((date,index) => (

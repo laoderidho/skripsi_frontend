@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import Sidebar from '../../../components/menu/Sidebar'
 import { Breadcrumb, Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AuthorizationRoute from '../../../AuthorizationRoute'
 import axios from '../../../axios'
+import ConfirmModal from '../../../components/menu/ConfirmModal';
 
 const AddDiagnostik = () => {
 
@@ -24,12 +25,12 @@ const AddDiagnostik = () => {
   const [verbal, setVerbal] = useState("");
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
+  const {id} = useParams();
 
    
 
-  const submitForm = async (e) => {
-    e.preventDefault();
-
+  const submitForm = async () => {
+    
     const handleKeluhanUtama = keluhan_utama.split("\n");
     const handleRiwayatPenyakit = riwayat_penyakit.split("\n");
     const handleRiwayatAlergi = riwayat_alergi.split("\n");
@@ -44,7 +45,8 @@ const AddDiagnostik = () => {
     
 
     try {
-      const res = await axios.post("/admin/daftarpasien/tambah", {
+      const res = await axios.post(`/perawat/diagnostic/add/${id}`, {
+        id_pasien: id,
         keluhan_utama: handleKeluhanUtama,
         riwayat_penyakit: handleRiwayatPenyakit,
         riwayat_alergi: handleRiwayatAlergi,
@@ -268,10 +270,12 @@ const AddDiagnostik = () => {
         </Row>
 
         <div className='d-flex justify-content-end mt-3'>
-          <Button 
-            variant='primary' 
-            type="submit" 
-            className='btn justify-content-center align-items-center blue-button'>Simpan</Button>
+          <ConfirmModal
+            onConfirm={submitForm}
+            successMessage={"Data berhasil ditambahkan"}
+            cancelMessage={"Data gagal ditambahkan"}
+            buttonText={"Simpan"}
+            />
         </div>
       </Form>
     </Sidebar>
