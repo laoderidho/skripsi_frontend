@@ -69,7 +69,7 @@ const ConfigMenu = [
   },
   {
     path: "/perawat/daftarpasien",
-    name: "Daftar Pasien",
+    name: "ASKEP",
     role: "perawat",
     icon: "fa-solid fa-list",
     child: null,
