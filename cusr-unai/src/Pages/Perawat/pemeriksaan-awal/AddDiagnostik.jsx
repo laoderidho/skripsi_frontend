@@ -31,12 +31,12 @@ const AddDiagnostik = () => {
 
   const submitForm = async () => {
     
-    const handleKeluhanUtama = keluhan_utama.split("\n");
-    const handleRiwayatPenyakit = riwayat_penyakit.split("\n");
-    const handleRiwayatAlergi = riwayat_alergi.split("\n");
-    const handleRisikoJatuh = risiko_jatuh.split("\n");
-    const handleRisikoNyeri = risiko_nyeri.split("\n");
-    const handlePemeriksaanFisik = pemeriksaan_fisik.split("\n");
+    const handleKeluhanUtama = keluhan_utama ? keluhan_utama.split("/n ").join(",") : null;
+    const handleRiwayatPenyakit = riwayat_penyakit ? riwayat_penyakit.split("/n").join(",") : null;
+    const handleRiwayatAlergi = riwayat_alergi ? riwayat_alergi.split("/n").join(",")  : null;
+    const handleRisikoJatuh = risiko_jatuh ? risiko_jatuh.split("/n").join(",") : null;
+    const handleRisikoNyeri = risiko_nyeri ? risiko_nyeri.split("/n").join(",") : null;
+    const handlePemeriksaanFisik = pemeriksaan_fisik ? pemeriksaan_fisik.split("/n").join(",") : null;
     const handleSuhu = `${suhu} °C`;
     const handleNadi = `${nadi} x/menit`
     const handleLajuRespirasi = `${laju_respirasi} x/menit`;
@@ -68,7 +68,7 @@ const AddDiagnostik = () => {
       { 
         headers: { Authorization: `Bearer ${token}`}
       });
-      navigate("/admin/daftarpasien");
+      navigate("/perawat/daftarpasien");
     } catch (error){
       // AuthorizationRoute(error.response.status)
     }
@@ -261,6 +261,8 @@ const AddDiagnostik = () => {
               <Form.Control 
                 id="form-control-input"
                 type="text" 
+                as="textarea"
+                style={{ height: "4rem" }}
                 value={pemeriksaan_fisik}
                 onChange={(e) => setPemeriksaanFisik(e.target.value)}
                 required

@@ -26,7 +26,7 @@ export default function ProfilPemeriksaan() {
 
     const getDataById = async () => {
         try {
-            const res = await axios.post(`/perawat/pasien/detail/${id}`, {}, {
+            const res = await axios.post(`/perawat/daftarpasien/detail/${id}`, {}, {
                 headers: { Authorization: `Bearer ${token}`}
             });
             setNamaLengkap(res.data.data.nama_lengkap)

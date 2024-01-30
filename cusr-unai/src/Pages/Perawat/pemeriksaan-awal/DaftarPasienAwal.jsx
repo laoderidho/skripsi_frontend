@@ -34,7 +34,7 @@ export default function DaftarPasienAwal() {
     const getPasien = async (token) => {
         try {
             await axios
-            .post("/perawat/pasien", {
+            .post("/perawat/daftarpasien", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
