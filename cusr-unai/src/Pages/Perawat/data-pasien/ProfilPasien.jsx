@@ -28,6 +28,8 @@ export default function ProfilPasien() {
         getDataById();
     },[]);
 
+    const token = localStorage.getItem('token');
+
     const getDataById = async () => {
         try {
             const res = await axios.post(`/perawat/daftarpasien/detail/${id}`, {
@@ -71,7 +73,7 @@ export default function ProfilPasien() {
     // };
 
     useEffect(()=>{
-        getPasien(localStorage.getItem('token'))
+        // getPasien(localStorage.getItem('token'))
     }, [])
 
   return (
@@ -93,6 +95,7 @@ export default function ProfilPasien() {
           </Link>
         </div>
 
+        </Form>
         {/* Search */}
 
         <Form className="container">
@@ -109,7 +112,7 @@ export default function ProfilPasien() {
             
             
         </Form>
-      </Sidebar>
+    </Sidebar>
       
   );
 }

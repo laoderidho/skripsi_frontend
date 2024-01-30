@@ -31,22 +31,23 @@ const AddDiagnostik = () => {
 
   const submitForm = async () => {
     
-    const handleKeluhanUtama = keluhan_utama ? keluhan_utama.split("/n ").join(",") : null;
-    const handleRiwayatPenyakit = riwayat_penyakit ? riwayat_penyakit.split("/n").join(",") : null;
-    const handleRiwayatAlergi = riwayat_alergi ? riwayat_alergi.split("/n").join(",")  : null;
-    const handleRisikoJatuh = risiko_jatuh ? risiko_jatuh.split("/n").join(",") : null;
-    const handleRisikoNyeri = risiko_nyeri ? risiko_nyeri.split("/n").join(",") : null;
-    const handlePemeriksaanFisik = pemeriksaan_fisik ? pemeriksaan_fisik.split("/n").join(",") : null;
+    const handleKeluhanUtama = keluhan_utama ? keluhan_utama.split("\n").join(",") : null;
+    const handleRiwayatPenyakit = riwayat_penyakit ? riwayat_penyakit.split("\n").join(",") : null;
+    const handleRiwayatAlergi = riwayat_alergi ? riwayat_alergi.split("\n").join(",")  : null;
+    const handleRisikoJatuh = risiko_jatuh ? risiko_jatuh.split("\n").join(",") : null;
+    const handleRisikoNyeri = risiko_nyeri ? risiko_nyeri.split("\n").join(",") : null;
+    const handlePemeriksaanFisik = pemeriksaan_fisik ? pemeriksaan_fisik.split("\n").join(",") : null;
     const handleSuhu = `${suhu} °C`;
     const handleNadi = `${nadi} x/menit`
     const handleLajuRespirasi = `${laju_respirasi} x/menit`;
     const handleTekananDarah = `${sistolik}/${diastolik} mmHg`;
     const handleGCS = `e: ${eye}/m: ${motor}/v: ${verbal}`;
+    const handleSistolik = parseInt(sistolik);
+    const handleDiastolik = parseInt(diastolik);
     
 
     try {
-      const res = await axios.post(`/perawat/diagnostic/add/${id}`, {
-        id_pasien: id,
+       await axios.post(`/perawat/diagnostic/add/${id}`, {
         keluhan_utama: handleKeluhanUtama,
         riwayat_penyakit: handleRiwayatPenyakit,
         riwayat_alergi: handleRiwayatAlergi,
@@ -54,8 +55,8 @@ const AddDiagnostik = () => {
         risiko_nyeri: handleRisikoNyeri,
         suhu: handleSuhu,
         tekanan_darah: handleTekananDarah,
-        sistolik: sistolik,
-        diastolik: diastolik,
+        sistolik: handleSistolik,
+        diastolik: handleDiastolik,
         nadi: handleNadi,
         laju_respirasi: handleLajuRespirasi,
         gcs: handleGCS,
@@ -63,16 +64,14 @@ const AddDiagnostik = () => {
         motor: motor,
         verbal: verbal,
         pemeriksaan_fisik: handlePemeriksaanFisik
-
       },
       { 
         headers: { Authorization: `Bearer ${token}`}
       });
-      navigate("/perawat/daftarpasien");
+      navigate(`/perawat/profil/pemeriksaan/${id}`);
     } catch (error){
       // AuthorizationRoute(error.response.status)
-    }
-    
+    }    
   };
 
 
