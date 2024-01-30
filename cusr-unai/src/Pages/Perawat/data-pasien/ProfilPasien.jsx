@@ -1,46 +1,74 @@
 import React, {useEffect, useState} from "react";
 import Sidebar from "../../../components/menu/Sidebar";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
 
 export default function ProfilPasien() {
 
-    const [nama, setNama] = useState("");
+    const [nama_lengkap, setNamaLengkap] = useState("");
     const [tanggal_lahir, setTanggalLahir] = useState("");
-    const [gender, setGender] = useState("");
+    const [jenis_kelamin, setJenisKelamin] = useState("");
+    const [no_telepon, setNoTelepon] = useState("");
     const [alamat, setAlamat] = useState("");
-    const [isMaried, setIsMaried] = useState("");
-    const [nohp, setNohp] = useState("");
+    const [status_pernikahan, setStatusPernikahan] = useState("");
+    const [nik, setNik] = useState("");
     const [alergi, setAlergi] = useState("");
-    const [asuransi, setAsuransi] = useState("");
-
-  
+    const [nama_asuransi, setNamaAsuransi] = useState("");
+    const [no_asuransi, setNomorAsuransi] = useState("");
+    const [no_medical_record, setMedicalRecord] = useState("");
     const {id} = useParams();
+    const navigate = useNavigate();
 
-    const getPasien = async (token) => {
+    const [inputValue, setInputValue] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+
+    useEffect(() => {
+        getDataById();
+    },[]);
+
+    const getDataById = async () => {
         try {
-            await axios
-            .post(`/perawat/pasien/detail/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+            const res = await axios.post(`/perawat/daftarpasien/detail/${id}`, {
+                headers: { Authorization: `Bearer ${token}`}
             })
-            .then((res) => {
-                console.log(res)
-                setNama(res.data.data.nama_lengkap);
-                setTanggalLahir(res.data.data.tanggal_lahir);
-                setGender(res.data.data.jenis_kelamin);
-                setAlamat(res.data.data.alamat);
-                setNohp(res.data.data.no_telepon);
-                setAlergi(res.data.data.alergi);
-                setAsuransi(res.data.data.no_asuransi);
-            });
+            setNamaLengkap(res.data.data.nama_lengkap)
+            setTanggalLahir(res.data.data.tanggal_lahir)
+            setJenisKelamin(res.data.data.jenis_kelamin)
+            setNoTelepon(res.data.data.no_telepon)
+            setAlamat(res.data.data.alamat)
+            setStatusPernikahan(res.data.data.status_pernikahan)
+            setNik(res.data.data.nik)
+            setAlergi(res.data.data.alergi)
+            setNamaAsuransi(res.data.data.nama_asuransi)
+            setNomorAsuransi(res.data.data.no_asuransi)
+            setMedicalRecord(res.data.data.no_medical_record)
         } catch (error) {
-            // AuthorizationRoute(error.response.status);
+
         }
     };
+
+    // Table
+
+    const [pasien, setPasien] = useState([])
+
+    // const getPasien = async (token) => {
+    //     try {
+    //         await axios
+    //         .post("/admin/daftarpasien", {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         })
+    //         .then((res) => {
+    //             console.log(res)
+    //             setPasien(res?.data?.data);
+    //         });
+    //     } catch (error) {
+    //         // AuthorizationRoute(error.response.status);
+    //     }
+    // };
 
     useEffect(()=>{
         getPasien(localStorage.getItem('token'))
@@ -65,49 +93,23 @@ export default function ProfilPasien() {
           </Link>
         </div>
 
-        <Table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th></th>
-              <th className="button-space"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Nama lengkap</td>
-              <td>{nama}</td>
-            </tr>
-            <tr>
-              <td>tanggal Lahir</td>
-              <td>{tanggal_lahir}</td>
-            </tr>
-            <tr>
-              <td>Jenis Kelamin</td>
-              <td>{gender == 1 ? "Laki-Laki" : "Perempuan"}</td>
-            </tr>
-            <tr>
-              <td>Alamat</td>
-              <td>{alamat}</td>
-            </tr>
-            <tr>
-              <td>Status Pernikahan</td>
-              <td>{isMaried == 1 ? "Sudah Menikah" : "Belum Menikah"}</td>
-            </tr>
-            <tr>
-              <td>No Telepon</td>
-              <td>{nohp}</td>
-            </tr>
-            <tr>
-              <td>alergi</td>
-              <td>{alergi ? alergi : "-"}</td>
-            </tr>
-            <tr>
-              <td>Nomor Asuransi</td>
-              <td>{asuransi ? asuransi : "-"}</td>
-            </tr>
-          </tbody>
-        </Table>
-      </Form>
-    </Sidebar>
+        {/* Search */}
+
+        <Form className="container">
+            <div>
+                <Link to="/perawat/keteranganaskep" className="btn d-flex justify-content-center align-items-center blue-button-lg">
+                        Lihat Pencatatan
+                </Link> 
+
+                <p>Nama Lengkap</p>
+                <hr />
+
+            </div>
+
+            
+            
+        </Form>
+      </Sidebar>
+      
   );
 }

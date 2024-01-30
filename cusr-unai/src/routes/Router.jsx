@@ -40,6 +40,7 @@ import KeteranganAskep from "../Pages/Perawat/keterangan/KeteranganAskep";
 import PerawatGantiSandi from "../Pages/Perawat/PerawatGantiSandi";
 import DaftarPasienAwal from "../Pages/Perawat/pemeriksaan-awal/DaftarPasienAwal";
 import DaftarPasienLaporan from "../Pages/Perawat/laporan/DaftarPasienLaporan";
+import DetailDiagnostik from "../Pages/Perawat/pemeriksaan-awal/DetailDiagnostik";
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
@@ -116,6 +117,7 @@ export default function Router() {
           <Route path="/perawat/profil/pemeriksaan/:id" element={<ProfilPemeriksaan />} />
           <Route path="/perawat/diagnostik/tambah/:id" element={<AddDiagnostik />} />
           <Route path="/perawat/pemeriksaan-awal" element={<DaftarPasienAwal/>} />
+          <Route path="/perawat/diagnostik" element={<DetailDiagnostik/>} />
 
           {/* Laporan */}
           <Route path="/perawat/laporan" element={<DaftarPasienLaporan />} />
