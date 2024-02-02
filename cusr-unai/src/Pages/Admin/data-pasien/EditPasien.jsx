@@ -18,6 +18,7 @@ const EditPasien = () => {
     const [nama_asuransi, setNamaAsuransi] = useState("");
     const [nomor_asuransi, setNomorAsuransi] = useState("");
     const [no_medical_record, setMedicalRecord] = useState("");
+    const [bed, setBed] = useState("");
     const {id} = useParams();
     const navigate = useNavigate();
     const token=localStorage.getItem("token");
@@ -41,6 +42,7 @@ const EditPasien = () => {
           nama_asuransi: nama_asuransi,
           nomor_asuransi: nomor_asuransi,
           no_medical_record: no_medical_record,
+          bed: bed,
         },
         { 
           headers: { Authorization: `Bearer ${token}`}
@@ -208,6 +210,19 @@ const EditPasien = () => {
                   required
                   />
               </Form.Group>
+
+              <Form.Group className="mb-3">
+              <Form.Label>Bed</Form.Label>
+              <Form.Control 
+                id="form-control-input"
+                type="text" 
+                placeholder="Masukkan No Bed"
+                value={bed}
+                onChange={(e) => setBed(e.target.value)}
+                required
+                />
+            </Form.Group>
+
             </Col>
           </Row>
   

@@ -229,6 +229,7 @@ const DetailDiagnostik = () => {
                max="200"
                value={diastolik}
                onChange={(e)=>setDiastolik(e.target.value)}
+               disabled={!isEditing}
               />
               <span class="input-group-text">mmHg</span>
             </div>
@@ -319,12 +320,7 @@ const DetailDiagnostik = () => {
       </Row>
 
       <div className='d-flex justify-content-end mt-3'>
-        <ConfirmModal
-          onConfirm={submitForm}
-          successMessage={"Data berhasil ditambahkan"}
-          cancelMessage={"Data gagal ditambahkan"}
-          buttonText={"Simpan"}
-          />
+        
       </div>
     </Form>
   </Sidebar>

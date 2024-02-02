@@ -19,6 +19,7 @@ const AddPasien = () => {
   const [nama_asuransi, setNamaAsuransi] = useState("");
   const [nomor_asuransi, setNomorAsuransi] = useState("");
   const [no_medical_record, setMedicalRecord] = useState("");
+  const [bed, setBed] = useState("");
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
 
@@ -36,6 +37,7 @@ const AddPasien = () => {
         nama_asuransi: nama_asuransi,
         no_asuransi: nomor_asuransi,
         no_medical_record: no_medical_record,
+        bed: bed,
       },
       { 
         headers: { Authorization: `Bearer ${token}`}
@@ -53,8 +55,8 @@ const AddPasien = () => {
       <div className="container">
         <h2>Tambah Pasien</h2>
         <Breadcrumb>
-          <Breadcrumb.Item href="/admin/standarkeperawatan/diagnosis">
-            Diagnosis
+          <Breadcrumb.Item href="/admin/daftarpasien">
+            Daftar Pasien
           </Breadcrumb.Item>
           <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
         </Breadcrumb>
@@ -200,6 +202,18 @@ const AddPasien = () => {
                 placeholder="Masukkan No Medical Record"
                 value={no_medical_record}
                 onChange={(e) => setMedicalRecord(e.target.value)}
+                required
+                />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Bed</Form.Label>
+              <Form.Control 
+                id="form-control-input"
+                type="text" 
+                placeholder="Masukkan No Bed"
+                value={bed}
+                onChange={(e) => setBed(e.target.value)}
                 required
                 />
             </Form.Group>

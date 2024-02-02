@@ -19,6 +19,7 @@ const DetailPasien = () => {
     const [nama_asuransi, setNamaAsuransi] = useState("");
     const [no_asuransi, setNomorAsuransi] = useState("");
     const [no_medical_record, setMedicalRecord] = useState("");
+    const [bed, setBed] = useState("");
     const {id} = useParams();
     const navigate = useNavigate();
     const token=localStorage.getItem("token");
@@ -52,6 +53,7 @@ const DetailPasien = () => {
         setNamaAsuransi(res.data.data.nama_asuransi)
         setNomorAsuransi(res.data.data.no_asuransi)
         setMedicalRecord(res.data.data.no_medical_record)
+        setBed(res.data.data.bed)
       } catch (error) {
         
       }
@@ -73,6 +75,7 @@ const DetailPasien = () => {
           nama_asuransi: nama_asuransi,
           no_asuransi: no_asuransi,
           no_medical_record: no_medical_record,
+          bed: bed,
         },
         { 
           headers: { Authorization: `Bearer ${token}`}
@@ -320,6 +323,20 @@ const DetailPasien = () => {
                   disabled={!isEditing}
                 />
               </Form.Group>
+
+              <Form.Group className="mb-3">
+              <Form.Label>Bed</Form.Label>
+              <Form.Control 
+                id="form-control-input"
+                type="text" 
+                placeholder="Masukkan No Bed"
+                value={bed}
+                onChange={(e) => setBed(e.target.value)}
+                required
+                disabled={!isEditing}
+                />
+            </Form.Group>
+
               <Form.Group className="mb-3">
                 <Form.Label>
                   {" "}

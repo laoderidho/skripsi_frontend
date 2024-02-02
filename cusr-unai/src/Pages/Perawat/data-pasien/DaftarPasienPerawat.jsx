@@ -40,7 +40,7 @@ export default function DaftarPasien() {
 
     const getdataPasien = async () =>{
         try{
-            const res = await axios.post("/perawat/pasien",{
+            const res = await axios.post("/perawat/daftarpasien",{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

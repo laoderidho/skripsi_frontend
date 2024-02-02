@@ -22,6 +22,7 @@ export default function ProfilPemeriksaan() {
 
     useEffect(() => {
         getDataById();
+        handleAddBox();
     },[]);
 
     const getDataById = async () => {
@@ -35,16 +36,28 @@ export default function ProfilPemeriksaan() {
         }
     };
 
+    const handleAddBox = async () => {
+        try {
+            const res = await axios.post(`/perawat/diagnostic/getlist/${id}`, {
+                headers: { Authorization: `Bearer ${token}`}
+            }); 
+            setBoxes(res.data.data)
+            console.log(res.data.data)
+        } catch (error) {
 
-    const handleAddBox = () => {
-        const currentDate = new Date();
-        const formattedDate = currentDate.toLocaleDateString('id-ID', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        });
-        setBoxes([...boxes, formattedDate]);
-    }
+        }
+    };
+
+
+    // const handleAddBox = () => {
+    //     const currentDate = new Date();
+    //     const formattedDate = currentDate.toLocaleDateString('id-ID', {
+    //         year: 'numeric',
+    //         month: 'long',
+    //         day: 'numeric',
+    //     });
+    //     setBoxes([...boxes, formattedDate]);
+    // }
 
     const filteredTanggal = () => {
         const filteredTanggal = tanggal.filter((item) => {
@@ -102,13 +115,15 @@ export default function ProfilPemeriksaan() {
                         className="btn d-flex justify-content-center align-items-center blue-button-lg mt-1">Tambah</Link>
                 </Col>
             </Row>
-            {boxes.map((date,index) => (
+            {boxes && boxes.map((date,index) => (
                 <Row key={index}>
                     <Col>
-                        <div className="btn box">
-                            <span className="">{date}</span>
-                            <span className=""><a href="#">Edit</a></span>
-                        </div>
+                        <Link 
+                            to={`/perawat/diagnostik/${date.id}`}
+                            className="btn box">
+                            <span className="">{date.updated_at}</span>
+                            <span className=""></span>
+                        </Link>
                     </Col>
                 </Row>
             ))}

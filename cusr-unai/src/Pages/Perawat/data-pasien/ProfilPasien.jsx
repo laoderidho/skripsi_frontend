@@ -51,27 +51,11 @@ export default function ProfilPasien() {
         }
     };
 
-    // Table
+    
 
     const [pasien, setPasien] = useState([])
 
-    // const getPasien = async (token) => {
-    //     try {
-    //         await axios
-    //         .post("/admin/daftarpasien", {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         })
-    //         .then((res) => {
-    //             console.log(res)
-    //             setPasien(res?.data?.data);
-    //         });
-    //     } catch (error) {
-    //         // AuthorizationRoute(error.response.status);
-    //     }
-    // };
-
+    
     useEffect(()=>{
         // getPasien(localStorage.getItem('token'))
     }, [])
@@ -83,19 +67,6 @@ export default function ProfilPasien() {
         <h2>Profil Pasien</h2>
       </div>
 
-      {/* Search */}
-
-      <Form className="container">
-        <div>
-          <Link
-            to="/admin/daftarpasien/tambah"
-            className="btn d-flex justify-content-center align-items-center blue-button-lg"
-          >
-            Lihat Pencatatan
-          </Link>
-        </div>
-
-        </Form>
         {/* Search */}
 
         <Form className="container">
@@ -105,7 +76,7 @@ export default function ProfilPasien() {
                 </Link> 
 
                 <p>Nama Lengkap</p>
-                <hr />
+                <hr className="hr-style"/>
 
             </div>
 

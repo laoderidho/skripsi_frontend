@@ -28,6 +28,7 @@ import EditIntervensi from "../Pages/Admin/standar/intervensi/EditIntervensi";
 import EditDiagnosa from "../Pages/Admin/standar/diagnosa/EditDiagnosa";
 import DetailLuaran from "../Pages/Admin/standar/luaran/DetailLuaran";
 import EditLuaran from "../Pages/Admin/standar/luaran/EditLuaran";
+import DaftarBed from "../Pages/Admin/bed/DaftarBed";
 
 // Perawat Component Import
 import PerawatDashboard from "../Pages/Perawat/PerawatDashboard";
@@ -88,7 +89,8 @@ export default function Router() {
           {/* Admin */}
           <Route path="/admin/dashboard" element={<DashboardPage />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/admin/ganti-sandi" elemen t={<GantiSandi />} />
+          <Route path="/admin/ganti-sandi" element={<GantiSandi />} />
+          <Route path="/admin/bed" element={<DaftarBed />} />
 
           {/* Perawat */}
           <Route path="/perawat/ganti-sandi" element={<PerawatGantiSandi />} />
@@ -117,7 +119,7 @@ export default function Router() {
           <Route path="/perawat/profil/pemeriksaan/:id" element={<ProfilPemeriksaan />} />
           <Route path="/perawat/diagnostik/tambah/:id" element={<AddDiagnostik />} />
           <Route path="/perawat/pemeriksaan-awal" element={<DaftarPasienAwal/>} />
-          <Route path="/perawat/diagnostik" element={<DetailDiagnostik/>} />
+          <Route path="/perawat/diagnostik/:id" element={<DetailDiagnostik/>} />
 
           {/* Laporan */}
           <Route path="/perawat/laporan" element={<DaftarPasienLaporan />} />

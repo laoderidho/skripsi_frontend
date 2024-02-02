@@ -10,7 +10,7 @@ const ConfigMenu = [
     path: "/admin/daftarpasien",
     name: "Daftar Pasien",
     role: "admin",
-    icon: "fa-solid fa-bed",
+    icon: "fa-solid fa-list",
     child: null,
   },
   {
@@ -18,6 +18,13 @@ const ConfigMenu = [
     name: "Daftar Perawat",
     role: "admin",
     icon: "fa-solid fa-user-nurse",
+    child: null,
+  },
+  {
+    path: "/admin/bed",
+    name: "Bed",
+    role: "admin",
+    icon: "fa-solid fa-bed",
     child: null,
   },
   {
