@@ -19,7 +19,7 @@ const DetailPasien = () => {
     const [nama_asuransi, setNamaAsuransi] = useState("");
     const [no_asuransi, setNomorAsuransi] = useState("");
     const [no_medical_record, setMedicalRecord] = useState("");
-    const [bed, setBed] = useState("");
+    const [bed, setBed] = useState([]);
     const {id} = useParams();
     const navigate = useNavigate();
     const token=localStorage.getItem("token");
@@ -30,14 +30,26 @@ const DetailPasien = () => {
     const [showModalRawatInap, setShowModalRawatInap] = useState(false);
     const [dataRawatInap, setDataRawatInap] = useState('');
     const [triase, setTriase] = useState('');
+    const [pasienBed, setPasienBed] = useState('');
 
     useEffect(() => {
         getDataById();
         detailStatus();
+        getBedData();
     },[]);
+
+    const getBedData = async () =>{
+      try {
+       const res =  await axios.post('/admin/bed/filter',{
+            headers: { Authorization: `Bearer ${token}`} 
+          })
+          setBed(res.data.data)
+      } catch (error) {
+        
+      }
+    }
     
-    const getDataById = async () => {
-       
+    const getDataById = async () => {     
      try {
         const res = await axios.post(`/admin/daftarpasien/detail/${id}`,{
           headers: { Authorization: `Bearer ${token}`}
@@ -53,7 +65,6 @@ const DetailPasien = () => {
         setNamaAsuransi(res.data.data.nama_asuransi)
         setNomorAsuransi(res.data.data.no_asuransi)
         setMedicalRecord(res.data.data.no_medical_record)
-        setBed(res.data.data.bed)
       } catch (error) {
         
       }
@@ -75,7 +86,6 @@ const DetailPasien = () => {
           nama_asuransi: nama_asuransi,
           no_asuransi: no_asuransi,
           no_medical_record: no_medical_record,
-          bed: bed,
         },
         { 
           headers: { Authorization: `Bearer ${token}`}
@@ -111,16 +121,17 @@ const DetailPasien = () => {
 
     const addRawatInap = async () =>{
       try {
-        const res = await axios.post(`/pasien/rawat-inap/${id}`, {
+         await axios.post(`/admin/perawatan/add/${id}`, {
           triase: triase,
-          status: 1
+          bed: pasienBed
         },
         { 
           headers: { Authorization: `Bearer ${token}`}
         });
-        // navigate("/admin/rawatinap");
+        setShowModalRawatInap(!showModalRawatInap)
+        detailStatus();
       } catch (error){
-         AuthorizationRoute(error.response.status)
+        //  AuthorizationRoute(error.response.status)
       }
     }
     
@@ -154,6 +165,16 @@ const DetailPasien = () => {
                   <option value="hitam">Hitam</option>
                 </Form.Select>
               </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Select name="bed" value={pasienBed} onChange={(e)=>setPasienBed(e.target.value)}>
+                  <option value={null}>Pilih Kamar</option>
+                  {bed && bed.map((item, index)=>{
+                    return(
+                      <option value={item.no_bed}>{item.no_bed}</option>
+                    )
+                  })}
+                </Form.Select>
+              </Form.Group>
             </Modal.Body>
             <Modal.Footer>
               <Button
@@ -162,9 +183,14 @@ const DetailPasien = () => {
               >
                 Close
               </Button>
-              <Button variant="primary" type="submit">
-                Save Changes
-              </Button>
+              {pasienBed && triase ? ( <ConfirmModal
+                onConfirm={addRawatInap}
+                successMessage={"Pasien berhasil di rawat inap"}
+                cancelMessage={"Pasien gagal di rawat inap"}
+                buttonText={"save changes"}
+              />): (
+                <Button variant="primary" disabled>save changes</Button>
+              )}
             </Modal.Footer>
           </Form>
         </Modal>
@@ -324,7 +350,7 @@ const DetailPasien = () => {
                 />
               </Form.Group>
 
-              <Form.Group className="mb-3">
+            { /**<Form.Group className="mb-3">
               <Form.Label>Bed</Form.Label>
               <Form.Control 
                 id="form-control-input"
@@ -335,7 +361,7 @@ const DetailPasien = () => {
                 required
                 disabled={!isEditing}
                 />
-            </Form.Group>
+                </Form.Group> **/}
 
               <Form.Group className="mb-3">
                 <Form.Label>

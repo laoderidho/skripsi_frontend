@@ -13,6 +13,7 @@ export default function DaftarBed() {
 
     const [showModal, setShowModal] = useState(false);
     const [bed, setBed] = useState([]);
+    const [newBed, setNewBed] = useState("");
     const {id} = useParams();
     const [showModalStatus, setShowModalStatus] = useState(false);
 
@@ -44,9 +45,8 @@ export default function DaftarBed() {
     const filteredBed = () => {
         const filteredRoom = bed.filter((item) => {
             return (
-                item.bed.toString().includes(inputValue) ||
-                item.status.toString().toLowerCase().includes(inputValue.toLowerCase()) ||
-                item.nama_lengkap.toString().tozlowerCase().includes(inputValue.toLowerCase())
+                item.no_bed.toString().includes(inputValue) ||
+                item.status.toString().toLowerCase().includes(inputValue.toLowerCase()) 
             );
         });
         setFilterBed(filteredRoom);
@@ -68,7 +68,6 @@ export default function DaftarBed() {
         detailSedia();
         getData();
     },[inputValue])
-
 
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
@@ -92,13 +91,15 @@ export default function DaftarBed() {
 
     const submitForm = async () => {
         try {
-            const res = await axios.post(`/admin/bed/tambah`, {
-                bed: bed,
+            await axios.post(`/admin/bed/tambah`, {
+                no_bed: newBed,
             },
             {
                 headers: { Authorization: `Bearer ${token}`}
             });
-            navigate("/admin/bed")
+            setShowModal(false);
+            getData();
+            navigate("/admin/bed");
         } catch (error) {
 
         }
@@ -109,9 +110,9 @@ export default function DaftarBed() {
     return (
         <Sidebar>
             <div className="container">
-                <h2>Daftar Bed</h2>
+                <h2>Daftar Kamaar</h2>
                 <Breadcrumb>
-                <Breadcrumb.Item active>Daftar Bed</Breadcrumb.Item>
+                <Breadcrumb.Item active>Daftar Kamar</Breadcrumb.Item>
                 <Breadcrumb.Item href="/admin/bed/tambah">
                     Tambah
                 </Breadcrumb.Item>
@@ -122,8 +123,8 @@ export default function DaftarBed() {
                         className="form-control"
                         type="text"
                         placeholder="Search"
-                        // value={inputValue}
-                        // onChange={(e) => setInputValue(e.target.value)}
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
                     />
 
                     <Button
@@ -136,17 +137,17 @@ export default function DaftarBed() {
                     <Table>
                         <thead>
                             <tr>
-                                <th>Nama Bed</th>
+                                <th>Nomor Kamar</th>
                                 <th>Status</th>
-                                <th>Nama Pengguna</th>
+                                <th>Action</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {inputValue
-                            ? filterBed.localeCompare((item,index) => (
+                            ? filterBed.map((item,index) => (
                                 <tr key={index}>
-                                    <td>{item.bed}</td>
+                                    <td>{item.no_bed}</td>
                                     <td>{item.status}</td>
                                     <td>
                                         <Button>
@@ -157,7 +158,7 @@ export default function DaftarBed() {
                             ))
                             : bed.map((item, index) => (
                                 <tr key={index}>
-                                    <td>{item.bed}</td>
+                                    <td>{item.no_bed}</td>
                                     <td>{item.status}</td>
                                     <td>
                                         <Button>
@@ -184,8 +185,8 @@ export default function DaftarBed() {
                                     <Form.Control
                                         type="text"
                                         placeholder="Masukkan Nama Bed"
-                                        value={bed}
-                                        onChange={(e) => setBed(e.target.value)}
+                                        value={newBed}
+                                        onChange={(e) => setNewBed(e.target.value)}
                                     />
                                     
                                         <ConfirmModal 
