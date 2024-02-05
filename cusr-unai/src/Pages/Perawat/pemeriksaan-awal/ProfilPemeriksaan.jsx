@@ -92,7 +92,8 @@ export default function ProfilPemeriksaan() {
                     <tr>
                         <th>Nama</th>
                             <th>
-                                <Link href="#">{nama_lengkap}</Link>
+                                <Link
+                                to={`/perawat/profilpasien/${id}`}>{nama_lengkap}</Link>
                             </th>
                     </tr>
                 </thead>

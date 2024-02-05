@@ -5,6 +5,7 @@ import "../../../../src/style/accordion.css";
 import { Dropdown }  from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect';
 import "primereact/resources/themes/saga-blue/theme.css";
+import Sidebar from '../../../components/menu/Sidebar';
 
 export default function FormDiagnosa() {
 
@@ -144,13 +145,11 @@ export default function FormDiagnosa() {
     // console.log(diagnosa)
 
     return (
-      <div>
-        <Accordion defaultActiveKey="0">
-          <Accordion.Item>
-            <Accordion.Header>Diagnosa</Accordion.Header>
-            <Accordion.Body className="accordion-form">
-              <Card>
-                <Card.Body>
+      <Sidebar>
+        <div className='container'>
+        <h2>Form Diagnosa</h2>
+      </div>
+        <div className='container'>
                   <Form className="container">
                     <Form.Group className="mt-4">
                       <Form.Label>Diagnosa</Form.Label>
@@ -290,11 +289,7 @@ export default function FormDiagnosa() {
                       </Form.Group>
                     </Form.Group>
                   </Form>
-                </Card.Body>
-              </Card>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-      </div>
+        </div>
+      </Sidebar>
     );
 }

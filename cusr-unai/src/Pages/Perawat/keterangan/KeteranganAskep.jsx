@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Table, Modal, Form, Accordion } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Button, Table, Modal, Form, Accordion, Container, Row, Col } from "react-bootstrap";
 import Sidebar from '../../../components/menu/Sidebar'
+import { Link } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom'
+
+
 
 const KeteranganAskep = () => {
   const [tables, setTables] = useState([]);
@@ -8,6 +12,11 @@ const KeteranganAskep = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const [showTime, setShowTime] = useState(false);
+  const {id} = useParams();
+  const navigate =  useNavigate();
+  const token = localStorage.getItem("token");
+
+  
 
   const handleTambah = () => {
     setShowModal(true);
@@ -19,13 +28,14 @@ const KeteranganAskep = () => {
 
   const getFormattedDateTime = () => {
     const options = {
-      year: "2-digit",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "numeric",
-      minute: "numeric",
+      year: "numeric",
+      weekday:  "long",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     };
-    return new Date().toLocaleString("id-ID", options).replace(","," -");
+    return new Date().toLocaleString("id-ID", options).replace(","," ·");
   }
 
   const handleSimpan = () => {
@@ -43,19 +53,61 @@ const KeteranganAskep = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  function CheckIcon(props) {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" {...props}>
+        <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />
+        <path
+          d="M7 13l3 3 7-7"
+          stroke="#fff"
+          strokeWidth={1.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    )
+  }
+
   return (
     <Sidebar>
-        <div className="App">
-      <h1> {loggedInUser || "Tamu"}</h1>
-      <Button onClick={handleTambah} className='btn d-flex justify-content-center align-items-center blue-button-lg mt-1'>Tambah</Button>
+
+      <div className='container'>
+        <h2>Askep</h2>
+      </div>
+
+      <div className='container'>
+      
+      <Link  
+        to={`/perawat/askep/form-diagnosa/${id}`}
+        className='btn d-flex justify-content-center align-items-center diagnosa-button'>Tambah Diagnosa</Link>
 
       {tables.map((table, date, index) => (
-        <div key={table.id}>
-          <div className='flexbox justify-content'>
+        <div key={table.id} className='box-panel'>
+          <div className='flexbox justify-content modify'>
             <span>User: {table.user}</span>
-            <span className='flex-end'>No: </span>
+            <span 
+              style={{ paddingLeft: '8rem' }}>No: </span>
           </div>
-          <Table striped bordered hover>
+
+          
+
+          
+
+          <Container className='container-modify'>
+            <Row>
+              <Col>
+                <p style={{ paddingLeft: '0.7rem' }}>Diagnosa</p>
+                <p style={{ paddingLeft: '0.7rem', 
+                            fontSize: '14px',
+                            paddingTop: '0rem' }}>{getFormattedDateTime()}</p>
+              </Col>
+            </Row>
+          </Container>
+
+          <div>
+            <br></br>
+          </div>
+          {/* <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Keterangan</th>
@@ -68,7 +120,7 @@ const KeteranganAskep = () => {
                 <td>{getFormattedDateTime()}</td>
               </tr>
             </tbody>
-          </Table>
+          </Table> */}
         </div>
       ))}
 

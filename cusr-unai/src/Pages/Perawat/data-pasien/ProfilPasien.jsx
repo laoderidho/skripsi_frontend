@@ -69,20 +69,63 @@ export default function ProfilPasien() {
 
         {/* Search */}
 
-        <Form className="container">
-            <div>
-                <Link to="/perawat/keteranganaskep" className="btn d-flex justify-content-center align-items-center blue-button-lg">
-                        Lihat Pencatatan
-                </Link> 
+        <div className="container">
+           
+            <Link to={`/perawat/askep/${id}`} className="btn blue-button-left-align">
+                Lihat Pencatatan
+            </Link> 
 
-                <p>Nama Lengkap</p>
-                <hr className="hr-style"/>
+            <div className="default"> 
+                  {/* Nama Lengkap */}
+                  <b className="hr-style">Nama Lengkap</b>
+                  <p className="mt-2">{nama_lengkap}</p>
 
-            </div>
+                  {/* Tanggal Lahir */}
+                  <b className="hr-style">Tanggal Lahir</b>
+                  <p className="mt-2">{tanggal_lahir}</p>
+
+                  {/* Jenis Kelamin */}
+                  <b className="hr-style">Jenis Kelamin</b>
+                  <p className="mt-2">{jenis_kelamin}</p>
+
+                  {/* No Telepon */}
+                  <b className="hr-style">Nomor Telepon</b>
+                  <p className="mt-2">{no_telepon}</p>
+
+                  {/* Alamat */}
+                  <b className="hr-style">Alamat</b>
+                  <p className="mt-2">{alamat}</p>
+
+                  {/* Status Pernikahan */}
+                  <b className="hr-style">Status Pernikahan</b>
+                  <p className="mt-2">{status_pernikahan}</p>
+
+                  {/* NIK */}
+                  <b className="hr-style">NIK</b>
+                  <p className="mt-2">{nik}</p>
+
+                  {/* Alergi */}
+                  <b className="hr-style">Alergi</b>
+                  <p className="mt-2">{alergi}</p>
+
+                  {/* Nama Asuransi */}
+                  <b className="hr-style">Nama Asuransi</b>
+                  <p className="mt-2">{nama_asuransi}</p>
+
+                  {/* Nomor Asuransi */}
+                  <b className="hr-style">Nomor Asuransi</b>
+                  <p className="mt-2">{no_asuransi}</p>
+
+                  {/* No Medical Record */}
+                  <b className="hr-style">No Medical Record</b>
+                  <p className="mt-2">{no_medical_record}</p>
+                </div>
+
+          
 
             
             
-        </Form>
+        </div>
     </Sidebar>
       
   );

@@ -431,6 +431,66 @@ th, td {
     border: 1px solid #007BFF;
 }
 
+.blue-button-left-align {
+    background-color: #007BFF;
+    color: #ffffff;
+    border-radius: 0.2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5rem;
+    /* margin-bottom: 1rem; */ 
+    border: 1px solid #007BFF;
+}
+
+.diagnosa-button {
+    background-color: #e6f5ff;
+    color: #0099ff ;
+    border-radius: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 3rem;
+    height: 3rem;
+    font-weight:  600;
+  
+}
+
+.modify {
+    padding-left: 0.7rem;
+    padding-top: 0.5rem;
+}
+
+.container-modify {
+    background-color: #fff;
+    width: 95%;
+    max-width: 100%;
+    border-radius: 0.4rem;
+    padding-Left: 1rem;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.diagnosa-button:hover {
+    box-shadow: 0 0 0px 2px #0099ff;
+}
+
+.box-panel {
+    background-color: #e6f5ff;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+
+}
+
+.blue-button-left-align:hover, .blue-button-lg:hover {
+    background-color: #0069D9;
+    color: #fff;
+}
+
+
+
+
 .red-button {
     background-color: #ff0000;
     border: 1px solid #ff0000;
@@ -442,6 +502,8 @@ th, td {
     margin-bottom: 1rem;
     float: right;
 }
+
+
 
 .red-button:hover {
     background-color: #e02807;
@@ -537,6 +599,15 @@ th, td {
     border-radius: 0.7rem;
 }
 
+.hr-style {
+    color: #161f7d;
+  
+}
+
+.default {
+    margin-top: 2rem !important;
+}
+
 
 
 /* Buat Mobile */
@@ -559,7 +630,8 @@ th, td {
         max-width:37%;
     }
 
-    .blue-button-lg {
+
+    .blue-button-left-align, .blue-button-lg, .diagnosa-button {
         width: 100%;
         max-width: 100%;
     }
@@ -593,11 +665,7 @@ th, td {
         height: 3rem;
     }
 
-    .p-multiselect-panel, .p-multiselect-item {
-
-    
-
-    }
+   
     
 }
 

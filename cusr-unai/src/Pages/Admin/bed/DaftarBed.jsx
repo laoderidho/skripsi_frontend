@@ -146,10 +146,10 @@ export default function DaftarBed() {
                             {inputValue
                             ? filterBed.localeCompare((item,index) => (
                                 <tr key={index}>
-                                    <td>{item.bed}</td>
+                                    <td>{item.no_bed}</td>
                                     <td>{item.status}</td>
                                     <td>
-                                        <Button>
+                                        <Button >
                                             Edit
                                         </Button>
                                     </td>
@@ -157,7 +157,7 @@ export default function DaftarBed() {
                             ))
                             : bed.map((item, index) => (
                                 <tr key={index}>
-                                    <td>{item.bed}</td>
+                                    <td>{item.no_bed}</td>
                                     <td>{item.status}</td>
                                     <td>
                                         <Button>
