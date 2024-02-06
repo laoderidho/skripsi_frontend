@@ -22,7 +22,7 @@ const ConfigMenu = [
   },
   {
     path: "/admin/bed",
-    name: "Bed",
+    name: "kamar",
     role: "admin",
     icon: "fa-solid fa-bed",
     child: null,

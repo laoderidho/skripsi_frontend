@@ -6,6 +6,7 @@ import { Dropdown }  from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect';
 import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from '../../../components/menu/Sidebar';
+import ConfirmModal from '../../../components/menu/ConfirmModal';
 
 export default function FormDiagnosa() {
 
@@ -83,6 +84,7 @@ export default function FormDiagnosa() {
             );
 
             const selectedDiagnosaData = res.data;
+
             
             setSelectedFaktorRisiko(selectedDiagnosaData.faktor_risiko);
             setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
@@ -92,28 +94,18 @@ export default function FormDiagnosa() {
             setSelectedGejalaMayorObjektif(selectedDiagnosaData.gejala_mayor_objektif);
             setSelectedGejalaMinorSubjektif(selectedDiagnosaData.gejala_minor_subjektif);
             setSelectedGejalaMinorObjektif(selectedDiagnosaData.gejala_minor_objektif);
-
-            // console.log(selectedDiagnosaData.penyebab_fisiologis)
-
-            // if (selectedDiagnosaData) {
-                // setSelectedFaktorRisiko(selectedDiagnosaData.faktor_risiko);
-               // setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
-               // setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
-                
-            // }
         
         } catch (error) {
             
         }
     } 
 
+    
+
     useEffect(()=>{
         const fetchData = async () => {
           try {
             await handleDiagnosaChange(selectedDiagnosa);
-            console.log(selectedDiagnosa);
-            console.log(selectedPenyebabFisiologis);
-            console.log(selectedGejalaMinorObjektif);
           } catch (error) {
             console.error(error);
           }
@@ -288,6 +280,15 @@ export default function FormDiagnosa() {
                         ></MultiSelect>
                       </Form.Group>
                     </Form.Group>
+
+                    <div className='d-flex justify-content-end mt-3'>
+                      <ConfirmModal
+                        // onConfirm={}
+                        successMessage={"Data berhasil ditambahkan"}
+                        cancelMessage={"Data gagal ditambahkan"}
+                        buttonText={"Simpan"}
+                        />
+                    </div>
                   </Form>
         </div>
       </Sidebar>

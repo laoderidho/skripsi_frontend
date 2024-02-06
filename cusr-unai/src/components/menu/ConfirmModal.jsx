@@ -9,7 +9,7 @@ const ConfirmModal = ({onConfirm, successMessage, cancelMessage, buttonText}) =>
       text: "Apakah Anda yakin?",
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "OK",
+      confirmButtonText: "Ok",
       cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -21,7 +21,7 @@ const ConfirmModal = ({onConfirm, successMessage, cancelMessage, buttonText}) =>
     });
   };
 
-  return <Button variant="btn d-flex justify-content-center align-items-center blue-button" onClick={showApiConfirmation}>{buttonText}</Button>;
+  return <Button variant="btn blue-button" onClick={showApiConfirmation}>{buttonText}</Button>;
 };
 
 export default ConfirmModal;
