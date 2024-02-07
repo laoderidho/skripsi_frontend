@@ -14,11 +14,11 @@ const AddDiagnosa = () => {
   const [penyebab_fisiologis, setPenyebabFisiologis] = useState("");
   const [penyebab_situasional, setPenyebabSituasional] = useState("");
   const [penyebab_psikologis, setPenyebabPsikologis] = useState("");
+  const [penyebab_umum, setPenyebabUmum] = useState("");
   const [gejala_mayor_subjektif, setGejalaMayorSubjektif] = useState("");
   const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState("");
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState("");
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState("");
-  const [penyebab_umum, setPenyebabUmum] = useState("");
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
   const [submitted, setSubmitted] = useState(false);
@@ -48,7 +48,7 @@ const AddDiagnosa = () => {
         gejala_mayor_objektif: handleGejalaMayorObjektif,
         gejala_minor_subjektif: handleGejalaMinorSubjektif,
         gejala_minor_objektif: handleGejalaMinorObjektif,
-        penyebab_umum: handlePenyebab_umum
+        penyebab_umum: handlePenyebab_umum,
       },
       { 
         headers: { Authorization: `Bearer ${token}`}
@@ -234,6 +234,8 @@ const AddDiagnosa = () => {
               onChange={(e) => setGejalaMinorObjektif(e.target.value)}
             />
           </Form.Group>
+
+          
         </Row>
 
         <div className="d-flex justify-content-end mt-5">
