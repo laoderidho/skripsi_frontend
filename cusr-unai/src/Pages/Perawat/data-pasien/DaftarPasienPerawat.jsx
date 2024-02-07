@@ -45,18 +45,12 @@ export default function DaftarPasien() {
                     Authorization: `Bearer ${token}`,
                 },
             })
+            console.log(res.data.data)
             setPasien(res.data.data)
         }catch(error){
             // AuthorizationRoute(error.response.status)
         }
     }
-
-    
-    
-
-    console.log(pasien)
-    
-
   return (
     <Sidebar>
       {/* Title */}
@@ -99,7 +93,7 @@ export default function DaftarPasien() {
                 <td>{item.nama_lengkap}</td>
                 <td>
                   <Link
-                    to={`/perawat/profilpasien/${item.id}`}
+                    to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
                     class="d-flex justify-content-center align-items-center"
                   >
                     Lihat Profil

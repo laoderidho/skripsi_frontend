@@ -108,7 +108,7 @@ export default function Router() {
 
           {/* Asuhan Keperawatan */}
           <Route path="/perawat/daftarpasien" element={<DaftarPasienPerawat />} />
-          <Route path="/perawat/profilpasien/:id" element={<ProfilPasien />} />
+          <Route path="/perawat/profilpasien/:id/:perawatan_id" element={<ProfilPasien />} />
         
 
           {/* Keterangan Askep */}
