@@ -3,6 +3,7 @@ import { Button, Table, Modal, Form, Accordion, Container, Row, Col } from "reac
 import Sidebar from '../../../components/menu/Sidebar'
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from 'react-router-dom'
+import axios from "../../../axios";
 
 
 
@@ -16,7 +17,8 @@ const KeteranganAskep = () => {
   const navigate =  useNavigate();
   const token = localStorage.getItem("token");
 
-  
+  const [diagnosa, setDiagnosa] = useState([]);
+
 
   const handleTambah = () => {
     setShowModal(true);
@@ -25,6 +27,7 @@ const KeteranganAskep = () => {
   const handleCloseModal = () => {
     setShowModal(true);
   };
+
 
   const getFormattedDateTime = () => {
     const options = {
@@ -38,6 +41,8 @@ const KeteranganAskep = () => {
     return new Date().toLocaleString("id-ID", options).replace(","," ·");
   }
 
+
+
   const handleSimpan = () => {
     // Tambahkan tabel baru ke dalam array tables
     setTables([...tables, { user: loggedInUser, id: Date.now(), data: formData }]);
@@ -46,6 +51,11 @@ const KeteranganAskep = () => {
     setShowModal(false);
     setShowTime(true);
   };
+
+  useEffect(() => {
+    handleSimpan();
+  },[]);
+
 
   const handleChange = (e) => {
     // Handle perubahan input formulir
