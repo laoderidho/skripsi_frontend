@@ -7,7 +7,7 @@ import { MultiSelect } from "primereact/multiselect";
 import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function FormDiagnosa() {
   const [diagnosa, setDiagnosa] = useState([]);
@@ -30,10 +30,10 @@ export default function FormDiagnosa() {
     useState([]);
   const [selectedGejalaMinorObjektif, setSelectedGejalaMinorObjektif] =
     useState([]);
+  const [selectedPenyebabUmum, setSelectedPenyebabUmum] = useState([]);
 
-  const [inputValue, setInputValue] = useState("");
-  const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
   const {id} = useParams();
+  const Navigate = useNavigate();
 
   // VALUE
 
@@ -46,6 +46,8 @@ export default function FormDiagnosa() {
   const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState(null);
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState(null);
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState(null);
+  const [penyebab_umum, setPenyebabUmum] = useState(null);
+
 
   const createDiagnosaOptions = () => {
     if (!diagnosa || diagnosa.length === 0) {
@@ -95,6 +97,7 @@ export default function FormDiagnosa() {
       setSelectedGejalaMinorObjektif(
         selectedDiagnosaData.gejala_tanda_minor_objektif
       );
+      setSelectedPenyebabUmum(selectedDiagnosaData.penyebab_umum);
     } catch (error) {}
   };
 
@@ -184,6 +187,7 @@ export default function FormDiagnosa() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      Navigate(`/perawat/askep/${id}`);
     } catch (error) {
       
     }
@@ -269,6 +273,21 @@ export default function FormDiagnosa() {
               ></MultiSelect>
             </Form.Group>
 
+            <Form.Group className="mt-3">
+              <Form.Label>Penyebab Umum</Form.Label>
+              <MultiSelect
+                value={penyebab_umum}
+                disabled={!selectedDiagnosa}
+                options={selectedPenyebabUmum}
+                optionLabel="nama_penyebab"
+                placeholder="Pilih Penyebab Umum"
+                filter
+                className="pt-1"
+                onChange={(e) => setPenyebabPsikologis(e.value)}
+                maxSelectedLabels={3}
+              ></MultiSelect>
+            </Form.Group>
+
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Mayor</h6>
               <Form.Label>Subjektif</Form.Label>
@@ -334,11 +353,11 @@ export default function FormDiagnosa() {
 
           <div className="d-flex justify-content-end mt-3">
             <ConfirmModal
-                onConfirm={addDiagnosa}
-                successMessage={"Data berhasil ditambahkan"}
-                cancelMessage={"Data gagal ditambahkan"}
-                buttonText={"Simpan"}
-              /> 
+              onConfirm={addDiagnosa}
+              successMessage={"Data berhasil ditambahkan"}
+              cancelMessage={"Data gagal ditambahkan"}
+              buttonText={"Simpan"}
+            />
           </div>
         </Form>
       </div>
