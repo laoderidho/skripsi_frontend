@@ -120,7 +120,7 @@ export default function Router() {
 
           {/* Form SKI*/}
           <Route path="/perawat/askep/form-diagnosa/:id" element={<FormDiagnosa />} />
-          <Route path="/perawat/askep/form-intervensi" element={<FormIntervensi />} />
+          <Route path="/perawat/askep/form-intervensi/:id" element={<FormIntervensi />} />
           <Route path="/perawat/askep/form-evaluasi" element={<FormEvaluasi />} />
 
           {/* Profil Pemeriksaan */}

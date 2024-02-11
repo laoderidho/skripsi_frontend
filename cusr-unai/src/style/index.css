@@ -263,12 +263,27 @@ nav{
 }
 
 .option-button-svg {
-    color: #000;
+    color: #3a3636;
     background-color: #fff;
-    width: 3.2rem;
-    height: 3.2rem;
     border: 0.1rem solid #dddee0;
     float: right;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    max-width: 100%;
+}
+
+.svg-askep {
+    width: 50%;
+    color: #3a3636;
+    margin-right: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.option-text {
+    margin-right: 0.7rem;
 }
 
 
@@ -695,6 +710,32 @@ th, td {
         height: 3rem;
     }
 
+    .svg-askep {
+        width: 50%;
+        color: #3a3636;
+        margin-right: 1rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .option-button-svg {
+        color: #3a3636;
+        background-color: #fff;
+        border: 0.1rem solid #dddee0;
+        float: right;
+        text-align: center;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .option-text {
+        margin-right: 0.5rem;
+    }
+    
+
+    
    
     
 }

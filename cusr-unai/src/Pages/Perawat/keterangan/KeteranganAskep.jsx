@@ -111,40 +111,24 @@ const KeteranganAskep = () => {
                               paddingTop: '0rem' }}>{getFormattedDateTime()}</p>
                 </Col>
                 <Col>
-                  <div className='dropdown'>
-                    <Button className='btn option-button-svg'>
-                    <svg viewBox="0 0 24 24" focusable="false" class="" aria-hidden="true"><path fill="currentColor" d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"></path></svg>
-                    </Button>
-                  </div>
-                 {/* <svg viewBox="0 0 24 24" focusable="false" class="option-button-svg" aria-hidden="true"><path fill="currentColor" d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"></path></svg> */}
-                
+                  <Link 
+                    to={`/perawat/askep/form-intervensi/${id}`}
+                    className='btn d-flex justify-content-center align-items-center option-button-svg mt-4'>
+                      <span>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                      </span>
+                      <span className='option-text'>Intervensi</span>
+                    </Link>
                 </Col>
               </Row>
             </Container>
 
             <div>
-              {/* <Accordion activeIndex={0}>
-                <AccordionTab header="">
-                  <Link
-                    className='btn d-flex justify-content-center align-items-center intervensi-button'>Tambah Intervensi</Link>
-                </AccordionTab>
-              </Accordion> */}
-              <div></div>
+              <br></br>
             </div>
-            {/* <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Keterangan</th>
-                  <th>Tanggal/Jam</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td>{getFormattedDateTime()}</td>
-                </tr>
-              </tbody>
-            </Table> */}
+           
           </div>
         ))}
 
