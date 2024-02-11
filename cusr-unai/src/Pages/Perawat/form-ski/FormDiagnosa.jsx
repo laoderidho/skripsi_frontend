@@ -8,7 +8,7 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
 import { useParams } from "react-router-dom";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 export default function FormDiagnosa() {
   const [diagnosa, setDiagnosa] = useState([]);
@@ -157,6 +157,7 @@ export default function FormDiagnosa() {
           gejala_tanda_mayor_subjektif: handleGejalaTanda_mayor_subjektif,
           gejala_tanda_minor_objektif: handleGejala_Minor_objektif,
           gejala_tanda_minor_subjektif: handleGejala_Minor_subjektif,
+          catatan: catatan
         },
         {
           headers: { Authorization: `Bearer ${token}` },

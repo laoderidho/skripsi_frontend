@@ -6,6 +6,8 @@ import { Dropdown }  from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect';
 import "primereact/resources/themes/saga-blue/theme.css";
 import ConfirmModal from '../../../components/menu/ConfirmModal';
+import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function FormEvaluasi() {
 
@@ -16,7 +18,7 @@ export default function FormEvaluasi() {
     const [selectedKriteriaLuaran, setSelectedKriteriaLuaran] = useState([]);
 
     // VALUE
-
+    const [nama_luaran, setNamaLuaran] = useState(null);
     const [nama_kriteria_luaran, setNamaKriteriaLuaran] = useState(null);
 
     const createLuaranOptions = () => {
