@@ -45,6 +45,7 @@ import DetailDiagnostik from "../Pages/Perawat/pemeriksaan-awal/DetailDiagnostik
 import HariAskep from "../Pages/Perawat/keterangan/HariAskep";
 import ShiftHarian from "../Pages/Perawat/keterangan/ShiftHarian";
 import FormIntervensi from "../Pages/Perawat/form-ski/FormIntervensi";
+import FormEvaluasi from "../Pages/Perawat/form-ski/FormEvaluasi";
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
@@ -120,6 +121,7 @@ export default function Router() {
           {/* Form SKI*/}
           <Route path="/perawat/askep/form-diagnosa/:id" element={<FormDiagnosa />} />
           <Route path="/perawat/askep/form-intervensi" element={<FormIntervensi />} />
+          <Route path="/perawat/askep/form-evaluasi" element={<FormEvaluasi />} />
 
           {/* Profil Pemeriksaan */}
           <Route path="/perawat/profil/pemeriksaan/:id" element={<ProfilPemeriksaan />} />

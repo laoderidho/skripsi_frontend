@@ -7,10 +7,11 @@ import { MultiSelect } from "primereact/multiselect";
 import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function FormDiagnosa() {
   const [diagnosa, setDiagnosa] = useState([]);
+  const [catatan, setCatatan] = useState('');
 
   const [selectedDiagnosa, setSelectedDiagnosa] = useState("");
   const [selectedFaktorRisiko, setSelectedFaktorRisiko] = useState([]);
@@ -30,10 +31,8 @@ export default function FormDiagnosa() {
     useState([]);
   const [selectedGejalaMinorObjektif, setSelectedGejalaMinorObjektif] =
     useState([]);
-  const [selectedPenyebabUmum, setSelectedPenyebabUmum] = useState([]);
 
   const {id} = useParams();
-  const Navigate = useNavigate();
 
   // VALUE
 
@@ -42,6 +41,7 @@ export default function FormDiagnosa() {
   const [penyebab_fisiologis, setPenyebabFisiologis] = useState(null);
   const [penyebab_situasional, setPenyebabSituasional] = useState(null);
   const [penyebab_psikologis, setPenyebabPsikologis] = useState(null);
+  const [penyebab_umum, setPenyebabUmum] = useState(null);
   const [gejala_mayor_subjektif, setGejalaMayorSubjektif] = useState(null);
   const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState(null);
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState(null);
@@ -97,7 +97,6 @@ export default function FormDiagnosa() {
       setSelectedGejalaMinorObjektif(
         selectedDiagnosaData.gejala_tanda_minor_objektif
       );
-      setSelectedPenyebabUmum(selectedDiagnosaData.penyebab_umum);
     } catch (error) {}
   };
 
@@ -147,25 +146,13 @@ export default function FormDiagnosa() {
   };
 
   const addDiagnosa = async () => {
-    const handleFaktorRisiko = faktor_risiko
-      ? handleData(faktor_risiko, "faktor_risiko")
-      : null;
-    const handlePenyebabFisiologis = penyebab_fisiologis
-      ? handleData(penyebab_fisiologis, "nama_penyebab")
-      : null;
-    const handlePenyebabSituasional = penyebab_situasional
-      ? handleData(penyebab_situasional, "nama_penyebab")
-      : null;
-    const handlePenyebabPsikologis = penyebab_psikologis
-      ? handleData(penyebab_psikologis, "nama_penyebab")
-      : null;
-    // const handlePenyebabUmum =
-    const handleGejalaTanda_mayor_objektif = gejala_mayor_objektif
-      ? handleData(gejala_mayor_objektif, "nama_gejala")
-      : null;
-    const handleGejalaTanda_mayor_subjektif = gejala_mayor_subjektif
-      ? handleData(gejala_mayor_subjektif, "nama_gejala")
-      : null;
+    const handleFaktorRisiko = faktor_risiko ? handleData(faktor_risiko, "faktor_risiko") : null;
+    const handlePenyebabFisiologis = penyebab_fisiologis ? handleData(penyebab_fisiologis, "nama_penyebab") : null;
+    const handlePenyebabSituasional = penyebab_situasional ? handleData(penyebab_situasional, "nama_penyebab") : null;
+    const handlePenyebabPsikologis = penyebab_psikologis ? handleData(penyebab_psikologis, "nama_penyebab") : null;
+    const handlePenyebabUmum = penyebab_umum ? handleData(penyebab_umum, "nama_penyebab") : null;
+    const handleGejalaTanda_mayor_objektif = gejala_mayor_objektif ? handleData(gejala_mayor_objektif, "nama_gejala") : null;
+    const handleGejalaTanda_mayor_subjektif = gejala_mayor_subjektif ? handleData(gejala_mayor_subjektif, "nama_gejala") : null;
     const handleGejala_Minor_objektif = gejala_minor_objektif ? handleData(gejala_minor_objektif, "nama_gejala"): null;
     const handleGejala_Minor_subjektif = gejala_minor_subjektif ? handleData(gejala_minor_subjektif, "nama_gejala") : null;
 
@@ -178,16 +165,17 @@ export default function FormDiagnosa() {
           penyebab_fisiologis: handlePenyebabFisiologis,
           penyebab_situasional: handlePenyebabSituasional,
           penyebab_psikologis: handlePenyebabPsikologis,
+          penyebab_umum: handlePenyebabUmum,
           gejala_tanda_mayor_objektif: handleGejalaTanda_mayor_objektif,
           gejala_tanda_mayor_subjektif: handleGejalaTanda_mayor_subjektif,
           gejala_tanda_minor_objektif: handleGejala_Minor_objektif,
           gejala_tanda_minor_subjektif: handleGejala_Minor_subjektif,
+          catatan: catatan
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      Navigate(`/perawat/askep/${id}`);
     } catch (error) {
       
     }
@@ -273,21 +261,6 @@ export default function FormDiagnosa() {
               ></MultiSelect>
             </Form.Group>
 
-            <Form.Group className="mt-3">
-              <Form.Label>Penyebab Umum</Form.Label>
-              <MultiSelect
-                value={penyebab_umum}
-                disabled={!selectedDiagnosa}
-                options={selectedPenyebabUmum}
-                optionLabel="nama_penyebab"
-                placeholder="Pilih Penyebab Umum"
-                filter
-                className="pt-1"
-                onChange={(e) => setPenyebabPsikologis(e.value)}
-                maxSelectedLabels={3}
-              ></MultiSelect>
-            </Form.Group>
-
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Mayor</h6>
               <Form.Label>Subjektif</Form.Label>
@@ -349,7 +322,22 @@ export default function FormDiagnosa() {
                 maxSelectedLabels={3}
               ></MultiSelect>
             </Form.Group>
+
+            <Form.Group className="mt-3">
+              <h6>Catatan</h6>
+              <Form.Control
+                as="textarea"
+                value={catatan}
+                disabled={!selectedDiagnosa}
+                placeholder="Catatan"
+                onChange={(e) => setCatatan(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
           </Form.Group>
+
+          
+
+
 
           <div className="d-flex justify-content-end mt-3">
             <ConfirmModal

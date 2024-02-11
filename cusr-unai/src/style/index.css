@@ -251,6 +251,25 @@ nav{
     border: 1px solid #cacaca;
 }
 
+.p-accordion {
+    width: 95%;
+    max-width: 95%;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
+
+.p-accordion-header {
+    background-color: #fff;
+}
+
+.option-button-svg {
+    color: #000;
+    background-color: #fff;
+    width: 3.2rem;
+    height: 3.2rem;
+    border: 0.1rem solid #dddee0;
+    float: right;
+}
 
 
 .search-input {
@@ -452,6 +471,17 @@ th, td {
     height: 3rem;
     font-weight:  600;
   
+}
+
+.intervensi-button {
+    background-color: #e6f5ff;
+    color: #0099ff ;
+    border-radius: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 3rem;
+    height: 3rem;
+    font-weight:  600;
 }
 
 .modify {

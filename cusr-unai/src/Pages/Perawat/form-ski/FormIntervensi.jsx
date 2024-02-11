@@ -6,10 +6,13 @@ import { Dropdown }  from 'primereact/dropdown'
 import { MultiSelect } from 'primereact/multiselect';
 import "primereact/resources/themes/saga-blue/theme.css";
 import ConfirmModal from '../../../components/menu/ConfirmModal';
+import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function FormIntervensi() {
 
     const [intervensi, setIntervensi] = useState([]);
+    const [catatan, setCatatan] = useState('');
 
     const [selectedIntervensi, setSelectedIntervensi] = useState('');
     const [selectedObservasi, setSelectedObservasi] = useState([]);
@@ -17,9 +20,11 @@ export default function FormIntervensi() {
     const [selectedEdukasi, setSelectedEdukasi] = useState([]);
 
     const token = localStorage.getItem('token');
+    const {id} = useParams();
+    const navigate = useNavigate();
 
     // VALUE
-
+    const [nama_intervensi, setNamaIntervensi] = useState(null);
     const [observasi, setObservasi] = useState(null);
     const [terapeutik, setTerapeutik] = useState(null);
     const [edukasi, setEdukasi] = useState(null);
@@ -70,10 +75,6 @@ export default function FormIntervensi() {
         const fetchData = async () => {
             try {
                 await handleIntervensiChange(selectedIntervensi);
-                console.log(selectedIntervensi);
-                console.log(selectedObservasi);
-                console.log(selectedTerapeutik);
-                console.log(selectedEdukasi);
             } catch (error) {
                 console.log(error);
             }
@@ -99,8 +100,36 @@ export default function FormIntervensi() {
         getIntervensi(localStorage.getItem('token'))
     }, []);
 
-    
+    const getPropValues = (array, prop) => {
+        return array.map((item) =>  item[prop]);
+    };
 
+    const handleData = (dataArray, propName) => {
+        const propValues = getPropValues(dataArray, propName);
+        const convertedValues = propValues.join(',');
+        return convertedValues;
+    };
+
+    const addIntervensi = async () => {
+        const handleObservasi = observasi ? handleData(observasi, "observasi") : null;
+        const handleTerapeutik = terapeutik ? handleData(terapeutik, "terapeutik") : null;
+        const handleEdukasi = edukasi ? handleData(edukasi, "edukasi") : null;
+
+        try {
+            await axios.post(`perawat/intervensi/add/${id}`, {
+                nama_intervensi,
+                observasi: handleObservasi,
+                terapeutik: handleTerapeutik,
+                edukasi: handleEdukasi,
+                catatan: catatan
+            });
+            navigate(`/perawat/askep/shift/keterangan${id}`)
+        } catch (error) {
+            
+        }
+    };
+
+    
     return (
         <Sidebar>
             <div className='container'>
@@ -126,7 +155,7 @@ export default function FormIntervensi() {
                             <Form.Label>Observasi</Form.Label>
                             <MultiSelect
                                 value={observasi}
-                                onChange={(e) => setObservasi(e.target)}
+                                onChange={(e) => setObservasi(e.value)}
                                 options={selectedObservasi}
                                 disabled={!selectedIntervensi}
                                 placeholder='Pilih Tindakan Observasi'
@@ -140,7 +169,7 @@ export default function FormIntervensi() {
                             <Form.Label>Terapeutik</Form.Label>
                             <MultiSelect
                                 value={terapeutik}
-                                onChange={(e) => setTerapeutik(e.target)}
+                                onChange={(e) => setTerapeutik(e.value)}
                                 options={selectedTerapeutik}
                                 disabled={!selectedIntervensi}
                                 placeholder='Pilih Tindakan Terapeutik'
@@ -154,7 +183,7 @@ export default function FormIntervensi() {
                             <Form.Label>Edukasi</Form.Label>
                             <MultiSelect
                                 value={edukasi}
-                                onChange={(e) => setEdukasi(e.target)}
+                                onChange={(e) => setEdukasi(e.value)}
                                 options={selectedEdukasi}
                                 disabled={!selectedIntervensi}
                                 placeholder='Pilih Tindakan Edukasi'
@@ -163,11 +192,22 @@ export default function FormIntervensi() {
                                 filter>
                             </MultiSelect>
                         </Form.Group>
+
+                        <Form.Group className="mt-3">
+                            <h6>Catatan</h6>
+                            <Form.Control
+                                as="textarea"
+                                value={catatan}
+                                disabled={!selectedIntervensi}
+                                placeholder="Catatan"
+                                onChange={(e) => setCatatan(e.target.value)}
+                            ></Form.Control>
+                            </Form.Group>
                     </Form.Group>
 
                     <div className='d-flex justify-content-end mt-3'>
                         <ConfirmModal
-                            // onConfirm={}
+                            onConfirm={addIntervensi}
                             successMessage={"Data berhasil ditambahkan"}
                             cancelMessage={"Data gagal ditambahkan"}
                             buttonText={"Simpan"}
