@@ -10,8 +10,6 @@ import "primereact/resources/themes/saga-blue/theme.css";
 
 const KeteranganAskep = () => {
 
-  
-
   const [tables, setTables] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -45,19 +43,25 @@ const KeteranganAskep = () => {
     return new Date().toLocaleString("id-ID", options).replace(","," ·");
   }
 
+  const getDateDiagnose = async () =>{
+    try {
+      const response = await axios.post(`/perawat/diagnosa/getdate/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTables(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 
-  const handleSimpan = () => {
-    // Tambahkan tabel baru ke dalam array tables
-    setTables([...tables, { user: loggedInUser, id: Date.now(), data: formData }]);
-    // Reset formData dan tutup modal
-    setFormData({});
-    setShowModal(false);
-    setShowTime(true);
-  };
+
 
   useEffect(() => {
-    handleSimpan();
+    getDateDiagnose();
   },[]);
 
 
@@ -83,41 +87,64 @@ const KeteranganAskep = () => {
   }
 
   return (
-      <Sidebar>
-        <div className='container'>
-          <h2>Askep</h2>
-        </div>
+    <Sidebar>
+      <div className="container">
+        <h2>Askep</h2>
+      </div>
 
-        <div className='container'>
-
-        <Link  
+      <div className="container">
+        <Link
           to={`/perawat/askep/form-diagnosa/${id}`}
-          className='btn d-flex justify-content-center align-items-center diagnosa-button'>Tambah Diagnosa</Link>
+          className="btn d-flex justify-content-center align-items-center diagnosa-button"
+        >
+          Tambah Diagnosa
+        </Link>
 
         {tables.map((table, date, index) => (
-          <div key={table.id} className='box-panel'>
-            <div className='flexbox justify-content modify'>
+          <div key={table.id} className="box-panel">
+            <div className="flexbox justify-content modify">
               <span>User: {table.user}</span>
-              <span 
-                style={{ paddingLeft: '8rem' }}>No: </span>
+              <span style={{ paddingLeft: "8rem" }}>No: </span>
             </div>
 
-            <Container className='container-modify'>
+            <Container className="container-modify">
               <Row>
                 <Col>
-                  <p style={{ paddingLeft: '0.7rem' }}>Diagnosa</p>
-                  <p style={{ paddingLeft: '0.7rem', 
-                              fontSize: '14px',
-                              paddingTop: '0rem' }}>{getFormattedDateTime()}</p>
+                  <p style={{ paddingLeft: "0.7rem" }}>Diagnosa</p>
+                  <p
+                    style={{
+                      paddingLeft: "0.7rem",
+                      fontSize: "14px",
+                      paddingTop: "0rem",
+                    }}
+                  >
+                    {table.hari}
+                  </p>
+                  <p
+                    style={{
+                      paddingLeft: "0.7rem",
+                      fontSize: "14px",
+                      paddingTop: "0rem",
+                    }}
+                  >{table.tanggal}</p>
                 </Col>
                 <Col>
-                  <div className='dropdown'>
-                    <Button className='btn option-button-svg'>
-                    <svg viewBox="0 0 24 24" focusable="false" class="" aria-hidden="true"><path fill="currentColor" d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"></path></svg>
+                  <div className="dropdown">
+                    <Button className="btn option-button-svg">
+                      <svg
+                        viewBox="0 0 24 24"
+                        focusable="false"
+                        class=""
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"
+                        ></path>
+                      </svg>
                     </Button>
                   </div>
-                 {/* <svg viewBox="0 0 24 24" focusable="false" class="option-button-svg" aria-hidden="true"><path fill="currentColor" d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"></path></svg> */}
-                
+                  {/* <svg viewBox="0 0 24 24" focusable="false" class="option-button-svg" aria-hidden="true"><path fill="currentColor" d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"></path></svg> */}
                 </Col>
               </Row>
             </Container>
@@ -147,10 +174,8 @@ const KeteranganAskep = () => {
             </Table> */}
           </div>
         ))}
-
-       ?
-        </div>  
-      </Sidebar>
+      </div>
+    </Sidebar>
   );
 };
 
