@@ -8,7 +8,6 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
 import { useParams } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
 
 export default function FormDiagnosa() {
   const [diagnosa, setDiagnosa] = useState([]);
@@ -16,19 +15,24 @@ export default function FormDiagnosa() {
 
   const [selectedDiagnosa, setSelectedDiagnosa] = useState("");
   const [selectedFaktorRisiko, setSelectedFaktorRisiko] = useState([]);
-  const [selectedPenyebabFisiologis, setSelectedPenyebabFisiologis] = useState([]);
-  const [selectedPenyebabSituasional, setSelectedPenyebabSituasional] = useState([]);
-  const [selectedPenyebabPsikologis, setSelectedPenyebabPsikologis] = useState([]);
-  const [selectedPenyebabUmum, setSelectedPenyebabUmum] = useState([]);
-  const [selectedGejalaMayorSubjektif, setSelectedGejalaMayorSubjektif] = useState([]);
-  const [selectedGejalaMayorObjektif, setSelectedGejalaMayorObjektif] = useState([]);
-  const [selectedGejalaMinorSubjektif, setSelectedGejalaMinorSubjektif] = useState([]);
-  const [selectedGejalaMinorObjektif, setSelectedGejalaMinorObjektif] = useState([]);
+  const [selectedPenyebabFisiologis, setSelectedPenyebabFisiologis] = useState(
+    []
+  );
+  const [selectedPenyebabSituasional, setSelectedPenyebabSituasional] =
+    useState([]);
+  const [selectedPenyebabPsikologis, setSelectedPenyebabPsikologis] = useState(
+    []
+  );
+  const [selectedGejalaMayorSubjektif, setSelectedGejalaMayorSubjektif] =
+    useState([]);
+  const [selectedGejalaMayorObjektif, setSelectedGejalaMayorObjektif] =
+    useState([]);
+  const [selectedGejalaMinorSubjektif, setSelectedGejalaMinorSubjektif] =
+    useState([]);
+  const [selectedGejalaMinorObjektif, setSelectedGejalaMinorObjektif] =
+    useState([]);
 
-  const [inputValue, setInputValue] = useState("");
-  const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
   const {id} = useParams();
-  const navigate = useNavigate();
 
   // VALUE
 
@@ -42,6 +46,7 @@ export default function FormDiagnosa() {
   const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState(null);
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState(null);
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState(null);
+
 
   const createDiagnosaOptions = () => {
     if (!diagnosa || diagnosa.length === 0) {
@@ -79,11 +84,18 @@ export default function FormDiagnosa() {
       setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
       setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
       setSelectedPenyebabPsikologis(selectedDiagnosaData.penyebab_psikologis);
-      setSelectedPenyebabUmum(selectedDiagnosaData.penyebab_umum);
-      setSelectedGejalaMayorSubjektif(selectedDiagnosaData.gejala_tanda_mayor_subjektif);
-      setSelectedGejalaMayorObjektif(selectedDiagnosaData.gejala_tanda_mayor_objektif);
-      setSelectedGejalaMinorSubjektif(selectedDiagnosaData.gejala_tanda_minor_subjektif);
-      setSelectedGejalaMinorObjektif(selectedDiagnosaData.gejala_tanda_minor_objektif);
+      setSelectedGejalaMayorSubjektif(
+        selectedDiagnosaData.gejala_tanda_mayor_subjektif
+      );
+      setSelectedGejalaMayorObjektif(
+        selectedDiagnosaData.gejala_tanda_mayor_objektif
+      );
+      setSelectedGejalaMinorSubjektif(
+        selectedDiagnosaData.gejala_tanda_minor_subjektif
+      );
+      setSelectedGejalaMinorObjektif(
+        selectedDiagnosaData.gejala_tanda_minor_objektif
+      );
     } catch (error) {}
   };
 
@@ -161,8 +173,8 @@ export default function FormDiagnosa() {
         },
         {
           headers: { Authorization: `Bearer ${token}` },
-        });
-        navigate(`/perawat/askep/shift/keterangan/${id}`)
+        }
+      );
     } catch (error) {
       
     }
@@ -248,21 +260,6 @@ export default function FormDiagnosa() {
               ></MultiSelect>
             </Form.Group>
 
-            <Form.Group className="mt-3">
-              <Form.Label>Penyebab Umum</Form.Label>
-              <MultiSelect
-                value={penyebab_umum}
-                disabled={!selectedDiagnosa}
-                options={selectedPenyebabUmum}
-                optionLabel="nama_penyebab"
-                placeholder="Pilih Penyebab Umum"
-                filter
-                className="pt-1"
-                onChange={(e) => setPenyebabUmum(e.value)}
-                maxSelectedLabels={3}
-              ></MultiSelect>
-            </Form.Group>
-
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Mayor</h6>
               <Form.Label>Subjektif</Form.Label>
@@ -343,11 +340,11 @@ export default function FormDiagnosa() {
 
           <div className="d-flex justify-content-end mt-3">
             <ConfirmModal
-                onConfirm={addDiagnosa}
-                successMessage={"Data berhasil ditambahkan"}
-                cancelMessage={"Data gagal ditambahkan"}
-                buttonText={"Simpan"}
-              /> 
+              onConfirm={addDiagnosa}
+              successMessage={"Data berhasil ditambahkan"}
+              cancelMessage={"Data gagal ditambahkan"}
+              buttonText={"Simpan"}
+            />
           </div>
         </Form>
       </div>

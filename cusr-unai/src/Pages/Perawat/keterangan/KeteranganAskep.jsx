@@ -10,10 +10,8 @@ import "primereact/resources/themes/saga-blue/theme.css";
 
 const KeteranganAskep = () => {
 
-  
-
-  const [tables, setTables] = useState([]);
-  const [loggedInUser, setLoggedInUser] = useState("");
+  const [diagnosa, setDiagnosa] = useState([]);
+  const [intervensi, setIntervensi] = useState([])
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const [showTime, setShowTime] = useState(false);
@@ -21,7 +19,6 @@ const KeteranganAskep = () => {
   const navigate =  useNavigate();
   const token = localStorage.getItem("token");
 
-  const [diagnosa, setDiagnosa] = useState([]);
 
 
   const handleTambah = () => {
@@ -45,19 +42,26 @@ const KeteranganAskep = () => {
     return new Date().toLocaleString("id-ID", options).replace(","," ·");
   }
 
+  const getDateDiagnose = async () =>{
+    try {
+      const response = await axios.post(`/perawat/diagnosa/getdate/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setDiagnosa(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  
 
 
-  const handleSimpan = () => {
-    // Tambahkan tabel baru ke dalam array tables
-    setTables([...tables, { user: loggedInUser, id: Date.now(), data: formData }]);
-    // Reset formData dan tutup modal
-    setFormData({});
-    setShowModal(false);
-    setShowTime(true);
-  };
 
   useEffect(() => {
-    handleSimpan();
+    getDateDiagnose();
   },[]);
 
 
@@ -83,41 +87,54 @@ const KeteranganAskep = () => {
   }
 
   return (
-      <Sidebar>
-        <div className='container'>
-          <h2>Askep</h2>
-        </div>
+    <Sidebar>
+      <div className="container">
+        <h2>Askep</h2>
+      </div>
 
-        <div className='container'>
-
-        <Link  
+      <div className="container">
+        <Link
           to={`/perawat/askep/form-diagnosa/${id}`}
-          className='btn d-flex justify-content-center align-items-center diagnosa-button'>Tambah Diagnosa</Link>
+          className="btn d-flex justify-content-center align-items-center diagnosa-button"
+        >
+          Tambah Diagnosa
+        </Link>
 
-        {tables.map((table, date, index) => (
-          <div key={table.id} className='box-panel'>
-            <div className='flexbox justify-content modify'>
-              <span>User: {table.user}</span>
-              <span 
-                style={{ paddingLeft: '8rem' }}>No: </span>
+        {/* Render Diagnosa */}
+        {diagnosa.map((diag, index) => (
+          <div key={diag.id} className="box-panel">
+            <div className="flexbox justify-content modify">
+              <span>User: {diag.user}</span>
+              <span style={{ paddingLeft: "8rem" }}>No: </span>
             </div>
 
-            <Container className='container-modify'>
+            <Container className="container-modify">
               <Row>
                 <Col>
-                  <p style={{ paddingLeft: '0.7rem' }}>Diagnosa</p>
-                  <p style={{ paddingLeft: '0.7rem', 
-                              fontSize: '14px',
-                              paddingTop: '0rem' }}>{getFormattedDateTime()}</p>
+                  <Link style={{ paddingLeft: "0.7rem" }}>Diagnosa</Link>
+
+                  <div>
+                    <span>
+                      <p
+                        style={{
+                          paddingLeft: "0.7rem",
+                          fontSize: "14px",
+                          paddingTop: "0rem",
+                        }}
+                      >
+                        {diag.hari} - {diag.tanggal}
+                      </p>
+                    </span>
+                  </div>
                 </Col>
                 <Col>
                   <Link 
                     to={`/perawat/askep/form-intervensi/${id}`}
-                    className='btn d-flex justify-content-center align-items-center option-button-svg mt-4'>
+                    className='btn d-flex justify-content-center align-items-center option-button-svg mt-1'>
                       <span>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                      </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
                       </span>
                       <span className='option-text'>Intervensi</span>
                     </Link>
@@ -132,9 +149,46 @@ const KeteranganAskep = () => {
           </div>
         ))}
 
-       ?
-        </div>  
-      </Sidebar>
+        {/* Render Intervensi */}
+        {intervensi.map((inter, index) => (
+          <div key={inter.id} className='box-panel'>
+            <Container className="container-modify">
+              <Row>
+                <Col>
+                  <Link style={{ paddingLeft: "0.7rem" }}>Intervensi</Link>
+
+                  <div>
+                    <span>
+                      <p
+                        style={{
+                          paddingLeft: "0.7rem",
+                          fontSize: "14px",
+                          paddingTop: "0rem",
+                        }}
+                      >
+                        {inter.hari} - {inter.tanggal}
+                      </p>
+                    </span>
+                  </div>
+                </Col>
+                <Col>
+                  <Link 
+                    to={`/perawat/askep/form-intervensi/${id}`}
+                    className='btn d-flex justify-content-center align-items-center option-button-svg mt-1'>
+                      <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                      </span>
+                      <span className='option-text'>Implementasi</span>
+                    </Link>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        ))}
+      </div>
+    </Sidebar>
   );
 };
 

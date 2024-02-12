@@ -9,11 +9,28 @@ import ConfirmModal from '../../../components/menu/ConfirmModal';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
+
 export default function FormEvaluasi() {
 
     const [luaran, setLuaran] = useState([]);
     const [catatan, setCatatan] = useState('');
+    const [subjektif, setSubjektif] = useState('');
+    const [objektif, setObjektif] = useState('');
+    
 
+    const pencapaian = [
+        {label: 'Tercapai', value:'tercapai'},
+        {label: 'Tercapai Sebagian', value:'tercapai_sebagian'},
+        {label: 'Tidak Tercapai', value:'tidak_tercapai'}
+    ];
+
+    const perencanaan = [
+        {label: 'Lanjutkan Intervensi', value: 'lanjutkan_intervensi'},
+        {label: 'Hentikan Intervensi', value: 'hentikan_intervensi'},
+        {label: 'Kaji Ulang', value: 'kaji_ulang'}
+    ];
+
+    
     const [selectedLuaran, setSelectedLuaran] = useState('');
     const [selectedKriteriaLuaran, setSelectedKriteriaLuaran] = useState([]);
 
@@ -54,7 +71,7 @@ export default function FormEvaluasi() {
             );
 
             const selectedLuaranData = res.data;
-
+            
             setSelectedKriteriaLuaran(selectedLuaranData.nama_kriteria_luaran);
         } catch (error) {
 
@@ -106,6 +123,68 @@ export default function FormEvaluasi() {
 
                             </MultiSelect>
                         </Form.Group>
+
+                        <Form.Group className="mt-3">
+                            <h6>Subjektif</h6>
+                            <Form.Control
+                                as="textarea"
+                                value={subjektif}
+                                disabled={!selectedLuaran}
+                                placeholder="Subjektif"
+                                onChange={(e) => setSubjektif(e.target.value)}
+                            ></Form.Control>
+                        </Form.Group>
+
+                        <Form.Group className="mt-3">
+                            <h6>Objektif</h6>
+                            <Form.Control
+                                as="textarea"
+                                value={objektif}
+                                disabled={!selectedLuaran}
+                                placeholder="Objektif"
+                                onChange={(e) => setObjektif(e.target.value)}
+                            ></Form.Control>
+                        </Form.Group>
+
+                        <Form.Group className='mt-3'>
+                            <Form.Label>Pencapaian</Form.Label>
+                            <Dropdown
+                                value={selectedLuaran}
+                                onChange={(e) => setSelectedLuaran(e.target.value)}
+                                options={pencapaian}
+                                placeholder='Pilih Pencapaian'
+                                required
+                                disabled={!selectedLuaran}
+                                className='pt-1'>
+                            </Dropdown>
+                        </Form.Group>
+
+                        <Form.Group className='mt-3'>
+                            <Form.Label>Perencanaan</Form.Label>
+                            <Dropdown
+                                value={selectedLuaran}
+                                onChange={(e) => setSelectedLuaran(e.target.value)}
+                                options={perencanaan}
+                                placeholder='Pilih Perencanaan'
+                                required
+                                disabled={!selectedLuaran}
+                                className='pt-1'>
+                            </Dropdown>
+                        </Form.Group>
+
+                        <Form.Group className="mt-3">
+                            <h6>Catatan</h6>
+                            <Form.Control
+                                as="textarea"
+                                value={catatan}
+                                disabled={!selectedLuaran}
+                                placeholder="Catatan"
+                                onChange={(e) => setCatatan(e.target.value)}
+                            ></Form.Control>
+                        </Form.Group>
+                        
+
+
                     </Form.Group>
                 </Form>
             </div>

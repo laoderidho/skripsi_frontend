@@ -202,7 +202,7 @@ export default function FormIntervensi() {
                                 placeholder="Catatan"
                                 onChange={(e) => setCatatan(e.target.value)}
                             ></Form.Control>
-                            </Form.Group>
+                        </Form.Group>
                     </Form.Group>
 
                     <div className='d-flex justify-content-end mt-3'>
