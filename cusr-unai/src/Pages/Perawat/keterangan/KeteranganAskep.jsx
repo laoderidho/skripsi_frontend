@@ -129,7 +129,7 @@ const KeteranganAskep = () => {
                 </Col>
                 <Col>
                   <Link 
-                    to={`/perawat/askep/form-intervensi/${id}`}
+                    to={`/perawat/askep/form-intervensi/${diag.id}`}
                     className='btn d-flex justify-content-center align-items-center option-button-svg mt-1'>
                       <span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>

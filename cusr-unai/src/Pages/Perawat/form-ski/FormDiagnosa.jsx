@@ -84,9 +84,7 @@ export default function FormDiagnosa() {
       setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
       setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
       setSelectedPenyebabPsikologis(selectedDiagnosaData.penyebab_psikologis);
-      setSelectedGejalaMayorSubjektif(
-        selectedDiagnosaData.gejala_tanda_mayor_subjektif
-      );
+      setSelectedGejalaMayorSubjektif(selectedDiagnosaData.gejala_tanda_mayor_subjektif);
       setSelectedGejalaMayorObjektif(
         selectedDiagnosaData.gejala_tanda_mayor_objektif
       );
@@ -202,7 +200,6 @@ export default function FormDiagnosa() {
 
             <Form.Group className="mt-3">
               <Form.Label>Faktor Risiko</Form.Label>
-
               <MultiSelect
                 value={faktor_risiko}
                 disabled={!selectedDiagnosa}

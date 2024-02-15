@@ -4,6 +4,11 @@ import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
+import "primereact/resources/themes/saga-blue/theme.css";
+import { Toolbar } from 'primereact/toolbar';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+
 
 export default function DaftarPasien() {
 
@@ -57,6 +62,19 @@ export default function DaftarPasien() {
     }, [])
 
     console.log(pasien)
+
+    const endContent = (
+      <React.Fragment>
+        <input
+            className="form-control"
+            id="form-width"
+            type="text"
+            placeholder="Search"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+      </React.Fragment>
+    );
     
 
   return (
@@ -72,70 +90,27 @@ export default function DaftarPasien() {
         </Breadcrumb>
       </div>
 
-      {/* Search */}
-
-      <Form className="container">
-        <div className="search-container">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Search"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-
-          <Link
-            to="/admin/daftarpasien/tambah"
-            className="btn d-flex justify-content-center align-items-center blue-button"
+      <div className="container">
+        <Toolbar
+          end={endContent}
           >
-            Tambah
-          </Link>
-        </div>
+        </Toolbar>
 
-        <Table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama</th>
-              <th>Medical Record</th>
-              <th className="button-space"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {inputValue
-              ? filterPasien.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.id}</td>
-                    <td>{item.nama_lengkap}</td>
-                    <td>{item.no_medical_record}</td>
-                    <td>
-                      <Link
-                        to={`/admin/daftarpasien/${item.id}`}
-                        class="btn d-flex justify-content-center align-items-center simple-button"
-                      >
-                        Lihat Profil
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              : pasien.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.id}</td>
-                    <td>{item.nama_lengkap}</td>
-                    <td>{item.no_medical_record}</td>
-                    <td>
-                      <Link
-                        to={`/admin/daftarpasien/${item.id}`}
-                        class="btn d-flex justify-content-center align-items-center simple-button"
-                      >
-                        Lihat Profil
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-          </tbody>
-        </Table>
-      </Form>
+        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}  tableStyle={{ minWidth: '50rem' }}  stripedRows show showGridlines className="mt-3">
+          <Column field="id" header='No'/>
+          <Column field="nama_lengkap" header='Nama'/>
+          <Column field="no_medical_record" header='Medical Record'/>
+          <Column 
+            header=''
+            body={(rowData) => (
+              <Link
+                to={`/admin/daftarpasien/${rowData.id}`}
+                className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
+            )}/>
+        </DataTable>
+    
+      </div> 
+      
     </Sidebar>
   );
 }

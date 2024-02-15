@@ -60,6 +60,7 @@ export default function FormIntervensi() {
             );
 
             const selectedIntervensiData = res.data;
+            console.log(res)
 
 
             setSelectedObservasi(selectedIntervensiData.tindakan_observasi);
@@ -116,14 +117,16 @@ export default function FormIntervensi() {
         const handleEdukasi = edukasi ? handleData(edukasi, "edukasi") : null;
 
         try {
-            await axios.post(`perawat/intervensi/add/${id}`, {
+            await axios.post(`/perawat/intervensi/update/${id}`, {
                 nama_intervensi,
-                observasi: handleObservasi,
-                terapeutik: handleTerapeutik,
-                edukasi: handleEdukasi,
+                tindakan_observasi: handleObservasi,
+                tindakan_terapeutik: handleTerapeutik,
+                tindakan_edukasi: handleEdukasi,
                 catatan: catatan
-            });
-            navigate(`/perawat/askep/shift/keterangan${id}`)
+            },
+            {
+                headers: { Authorization: `Bearer ${token}`},
+            });   
         } catch (error) {
             
         }

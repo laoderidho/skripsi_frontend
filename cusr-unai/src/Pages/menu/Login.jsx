@@ -93,7 +93,6 @@ export default function Login() {
             <Form.Text className="text-danger">{`${error}`}</Form.Text>
           </Form.Group>
           <Button
-            variant="primary"
             type="submit"
             className="w-100 mt-3 loginbutton mb-3"
             disabled={username === "" || password === "" || showAnimate}

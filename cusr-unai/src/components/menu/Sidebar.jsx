@@ -27,7 +27,7 @@ export default function Sidebar(props){
    };
    
    const iconStyle = {
-    marginRight: "2rem",
+    marginRight: "1rem",
    }
 
     const getClick = () => {
@@ -76,21 +76,21 @@ export default function Sidebar(props){
                 width="25"
                 height="4.13208"
                 rx="2.06604"
-                fill="#1F1E5B"
+                fill="#6e84b1"
               />
               <rect
                 y="8.30188"
                 width="25"
                 height="4.13208"
                 rx="2.06604"
-                fill="#1F1E5B"
+                fill="#6e84b1"
               />
               <rect
                 y="16.434"
                 width="25"
                 height="4.13208"
                 rx="2.06604"
-                fill="#1F1E5B"
+                fill="#6e84b1"
               />
             </svg>
           </button>
@@ -102,7 +102,7 @@ export default function Sidebar(props){
             item.child ? (
               componentChild(item)
             ) : (
-              <Link key={index} to={item.path}>
+              <Link key={index} to={item.path} >
                 {" "}
                 <i className={item.icon} style={iconStyle}></i> {item.name}
               </Link>

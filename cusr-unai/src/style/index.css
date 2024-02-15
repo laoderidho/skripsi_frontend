@@ -2,7 +2,7 @@
     font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .blue-login {
-    background-color: #1F1E5B;
+    background-color: #fff;
     height: 100vh;
 }
 .card-login {
@@ -37,10 +37,10 @@ nav{
 
 
 .form-control {
-    width: 40%;
-    max-width: 40%;
-    border-radius: 0.2rem;
-    height: 3.2rem;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0.3rem;
+    height: 2.7rem;
     border-color:#1F1E5B;
     display: block;
     box-shadow: none !important;
@@ -68,10 +68,14 @@ nav{
 }
 
 .loginbutton {
-    background-color: #1F1E5B;
+    background-color: #6e84b1;
     border-color: #1F1E5B;
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     height: 3rem;
+}
+
+.loginbutton:hover {
+    background: #6e84b1de;
 }
 
 .image-logo {
@@ -89,11 +93,15 @@ nav{
 
 .sidebar {
     width: 17rem;
-    background-color:#1F1E5B;
+    background-color:#fff;
     height: 100vh;
     margin-top: 5rem;
     position: fixed;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    
 }
 
 .btn, .sidebarbutton {
@@ -109,9 +117,15 @@ nav{
 .sidebar a {
     text-decoration: none;
     display: block;
-    color: #fff;
-    padding: 1rem;
+    color: #4b5563;
+    padding-left: 1rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
     font-size: 1rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
     
 
 }
@@ -121,8 +135,10 @@ nav{
 }
 
 .sidebar a:hover {
-    background-color:#fff;
-    color: #1F1E5B;
+    background-color:#f3f4f6;
+    color: #4b5563;
+    border-radius: 0.5rem;
+    transition: color 0.3 ease;
 }
 
 .navbar {
@@ -147,20 +163,20 @@ nav{
 
 
 .accordion{
-    --bs-accordion-bg:#1F1E5B;
-    --bs-accordion-color: #fff;
+    --bs-accordion-bg:#fff;
+    --bs-accordion-color: #4b5563 !important;
     --bs-accordion-border-width: 0 !important;
 
 }
 
 .accordion-button:not(.collapsed){
-    background-color: #1F1E5B;
-    color: #fff;
+    background-color: #fff;
+    color: #4b5563;
     box-shadow: none;
 }
 
 .accordion-button{
-    color: #fff;
+    color: #4b5563;
 }
 
 .accordion-button:focus {
@@ -174,6 +190,10 @@ nav{
 
 .accordion-button:not(.colapsed)::after{
     background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 stroke=%27%23ffffff%27%3e%3cpath fill-rule=%27evenodd%27 d=%27M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z%27/%3e%3c/svg%3e");
+}
+
+.accordion-button.collapsed::after {
+    color: #4b5563 !important;
 }
 
 .content {
@@ -405,13 +425,21 @@ th, td {
 
 .simple-button {
     background-color: #ffffff;
-    height: 2rem;
+    height: 2.5rem;
+    width: 80%;
+    max-width: 80%;
     text-align: center;
     padding-left: 2rem;
     padding-right: 2rem;
     border-radius: 0.2rem;
-    border: 1px solid #cacaca;
+    border: 0.01rem solid #cacaca;
+
 }
+
+.p-datatable-tbody {
+
+    /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  */
+  }
 
 .green-active-button {
     background-color: #4ed14e;
@@ -434,7 +462,7 @@ th, td {
 
 .simple-button:hover {
     border: 1px solid #cacaca;
-    background-color: #F0F0F0;
+    background-color: #fffffff8;
 }
 
 .cancel {
@@ -680,6 +708,10 @@ th, td {
         width: 100%;
         max-width: 100%;
     }
+
+    .p-toolbar-group-end {
+        width: 100%;
+    }
     
     .table td {
         padding-top: 1rem ;
@@ -687,10 +719,15 @@ th, td {
         padding-left: 1rem;
         padding-right: 1rem;
     }
+
+    
+
     .form-control {
         width: 100%;
         max-width: 100%;
     }
+
+
     .search-input-admin {
         width: 100%;
         max-width: 100%;
