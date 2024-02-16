@@ -32,9 +32,9 @@ nav{
 #form-control-input {
     width: 100%;
     max-width: 100%;
+    height: 3.2rem;
+    border-radius: 0.23rem;
 }
-
-
 
 .form-control {
     width: 100%;
@@ -97,7 +97,7 @@ nav{
 
 
 
-.sidebar .sidebar  {
+.sidebar {
     width: 17rem;
     background-color:#fff;
     height: 100vh;
@@ -106,21 +106,10 @@ nav{
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    z-index: 1000;
-    transition: width 0.5s ease-in-out;
-    
-}
-
-
-.content {
+    z-index: 99;
     transition: margin-left 0.5s ease-in-out; 
-   
 }
 
-.sidebar-open .content {
-    margin-left: 17rem;
-    transition: margin-left 0.5s ease-in-out;
-}
 
 
 
@@ -446,12 +435,26 @@ th, td {
 
 .simple-button {
     background-color: #ffffff;
+    color: #6e84b1;
     height: 3rem;
-    width: 80%;
-    max-width: 80%;
+    width: 60%;
+    max-width: 60%;
     text-align: center;
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
     border: 0.01rem solid #dee2e6;
+    box-shadow: inset 0 0 0.1rem #dee2e6;
+}
+
+.simple-button:hover {
+    background-color: #ffffff;
+    color: #6e84b1d8;
+    height: 3rem;
+    width: 60%;
+    max-width:60%;
+    text-align: center;
+    border-radius: 0.3rem;
+    border: 0.01rem solid #dee2e6;
+    box-shadow: inset 0 0 0.1rem #dee2e6; 
 }
 
 tbody tr {
@@ -498,9 +501,132 @@ tbody tr {
     color: #fff;
 }
 
+.form-control:disabled {
+    color: #4b5563 !important; 
+    background-color : #b5daf371 !important; 
+}
 
-.simple-button:hover {
-    border: 1px solid #dee2e6;
+.form-select:disabled {
+    color: #4b5563 !important;
+    background-color : #b5daf371 !important;
+ 
+}
+
+.triase-merah, .triase-merah:hover {
+    background-color: #e44141;
+    width:40%;
+    max-width: 40%;
+    border: 0.01rem solid #e44141;
+    border-radius: 0.1rem;
+
+}
+
+.confirm-button {
+    background-color: #6e84b1;
+    color: #fff;
+    width:10%;
+    max-width: 40%;
+    border: 0.01rem solid #6e84b1;
+    border-radius: 0.2rem; 
+}
+
+.confirm-button:hover {
+    background-color: #6e84b1d8;
+    color: #fff;
+    width:10%;
+    max-width: 40%;
+    border: 0.01rem solid #6e84b1d8;
+    border-radius: 0.2rem; 
+}
+
+/* EDIT */
+
+.edit-button {
+    background-color: transparent;
+    width:10%;
+    max-width: 40%;
+    color: #6e84b1;
+    border: 0.01rem solid #6e84b1;
+    border-radius: 0.2rem; 
+}
+
+.edit-button:hover {
+    background-color: #ffffffb4;
+    width:10%;
+    max-width: 40%;
+    color: #6e84b1;
+    border: 0.01rem solid #6e84b1b2;
+    border-radius: 0.2rem; 
+}
+
+/* DELETE */
+
+.delete-button {
+    background-color: #6e84b1;
+    width:10%;
+    max-width: 40%;
+    border: 0.01rem solid #6e84b1;
+    border-radius: 0.2rem; 
+}
+
+.delete-button:hover {
+    background-color: #6e84b1d8;
+    width:10%;
+    max-width: 40%;
+    border: 0.01rem solid #6e84b1d8;
+    border-radius: 0.2rem; 
+}
+
+.triase-kuning, .triase-kuning:hover {
+    background-color: #ebdd62fd;
+    width:40%;
+    max-width: 40%;
+    border: 0.01rem solid #ebdd62fd;
+    border-radius: 0.1rem;
+}
+
+.triase-hijau, .triase-hijau:hover {
+    background-color: #7fb47ffd;
+    width:40%;
+    max-width: 40%;
+    border: 0.01rem solid #7fb47ffd;
+    border-radius: 0.1rem; 
+}
+
+.triase-hitam, .triase-hitam:hover {
+    background-color: #334126fd;
+    width:40%;
+    max-width: 40%;
+    border: 0.01rem solid #334126fd;
+    border-radius: 0.1rem; 
+}
+
+.link-theme {
+    background-color: none !important;
+    color: #6e84b1;
+    text-decoration: none;
+}
+
+.link-theme:hover {
+    background-color: none !important;
+    color: #6e84b1d8;
+    text-decoration: underline;
+}
+
+/* DAFTAR PASIEN LAYOUT */
+
+.p-card {
+    box-shadow: none;
+    border: 0.01rem solid #dee2e6;
+}
+
+#form-label {
+    font-size: small;
+}
+
+
+.simple-button:hover .simple-button:active {
+    border: 1px solid #dee2e6 !important;
     background-color: #ffffffbb !important;
 }
 

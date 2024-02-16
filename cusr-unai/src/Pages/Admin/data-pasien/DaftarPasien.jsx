@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Sidebar from "../../../components/menu/Sidebar";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -16,7 +16,10 @@ export default function DaftarPasien() {
 
     const [inputValue, setInputValue] = useState('');
     const [filterPasien, setFilterPasien] = useState([]);
-    const [pasien, setPasien] = useState([])
+    const [pasien, setPasien] = useState([]);
+    const [dataRawatInap, setDataRawatInap] = useState('');
+    const {id} = useParams();
+    const token=localStorage.getItem("token");
 
     const filteredPasien = () => {
          const filteredDiagnosa = pasien.filter((item) => {
@@ -57,9 +60,25 @@ export default function DaftarPasien() {
         }
     };
 
+    const detailStatus = async () => {
+      try{
+        const res = await axios.post(`/pasien/rawat-inap/detailStatus/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDataRawatInap(res.data.message)
+      }catch(error){
+        AuthorizationRoute(error.response.status)
+      }
+    };
+
     useEffect(()=>{
-        getPasien(localStorage.getItem('token'))
-    }, [])
+        getPasien(localStorage.getItem('token'));
+    }, []);
+
+    useEffect(() => {
+      console.log("Calling Status")
+      detailStatus();
+    },[]);
 
     console.log(pasien)
 
@@ -110,7 +129,34 @@ export default function DaftarPasien() {
           <Column field="id" header='No'/>
           <Column field="nama_lengkap" header='Nama'/>
           <Column field="no_medical_record" header='Medical Record'/>
-          <Column field="" header='Status'/>
+          <Column 
+            field="" 
+            header='Status'
+            bodyStyle={(rowData) => (
+              <div>
+                {dataRawatInap === "merah" ? (
+                        <Button href="#" className="triase-merah text-white p-1 ">
+                          Triase Merah
+                        </Button>
+                      ) : dataRawatInap === "kuning" ? (
+                        <Button href="#" className="triase-kuning text-white p-1 ">
+                          Triase Kuning
+                        </Button>
+                      ) : dataRawatInap === "hijau" ? (
+                        <Button href="#" className="triase-hijau text-white p-1 rounded">
+                          Triase Hijau
+                        </Button>
+                      ) : dataRawatInap === "hitam" ? (
+                        <Button href="#" className="triase-hitam text-white p-1 rounded">
+                          Triase Hitam
+                        </Button>
+                      ) : (
+                        "Tidak di rawat inap"
+                )}
+                <div>{rowData.id}</div>  
+              </div>
+            )}
+          />
           <Column 
             header=''
             body={(rowData) => (

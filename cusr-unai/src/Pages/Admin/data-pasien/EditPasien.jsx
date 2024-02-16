@@ -4,6 +4,10 @@ import { Breadcrumb, Form, Row, Col, Button } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import AuthorizationRoute from '../../../AuthorizationRoute'
 import axios from '../../../axios'
+import { Card } from 'primereact/card';
+import { Divider } from 'primereact/divider';
+import "primereact/resources/themes/saga-blue/theme.css";
+
 
 const EditPasien = () => {
 
@@ -64,159 +68,164 @@ const EditPasien = () => {
             <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
           </Breadcrumb>
         </div>
-  
-        <Form className="container mt-5" onSubmit={submitForm}>
+
+        <Form className="container pt-2">
           <Row>
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Nama Lengkap</Form.Label>
-                <Form.Control
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan Nama Lengkap" 
-                  value={nama_lengkap}
-                  onChange={(e) => setNamaLengkap(e.target.value)}
-                  required
+            <Col xs={4}>
+              <Card className='profile'>
+                <Form.Group>
+                  <Form.Label id='form-label'>Nama Lengkap</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Masukkan Nama Lengkap"
+                    value={nama_lengkap}
+                    onChange={(e) => setNamaLengkap(e.target.value)}
+                    required
                   />
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>Tanggal Lahir</Form.Label>
-                <Form.Control 
-                  id="form-control-input"
-                  type="date" 
-                  placeholder="Masukkan Nama Lengkap" 
-                  value={tanggal_lahir}
-                  onChange={(e) => setTanggalLahir(e.target.value)}
-                  required
+                </Form.Group>
+
+                <Form.Group className="mt-2">
+                  <Form.Label id='form-label'>Tanggal Lahir</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="date"
+                    placeholder="Masukkan Nama Lengkap"
+                    value={tanggal_lahir}
+                    onChange={(e) => setTanggalLahir(e.target.value)}
+                    required
                   />
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>Jenis Kelamin</Form.Label>
-                <Form.Select 
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Tentukan Jenis Kelamin"
-                  value={jenis_kelamin}
-                  onChange={(e) => setJenisKelamin(e.target.value)}
-                  required
+                </Form.Group>
+
+                <Form.Group className="mt-2">
+                  <Form.Label id='form-label'>Jenis Kelamin</Form.Label>
+                  <Form.Select
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Tentukan Jenis Kelamin"
+                    value={jenis_kelamin}
+                    onChange={(e) => setJenisKelamin(e.target.value)}
+                    required
                   >
-                  <option>Pilih</option>
-                  <option value="1">Laki Laki</option>
-                  <option value="0">Perempuan</option>
-                </Form.Select>
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>Nomor Telepon</Form.Label>
-                <Form.Control 
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan Nomor Telepon" 
-                  value={no_telepon}
-                  onChange={(e) => setNoTelepon(e.target.value)}
-                  required
+                    <option>Pilih</option>
+                    <option value="1">Laki Laki</option>
+                    <option value="0">Perempuan</option>
+                  </Form.Select>
+                </Form.Group>
+
+                <Form.Group className="mt-2">
+                  <Form.Label id='form-label'>NIK</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Masukkan NIK"
+                    value={nik}
+                    onChange={(e) => setNik(e.target.value)}
+                    required
                   />
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>Alamat</Form.Label>
-                <Form.Control
-                  id="form-control-input"
-                  as="textarea"
-                  style={{ height: "7rem" }}
-                  type="text"
-                  placeholder="Masukkan Alamat"
-                  value={alamat}
-                  onChange={(e) => setAlamat(e.target.value)}
-                  required
-                />
-              </Form.Group>
+                </Form.Group>
+
+                <Form.Group className="mt-2">
+                  <Form.Label id='form-label'>Status Pernikahan</Form.Label>
+                  <Form.Select
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Tentukan Jenis Kelamin"
+                    value={status_pernikahan}
+                    onChange={(e) => setStatusPernikahan(e.target.value)}
+                    required
+                  >
+                    <option>Pilih</option>
+                    <option value="0">Belum Menikah</option>
+                    <option value="1">Sudah Menikah</option>
+                  </Form.Select>
+                </Form.Group>
+              </Card>
+              <Card className='mt-3'>
+                <Form.Group>
+                  <Form.Label id='form-label'>Nomor Telepon</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Masukkan Nomor Telepon"
+                    value={no_telepon}
+                    onChange={(e) => setNoTelepon(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+
+                <Form.Group className="mt-2">
+                  <Form.Label id='form-label'>Alamat</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    as="textarea"
+                    style={{ height: "7rem" }}
+                    type="text"
+                    placeholder="Masukkan Alamat"
+                    value={alamat}
+                    onChange={(e) => setAlamat(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+              </Card>
             </Col>
-  
-            <Col>
-              <Form.Group className="mb-3">
-                <Form.Label>Status Pernikahan</Form.Label>
-                <Form.Select 
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Tentukan Jenis Kelamin"
-                  value={status_pernikahan}
-                  onChange={(e) => setStatusPernikahan(e.target.value)}
-                  required
-                  >
-                  <option>Pilih</option>
-                  <option value="0">Belum Menikah</option>
-                  <option value="1">Sudah Menikah</option>
-                </Form.Select>
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>NIK</Form.Label>
-                <Form.Control 
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan NIK" 
-                  value={nik}
-                  onChange={(e) => setNik(e.target.value)}
-                  required
+
+            <Col xs={4}>
+              <Card>
+                <Form.Group>
+                  <Form.Label id='form-label'>No Medical Record</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Masukkan No Medical Record"
+                    value={no_medical_record}
+                    onChange={(e) => setMedicalRecord(e.target.value)}
+                    required
                   />
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>Alergi</Form.Label>
-                <Form.Control 
-                  id="form-control-input"
-                  type="text"
-                  placeholder="Masukkan Alergi" 
-                  value={alergi}
-                  onChange={(e) => setAlergi(e.target.value)}
+                </Form.Group>
+              </Card>
+              <Card className='mt-3'>
+                <Form.Group>
+                  <Form.Label id='form-label'>Alergi</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="text"
+                    as='textarea'
+                    placeholder="Masukkan Alergi"
+                    value={alergi}
+                    style={{ height: "7rem" }}
+                    onChange={(e) => setAlergi(e.target.value)}
                   />
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>Nama Asuransi</Form.Label>
-                <Form.Control 
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan Asuransi"
-                  value={nama_asuransi}
-                  onChange={(e) => setNamaAsuransi(e.target.value)}
+                </Form.Group>
+              </Card>
+              <Card className='mt-3'>
+                <Form.Group>
+                  <Form.Label id='form-label'>Nama Asuransi</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Masukkan Asuransi"
+                    value={nama_asuransi}
+                    onChange={(e) => setNamaAsuransi(e.target.value)}
                   />
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>Nomor Asuransi</Form.Label>
-                <Form.Control 
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan Nomor Asuransi"
-                  value={nomor_asuransi}
-                  onChange={(e) => setNomorAsuransi(e.target.value)}
+                </Form.Group>
+
+                <Form.Group className="mt-2">
+                  <Form.Label id='form-label'>Nomor Asuransi</Form.Label>
+                  <Form.Control
+                    id="form-control-input"
+                    type="text"
+                    placeholder="Masukkan Nomor Asuransi"
+                    value={nomor_asuransi}
+                    onChange={(e) => setNomorAsuransi(e.target.value)}
                   />
-              </Form.Group>
-  
-              <Form.Group className="mb-3">
-                <Form.Label>No Medical Record</Form.Label>
-                <Form.Control 
-                  id="form-control-input"
-                  type="text" 
-                  placeholder="Masukkan No Medical Record"
-                  value={no_medical_record}
-                  onChange={(e) => setMedicalRecord(e.target.value)}
-                  required
-                  />
-              </Form.Group>
+                </Form.Group>
+              </Card>
+            </Col>
+            <Col xs={1}>
+              <Divider layout='vertical'/>
             </Col>
           </Row>
-  
-          <div className='d-flex justify-content-end mt-3'>
-            <Button 
-              variant='primary' 
-              type="submit" 
-              className='btn justify-content-center align-items-center blue-button'>Simpan</Button>
-          </div>
         </Form>
       </Sidebar>
     );
