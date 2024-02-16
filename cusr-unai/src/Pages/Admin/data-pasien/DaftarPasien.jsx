@@ -75,6 +75,14 @@ export default function DaftarPasien() {
           />
       </React.Fragment>
     );
+
+    const startContent = (
+      <React.Fragment>
+        <Link
+          to={`/admin/daftarpasien/tambah`}
+          className="btn blue-button-table">Tambah</Link>
+      </React.Fragment>
+    );
     
 
   return (
@@ -90,9 +98,11 @@ export default function DaftarPasien() {
         </Breadcrumb>
       </div>
 
-      <div className="container">
+      <div className="container pt-5">
         <Toolbar
+          start={startContent}
           end={endContent}
+          className=""
           >
         </Toolbar>
 
@@ -100,6 +110,7 @@ export default function DaftarPasien() {
           <Column field="id" header='No'/>
           <Column field="nama_lengkap" header='Nama'/>
           <Column field="no_medical_record" header='Medical Record'/>
+          <Column field="" header='Status'/>
           <Column 
             header=''
             body={(rowData) => (

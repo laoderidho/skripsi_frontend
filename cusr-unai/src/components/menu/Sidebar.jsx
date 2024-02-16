@@ -7,9 +7,15 @@ import { Accordion } from 'react-bootstrap';
 export default function Sidebar(props){
 
     const [sidebar, setSidebar] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [dataMenu, setDataMenu] = useState([]);
     const location = useLocation();
     const currentPath = location.pathname;
+  
+
+    
+
+    
 
 
     const adminRoute = currentPath.includes("/admin");

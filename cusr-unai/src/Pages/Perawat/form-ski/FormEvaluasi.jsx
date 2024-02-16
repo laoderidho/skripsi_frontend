@@ -30,13 +30,16 @@ export default function FormEvaluasi() {
         {label: 'Kaji Ulang', value: 'kaji_ulang'}
     ];
 
+    const {id} = useParams();
+
     
     const [selectedLuaran, setSelectedLuaran] = useState('');
     const [selectedKriteriaLuaran, setSelectedKriteriaLuaran] = useState([]);
 
+
     // VALUE
     const [nama_luaran, setNamaLuaran] = useState(null);
-    const [nama_kriteria_luaran, setNamaKriteriaLuaran] = useState(null);
+    const [kriteria_luaran, setKriteriaLuaran] = useState(null);
 
     const createLuaranOptions = () => {
         if (!luaran || luaran.length === 0) {
@@ -71,10 +74,42 @@ export default function FormEvaluasi() {
             );
 
             const selectedLuaranData = res.data;
+
+            console.log(selectedLuaranData.kriteria_luaran);
             
-            setSelectedKriteriaLuaran(selectedLuaranData.nama_kriteria_luaran);
+            setNamaLuaran(selectedLuaranData.luaran.nama_luaran);
+            setSelectedKriteriaLuaran(selectedLuaranData.kriteria_luaran);
         } catch (error) {
 
+        }
+    };
+
+    const getPropValues = (array, prop) => {
+        return array.map((item) => item[prop]);
+      };
+
+    const handleData = (dataArray, propName) => {
+        const propValues = getPropValues(dataArray, propName);
+        const convertedValues = propValues.join(",");
+        return convertedValues;
+      };
+
+    const addLuaran = async () => {
+        const handleKriteria = kriteria_luaran ? handleData(kriteria_luaran, "kriteria_luaran") : null;
+
+        try {
+            await axios.post(`perawat/luaran/add/${id}`,
+            {
+                nama_luaran,
+                kriteria_luaran: handleKriteria,
+                subjektif: subjektif,
+                objektif: objektif
+            },
+            {
+                headers: { Authorization: `Bearer ${token}`},
+            });
+        } catch (error) {
+            console.log(addLuaran);
         }
     };
 
@@ -88,7 +123,25 @@ export default function FormEvaluasi() {
         };
 
         fetchData();
-    },[selectedLuaran])
+    },[selectedLuaran]);
+
+    useEffect(()=>{
+        getLuaran();
+    },[])
+
+    const getLuaran = async () => {
+        try {
+            await axios.post(`/perawat/luaran`,
+            {
+                headers: { Authorization: `Bearer $(token)`},
+            })
+            .then((res) => {
+                setLuaran(res?.data?.data);
+            });
+        } catch (error) {
+
+        }
+    };
 
 
     return (
@@ -108,19 +161,23 @@ export default function FormEvaluasi() {
                             placeholder='Pilih Luaran'
                             filter
                             required
-                            className='pt-1'>
+                            className='pt-1'
+                            >
                         </Dropdown>
 
                         <Form.Group className='mt-5'>
                             <Form.Label>Kriteria</Form.Label>
                             <MultiSelect
-                                value={nama_kriteria_luaran}
-                                onChange={(e) => setNamaKriteriaLuaran(e.target)}
-                                options={selectedKriteriaLuaran}
-                                disabled={!selectedLuaran}
-                                placeholder='Pilih Kriteria'
-                                optionlLabel='nama'>
-
+                             value={kriteria_luaran}
+                             disabled={!selectedLuaran}
+                             options={selectedKriteriaLuaran}
+                             optionLabel="nama_kriteria_luaran"
+                             placeholder='pilih kriteria'
+                             filter
+                             className='pt-1'
+                             onChange={(e)=>setKriteriaLuaran(e.value)} 
+                             maxSelectedLabels={3}
+                                >
                             </MultiSelect>
                         </Form.Group>
 
@@ -187,6 +244,15 @@ export default function FormEvaluasi() {
 
                     </Form.Group>
                 </Form>
+
+                <div className="d-flex justify-content-end mt-3">
+                    <ConfirmModal
+                    onConfirm={addLuaran}
+                    successMessage={"Data berhasil ditambahkan"}
+                    cancelMessage={"Data gagal ditambahkan"}
+                    buttonText={"Simpan"}
+                    />
+                </div>
             </div>
         </Sidebar>
     )

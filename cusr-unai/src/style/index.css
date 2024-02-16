@@ -68,10 +68,14 @@ nav{
 }
 
 .loginbutton {
-    background-color: #6e84b1;
+    background-color: #6e84b1 !important;
     border-color: #1F1E5B;
     border-radius: 0.5rem;
     height: 3rem;
+}
+
+.loginbutton:active {
+    background-color: #6e84b1;
 }
 
 .loginbutton:hover {
@@ -91,18 +95,35 @@ nav{
     height: 4rem;
 }
 
-.sidebar {
+
+
+.sidebar .sidebar  {
     width: 17rem;
     background-color:#fff;
     height: 100vh;
     margin-top: 5rem;
     position: fixed;
-    transition: all 0.5s ease-in-out;
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    z-index: 1000;
+    transition: width 0.5s ease-in-out;
     
 }
+
+
+.content {
+    transition: margin-left 0.5s ease-in-out; 
+   
+}
+
+.sidebar-open .content {
+    margin-left: 17rem;
+    transition: margin-left 0.5s ease-in-out;
+}
+
+
+
 
 .btn, .sidebarbutton {
     --bs-btn-border-width: 0 !important;
@@ -425,15 +446,33 @@ th, td {
 
 .simple-button {
     background-color: #ffffff;
-    height: 2.5rem;
+    height: 3rem;
     width: 80%;
     max-width: 80%;
     text-align: center;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    border-radius: 0.2rem;
-    border: 0.01rem solid #cacaca;
+    border-radius: 0.5rem;
+    border: 0.01rem solid #dee2e6;
+}
 
+tbody tr {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.p-datatable {
+    border: 0.001rem solid #dee2e6; 
+    border-radius: 0.2rem;
+}
+
+.p-datatable-thead {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.p-paginator-bottom {
+    border: none;
+}
+
+.p-toolbar {
+    background-color: #fff;
 }
 
 .p-datatable-tbody {
@@ -461,8 +500,8 @@ th, td {
 
 
 .simple-button:hover {
-    border: 1px solid #cacaca;
-    background-color: #fffffff8;
+    border: 1px solid #dee2e6;
+    background-color: #ffffffbb !important;
 }
 
 .cancel {
@@ -473,13 +512,34 @@ th, td {
     background-color: #007BFF;
     color: #ffffff;
     border-radius: 0.2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    /* padding-left: 2rem; */
+    /* padding-right: 2rem; */
     margin-top: 5rem;
     margin-bottom: 1rem;
+
     float: right;
     border: 1px solid #007BFF;
 }
+
+.blue-button-table {
+    background-color: #4e95e0;
+    color: #ffffff !important;
+    border-radius: 0.25rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-align: center !important;
+    border: 1px solid #4e95e0;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.blue-button-table:hover {
+    background-color: #4e94e0e0 !important;
+    color: #fff;
+    border-radius: 0.25rem !important;
+}
+
 
 .blue-button-lg {
     background-color: #007BFF;
