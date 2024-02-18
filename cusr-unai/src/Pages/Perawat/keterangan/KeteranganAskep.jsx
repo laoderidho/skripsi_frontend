@@ -7,7 +7,6 @@ import axios from "../../../axios";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/saga-blue/theme.css";
-import { Keterangan } from '../keterangan/Keterangan';
 
 
 
@@ -23,42 +22,26 @@ const KeteranganAskep = () => {
   const token = localStorage.getItem("token");
 
   const [keteranganData, setKeteranganData] = useState([]);
+  const [listAskep, setListAskep] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = Keterangan.getData();
-        setKeteranganData(data);
-      } catch (error) {
-
-      }
-    };
-
-    fetchData();
+    getListAskep();
   }, []);
 
 
-
-  const handleTambah = () => {
-    setShowModal(true);
+  const getListAskep = async () => {
+    try{
+      const response = await axios.post(`/perawat/list-askep/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setListAskep(response.data);
+      console.log(response.data);
+    }catch(error){
+      console.error(error);
+    }
   };
-
-  const handleCloseModal = () => {
-    setShowModal(true);
-  };
-
-
-  const getFormattedDateTime = () => {
-    const options = {
-      year: "numeric",
-      weekday:  "long",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Date().toLocaleString("id-ID", options).replace(","," ·");
-  }
 
   const getDateDiagnose = async () =>{
     try {
@@ -73,12 +56,6 @@ const KeteranganAskep = () => {
       console.error(error);
     }
   }
-
-
-
-  
-
-
 
   useEffect(() => {
     getDateDiagnose();
@@ -120,11 +97,75 @@ const KeteranganAskep = () => {
           Tambah Diagnosa
         </Link>
 
-        <DataTable value={keteranganData} className='mt-3'>
-          <Column field='nama_keterangan' header='Keterangan'></Column>
-          <Column header='Tanggal/Jam'></Column>
-          <Column field='form' header=''></Column>
+        {listAskep &&
+          listAskep.map((askep, index) => (
+            <Table striped bordered>
+              <thead>
+                <tr>
+                  <th>Keterangan</th>
+                  <th>Tanggal/Jam</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Diagnosa</td>
+                  <td>
+                    {askep.tanggal}/{askep.jam_pemberian_diagnosa}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Intervensi</td>
+                  <td>
+                    {askep.jam_pemberian_intervensi ? (
+                      `${askep.tanggal}/${askep.jam_pemberian_intervensi}`
+                    ) : (
+                      <Link
+                        to={`/perawat/askep/form-intervensi/${askep.id}`}
+                        className="btn btn-primary btn-large"
+                      >
+                        <i class="fa-solid fa-plus"></i> Tambah
+                      </Link>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Implementasi</td>
+                  <td>
+                    {askep.jam_pemberian_implementasi
+                      ? `${askep.tanggal}/${askep.jam_pemberian_implementasi}`
+                      : `-`}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Luaran</td>
+                  <td>
+                    {askep.jam_penilaian_luaran ? (
+                      `${askep.tanggal}/${askep.jam_penilaian_luaran}`
+                    ) : (
+                      <Link to={`/perawat/askep/form-evaluasi/${askep.id}`}
+                        className="btn btn-primary btn-large"
+                      >
+                        <i class="fa-solid fa-plus"></i> Tambah
+                      </Link>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Evaluasi</td>
+                  <td>
+                    {askep.jam_pemberian_evaluasi
+                      ? `${askep.tanggal}/${askep.jam_pemberian_evaluasi}`
+                      : `-`}
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+          ))}
 
+        <DataTable value={keteranganData} className="mt-3">
+          <Column field="nama_keterangan" header="Keterangan"></Column>
+          <Column header="Tanggal/Jam"></Column>
+          <Column field="form" header=""></Column>
         </DataTable>
 
         {/* Render Diagnosa */}
@@ -172,13 +213,12 @@ const KeteranganAskep = () => {
             <div>
               <br></br>
             </div>
-           
           </div>
         ))}
 
         {/* Render Intervensi */}
         {intervensi.map((inter, index) => (
-          <div key={inter.id} className='box-panel'>
+          <div key={inter.id} className="box-panel">
             <Container className="container-modify">
               <Row>
                 <Col>
@@ -199,16 +239,28 @@ const KeteranganAskep = () => {
                   </div>
                 </Col>
                 <Col>
-                  <Link 
+                  <Link
                     to={`/perawat/askep/form-intervensi/${id}`}
-                    className='btn d-flex justify-content-center align-items-center option-button-svg mt-1'>
-                      <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                      </span>
-                      <span className='option-text'>Implementasi</span>
-                    </Link>
+                    className="btn d-flex justify-content-center align-items-center option-button-svg mt-1"
+                  >
+                    <span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        className="svg-askep"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                    </span>
+                    <span className="option-text">Implementasi</span>
+                  </Link>
                 </Col>
               </Row>
             </Container>
