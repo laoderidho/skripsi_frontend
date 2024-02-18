@@ -4,7 +4,10 @@ import Sidebar from '../../../components/menu/Sidebar'
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from "../../../axios";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import "primereact/resources/themes/saga-blue/theme.css";
+import { Keterangan } from '../keterangan/Keterangan';
 
 
 
@@ -18,6 +21,21 @@ const KeteranganAskep = () => {
   const {id} = useParams();
   const navigate =  useNavigate();
   const token = localStorage.getItem("token");
+
+  const [keteranganData, setKeteranganData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = Keterangan.getData();
+        setKeteranganData(data);
+      } catch (error) {
+
+      }
+    };
+
+    fetchData();
+  }, []);
 
 
 
@@ -55,6 +73,8 @@ const KeteranganAskep = () => {
       console.error(error);
     }
   }
+
+
 
   
 
@@ -100,6 +120,13 @@ const KeteranganAskep = () => {
           Tambah Diagnosa
         </Link>
 
+        <DataTable value={keteranganData} className='mt-3'>
+          <Column field='nama_keterangan' header='Keterangan'></Column>
+          <Column header='Tanggal/Jam'></Column>
+          <Column field='form' header=''></Column>
+
+        </DataTable>
+
         {/* Render Diagnosa */}
         {diagnosa.map((diag, index) => (
           <div key={diag.id} className="box-panel">
@@ -108,7 +135,7 @@ const KeteranganAskep = () => {
               <span style={{ paddingLeft: "8rem" }}>No: </span>
             </div>
 
-            <Container className="container-modify">
+            {/* <Container className="container-modify">
               <Row>
                 <Col>
                   <Link style={{ paddingLeft: "0.7rem" }}>Diagnosa</Link>
@@ -140,7 +167,7 @@ const KeteranganAskep = () => {
                     </Link>
                 </Col>
               </Row>
-            </Container>
+            </Container> */}
 
             <div>
               <br></br>

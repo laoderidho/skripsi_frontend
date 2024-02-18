@@ -121,7 +121,6 @@ export default function DaftarPasien() {
         <Toolbar
           start={startContent}
           end={endContent}
-          className=""
           >
         </Toolbar>
 

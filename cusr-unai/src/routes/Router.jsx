@@ -46,6 +46,7 @@ import HariAskep from "../Pages/Perawat/keterangan/HariAskep";
 import ShiftHarian from "../Pages/Perawat/keterangan/ShiftHarian";
 import FormIntervensi from "../Pages/Perawat/form-ski/FormIntervensi";
 import FormEvaluasi from "../Pages/Perawat/form-ski/FormEvaluasi";
+import Keterangan from "../Pages/Perawat/keterangan/Keterangan";
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
