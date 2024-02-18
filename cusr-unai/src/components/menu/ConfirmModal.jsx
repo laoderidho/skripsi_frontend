@@ -1,8 +1,12 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom'
 
 const ConfirmModal = ({onConfirm, successMessage, cancelMessage, buttonText}) => {
+  
+  const navigate = useNavigate();
+
   const showApiConfirmation = () => {
     Swal.fire({
       title: "Konfirmasi",
@@ -21,7 +25,7 @@ const ConfirmModal = ({onConfirm, successMessage, cancelMessage, buttonText}) =>
     });
   };
 
-  return <Button variant="btn blue-button" onClick={showApiConfirmation}>{buttonText}</Button>;
+  return <Button variant="btn confirm-button" onClick={showApiConfirmation}>{buttonText}</Button>;
 };
 
 export default ConfirmModal;

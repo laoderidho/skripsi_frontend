@@ -79,6 +79,8 @@ export default function FormDiagnosa() {
 
       const selectedDiagnosaData = res.data;
 
+
+      console.log(selectedDiagnosaData.penyebab_fisiologis);
       setNamaDiagnosa(selectedDiagnosaData.diagnosa.nama_diagnosa);
       setSelectedFaktorRisiko(selectedDiagnosaData.faktor_risiko);
       setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);

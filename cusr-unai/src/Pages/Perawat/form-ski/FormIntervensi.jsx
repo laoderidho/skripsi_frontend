@@ -123,7 +123,9 @@ export default function FormIntervensi() {
             },
             {
                 headers: { Authorization: `Bearer ${token}`},
-            });   
+            });
+            
+            navigate(`/perawat/askep/shift/keterangan/${id}`);
         } catch (error) {
             
         }
