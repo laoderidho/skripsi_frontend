@@ -43,7 +43,7 @@ const DetailLuaran = () => {
 
   const getDataById = async () => {
     try {
-        const res = await axios.post(`/admin/luaran/${id}`, {
+        const res = await axios.post(`/admin/luaran/detail/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         setKodeLuaran(res.data.data.kode_luaran)

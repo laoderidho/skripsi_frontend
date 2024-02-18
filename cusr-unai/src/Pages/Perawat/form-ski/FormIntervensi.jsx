@@ -60,9 +60,8 @@ export default function FormIntervensi() {
             );
 
             const selectedIntervensiData = res.data;
-            console.log(res)
 
-
+            setNamaIntervensi(selectedIntervensiData.data.nama_intervensi);
             setSelectedObservasi(selectedIntervensiData.tindakan_observasi);
             setSelectedTerapeutik(selectedIntervensiData.tindakan_teraupetik);
             setSelectedEdukasi(selectedIntervensiData.tindakan_edukasi);
@@ -119,10 +118,8 @@ export default function FormIntervensi() {
         try {
             await axios.post(`/perawat/intervensi/update/${id}`, {
                 nama_intervensi,
-                tindakan_observasi: handleObservasi,
-                tindakan_terapeutik: handleTerapeutik,
-                tindakan_edukasi: handleEdukasi,
-                catatan: catatan
+                tindakan_intervensi: handleObservasi + ',' + handleTerapeutik + ',' + handleEdukasi,
+                catatan_intervensi: catatan
             },
             {
                 headers: { Authorization: `Bearer ${token}`},
