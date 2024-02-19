@@ -7,7 +7,7 @@ import axios from "../../../axios";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/saga-blue/theme.css";
-
+import { Keterangan } from '../keterangan/Keterangan';
 
 
 const KeteranganAskep = () => {
@@ -28,6 +28,7 @@ const KeteranganAskep = () => {
     getListAskep();
   }, []);
 
+  
 
   const getListAskep = async () => {
     try{
@@ -162,11 +163,15 @@ const KeteranganAskep = () => {
             </Table>
           ))}
 
-        <DataTable value={keteranganData} className="mt-3">
-          <Column field="nama_keterangan" header="Keterangan"></Column>
-          <Column header="Tanggal/Jam"></Column>
-          <Column field="form" header=""></Column>
-        </DataTable>
+
+        
+          <DataTable value={Keterangan.getData(listAskep)} className="mt-3">
+            <Column field="nama_keterangan" header="Keterangan"></Column>
+            <Column field="tanggal" header="Tanggal/Jam"></Column>
+            
+          
+          </DataTable>
+         
 
         {/* Render Diagnosa */}
         {diagnosa.map((diag, index) => (
