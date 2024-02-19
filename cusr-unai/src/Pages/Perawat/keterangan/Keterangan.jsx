@@ -5,28 +5,38 @@ import { Link } from "react-router-dom";
 
 
 export const Keterangan = {
-    getData(id) {
-        return [
-            {
+    getData(listAskep) {
+        const data = [];
+        listAskep.forEach(askep => {
+            askep.jam_pemberian_diagnosa && data.push({
                 nama_keterangan: 'Diagnosa',
-                form: (
-                        <Link to={`/perawat/askep/form-diagnosa/${id}`} className="btn d-flex justify-content-center align-items-center option-button-svg mt-1'">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                        </Link> 
-                    )
-                
-            },
-            {
-                nama_keterangan: 'Intervensi'
-            },
-            {
-                nama_keterangan: 'Implementasi'
-            },
-            {
-                nama_keterangan: 'Evaluasi'
-            }
-        ]
+                tanggal: `${askep.tanggal}/${askep.jam_pemberian_diagnosa}`
+            });
+            data.push({
+                nama_keterangan:  'Intervensi',
+                tanggal: askep.jam_pemberian_intervensi ? `${askep.tanggal}/${askep.jam_pemberian_intervensi}` : (
+                    <Link
+                        to={`/perawat/askep/form-intervensi/${askep.id}`}
+                        className="btn btn-primary btn-large">Tambah</Link>
+                )
+            });
+            data.push({
+                nama_keterangan: 'Implementasi',
+                tanggal: askep.jam_pemberian_implementasi ? `${askep.tanggal}/${askep.jam_pemberian_implementasi}` : `-`
+            })
+            data.push({
+                nama_keterangan: 'Luaran',
+                tanggal: askep.jam_penilaian_luaran ? `${askep.tanggal}/${askep.jam_pemberian_implementasi}` : (
+                    <Link
+                        tp={`/perawat/askep/form-evaluasi/${askep.id}`}
+                        className="btn btn-primary btn-large">Tambah</Link>
+                )
+            })
+            data.push({
+                nama_keterangan: 'Evaluasi',
+                tanggal: askep.jam_pemberian_evaluasi ? `${askep.tanggal}/${askep.jam_pemberian_evaluasi}` : '-'
+            })
+        });
+        return data;
     }
 }
