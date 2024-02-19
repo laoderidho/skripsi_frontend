@@ -7,7 +7,6 @@ import axios from "../../../axios";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/saga-blue/theme.css";
-import { Keterangan } from '../keterangan/Keterangan';
 
 
 const KeteranganAskep = () => {
@@ -100,8 +99,8 @@ const KeteranganAskep = () => {
 
         {listAskep &&
           listAskep.map((askep, index) => (
-            <Table striped bordered>
-              <thead>
+            <table className='bordered' id='border'>
+              <thead className='table-head'>
                 <tr>
                   <th>Keterangan</th>
                   <th>Tanggal/Jam</th>
@@ -132,9 +131,14 @@ const KeteranganAskep = () => {
                 <tr>
                   <td>Implementasi</td>
                   <td>
-                    {askep.jam_pemberian_implementasi
-                      ? `${askep.tanggal}/${askep.jam_pemberian_implementasi}`
-                      : `-`}
+                    {askep.jam_pemberian_implementasi ? (
+                       `${askep.tanggal}/${askep.jam_pemberian_implementasi}`
+                      ) : (
+                        <Link
+                          to={`/perawat/askep/form-implementasi/${askep.id}`}
+                          className='btn btn-primary btn-large'>
+                            <i class="fa-solid fa-plus"></i> Tambah</Link>
+                      )}
                   </td>
                 </tr>
                 <tr>
@@ -160,17 +164,10 @@ const KeteranganAskep = () => {
                   </td>
                 </tr>
               </tbody>
-            </Table>
+            </table>
           ))}
 
 
-        
-          <DataTable value={Keterangan.getData(listAskep)} className="mt-3">
-            <Column field="nama_keterangan" header="Keterangan"></Column>
-            <Column field="tanggal" header="Tanggal/Jam"></Column>
-            
-          
-          </DataTable>
          
 
         {/* Render Diagnosa */}
