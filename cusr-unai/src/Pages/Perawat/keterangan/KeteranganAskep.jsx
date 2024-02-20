@@ -163,16 +163,6 @@ const KeteranganAskep = () => {
             </Table>
           ))}
 
-
-        
-          <DataTable value={Keterangan.getData(listAskep)} className="mt-3">
-            <Column field="nama_keterangan" header="Keterangan"></Column>
-            <Column field="tanggal" header="Tanggal/Jam"></Column>
-            
-          
-          </DataTable>
-         
-
         {/* Render Diagnosa */}
         {diagnosa.map((diag, index) => (
           <div key={diag.id} className="box-panel">
