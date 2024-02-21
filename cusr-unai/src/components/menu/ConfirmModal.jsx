@@ -1,10 +1,14 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { Button } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
-const ConfirmModal = ({onConfirm, successMessage, cancelMessage, buttonText}) => {
-  
+const ConfirmModal = ({
+  onConfirm,
+  successMessage,
+  cancelMessage,
+  buttonText,
+}) => {
   const navigate = useNavigate();
 
   const showApiConfirmation = () => {
@@ -17,7 +21,7 @@ const ConfirmModal = ({onConfirm, successMessage, cancelMessage, buttonText}) =>
       cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await onConfirm()
+        await onConfirm();
         Swal.fire("Berhasil!", successMessage, "success");
       } else {
         Swal.fire("Dibatalkan", cancelMessage, "warning");
@@ -25,7 +29,14 @@ const ConfirmModal = ({onConfirm, successMessage, cancelMessage, buttonText}) =>
     });
   };
 
-  return <Button variant="btn confirm-button" onClick={showApiConfirmation}>{buttonText}</Button>;
+  return (
+    <Button
+      variant="btn btn-primary w-100 confirm-button"
+      onClick={showApiConfirmation}
+    >
+      {buttonText}
+    </Button>
+  );
 };
 
 export default ConfirmModal;
