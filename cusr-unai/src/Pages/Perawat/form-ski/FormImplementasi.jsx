@@ -8,6 +8,7 @@ import ConfirmModal from "../../../components/menu/ConfirmModal";
 export default function FormImplementasi() {
   const [nama_intervensi, setNamaIntervensi] = useState("");
   const [tindakan, setTindakan] = useState([]);
+  const [checked, setChecked] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,6 +31,21 @@ export default function FormImplementasi() {
     getDataById();
   }, []);
 
+  const joinTindakan = (item) => {};
+
+  const [checkedItems, setCheckedItems] = useState({});
+
+  // Fungsi untuk menangani perubahan status pencentangan pada checkbox
+  const handleCheckboxChange = (event, namaImplementasi, itemId) => {
+    const { checked } = event.target;
+    setCheckedItems((prevState) => ({
+      ...prevState, [namaImplementasi]: checked,
+    }));
+  };
+
+  useEffect(() => {
+    console.log(checkedItems);
+  }, [checkedItems]);
   return (
     <Sidebar>
       <div className="container">
@@ -40,16 +56,18 @@ export default function FormImplementasi() {
         <Form className="container">
           <h6>Tindakan</h6>
 
-          {tindakan.map((item) => {
-            return (
-              <Form.Group>
-                <Form.Check>
-                  <Form.Check.Input type="checkbox" />
-                  <Form.Check.Label>{item.nama_implementasi}</Form.Check.Label>
-                </Form.Check>
-              </Form.Group>
-            );
-          })}
+          {tindakan.map((item, index) => (
+            <Form.Group key={index}>
+              <Form.Check
+                type="checkbox"
+                label={item.nama_implementasi}
+                checked={checkedItems[item.nama_implementasi] || false}
+                onChange={(e) =>
+                  handleCheckboxChange(e, item.nama_implementasi, item.id)
+                }
+              />
+            </Form.Group>
+          ))}
 
           <div className="d-flex mt-4 justify-content-end">
             <ConfirmModal
