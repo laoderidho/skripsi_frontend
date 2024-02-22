@@ -99,8 +99,8 @@ const KeteranganAskep = () => {
 
         {listAskep &&
           listAskep.map((askep, index) => (
-            <table className='bordered' id='border'>
-              <thead className='table-head'>
+            <table className="bordered" id="border">
+              <thead className="table-head">
                 <tr>
                   <th>Keterangan</th>
                   <th>Tanggal/Jam</th>
@@ -138,13 +138,15 @@ const KeteranganAskep = () => {
                   ) : ( "Implementasi" )}</td>
                   <td>
                     {askep.jam_pemberian_implementasi ? (
-                       `${askep.tanggal}/${askep.jam_pemberian_implementasi}`
-                      ) : (
-                        <Link
-                          to={`/perawat/askep/form-implementasi/${askep.id}`}
-                          className='btn btn-primary btn-large'>
-                            <i class="fa-solid fa-plus"></i> Tambah</Link>
-                      )}
+                      `${askep.tanggal}/${askep.jam_pemberian_implementasi}`
+                    ) : (
+                      <Link
+                        to={`/perawat/askep/form-implementasi/${askep.id}`}
+                        className="btn btn-primary btn-large"
+                      >
+                        <i class="fa-solid fa-plus"></i> Tambah
+                      </Link>
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -155,7 +157,8 @@ const KeteranganAskep = () => {
                     {askep.jam_penilaian_luaran ? (
                       `${askep.tanggal}/${askep.jam_penilaian_luaran}`
                     ) : (
-                      <Link to={`/perawat/askep/form-evaluasi/${askep.id}`}
+                      <Link
+                        to={`/perawat/askep/form-evaluasi/${askep.id}`}
                         className="btn btn-primary btn-large"
                       >
                         <i class="fa-solid fa-plus"></i> Tambah
@@ -168,17 +171,21 @@ const KeteranganAskep = () => {
                     <Link to={`/perawat/askep/evaluasi/${askep.id}`} className='label-askep'>Evaluasi</Link>
                   ) : ( "Evaluasi" )}</td>
                   <td>
-                    {askep.jam_pemberian_evaluasi
-                      ? `${askep.tanggal}/${askep.jam_pemberian_evaluasi}`
-                      : `-`}
+                    {askep.jam_pemberian_evaluasi ? (
+                      `${askep.tanggal}/${askep.jam_pemberian_evaluasi}`
+                    ) : (
+                      <Link
+                        to={`/perawat/askep/form-evaluasi/${askep.id}`}
+                        className="btn btn-primary btn-large"
+                      >
+                        <i class="fa-solid fa-plus"></i> Tambah
+                      </Link>
+                    )}
                   </td>
                 </tr>
               </tbody>
             </table>
           ))}
-
-
-         
 
         {/* Render Diagnosa */}
         {diagnosa.map((diag, index) => (
