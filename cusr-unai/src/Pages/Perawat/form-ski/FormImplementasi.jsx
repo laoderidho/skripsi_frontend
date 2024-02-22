@@ -3,14 +3,11 @@ import Sidebar from "../../../components/menu/Sidebar";
 import axios from "../../../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
+import ConfirmModal from "../../../components/menu/ConfirmModal";
 
 export default function FormImplementasi() {
-  const [kode_intervensi, setKodeIntervensi] = useState("");
   const [nama_intervensi, setNamaIntervensi] = useState("");
-  const [observasi, setObservasi] = useState("");
-  const [terapeutik, setTerapeutik] = useState("");
-  const [edukasi, setEdukasi] = useState("");
-  const [kolaborasi, setKolaborasi] = useState("");
+  const [tindakan, setTindakan] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -18,9 +15,13 @@ export default function FormImplementasi() {
 
   const getDataById = async () => {
     try {
-      const res = await axios.post(`/perawat/implementasi/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.post(
+        `/perawat/implementasi/get-implementasi-pasien/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTindakan(res.data.data);
       console.log(res.data);
     } catch (error) {}
   };
@@ -37,71 +38,27 @@ export default function FormImplementasi() {
 
       <div className="container pt-5">
         <Form className="container">
-          <Form.Group>
-            <Form.Label>Intervensi</Form.Label>
-            <p>{nama_intervensi}</p>
-          </Form.Group>
+          <h6>Tindakan</h6>
 
-          <Form.Group>
-            <h5 className="mt-3">Tindakan</h5>
-            <Form.Label className="mt-2">Observasi</Form.Label>
-            <ul>
-              {observasi &&
-                observasi.map((item, index) => (
-                  <li key={index}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id=""
-                    />
-                    <label className="form-check-label" for="">
-                      {item}
-                    </label>
-                  </li>
-                ))}
-            </ul>
-          </Form.Group>
+          {tindakan.map((item) => {
+            return (
+              <Form.Group>
+                <Form.Check>
+                  <Form.Check.Input type="checkbox" />
+                  <Form.Check.Label>{item.nama_implementasi}</Form.Check.Label>
+                </Form.Check>
+              </Form.Group>
+            );
+          })}
 
-          <Form.Group>
-            <Form.Label className="mt-2">Terapeutik</Form.Label>
-            <ul>
-              {terapeutik &&
-                terapeutik.map((item, index) => (
-                  <li key={index}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id=""
-                    />
-                    <label className="form-check-label" for="">
-                      {item}
-                    </label>
-                  </li>
-                ))}
-            </ul>
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Label className="mt-2">Edukasi</Form.Label>
-            <ul>
-              {edukasi &&
-                edukasi.map((item, index) => (
-                  <li key={index}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id=""
-                    />
-                    <label className="form-check-label" for="">
-                      {item}
-                    </label>
-                  </li>
-                ))}
-            </ul>
-          </Form.Group>
+          <div className="d-flex mt-4 justify-content-end">
+            <ConfirmModal
+              onConfirm={getDataById}
+              successMessage={"Data berhasil di simpan"}
+              cancelMessage={"Data gagal di simpan"}
+              buttonText={"Simpan"}
+            />
+          </div>
         </Form>
       </div>
     </Sidebar>
