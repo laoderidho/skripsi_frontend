@@ -123,10 +123,11 @@ nav{
     background-color: #bbdcf1;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    border: 0.01rem solid #bbdcf1;
+    border: 0.01rem solid #fff;
     border-radius: 0.2rem; 
-    color: #fff;
+    color: #4b5563;
     text-decoration: none;
+    
 }
 
 
