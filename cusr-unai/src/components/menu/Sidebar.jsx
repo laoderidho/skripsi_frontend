@@ -33,7 +33,7 @@ export default function Sidebar(props){
    };
    
    const iconStyle = {
-    marginRight: "1rem",
+    marginRight: "1rem"
    }
 
     const getClick = () => {
@@ -110,7 +110,7 @@ export default function Sidebar(props){
             ) : (
               <Link key={index} to={item.path} >
                 {" "}
-                <i className={item.icon} style={iconStyle}></i> {item.name}
+                <i className={item.icon}  style={iconStyle}></i> {item.name}
               </Link>
             )
           )}

@@ -71,7 +71,7 @@ const ConfigMenu = [
     path: "/perawat/profile",
     name: "Profile",
     role: "perawat",
-    icon: "fa-solid fa-user-doctor",
+    icon: "fa-solid fa-user-nurse",
     child: null,
   },
   {
@@ -85,7 +85,7 @@ const ConfigMenu = [
     path: "/perawat/laporan",
     name: "Laporan",
     role: "perawat",
-    icon: "fa-solid fa-file-invoice",
+    icon: "fa-solid fa-notes-medical",
     child: null,
   },
   {

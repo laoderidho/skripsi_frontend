@@ -107,7 +107,16 @@ nav{
     display: flex;
     flex-direction: column;
     z-index: 99;
+    box-shadow: 0 0 10px #dee2e6;
     transition: margin-left 0.5s ease-in-out; 
+}
+
+.label {
+    background-color: #bbdcf1;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border: 0.01rem solid #bbdcf1;
+    border-radius: 0.2rem;
 }
 
 
