@@ -30,19 +30,6 @@ const DetailDiagnosa = () => {
 
   const [diagnosa, setDiagnosa] = useState([]);
 
-  // const getDiagnosa = async (token) => {
-  //   try {
-  //     await axios.post(`/admin/diagnosa`, {
-  //       headers: { Authorization: `Bearer ${token}` }
-  //     })
-  //     .then((res) => {
-  //       console.log(res)
-  //       setDiagnosa(res?.data?.data);
-  //     }) 
-  //   } catch (error) {
-      
-  //   }
-  // }
 
 
   useEffect(() => {

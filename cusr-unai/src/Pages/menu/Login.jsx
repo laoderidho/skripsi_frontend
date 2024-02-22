@@ -59,7 +59,7 @@ export default function Login() {
         </div>
         <Form className="container" onSubmit={loginForm}>
           <Form.Group>
-            <Form.Label>Username</Form.Label>
+            <Form.Label id="form-label">Username</Form.Label>
             <Form.Control
               id="form-control-login"
               type="text"
@@ -76,7 +76,7 @@ export default function Login() {
             <Form.Text className="text-danger">{`${error}`}</Form.Text>
           </Form.Group>
           <Form.Group className="pt-2">
-            <Form.Label>Password</Form.Label>
+            <Form.Label id="form-label">Password</Form.Label>
             <Form.Control
               id="form-control-login"
               type="password"
