@@ -94,7 +94,7 @@ export default function DaftarPasien() {
             body={(item) => (
               <Link
                 to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
-                className="">Lihat Profil</Link>
+                className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
             )}/>
         </DataTable>
       </div>

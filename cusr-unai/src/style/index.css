@@ -119,6 +119,16 @@ nav{
     border-radius: 0.2rem;
 }
 
+.label-askep, .label-askep:hover {
+    background-color: #bbdcf1;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border: 0.01rem solid #bbdcf1;
+    border-radius: 0.2rem; 
+    color: #fff;
+    text-decoration: none;
+}
+
 
 
 

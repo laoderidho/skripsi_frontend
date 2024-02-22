@@ -109,7 +109,7 @@ const KeteranganAskep = () => {
               <tbody>
                 <tr>
                   <td>{askep.jam_pemberian_diagnosa ? (
-                    <Link to={`/perawat/askep/diagnosa/${askep.id}`}>Diagnosa</Link>
+                    <Link to={`/perawat/askep/diagnosa/${askep.id}`} className='label-askep'>Diagnosa</Link>
                    ) : ( "Diagnosa" )} </td>
                   <td>
                     {askep.tanggal}/{askep.jam_pemberian_diagnosa}
@@ -117,7 +117,7 @@ const KeteranganAskep = () => {
                 </tr>
                 <tr>
                   <td>{askep.jam_pemberian_intervensi ? (
-                    <Link to={`/perawat/askep/intervensi/${askep.id}`}>Intervensi</Link>
+                    <Link to={`/perawat/askep/intervensi/${askep.id}`} className='label-askep'>Intervensi</Link>
                   ) : ( "Intervensi" )}</td>
                   <td>
                     {askep.jam_pemberian_intervensi ? (
@@ -134,7 +134,7 @@ const KeteranganAskep = () => {
                 </tr>
                 <tr>
                   <td>{askep.jam_pemberian_implementasi ? (
-                    <Link tp={`/perawat/askep/implementasi/${askep.id}`}>Implementasi</Link>
+                    <Link tp={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
                   ) : ( "Implementasi" )}</td>
                   <td>
                     {askep.jam_pemberian_implementasi ? (
@@ -149,7 +149,7 @@ const KeteranganAskep = () => {
                 </tr>
                 <tr>
                   <td>{askep.jam_pemberian_luaran ? (
-                    <Link to={`/perawat/askep/luaran/${askep.id}`}>Luaran</Link>
+                    <Link to={`/perawat/askep/luaran/${askep.id}`} className='label-askep'>Luaran</Link>
                   ) : ( "Luaran" )}</td>
                   <td>
                     {askep.jam_penilaian_luaran ? (
@@ -165,7 +165,7 @@ const KeteranganAskep = () => {
                 </tr>
                 <tr>
                   <td>{askep.jam_pemberian_luaran ? (
-                    <Link to={`/perawat/askep/evaluasi/${askep.id}`}>Evaluasi</Link>
+                    <Link to={`/perawat/askep/evaluasi/${askep.id}`} className='label-askep'>Evaluasi</Link>
                   ) : ( "Evaluasi" )}</td>
                   <td>
                     {askep.jam_pemberian_evaluasi
