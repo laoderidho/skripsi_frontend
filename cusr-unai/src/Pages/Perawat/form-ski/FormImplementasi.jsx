@@ -10,6 +10,8 @@ export default function FormImplementasi() {
   const [tindakan, setTindakan] = useState([]);
   const [checked, setChecked] = useState(false);
 
+  const [checkedTindakan, setCheckedTindakan] = useState([]);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -31,21 +33,36 @@ export default function FormImplementasi() {
     getDataById();
   }, []);
 
-  const joinTindakan = (item) => {};
+  const joinTindakan = () => {
+    let tindakan = [];
+    for (let key in checkedItems) {
+      if (checkedItems[key] === true) {
+        tindakan.push(key);
+      }
+    }
+    return tindakan;
+  };
 
   const [checkedItems, setCheckedItems] = useState({});
 
   // Fungsi untuk menangani perubahan status pencentangan pada checkbox
-  const handleCheckboxChange = (event, namaImplementasi, itemId) => {
+  const handleCheckboxChange = (event, id_implementasi) => {
     const { checked } = event.target;
     setCheckedItems((prevState) => ({
-      ...prevState, [namaImplementasi]: checked,
+      ...prevState,
+      [id_implementasi]: checked,
     }));
   };
 
   useEffect(() => {
-    console.log(checkedItems);
+    console.log(joinTindakan());
   }, [checkedItems]);
+
+  const addImplementasi = async () => {
+    try {
+    } catch (err) {}
+  };
+
   return (
     <Sidebar>
       <div className="container">
@@ -61,10 +78,8 @@ export default function FormImplementasi() {
               <Form.Check
                 type="checkbox"
                 label={item.nama_implementasi}
-                checked={checkedItems[item.nama_implementasi] || false}
-                onChange={(e) =>
-                  handleCheckboxChange(e, item.nama_implementasi, item.id)
-                }
+                checked={checkedItems[item.id] || false}
+                onChange={(e) => handleCheckboxChange(e, item.id)}
               />
             </Form.Group>
           ))}

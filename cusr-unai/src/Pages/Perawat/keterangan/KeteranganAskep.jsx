@@ -45,7 +45,7 @@ const KeteranganAskep = () => {
 
   const getDateDiagnose = async () =>{
     try {
-      const response = await axios.post(`/perawat/diagnosa/getdate/${id}`, {
+      const response = await axios.post(`/perawat/list-askep/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
