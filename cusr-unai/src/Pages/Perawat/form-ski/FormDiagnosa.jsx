@@ -64,6 +64,7 @@ export default function FormDiagnosa() {
     }
   };
 
+  
   const token = localStorage.getItem("token");
 
   const handleDiagnosaChange = async () => {

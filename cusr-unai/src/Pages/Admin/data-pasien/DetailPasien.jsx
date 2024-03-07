@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/menu/Sidebar'
-import { Breadcrumb, Form, Row, Col, Button, Modal, } from 'react-bootstrap'
+import { Breadcrumb, Form, Row, Col, Button, Modal } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import ConfirmModal from '../../../components/menu/ConfirmModal'
 import AuthorizationRoute from '../../../AuthorizationRoute'
@@ -428,7 +428,7 @@ const DetailPasien = () => {
         </div>
 
         
-
+        {/* MODAL STATUS */}
         <Modal
           show={showModalRawatInap}
           onHide={() => setShowModalRawatInap(!showModalRawatInap)}
