@@ -168,7 +168,7 @@ export default function DaftarPasienStatus() {
                     end={endContent}>
                 </Toolbar>
 
-                <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5} tableStyle={{ minWidth: '50rem'}} stripedRows show showGridlines className='mt-3'>
+                <DataTable value={inputValue ? filterPasien : pasien} paginator rows={20} tableStyle={{ minWidth: '50rem'}} stripedRows show showGridlines className='mt-3'>
                     <Column field="id" header='No'/>
                     <Column field="nama_lengkap" header='Nama'/>
                     <Column 
