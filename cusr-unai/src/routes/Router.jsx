@@ -29,6 +29,8 @@ import EditDiagnosa from "../Pages/Admin/standar/diagnosa/EditDiagnosa";
 import DetailLuaran from "../Pages/Admin/standar/luaran/DetailLuaran";
 import EditLuaran from "../Pages/Admin/standar/luaran/EditLuaran";
 import DaftarBed from "../Pages/Admin/bed/DaftarBed";
+import DaftarPasienStatus from "../Pages/Admin/status/DaftarPasienStatus";
+import DetailStatus from "../Pages/Admin/status/DetailStatus";
 
 // Perawat Component Import
 import PerawatDashboard from "../Pages/Perawat/PerawatDashboard";
@@ -92,6 +94,10 @@ export default function Router() {
           <Route path="/admin/luaran/tambah" element={<AddLuaran />} />
           <Route path="/admin/standarkeperawatan/luaran/:id" element={<DetailLuaran />} />
           <Route path="/admin/luaran/edit/:id" element={<EditLuaran />} />
+
+          {/* Admin | Status */}
+          <Route path="/admin/status" element={<DaftarPasienStatus />} />
+          <Route path="/admin/status/lihat-detail/:id" element={<DetailStatus />} />
         
           {/* Admin */}
           <Route path="/admin/dashboard" element={<DashboardPage />} />

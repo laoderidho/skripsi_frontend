@@ -31,7 +31,7 @@ const ConfirmModal = ({
 
   return (
     <Button
-      variant="btn btn-primary w-100 confirm-button"
+      variant="btn confirm-button"
       onClick={showApiConfirmation}
     >
       {buttonText}

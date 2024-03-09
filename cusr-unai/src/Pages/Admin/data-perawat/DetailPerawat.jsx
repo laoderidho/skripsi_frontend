@@ -51,6 +51,7 @@ const DetailPerawat = () => {
     }
   };
 
+  
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {

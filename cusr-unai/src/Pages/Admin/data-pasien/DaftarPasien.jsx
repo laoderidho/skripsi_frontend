@@ -8,6 +8,10 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import { Toolbar } from 'primereact/toolbar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Skeleton } from 'primereact/skeleton';
+
+
+
 
 
 export default function DaftarPasien() {
@@ -15,6 +19,7 @@ export default function DaftarPasien() {
     // Autocomplete
 
     const [inputValue, setInputValue] = useState('');
+    const [loading, setLoading] = useState(true);
     const [filterPasien, setFilterPasien] = useState([]);
     const [pasien, setPasien] = useState([]);
     const [dataRawatInap, setDataRawatInap] = useState('');
@@ -54,6 +59,7 @@ export default function DaftarPasien() {
             .then((res) => {
                 console.log(res)
                 setPasien(res?.data?.data);
+                setLoading(false);
             });
         } catch (error) {
             AuthorizationRoute(error.response.status);
@@ -125,13 +131,25 @@ export default function DaftarPasien() {
         </Toolbar>
 
         <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}  tableStyle={{ minWidth: '50rem' }}  stripedRows show showGridlines className="mt-3">
-          <Column field="id" header='No'/>
-          <Column field="nama_lengkap" header='Nama'/>
-          <Column field="no_medical_record" header='Medical Record'/>
+          <Column field="" 
+            header='No'
+            body={(rowData) => (
+              loading ? <Skeleton /> : rowData.id
+            )}/>
+          <Column field="" 
+            header='Nama'
+            body={(rowData) => (
+              loading ? <Skeleton /> : rowData.nama_lengkap
+            )}/>
+          <Column field="" 
+            header='Medical Record' 
+            body={(rowData) => (
+              loading ? <Skeleton /> : rowData.no_medical_record
+            )}/>w
           <Column 
             field="" 
             header='Status'
-            bodyStyle={(rowData) => (
+            body={(rowData) => (
               <div>
                 {dataRawatInap === "merah" ? (
                         <Button href="#" className="triase-merah text-white p-1 ">
@@ -142,11 +160,11 @@ export default function DaftarPasien() {
                           Triase Kuning
                         </Button>
                       ) : dataRawatInap === "hijau" ? (
-                        <Button href="#" className="triase-hijau text-white p-1 rounded">
+                        <Button href="#" className="triase-hijau text-white p-1">
                           Triase Hijau
                         </Button>
                       ) : dataRawatInap === "hitam" ? (
-                        <Button href="#" className="triase-hitam text-white p-1 rounded">
+                        <Button href="#" className="triase-hitam text-white p-1">
                           Triase Hitam
                         </Button>
                       ) : (

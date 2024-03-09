@@ -59,7 +59,7 @@ export default function DetailAskepDiagnosa() {
             <div className='container'>
                 <Form.Group className='mt-4'>
                     <Form.Label  className="label mt-4">Nama Diagnosa</Form.Label>
-                    <p>{kode_diagnosa} - {nama_diagnosa}</p>
+                    <p>{nama_diagnosa}</p>
                 </Form.Group>
 
                 <Form.Group className='mt-4'>

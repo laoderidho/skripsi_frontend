@@ -1,7 +1,7 @@
 const ConfigMenu = [
   {
     path: "/admin/dashboard",
-    name: "Dasboard",
+    name: "Dashboard",
     role: "admin",
     icon: "fa-solid fa-gauge",
     child: null,
@@ -23,6 +23,13 @@ const ConfigMenu = [
   {
     path: "/admin/bed",
     name: "Kamar",
+    role: "admin",
+    icon: "fa-solid fa-bed",
+    child: null,
+  },
+  {
+    path: "/admin/status",
+    name: "Status",
     role: "admin",
     icon: "fa-solid fa-bed",
     child: null,
