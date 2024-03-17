@@ -8,34 +8,20 @@ import axios from "../../../axios";
 const ShiftHarian = () => {
   const [nama_lengkap, setNamaLengkap] = useState('');
 
-  const {id} = useParams();
+  const {id, tanggal} = useParams();
   const navigate =  useNavigate();
   const token = localStorage.getItem("token");
   const [row, setRow] = useState([]);
   
+  
 
+  const getShift = async () => {
+    try {
+      const response = await axios.post(`/perawat/diagnosa`)
+    } catch (error) {
 
-//   const getDataById = async () => {
-//     try {
-//         const res = await axios.post(`/perawat/daftarpasien/detail/${id}`, {
-//             headers: { Authorization: `Bearer ${token}` }
-//         });
-//         setNamaLengkap(res.data.data.nama_lengkap)
-//     } catch (error) {
-
-//     }
-//   };
-
-//   const handleAddRow = async () => {
-//     try {
-//         const res = await axios.post(`/perawat/daftaraskep/getlist/${id}`, {
-//             headers: { Authorization : `Bearer ${token}` }
-//         });
-//         setRow(res.data.data)
-//     } catch (error) {
-
-//     }
-//   };
+    }
+  }
 
   
 
@@ -56,7 +42,7 @@ const ShiftHarian = () => {
             <Col>
                 <Link
                     className='btn box'
-                    to={`/perawat/askep/shift/keterangan/${id}`}>
+                    to={`/perawat/askep/shift/keterangan/${id}/${tanggal}/1`}>
                     Shift 1
                 </Link>
             </Col>
@@ -65,8 +51,9 @@ const ShiftHarian = () => {
         <Row>
             <Col>
                 <Link
+                    to={`/perawat/askep/shift/keterangan/${id}/${tanggal}/2`}
                     className='btn box'
-                    disabled
+            
                     >
                     Shift 2
                 </Link>

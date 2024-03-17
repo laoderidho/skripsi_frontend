@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import Sidebar from "../../../components/menu/Sidebar";
 import { Link } from "react-router-dom";
+import ListGroup from 'react-bootstrap/ListGroup';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../../axios";
 
@@ -36,13 +37,15 @@ const HariAskep = () => {
   const handleAddRow = async () => {
     try {
       const res = await axios.post(
-        `/perawat/daftaraskep/getlist/${id}`,
+        `/perawat/listaskep/list-pemeriksaan/${id} `,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setRow(res.data.data);
-    } catch (error) {}
+      setRow(res.data);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   useEffect(() => {
@@ -72,7 +75,7 @@ const HariAskep = () => {
         </Table>
 
         <Link
-          to={`/perawat/askep/shift/${id}`}
+          to={`/perawat/askep/form-diagnosa/${id}`}
           className="btn d-flex justify-content-center align-items-center blue-button-lg mt-1"
         >
           Tambah
@@ -80,22 +83,30 @@ const HariAskep = () => {
 
         <input className="form-control" type="text" placeholder="Search" />
 
-        <Table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Tanggal</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {row &&
-              row.map((date, index) => (
-                <tr key={index}>
-                  <td>{date.updated_at}</td>
-                </tr>
+        <Row>
+          <Col>
+            <ListGroup className="pt-4">
+              {row && row.map(item => (
+                <ListGroup.Item>
+                  <Row>
+                    <Col xs={8}>
+                      <Form.Label id='form-label'>
+                        <Row>
+                          <Col>
+                            <Row>
+                              <Link
+                                to={`/perawat/askep/shift/${id}/${item.tanggal_pemeriksaan}`}>{item.tanggal_pemeriksaan}</Link>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Form.Label>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
               ))}
-          </tbody>
-        </Table>
+            </ListGroup>
+          </Col>
+        </Row>
       </div>
     </Sidebar>
   );

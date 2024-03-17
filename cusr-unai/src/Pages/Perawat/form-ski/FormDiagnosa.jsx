@@ -4,10 +4,11 @@ import axios from "../../../axios";
 import "../../../../src/style/accordion.css";
 import { Dropdown } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
+import Multiselect from "../../../components/menu/Multiselect";
 import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function FormDiagnosa() {
   const [diagnosa, setDiagnosa] = useState([]);
@@ -33,6 +34,7 @@ export default function FormDiagnosa() {
     useState([]);
 
   const {id} = useParams();
+  const navigate = useNavigate();
 
   // VALUE
 
@@ -80,6 +82,8 @@ export default function FormDiagnosa() {
 
       const selectedDiagnosaData = res.data;
 
+      console.log(selectedDiagnosaData);
+
 
       console.log(selectedDiagnosaData.penyebab_fisiologis);
       setNamaDiagnosa(selectedDiagnosaData.diagnosa.nama_diagnosa);
@@ -101,15 +105,7 @@ export default function FormDiagnosa() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await handleDiagnosaChange(selectedDiagnosa);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
+    handleDiagnosaChange();
   }, [selectedDiagnosa]);
 
   const getDiagnosa = async (token) => {
@@ -174,12 +170,15 @@ export default function FormDiagnosa() {
         },
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+        });
+
+        navigate(`/perawat/askep/shift/keterangan/${id}`);
     } catch (error) {
       
     }
   };
+
+
 
   return (
     <Sidebar>
@@ -189,7 +188,7 @@ export default function FormDiagnosa() {
       <div className="container">
         <Form className="container">
           <Form.Group className="mt-4">
-            <Form.Label>Diagnosa</Form.Label>
+            <Form.Label id='form-label'>Diagnosa</Form.Label>
 
             <Dropdown
               value={selectedDiagnosa}
@@ -202,8 +201,8 @@ export default function FormDiagnosa() {
             ></Dropdown>
 
             <Form.Group className="mt-3">
-              <Form.Label>Faktor Risiko</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Faktor Risiko</Form.Label>
+              <Multiselect
                 value={faktor_risiko}
                 disabled={!selectedDiagnosa}
                 options={selectedFaktorRisiko}
@@ -211,115 +210,114 @@ export default function FormDiagnosa() {
                 optionLabel="faktor_risiko"
                 className="pt-1"
                 onChange={(e) => setFaktorRisiko(e.value)}
-                filter
-              ></MultiSelect>
+                
+              ></Multiselect>
             </Form.Group>
             <Form.Group className="mt-5">
               <h6>Penyebab</h6>
-              <Form.Label>Penyebab Fisiologis</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Penyebab Fisiologis</Form.Label>
+              <Multiselect
                 value={penyebab_fisiologis}
                 disabled={!selectedDiagnosa}
                 options={selectedPenyebabFisiologis}
                 optionLabel="nama_penyebab"
                 placeholder="Pilih Penyebab Fisiologis"
-                filter
+               
                 className="pt-1"
                 onChange={(e) => setPenyebabFisiologis(e.value)}
                 maxSelectedLabels={3}
-              ></MultiSelect>
+              ></Multiselect>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label>Penyebab Situasional</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Penyebab Situasional</Form.Label>
+              <Multiselect
                 value={penyebab_situasional}
                 disabled={!selectedDiagnosa}
                 options={selectedPenyebabSituasional}
                 optionLabel="nama_penyebab"
                 placeholder="Pilih Penyebab Situasional"
-                filter
+              
                 className="pt-1"
                 onChange={(e) => setPenyebabSituasional(e.value)}
                 maxSelectedLabels={3}
-              ></MultiSelect>
+              ></Multiselect>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label>Penyebab Psikologis</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Penyebab Psikologis</Form.Label>
+              <Multiselect
                 value={penyebab_psikologis}
                 disabled={!selectedDiagnosa}
                 options={selectedPenyebabPsikologis}
                 optionLabel="nama_penyebab"
                 placeholder="Pilih Penyebab Psikologis"
-                filter
+            
                 className="pt-1"
                 onChange={(e) => setPenyebabPsikologis(e.value)}
                 maxSelectedLabels={3}
-              ></MultiSelect>
+              ></Multiselect>
             </Form.Group>
 
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Mayor</h6>
-              <Form.Label>Subjektif</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Subjektif</Form.Label>
+              <Multiselect
                 value={gejala_mayor_subjektif}
                 disabled={!selectedDiagnosa}
                 options={selectedGejalaMayorSubjektif}
                 optionLabel="nama_gejala"
                 placeholder="Pilih Subjektif"
-                filter
+              
                 className="pt-1"
                 onChange={(e) => setGejalaMayorSubjektif(e.value)}
                 maxSelectedLabels={3}
-              ></MultiSelect>
+              ></Multiselect>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label>Objektif</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Objektif</Form.Label>
+              <Multiselect
                 value={gejala_mayor_objektif}
                 disabled={!selectedDiagnosa}
                 options={selectedGejalaMayorObjektif}
                 optionLabel="nama_gejala"
                 placeholder="Pilih Objektif"
-                filter
+              
                 className="pt-1"
                 onChange={(e) => setGejalaMayorObjektif(e.value)}
                 maxSelectedLabels={3}
-              ></MultiSelect>
+              ></Multiselect>
             </Form.Group>
 
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Minor</h6>
-              <Form.Label>Subjektif</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Subjektif</Form.Label>
+              <Multiselect
                 value={gejala_minor_subjektif}
                 disabled={!selectedDiagnosa}
                 options={selectedGejalaMinorSubjektif}
                 optionLabel="nama_gejala"
                 placeholder="Pilih Subjektif"
-                filter
+                
                 className="pt-1"
                 onChange={(e) => setGejalaMinorSubjektif(e.value)}
                 maxSelectedLabels={3}
-              ></MultiSelect>
+              ></Multiselect>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label>Objektif</Form.Label>
-              <MultiSelect
+              <Form.Label id='form-label'>Objektif</Form.Label>
+              <Multiselect
                 value={gejala_minor_objektif}
                 disabled={!selectedDiagnosa}
                 options={selectedGejalaMinorObjektif}
                 optionLabel="nama_gejala"
                 placeholder="Pilih Objektif"
-                filter
                 className="pt-1"
                 onChange={(e) => setGejalaMinorObjektif(e.value)}
                 maxSelectedLabels={3}
-              ></MultiSelect>
+              ></Multiselect>
             </Form.Group>
 
             <Form.Group className="mt-3">

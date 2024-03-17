@@ -38,6 +38,8 @@ export default function DaftarBed() {
 
     const [idBed, setIdBed] = useState(null);
 
+
+
     const handleCheckboxChange = (e) => {
         setShowDropdown(!e.target.checked);
         setShowOtherFacility(e.target.checked);
@@ -198,6 +200,9 @@ export default function DaftarBed() {
 
         }
     };
+
+    
+    
 
     // const fasilitas_options = [
     //     { label: '-', value: ''},
