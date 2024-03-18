@@ -9,6 +9,7 @@ import Multiselect from "../../../components/menu/Multiselect";
 import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
 import { useParams, useNavigate } from "react-router-dom";
+import SeeModalData from "../../../components/perawat/askep/SeeModalData";
 
 export default function FormDiagnosa() {
   const [diagnosa, setDiagnosa] = useState([]);
@@ -52,62 +53,13 @@ export default function FormDiagnosa() {
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState(null);
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState(null);
 
+  // modal Information validation form 
+  const [informationForm, setInformationForm] = useState([])
+  const [modalValidationForm, setModalValidationForm] = useState(false)
+
 
   // MODAL
-
- 
-  const toggleTag = (tag) => {
-    const index = selectedTags.indexOf(tag);
-    if (index !== -1) {
-      const updatedTags = [...selectedTags];
-      updatedTags.splice(index, 1);
-      setSelectedTags(updatedTags);
-    }
-  };
   
-
-  const handleFaktorRisikoChange = (e) => {
-    setFaktorRisiko(e.value);
-    setSelectedTags(e.value.map((item) => item.faktor_risiko));
-  };
-
-  const handlePenyebabFisiologisChange = (e) => {
-    setPenyebabFisiologis(e.value);
-    setSelectedTags(e.value.map((item) => item.nama_penyebab));
-  };
-
-  const handlePenyebabSituasionalChange = (e) => {
-    setPenyebabSituasional(e.value);
-    setSelectedTags(e.value.map((item) => item.nama_penyebab));
-  };
-
-  const handlePenyebabPsikologisChange = (e) => {
-    setPenyebabPsikologis(e.value);
-    setSelectedTags(e.value.map((item) => item.nama_penyebab));
-  };
-
-  const handleGejalaMayorSubjektifChange = (e) => {
-    setGejalaMayorSubjektif(e.value);
-    setSelectedTags(e.value.map((item) => item.nama_gejala));
-  };
-
-  const handleGejalaMayorObjektifChange = (e) => {
-    setGejalaMayorObjektif(e.value);
-    setSelectedTags(e.value.map((item) => item.nama_gejala));
-  };
-
-  const handleGejalaMinorSubjektifChange = (e) => {
-    setGejalaMinorSubjektif(e.value);
-    setSelectedTags(e.value.map((item) => item.nama_gejala));
-  };
-
-  const handleGejalaMinorObjektifChange = (e) => {
-    setGejalaMinorObjektif(e.value);
-    setSelectedTags(e.value.map((item) => item.nama_gejala));
-  };
-
-
-
 
 
   const createDiagnosaOptions = () => {
@@ -239,16 +191,33 @@ export default function FormDiagnosa() {
   };
 
 
+  const handleModal = (data)=>{
+    if(data == null || data.length == 0){
+      setInformationForm(false)
+    }else{
+      setInformationForm(data)
+    }
+    setModalValidationForm(true)
+  }
 
+  const CloseValidationFormModal = () => setModalValidationForm(false)
   return (
     <Sidebar>
+      {modalValidationForm && (
+        <SeeModalData
+          open={modalValidationForm}
+          data={informationForm}
+          name={"Data yang dipilih"}
+          onHide={CloseValidationFormModal}
+        />
+      )}
       <div className="container">
         <h2>Form Diagnosa</h2>
       </div>
       <div className="container">
         <Form className="container">
           <Form.Group className="mt-4">
-            <Form.Label id='form-label'>Diagnosa</Form.Label>
+            <Form.Label id="form-label">Diagnosa</Form.Label>
 
             <Dropdown
               value={selectedDiagnosa}
@@ -261,7 +230,7 @@ export default function FormDiagnosa() {
             ></Dropdown>
 
             <Form.Group className="mt-3">
-              <Form.Label id='form-label'>Faktor Risiko</Form.Label>
+              <Form.Label id="form-label">Faktor Risiko</Form.Label>
               <MultiSelect
                 value={faktor_risiko}
                 disabled={!selectedDiagnosa}
@@ -269,14 +238,20 @@ export default function FormDiagnosa() {
                 placeholder="Pilih Faktor Risiko"
                 optionLabel="faktor_risiko"
                 className="pt-1"
-                onChange={handleFaktorRisikoChange}
+                onChange={(e) => setFaktorRisiko(e.value)}
                 filter
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(faktor_risiko && faktor_risiko.map(item => item.faktor_risiko))}
+              >
+                See selected options
+              </span>
             </Form.Group>
             <Form.Group className="mt-5">
               <h6>Penyebab</h6>
-              <Form.Label id='form-label'>Penyebab Fisiologis</Form.Label>
+              <Form.Label id="form-label">Penyebab Fisiologis</Form.Label>
               <MultiSelect
                 value={penyebab_fisiologis}
                 disabled={!selectedDiagnosa}
@@ -285,14 +260,20 @@ export default function FormDiagnosa() {
                 placeholder="Pilih Penyebab Fisiologis"
                 filter
                 className="pt-1"
-                onChange={handlePenyebabFisiologisChange}
+                onChange={(e) => setPenyebabFisiologis(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(penyebab_fisiologis && penyebab_fisiologis.map(item => item.nama_penyebab))}
+              >
+                See selected options
+              </span>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label id='form-label'>Penyebab Situasional</Form.Label>
+              <Form.Label id="form-label">Penyebab Situasional</Form.Label>
               <MultiSelect
                 value={penyebab_situasional}
                 disabled={!selectedDiagnosa}
@@ -301,14 +282,20 @@ export default function FormDiagnosa() {
                 placeholder="Pilih Penyebab Situasional"
                 filter
                 className="pt-1"
-                onChange={handlePenyebabSituasionalChange}
+                onChange={(e) => setPenyebabSituasional(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(penyebab_situasional && penyebab_situasional.map(item => item.nama_penyebab))}
+              >
+                See selected options
+              </span>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label id='form-label'>Penyebab Psikologis</Form.Label>
+              <Form.Label id="form-label">Penyebab Psikologis</Form.Label>
               <MultiSelect
                 value={penyebab_psikologis}
                 disabled={!selectedDiagnosa}
@@ -317,15 +304,21 @@ export default function FormDiagnosa() {
                 placeholder="Pilih Penyebab Psikologis"
                 filter
                 className="pt-1"
-                onChange={handlePenyebabPsikologisChange}
+                onChange={(e) => setPenyebabPsikologis(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(penyebab_psikologis && penyebab_psikologis.map(item => item.nama_penyebab))}
+              >
+                See selected options
+              </span>
             </Form.Group>
 
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Mayor</h6>
-              <Form.Label id='form-label'>Subjektif</Form.Label>
+              <Form.Label id="form-label">Subjektif</Form.Label>
               <MultiSelect
                 value={gejala_mayor_subjektif}
                 disabled={!selectedDiagnosa}
@@ -334,14 +327,20 @@ export default function FormDiagnosa() {
                 placeholder="Pilih Subjektif"
                 filter
                 className="pt-1"
-                onChange={handleGejalaMayorSubjektifChange}
+                onChange={(e) => setGejalaMayorSubjektif(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(gejala_mayor_subjektif && gejala_mayor_subjektif.map(item => item.nama_gejala))}
+              >
+                See selected options
+              </span>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label id='form-label'>Objektif</Form.Label>
+              <Form.Label id="form-label">Objektif</Form.Label>
               <MultiSelect
                 value={gejala_mayor_objektif}
                 disabled={!selectedDiagnosa}
@@ -350,15 +349,21 @@ export default function FormDiagnosa() {
                 placeholder="Pilih Objektif"
                 filter
                 className="pt-1"
-                onChange={handleGejalaMayorObjektifChange}
+                onChange={(e) => setGejalaMayorObjektif(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(gejala_mayor_objektif && gejala_mayor_objektif.map(item => item.nama_gejala))}
+              >
+                See selected options
+              </span>
             </Form.Group>
 
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Minor</h6>
-              <Form.Label id='form-label'>Subjektif</Form.Label>
+              <Form.Label id="form-label">Subjektif</Form.Label>
               <MultiSelect
                 value={gejala_minor_subjektif}
                 disabled={!selectedDiagnosa}
@@ -367,14 +372,20 @@ export default function FormDiagnosa() {
                 placeholder="Pilih Subjektif"
                 filter
                 className="pt-1"
-                onChange={handleGejalaMinorSubjektifChange}
+                onChange={(e) => setGejalaMinorSubjektif(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(gejala_minor_subjektif && gejala_minor_subjektif.map(item => item.nama_gejala))}
+              >
+                See selected options
+              </span>
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label id='form-label'>Objektif</Form.Label>
+              <Form.Label id="form-label">Objektif</Form.Label>
               <MultiSelect
                 value={gejala_minor_objektif}
                 disabled={!selectedDiagnosa}
@@ -382,11 +393,17 @@ export default function FormDiagnosa() {
                 optionLabel="nama_gejala"
                 placeholder="Pilih Objektif"
                 className="pt-1"
-                onChange={handleGejalaMinorObjektifChange}
+                onChange={(e) => setGejalaMinorObjektif(e.value)}
                 maxSelectedLabels={3}
                 filter
               ></MultiSelect>
-              <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
+              <span
+                id="form-label"
+                className="see-option-link"
+                onClick={() => handleModal(gejala_minor_objektif && gejala_minor_objektif.map(item => item.nama_gejala))}
+              >
+                See selected options
+              </span>
             </Form.Group>
 
             <Form.Group className="mt-3">
@@ -411,29 +428,6 @@ export default function FormDiagnosa() {
           </div>
         </Form>
       </div>
-
-      {/* Modal */}
-
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Selected Options</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <ul>
-            {selectedTags.map((tag, index) => (
-              <li key={index}>
-                {tag}
-                <span onClick={() => toggleTag(tag)}>&times;</span>
-              </li>
-            ))}
-          </ul>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </Sidebar>
   );
 }
