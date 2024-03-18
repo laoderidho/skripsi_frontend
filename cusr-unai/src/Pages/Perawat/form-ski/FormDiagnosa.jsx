@@ -10,6 +10,7 @@ import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
 import { useParams, useNavigate } from "react-router-dom";
 import SeeModalData from "../../../components/perawat/askep/SeeModalData";
+import { type } from "@testing-library/user-event/dist/type";
 
 export default function FormDiagnosa() {
   const [diagnosa, setDiagnosa] = useState([]);
@@ -56,6 +57,10 @@ export default function FormDiagnosa() {
   // modal Information validation form 
   const [informationForm, setInformationForm] = useState([])
   const [modalValidationForm, setModalValidationForm] = useState(false)
+  const [dataValidationForm, setDataValidationForm] = useState([])
+  const [obj, setObj] = useState("")
+  const [getfunc, setGetFunc] = useState("")
+  const [tempData, setTempData] = useState([])
 
 
   // MODAL
@@ -191,16 +196,26 @@ export default function FormDiagnosa() {
   };
 
 
-  const handleModal = (data)=>{
+  const handleModal = (data, allData, nameObj, func)=>{
     if(data == null || data.length == 0){
       setInformationForm(false)
     }else{
       setInformationForm(data)
+      setDataValidationForm(allData)
+      setObj(nameObj)
+      setGetFunc(func)
     }
     setModalValidationForm(true)
   }
 
   const CloseValidationFormModal = () => setModalValidationForm(false)
+
+  const handleBackData = (newData, allData, onObj, myFunc)=>{
+    const filterData = allData.filter((item) => newData.includes(item[onObj]))
+    const myFunction = eval(myFunc)
+    myFunction(filterData)
+  }
+
   return (
     <Sidebar>
       {modalValidationForm && (
@@ -209,6 +224,10 @@ export default function FormDiagnosa() {
           data={informationForm}
           name={"Data yang dipilih"}
           onHide={CloseValidationFormModal}
+          allData={dataValidationForm}
+          onObj={obj}
+          myFunc={getfunc}
+          callDataBack={handleBackData}
         />
       )}
       <div className="container">
@@ -244,7 +263,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(faktor_risiko && faktor_risiko.map(item => item.faktor_risiko))}
+                onClick={() =>
+                  handleModal(
+                    faktor_risiko &&
+                    faktor_risiko.map((item) => item.faktor_risiko),
+                    faktor_risiko,
+                    "faktor_risiko",
+                    "setFaktorRisiko"
+                  )
+                }
               >
                 See selected options
               </span>
@@ -266,7 +293,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(penyebab_fisiologis && penyebab_fisiologis.map(item => item.nama_penyebab))}
+                onClick={() =>
+                  handleModal(
+                    penyebab_fisiologis &&
+                    penyebab_fisiologis.map((item) => item.nama_penyebab),
+                    penyebab_fisiologis,
+                    "nama_penyebab",
+                    "setPenyebabFisiologis"
+                  )
+                }
               >
                 See selected options
               </span>
@@ -288,7 +323,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(penyebab_situasional && penyebab_situasional.map(item => item.nama_penyebab))}
+                onClick={() =>
+                  handleModal(
+                    penyebab_situasional &&
+                    penyebab_situasional.map((item) => item.nama_penyebab),
+                    penyebab_situasional,
+                    "nama_penyebab",
+                    "setPenyebabSituasional"
+                  )
+                }
               >
                 See selected options
               </span>
@@ -310,7 +353,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(penyebab_psikologis && penyebab_psikologis.map(item => item.nama_penyebab))}
+                onClick={() =>
+                  handleModal(
+                    penyebab_psikologis &&
+                      penyebab_psikologis.map((item) => item.nama_penyebab),
+                    penyebab_psikologis,
+                    "nama_penyebab",
+                    "setPenyebabPsikologis"
+                  )
+                }
               >
                 See selected options
               </span>
@@ -333,7 +384,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(gejala_mayor_subjektif && gejala_mayor_subjektif.map(item => item.nama_gejala))}
+                onClick={() =>
+                  handleModal(
+                    gejala_mayor_subjektif &&
+                      gejala_mayor_subjektif.map((item) => item.nama_gejala),
+                    gejala_mayor_subjektif,
+                    "nama_gejala",
+                    "setGejalaMayorSubjektif"
+                  )
+                }
               >
                 See selected options
               </span>
@@ -355,7 +414,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(gejala_mayor_objektif && gejala_mayor_objektif.map(item => item.nama_gejala))}
+                onClick={() =>
+                  handleModal(
+                    gejala_mayor_objektif &&
+                      gejala_mayor_objektif.map((item) => item.nama_gejala),
+                    gejala_mayor_objektif,
+                    "nama_gejala",
+                    "setGejalaMayorObjektif"
+                  )
+                }
               >
                 See selected options
               </span>
@@ -378,7 +445,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(gejala_minor_subjektif && gejala_minor_subjektif.map(item => item.nama_gejala))}
+                onClick={() =>
+                  handleModal(
+                    gejala_minor_subjektif &&
+                      gejala_minor_subjektif.map((item) => item.nama_gejala),
+                    gejala_minor_subjektif,
+                    "nama_gejala",
+                    "setGejalaMinorSubjektif"
+                  )
+                }
               >
                 See selected options
               </span>
@@ -400,7 +475,15 @@ export default function FormDiagnosa() {
               <span
                 id="form-label"
                 className="see-option-link"
-                onClick={() => handleModal(gejala_minor_objektif && gejala_minor_objektif.map(item => item.nama_gejala))}
+                onClick={() =>
+                  handleModal(
+                    gejala_minor_objektif &&
+                      gejala_minor_objektif.map((item) => item.nama_gejala),
+                    gejala_minor_objektif,
+                    "nama_gejala",
+                    "setGejalaMinorObjektif"
+                  )
+                }
               >
                 See selected options
               </span>
