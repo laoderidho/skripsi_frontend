@@ -271,6 +271,7 @@ export default function FormDiagnosa() {
                 className="pt-1"
                 onChange={handleFaktorRisikoChange}
                 filter
+                display="chip"
               ></MultiSelect>
               <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
             </Form.Group>
@@ -284,6 +285,7 @@ export default function FormDiagnosa() {
                 optionLabel="nama_penyebab"
                 placeholder="Pilih Penyebab Fisiologis"
                 filter
+                display="chip"
                 className="pt-1"
                 onChange={handlePenyebabFisiologisChange}
                 maxSelectedLabels={3}
@@ -300,6 +302,7 @@ export default function FormDiagnosa() {
                 optionLabel="nama_penyebab"
                 placeholder="Pilih Penyebab Situasional"
                 filter
+                display="chip"
                 className="pt-1"
                 onChange={handlePenyebabSituasionalChange}
                 maxSelectedLabels={3}
@@ -316,6 +319,7 @@ export default function FormDiagnosa() {
                 optionLabel="nama_penyebab"
                 placeholder="Pilih Penyebab Psikologis"
                 filter
+                display="chip"
                 className="pt-1"
                 onChange={handlePenyebabPsikologisChange}
                 maxSelectedLabels={3}
@@ -333,6 +337,7 @@ export default function FormDiagnosa() {
                 optionLabel="nama_gejala"
                 placeholder="Pilih Subjektif"
                 filter
+                display="chip"
                 className="pt-1"
                 onChange={handleGejalaMayorSubjektifChange}
                 maxSelectedLabels={3}
@@ -349,6 +354,7 @@ export default function FormDiagnosa() {
                 optionLabel="nama_gejala"
                 placeholder="Pilih Objektif"
                 filter
+                display="chip"
                 className="pt-1"
                 onChange={handleGejalaMayorObjektifChange}
                 maxSelectedLabels={3}
@@ -366,6 +372,7 @@ export default function FormDiagnosa() {
                 optionLabel="nama_gejala"
                 placeholder="Pilih Subjektif"
                 filter
+                display="chip"
                 className="pt-1"
                 onChange={handleGejalaMinorSubjektifChange}
                 maxSelectedLabels={3}
@@ -385,6 +392,7 @@ export default function FormDiagnosa() {
                 onChange={handleGejalaMinorObjektifChange}
                 maxSelectedLabels={3}
                 filter
+                display="chip"
               ></MultiSelect>
               <span id='form-label' className='see-option-link' onClick={() => setShowModal(true)}>See selected options</span>
             </Form.Group>

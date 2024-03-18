@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Row, Col, Button, Container } from 'react-bootstrap';
 
-function Multiselect({ apiEndpoint, value, onChange, placeholder, disabled }) {
+function Multiselect({ apiEndpoint, placeholder, disabled, value, onChange }) {
     const [options, setOptions] = useState([]); // State for options fetched from API
-    const [selectedTags, setSelectedTags] = useState(value || []);
+    const [selectedTags, setSelectedTags] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -12,44 +12,34 @@ function Multiselect({ apiEndpoint, value, onChange, placeholder, disabled }) {
     const multiselectRef = useRef(null); 
 
     useEffect(() => {
-        fetch(apiEndpoint)
-            .then(response => {
-                // Check if response is successful
+        const fetchData = async () => {
+            try {
+                const response = await fetch(apiEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Tambahkan header kustom yang dibutuhkan
+                        // Contoh: 'Authorization': 'Bearer tokenAnda'
+                    },
+                    body: JSON.stringify({
+                        // Sesuaikan dengan data yang perlu dikirimkan ke API
+                        // Contoh: { key: 'value' }
+                    })
+                });
                 if (!response.ok) {
-                    throw new Error('Failed to fetch options');
+                    throw new Error('Network response was not ok');
                 }
-                // Check Content-Type header
-                const contentType = response.headers.get('Content-Type');
-                if (!contentType || !contentType.includes('application/json')) {
-                    throw new Error('Response is not JSON');
-                }
-                // Parse JSON response
-                return response.json();
-            })
-            .then(data => {
-                console.log('Options data:', data);
-                setOptions(data);
-            })
-            .catch(error => {
+                const data = await response.json();
+                setOptions(data); // Atur opsi sesuai respons API
+            } catch (error) {
                 console.error('Error fetching options:', error);
-                // Handle the error gracefully, for example, setting options to an empty array
-                setOptions([]);
-            });
+                // Handle error jika diperlukan
+            }
+        };
+
+        fetchData();
     }, [apiEndpoint]);
     
-    
-
-    useEffect(() => {
-        if (value) {
-            setSelectedTags(value);
-            const selected = {};
-            value.forEach(tag => {
-                selected[tag] = true;
-            });
-            setIsSelected(selected);
-        }
-    }, [value]);
-
     useEffect(() => {
         function handleClickOutside(event) {
             if (multiselectRef.current && !multiselectRef.current.contains(event.target)) {
@@ -74,7 +64,6 @@ function Multiselect({ apiEndpoint, value, onChange, placeholder, disabled }) {
             setSelectedTags(selectedTags.filter((t) => t !== tag));
             setIsSelected({ ...isSelected, [tag]: false });
         }
-        onChange(selectedTags); // This might need to be changed
     };
 
     const toggleDropdown = () => {
@@ -86,7 +75,6 @@ function Multiselect({ apiEndpoint, value, onChange, placeholder, disabled }) {
         if (disabled) return; 
         setSelectedTags([]);
         setIsSelected({}); 
-        onChange([]); // This might need to be changed
     };
 
     const filterOptions = (options) => {
