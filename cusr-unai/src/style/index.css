@@ -1010,6 +1010,25 @@ tbody tr {
     margin-top: 2rem !important;
 }
 
+/* MultiSelect */
+
+.p-checkbox .p-checkbox-box {
+    border: 0.02rem solid #ced4da;
+    border-radius: 0.1rem;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+    box-shadow: none !important;
+}
+
+.p-multiselect {
+    border-radius: 1px !important;
+}
+
+
+
+
+
 /* Multiselect */
 
 

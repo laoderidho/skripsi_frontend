@@ -134,7 +134,7 @@ function Multiselect({ apiEndpoint, value, onChange, placeholder, disabled }) {
                                                 <span className='remove-tag' onClick={() => toggleTag(tag)}>
                                                     &times;
                                                 </span>
-                                            </li>
+                                            </li>  
                                         ))}
                                     </ul>
                                 </Modal.Body>
