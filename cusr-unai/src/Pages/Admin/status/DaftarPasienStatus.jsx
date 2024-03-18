@@ -210,7 +210,7 @@ export default function DaftarPasienStatus() {
                             </>
                         )}
                     />
-                    <Column 
+                    {/* <Column 
                         header=''
                         body={(rowData) => (
                             <Link 
@@ -219,7 +219,7 @@ export default function DaftarPasienStatus() {
                                     Edit
                             </Link>
                         )}
-                    />
+                    /> */}
 
                 </DataTable>
 

@@ -120,8 +120,8 @@ export default function Router() {
 
           {/* Keterangan Askep */}
           <Route path="/perawat/askep/:id" element={<HariAskep />} />
-          <Route path="/perawat/askep/shift/keterangan/:id" element={<KeteranganAskep />} />
-          <Route path="/perawat/askep/shift/:id" element={<ShiftHarian />} />
+          <Route path="/perawat/askep/shift/keterangan/:id/:tanggal/:shift" element={<KeteranganAskep />} />
+          <Route path="/perawat/askep/shift/:id/:tanggal" element={<ShiftHarian />} />
 
 
           {/* Form SKI*/}
@@ -139,7 +139,8 @@ export default function Router() {
 
           {/* Laporan */}
           <Route path="/perawat/laporan" element={<DaftarPasienLaporan />} />
-          
+
+
 
 
 

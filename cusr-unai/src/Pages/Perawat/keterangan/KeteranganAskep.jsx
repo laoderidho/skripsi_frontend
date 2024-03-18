@@ -16,22 +16,19 @@ const KeteranganAskep = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const [showTime, setShowTime] = useState(false);
-  const {id} = useParams();
+  const {id, tanggal, shift} = useParams();
   const navigate =  useNavigate();
   const token = localStorage.getItem("token");
 
   const [keteranganData, setKeteranganData] = useState([]);
   const [listAskep, setListAskep] = useState([]);
 
-  useEffect(() => {
-    getListAskep();
-  }, []);
-
   
-
   const getListAskep = async () => {
+
+     const convertDate = ` '${tanggal}' `
     try{
-      const response = await axios.post(`/perawat/list-askep/${id}`, {
+      const response = await axios.post(`/perawat/list-askep/${id}/${shift}/${convertDate}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -43,22 +40,23 @@ const KeteranganAskep = () => {
     }
   };
 
-  const getDateDiagnose = async () =>{
-    try {
-      const response = await axios.post(`/perawat/list-askep/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setDiagnosa(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // const getDateDiagnose = async () =>{
+  //   try {
+  //     const response = await axios.post(`/perawat/diagnosa/getdate/${id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     setDiagnosa(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   useEffect(() => {
-    getDateDiagnose();
+    // getDateDiagnose();
+    getListAskep();
   },[]);
 
 
@@ -112,7 +110,7 @@ const KeteranganAskep = () => {
                     <Link to={`/perawat/askep/diagnosa/${askep.id}`} className='label-askep'>Diagnosa</Link>
                    ) : ( "Diagnosa" )} </td>
                   <td>
-                    {askep.tanggal}/{askep.jam_pemberian_diagnosa}
+                    {askep.tanggal_pemberian_diagnosa}/{askep.jam_pemberian_diagnosa}
                   </td>
                 </tr>
                 <tr>
