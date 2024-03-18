@@ -63,7 +63,7 @@ export default function Router() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
 
           {/* ==== ADMIN ROUTE ==== */}
 
