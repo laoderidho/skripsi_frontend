@@ -24,13 +24,13 @@ const SeeModalData = ({open, data, name, onHide, allData, onObj, myFunc, callDat
       <Modal.Body>
         {dataModal ? (
           dataModal.map((item, index) => (
-            <li>
-              <span>{item}</span>
-              <span className='btn' onClick={() => handleRemoveItem(index)}>&times;</span>
+            <li className='modal-tag'>
+              {item}
+              <span className='remove-tag' onClick={() => handleRemoveItem(index)}>&times;</span>
             </li>
           ))
         ) : (
-          <h1>Data Kosong</h1>
+          <p>-</p>
         )}
       </Modal.Body>
     </Modal>

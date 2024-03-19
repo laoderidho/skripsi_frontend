@@ -305,6 +305,7 @@ div.p-dropdown-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-don
     border: 1px solid #cacaca;
     overflow-wrap: break-word ;
 
+
 }
 
 .p-dropdown-filter-container {
@@ -322,7 +323,8 @@ div.p-dropdown-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-don
 
 .p-dropdown-header, .p-multiselect-header {
     background-color: #fff;
-    border: 1px solid #cacaca;
+    border-bottom: 1px solid #cacaca;
+
 }
 
 .p-accordion {
@@ -1010,6 +1012,12 @@ tbody tr {
     margin-top: 2rem !important;
 }
 
+/* Modal */
+
+.modal-content {
+    border-radius: 0.2rem;
+}
+
 /* MultiSelect */
 
 .p-checkbox .p-checkbox-box {
@@ -1025,11 +1033,49 @@ tbody tr {
     border-radius: 1px !important;
 }
 
+.p-multiselect.p-multiselect-chip .p-multiselect-token {
+    margin-right: 0.4rem !important;
+    background-color: #efefef;
+    border-radius: 0.2rem;
+}
 
+.p-icon.p-multiselect-token-icon {
+    background-image: url('../x-icon.svg') !important;
+    width: 10px;
+    height: 10px;
+    background-size: cover;
+}
+
+.p-multiselect-filter {
+    box-shadow: none;
+}
+
+.p-multiselect-panel {
+    width: 30% !important;
+    max-width: 30% !important;
+    margin: 0 auto;
+    border-radius: 1px;
+    box-shadow: none;
+    border-top: none;
+
+}
+
+.p-multiselect-item[data-p-highlight="true"] {
+    background: #e9ecef;
+}
+
+svg.p-icon.p-checkbox-icon.p-c[fill] {
+    color: #e9ecef !important;
+}
+
+svg.p-checkbox-icon[data-p-highlight="true"] {
+    fill: #006918 !important;
+}
 
 
 
 /* Multiselect */
+
 
 
 .custom-select {
@@ -1091,6 +1137,7 @@ tbody tr {
     color: #4b5563;
     border-radius: 0.3rem;
     margin-right: 5px;
+    margin-top: 1rem;
     padding: 1px 7px;
     display: inline-flex;
     align-items: center;
@@ -1400,6 +1447,9 @@ tbody tr {
         width: 30% !important;
         max-width: 30% !important;
         margin: 0 auto;
+        border-radius: 1px;
+        box-shadow: none;
+        border-top: none;
 
     }
 
@@ -1430,6 +1480,12 @@ tbody tr {
         border: 0.01rem solid #dee2e6;
         box-shadow: inset 0 0 0.1rem #dee2e6; 
     }
+
+    .p-multiselect-item {
+        white-space: normal;
+    }
+
+    
     
     
 

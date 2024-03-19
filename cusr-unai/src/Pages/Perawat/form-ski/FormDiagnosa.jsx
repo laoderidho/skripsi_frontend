@@ -4,7 +4,6 @@ import axios from "../../../axios";
 import "../../../../src/style/accordion.css";
 import { Dropdown } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
-import Multiselect from "../../../components/menu/Multiselect";
 // import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from "../../../components/menu/Sidebar";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
@@ -61,10 +60,6 @@ export default function FormDiagnosa() {
   const [obj, setObj] = useState("")
   const [getfunc, setGetFunc] = useState("")
   const [tempData, setTempData] = useState([])
-
-
-  // MODAL
-  
 
 
   const createDiagnosaOptions = () => {

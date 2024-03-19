@@ -8,6 +8,7 @@ import axios from '../../../axios'
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 import "primereact/resources/themes/saga-blue/theme.css";
+import { Skeleton } from 'primereact/skeleton';
 
 
 const DetailPasien = () => {
@@ -28,16 +29,17 @@ const DetailPasien = () => {
     const token=localStorage.getItem("token");
     const [isEditing, setIsEditing] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     // modal rawatInap
-    const [showModalRawatInap, setShowModalRawatInap] = useState(false);
-    const [dataRawatInap, setDataRawatInap] = useState('');
-    const [triase, setTriase] = useState('');
-    const [pasienBed, setPasienBed] = useState('');
+    // const [showModalRawatInap, setShowModalRawatInap] = useState(false);
+    // const [dataRawatInap, setDataRawatInap] = useState('');
+    // const [triase, setTriase] = useState('');
+    // const [pasienBed, setPasienBed] = useState('');
 
     useEffect(() => {
         getDataById();
-        detailStatus();
+        // detailStatus();
         getBedData();
     },[]);
 
@@ -68,6 +70,7 @@ const DetailPasien = () => {
         setNamaAsuransi(res.data.data.nama_asuransi)
         setNomorAsuransi(res.data.data.no_asuransi)
         setMedicalRecord(res.data.data.no_medical_record)
+        setLoading(false);
       } catch (error) {
         
       }
@@ -111,37 +114,37 @@ const DetailPasien = () => {
       }
     }
   
-    const detailStatus = async () => {
-      try{
-        const res = await axios.post(`/pasien/rawat-inap/detailStatus/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setDataRawatInap(res.data.message)
-      }catch(error){
-        AuthorizationRoute(error.response.status)
-      }
-    }
+    // const detailStatus = async () => {
+    //   try{
+    //     const res = await axios.post(`/pasien/rawat-inap/detailStatus/${id}`, {
+    //       headers: { Authorization: `Bearer ${token}` },
+    //     });
+    //     setDataRawatInap(res.data.message)
+    //   }catch(error){
+    //     AuthorizationRoute(error.response.status)
+    //   }
+    // }
 
-    const addRawatInap = async () =>{
-      try {
-         await axios.post(`/admin/perawatan/add/${id}`, {
-          triase: triase,
-          bed: pasienBed
-        },
-        { 
-          headers: { Authorization: `Bearer ${token}`}
-        });
-        setShowModalRawatInap(!showModalRawatInap)
-        detailStatus();
-      } catch (error){
-        //  AuthorizationRoute(error.response.status)
-      }
-    }
+    // const addRawatInap = async () =>{
+    //   try {
+    //      await axios.post(`/admin/perawatan/add/${id}`, {
+    //       triase: triase,
+    //       bed: pasienBed
+    //     },
+    //     { 
+    //       headers: { Authorization: `Bearer ${token}`}
+    //     });
+    //     setShowModalRawatInap(!showModalRawatInap)
+    //     detailStatus();
+    //   } catch (error){
+    //     //  AuthorizationRoute(error.response.status)
+    //   }
+    // }
     
     return (
       <Sidebar>
         <div className="container">
-          <h2>Tambah Pasien</h2>
+          <h2>{loading ? <Skeleton width="200px" height="30px"/> : 'Daftar Pasien'}</h2>
           <Breadcrumb>
             <Breadcrumb.Item href="/admin/daftarpasien">
               Daftar Pasien
@@ -156,7 +159,7 @@ const DetailPasien = () => {
               <Card className='profile'>
                 
                 <Form.Group>
-                  <Form.Label id='form-label'>Nama Lengkap</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Nama Lengkap'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     type="text"
@@ -169,7 +172,7 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>Tanggal Lahir</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Tanggal Lahir'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     type="date"
@@ -182,7 +185,7 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>Jenis Kelamin</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Jenis Kelamin'}</Form.Label>
                   <Form.Select
                     id="form-control-input"
                     type="text"
@@ -199,9 +202,9 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>NIK</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="10px"/> : 'NIK'}</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input"                       
                     type="text"
                     placeholder="Masukkan NIK"
                     value={nik}
@@ -212,7 +215,7 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>Status Pernikahan</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Status Penikhan'}</Form.Label>
                   <Form.Select
                     id="form-control-input"
                     type="text"
@@ -319,7 +322,7 @@ const DetailPasien = () => {
               <Divider layout='vertical'/>
             </Col>
             <Col>
-              <Form.Group>
+              {/* <Form.Group>
                   <Form.Label>Status Rawat Inap:</Form.Label>
                   <div>
                     {dataRawatInap === "merah" ? (
@@ -350,7 +353,7 @@ const DetailPasien = () => {
                     onClick={() => setShowModalRawatInap(!showModalRawatInap)}>
                   Klik untuk ubah status
                   </Link>
-                </div>
+                </div> */}
             </Col>
           </Row>
 
@@ -399,7 +402,7 @@ const DetailPasien = () => {
               )}
 
 
-              <Modal show={showModal} onHide={() => setShowModal(false)}>
+              {/* <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
                   <Modal.Title>Konfirmasi</Modal.Title>
                 </Modal.Header>
@@ -422,14 +425,14 @@ const DetailPasien = () => {
                     Hapus
                   </Button>
                 </Modal.Footer>
-              </Modal>
+              </Modal> */}
             </div>
           </Form>
         </div>
 
         
         {/* MODAL STATUS */}
-        <Modal
+        {/* <Modal
           show={showModalRawatInap}
           onHide={() => setShowModalRawatInap(!showModalRawatInap)}
         >
@@ -475,7 +478,7 @@ const DetailPasien = () => {
               )}
             </Modal.Footer>
           </Form>
-        </Modal>   
+        </Modal>    */}
       </Sidebar>
     );
   }

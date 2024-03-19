@@ -6,6 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { MultiSelect } from "primereact/multiselect";
 import "primereact/resources/themes/saga-blue/theme.css";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
+import SeeModalData from "../../../components/perawat/askep/SeeModalData";
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function FormEvaluasi() {
@@ -45,6 +46,15 @@ export default function FormEvaluasi() {
   // pencapaian and perencanaan state
   const [capai, setCapai] = useState("");
   const [rencana, setRencana] = useState("");
+
+  // Modal Validation
+  const [informationForm, setInformationForm] = useState([])
+  const [modalValidationForm, setModalValidationForm] = useState(false)
+  const [dataValidationForm, setDataValidationForm] = useState([])
+  const [obj, setObj] = useState("")
+  const [getfunc, setGetFunc] = useState("")
+  
+  
 
   const pencapaian = [
     { label: "Tercapai", value: "tercapai" },
@@ -221,6 +231,26 @@ export default function FormEvaluasi() {
     }
   };
 
+  const handleModal = (data, allData, nameObj, func)=>{
+    if(data == null || data.length == 0){
+      setInformationForm(false)
+    }else{
+      setInformationForm(data)
+      setDataValidationForm(allData)
+      setObj(nameObj)
+      setGetFunc(func)
+    }
+    setModalValidationForm(true)
+  }
+
+  const CloseValidationFormModal = () => setModalValidationForm(false)
+
+  const handleBackData = (newData, allData, onObj, myFunc)=>{
+    const filterData = allData.filter((item) => newData.includes(item[onObj]))
+    const myFunction = eval(myFunc)
+    myFunction(filterData)
+  }
+
   // useeffect
   useEffect(() => {
     fetchData();
@@ -237,6 +267,18 @@ export default function FormEvaluasi() {
 
   return (
     <Sidebar>
+      {modalValidationForm && (
+        <SeeModalData
+          open={modalValidationForm}
+          data={informationForm}
+          name={"Data yang dipilih"}
+          onHide={CloseValidationFormModal}
+          allData={dataValidationForm}
+          onObj={obj}
+          myFunc={getfunc}
+          callDataBack={handleBackData}
+        />
+      )}
       <div className="container">
         <h2>Form Evaluasi</h2>
       </div>
@@ -367,6 +409,20 @@ export default function FormEvaluasi() {
                     onChange={(e) => setKriteriaLuaran(e.value)}
                     maxSelectedLabels={3}
                   ></MultiSelect>
+
+                  <span
+                    id="form-label"
+                    className="see-option-link"
+                    onClick={() =>
+                      handleModal(
+                        kriteria_luaran &&
+                        kriteria_luaran.map((item) => item.kriteria_luaran),
+                        kriteria_luaran,
+                        "kriteria_luaran",
+                        "setKriteruaLuaran"
+                      )
+                    }
+                    >See selected options</span>
                 </Form.Group>
 
                 {/* TEXTAREA */}

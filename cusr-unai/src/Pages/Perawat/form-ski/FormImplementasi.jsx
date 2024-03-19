@@ -4,6 +4,7 @@ import axios from "../../../axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
+import SeeModalData from "../../../components/perawat/askep/SeeModalData";
 
 export default function FormImplementasi() {
   const [nama_intervensi, setNamaIntervensi] = useState("");
@@ -15,6 +16,13 @@ export default function FormImplementasi() {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  // Modal Validation
+  const [informationForm, setInformationForm] = useState([])
+  const [modalValidationForm, setModalValidationForm] = useState(false)
+  const [dataValidationForm, setDataValidationForm] = useState([])
+  const [obj, setObj] = useState("")
+  const [getfunc, setGetFunc] = useState("")
 
   const getDataById = async () => {
     try {
@@ -63,8 +71,40 @@ export default function FormImplementasi() {
     } catch (err) {}
   };
 
+  const handleModal = (data, allData, nameObj, func)=>{
+    if(data == null || data.length == 0){
+      setInformationForm(false)
+    }else{
+      setInformationForm(data)
+      setDataValidationForm(allData)
+      setObj(nameObj)
+      setGetFunc(func)
+    }
+    setModalValidationForm(true)
+  }
+
+  const CloseValidationFormModal = () => setModalValidationForm(false)
+
+  const handleBackData = (newData, allData, onObj, myFunc)=>{
+    const filterData = allData.filter((item) => newData.includes(item[onObj]))
+    const myFunction = eval(myFunc)
+    myFunction(filterData)
+  }
+
   return (
     <Sidebar>
+      {modalValidationForm && (
+        <SeeModalData
+          open={modalValidationForm}
+          data={informationForm}
+          name={"Data yang dipilih"}
+          onHide={CloseValidationFormModal}
+          allData={dataValidationForm}
+          onObj={obj}
+          myFunc={getfunc}
+          callDataBack={handleBackData}
+        />
+      )}
       <div className="container">
         <h2>Form Implementasi</h2>
       </div>

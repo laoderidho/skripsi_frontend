@@ -48,6 +48,17 @@ export default function DaftarPasien() {
     },[inputValue])
 
 
+    const dummyData = []
+
+    for(let i=0; i<5; i++){
+      dummyData.push(
+        {
+          data: <Skeleton />
+        }
+      )
+    }
+
+
     const getPasien = async (token) => {
         try {
             await axios
@@ -79,6 +90,10 @@ export default function DaftarPasien() {
 
     useEffect(()=>{
         getPasien(localStorage.getItem('token'));
+        const statusTimeout = setTimeout(() => {
+          console.log("Calling Status")
+          detailStatus();
+        }, 5000);
     }, []);
 
     useEffect(() => {
@@ -114,11 +129,11 @@ export default function DaftarPasien() {
     <Sidebar>
       {/* Title */}
       <div className="container">
-        <h2>Daftar Pasien</h2>
+        <h2>{loading ? <Skeleton width="200px" height="30px"/> : 'Daftar Pasien'}</h2>
         <Breadcrumb>
-          <Breadcrumb.Item active>Daftar Pasien</Breadcrumb.Item>
+          <Breadcrumb.Item active>{loading? <Skeleton width="100px"/> : 'Daftar Pasien'}</Breadcrumb.Item>
           <Breadcrumb.Item href="/admin/daftarpasien/tambah">
-            Tambah
+            {loading? <Skeleton width="60px"/> : 'Tambah' }
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
@@ -130,25 +145,26 @@ export default function DaftarPasien() {
           >
         </Toolbar>
 
-        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}  tableStyle={{ minWidth: '50rem' }}  stripedRows show showGridlines className="mt-3">
-          <Column field="" 
-            header='No'
-            body={(rowData) => (
-              loading ? <Skeleton /> : rowData.id
-            )}/>
-          <Column field="" 
-            header='Nama'
-            body={(rowData) => (
-              loading ? <Skeleton /> : rowData.nama_lengkap
-            )}/>
-          <Column field="" 
-            header='Medical Record' 
-            body={(rowData) => (
-              loading ? <Skeleton /> : rowData.no_medical_record
-            )}/>w
+        <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien)} paginator rows={5}  tableStyle={{ minWidth: '50rem' }}  stripedRows show showGridlines className="mt-3">
           <Column 
             field="" 
-            header='Status'
+            header={loading ? <Skeleton width="50px" /> : 'No'}
+            body={(rowData) => (
+              loading ? rowData.data : rowData.id
+            )}/>
+          <Column field="" 
+            header={loading ? <Skeleton width="100px" /> : 'Nama'}
+            body={(rowData) => (
+             loading ? rowData.data : rowData.nama_lengkap
+            )}/>
+          <Column field="" 
+            header={loading ? <Skeleton width="100px" /> : 'Medical Record'} 
+            body={(rowData) => (
+             loading ? rowData.data : rowData.no_medical_record
+            )}/>
+          <Column 
+            field="" 
+            header={loading ? <Skeleton width="50px" /> : 'Status'}
             body={(rowData) => (
               <div>
                 {dataRawatInap === "merah" ? (
@@ -167,10 +183,11 @@ export default function DaftarPasien() {
                         <Button href="#" className="triase-hitam text-white p-1">
                           Triase Hitam
                         </Button>
+                      ) : loading ? (
+                        <Skeleton width="50px"/>
                       ) : (
                         "Tidak di rawat inap"
                 )}
-                <div>{rowData.id}</div>  
               </div>
             )}
           />

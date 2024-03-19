@@ -8,6 +8,7 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import ConfirmModal from "../../../components/menu/ConfirmModal";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import SeeModalData from "../../../components/perawat/askep/SeeModalData";
 
 export default function FormIntervensi() {
   const [intervensi, setIntervensi] = useState([]);
@@ -27,6 +28,13 @@ export default function FormIntervensi() {
   const [observasi, setObservasi] = useState(null);
   const [terapeutik, setTerapeutik] = useState(null);
   const [edukasi, setEdukasi] = useState(null);
+
+  // Modal Validation
+  const [informationForm, setInformationForm] = useState([])
+  const [modalValidationForm, setModalValidationForm] = useState(false)
+  const [dataValidationForm, setDataValidationForm] = useState([])
+  const [obj, setObj] = useState("")
+  const [getfunc, setGetFunc] = useState("")
 
   const createIntervensiOptions = () => {
     if (!intervensi || intervensi.length === 0) {
@@ -125,8 +133,40 @@ export default function FormIntervensi() {
     }
   };
 
+  const handleModal = (data, allData, nameObj, func)=>{
+    if(data == null || data.length == 0){
+      setInformationForm(false)
+    }else{
+      setInformationForm(data)
+      setDataValidationForm(allData)
+      setObj(nameObj)
+      setGetFunc(func)
+    }
+    setModalValidationForm(true)
+  }
+
+  const CloseValidationFormModal = () => setModalValidationForm(false)
+
+  const handleBackData = (newData, allData, onObj, myFunc)=>{
+    const filterData = allData.filter((item) => newData.includes(item[onObj]))
+    const myFunction = eval(myFunc)
+    myFunction(filterData)
+  }
+
   return (
     <Sidebar>
+      {modalValidationForm && (
+        <SeeModalData
+          open={modalValidationForm}
+          data={informationForm}
+          name={"Data yang dipilih"}
+          onHide={CloseValidationFormModal}
+          allData={dataValidationForm}
+          onObj={obj}
+          myFunc={getfunc}
+          callDataBack={handleBackData}
+        />
+      )}
       <div className="container">
         <h2>Form Intervensi</h2>
       </div>
@@ -158,6 +198,19 @@ export default function FormIntervensi() {
                 className="pt-1"
                 filter
               ></MultiSelect>
+              <span
+                    id="form-label"
+                    className="see-option-link"
+                    onClick={() =>
+                      handleModal(
+                        observasi &&
+                        observasi.map((item) => item.observasi),
+                        observasi,
+                        "observasi",
+                        "setObservasi"
+                      )
+                    }
+                    >See selected options</span>
             </Form.Group>
 
             <Form.Group className="mt-3">
@@ -172,6 +225,19 @@ export default function FormIntervensi() {
                 className="pt-1"
                 filter
               ></MultiSelect>
+              <span
+                    id="form-label"
+                    className="see-option-link"
+                    onClick={() =>
+                      handleModal(
+                        terapeutik &&
+                        terapeutik.map((item) => item.terapeutik),
+                        terapeutik,
+                        "terapeutik",
+                        "setTerapeutik"
+                      )
+                    }
+                    >See selected options</span>
             </Form.Group>
 
             <Form.Group className="mt-3">
@@ -186,6 +252,19 @@ export default function FormIntervensi() {
                 className="pt-1"
                 filter
               ></MultiSelect>
+              <span
+                    id="form-label"
+                    className="see-option-link"
+                    onClick={() =>
+                      handleModal(
+                        edukasi &&
+                        edukasi.map((item) => item.edukasi),
+                        edukasi,
+                        "edukasi",
+                        "setEdukasi"
+                      )
+                    }
+                    >See selected options</span>
             </Form.Group>
 
             <Form.Group className="mt-3">
