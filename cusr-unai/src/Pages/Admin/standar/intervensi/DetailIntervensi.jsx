@@ -12,7 +12,6 @@ const DetailIntervensi = () => {
   const [observasi, setObservasi] = useState("");
   const [terapeutik, setTerapeutik] = useState("");
   const [edukasi, setEdukasi] = useState("");
-  const [kolaborasi, setKolaborasi] = useState("");
   const {id} = useParams();
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
@@ -54,7 +53,6 @@ const DetailIntervensi = () => {
         setObservasi(res.data.observasi)
         setTerapeutik(res.data.terapeutik)
         setEdukasi(res.data.edukasi)
-        setKolaborasi(res.data.kolaborasi)
     } catch (error) {
         
     }
@@ -162,18 +160,6 @@ const DetailIntervensi = () => {
             </ul>
           </Form.Group>
           <hr></hr>
-        </Row>
-
-        <Row>
-          <Form.Group>
-            <Form.Label id="bold-font" className="mt-4">
-              Kolaborasi
-            </Form.Label>
-            <ul>
-              {kolaborasi &&
-                kolaborasi.map((item, index) => <li key={index}>{item}</li>)}
-            </ul>
-          </Form.Group>
         </Row>
 
         <div className="d-flex justify-content-end mt-3">
