@@ -33,45 +33,45 @@ const ShiftHarian = () => {
 
   return (
     <Sidebar>
-      <div className='container'>
+      <div className="container">
         <h2>Shift</h2>
       </div>
 
-      <div className='container mt-5'>
+      <div className="container mt-5">
         <Row>
-            <Col>
-                <Link
-                    className='btn box'
-                    to={`/perawat/askep/shift/keterangan/${id}/${tanggal}/1`}>
-                    Shift 1
-                </Link>
-            </Col>
+          <Col>
+            <Link
+              className="btn box"
+              to={`/perawat/askep/shift/keterangan/${id}/${tanggal}/1`}
+            >
+              Shift 1
+            </Link>
+          </Col>
         </Row>
 
         <Row>
-            <Col>
-                <Link
-                    to={`/perawat/askep/shift/keterangan/${id}/${tanggal}/2`}
-                    className='btn box'
-            
-                    >
-                    Shift 2
-                </Link>
-            </Col>
+          <Col>
+            <Link
+              to={`/perawat/askep/shift/keterangan/${id}/${tanggal}/2`}
+              className="btn box"
+            >
+              Shift 2
+            </Link>
+          </Col>
         </Row>
 
         <Row>
-            <Col>
-                <Link
-                    className='btn box'
-                    disabled>
-                    Shift 3
-                </Link>
-            </Col>
+          <Col>
+            <Link
+              className="btn box"
+              to={`/perawat/askep/shift/keterangan/${id}/${tanggal}/3`}
+              disabled
+            >
+              Shift 3
+            </Link>
+          </Col>
         </Row>
-
       </div>
-        
     </Sidebar>
   );
 };
