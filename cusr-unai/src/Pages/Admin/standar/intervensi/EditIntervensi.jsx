@@ -13,7 +13,6 @@ const EditIntervensi = () => {
   const [observasi, setObservasi] = useState("");
   const [terapeutik, setTerapeutik] = useState("");
   const [edukasi, setEdukasi] = useState("");
-  const [kolaborasi, setKolaborasi] = useState("");
   const {id} = useParams();
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
@@ -33,7 +32,6 @@ const EditIntervensi = () => {
         setObservasi(res.data.observasi.join('\n'))
         setTerapeutik(res.data.terapeutik.join('\n'))
         setEdukasi(res.data.edukasi.join('\n'))
-        setKolaborasi(res.data.kolaborasi.join('\n'))
     } catch (error) {
         
     }
@@ -44,7 +42,6 @@ const EditIntervensi = () => {
     const handleObservasi = observasi ? observasi.split("\n") : null;
     const handleTerapeutik = terapeutik ? terapeutik.split("\n") : null;
     const handleEdukasi =  edukasi ? edukasi.split("\n") : null;
-    const handleKolaborasi = kolaborasi ? kolaborasi.split("\n") : null;
 
     try {
       const res = await axios.post(
@@ -55,7 +52,6 @@ const EditIntervensi = () => {
           observasi: handleObservasi,
           terapeutik: handleTerapeutik,
           edukasi: handleEdukasi,
-          kolaborasi: handleKolaborasi,
          },
          {
            headers: { Authorization: `Bearer ${token}` },
@@ -160,18 +156,7 @@ const EditIntervensi = () => {
             />
           </Form.Group>
 
-          <Form.Group as={Col}>
-            <Form.Label>Kolaborasi</Form.Label>
-            <Form.Control
-              id="form-control-input"
-              as="textarea"
-              value={kolaborasi}
-              type="text"
-              placeholder="Masukkan Tindakan Kolaborasi"
-              style={{ height: "7rem" }}
-              onChange={(e) => setKolaborasi(e.target.value)}
-            />
-          </Form.Group>
+       
         </Row>
 
         <div className="mt-3 d-flex justify-content-end">

@@ -94,11 +94,7 @@ export default function FormDiagnosa() {
 
       const selectedDiagnosaData = res.data;
 
-      console.log(selectedDiagnosaData);
-
-
-      console.log(selectedDiagnosaData.penyebab_fisiologis);
-      setNamaDiagnosa(selectedDiagnosaData.diagnosa.nama_diagnosa);
+      setNamaDiagnosa(selectedDiagnosaData.diagnosa.id);
       setSelectedFaktorRisiko(selectedDiagnosaData.faktor_risiko);
       setSelectedPenyebabFisiologis(selectedDiagnosaData.penyebab_fisiologis);
       setSelectedPenyebabSituasional(selectedDiagnosaData.penyebab_situasional);
@@ -115,10 +111,6 @@ export default function FormDiagnosa() {
       );
     } catch (error) {}
   };
-
-  useEffect(() => {
-    handleDiagnosaChange();
-  }, [selectedDiagnosa]);
 
   const getDiagnosa = async (token) => {
     try {
@@ -154,15 +146,15 @@ export default function FormDiagnosa() {
   };
 
   const addDiagnosa = async () => {
-    const handleFaktorRisiko = faktor_risiko ? handleData(faktor_risiko, "faktor_risiko") : null;
-    const handlePenyebabFisiologis = penyebab_fisiologis ? handleData(penyebab_fisiologis, "nama_penyebab") : null;
-    const handlePenyebabSituasional = penyebab_situasional ? handleData(penyebab_situasional, "nama_penyebab") : null;
-    const handlePenyebabPsikologis = penyebab_psikologis ? handleData(penyebab_psikologis, "nama_penyebab") : null;
-    const handlePenyebabUmum = penyebab_umum ? handleData(penyebab_umum, "nama_penyebab") : null;
-    const handleGejalaTanda_mayor_objektif = gejala_mayor_objektif ? handleData(gejala_mayor_objektif, "nama_gejala") : null;
-    const handleGejalaTanda_mayor_subjektif = gejala_mayor_subjektif ? handleData(gejala_mayor_subjektif, "nama_gejala") : null;
-    const handleGejala_Minor_objektif = gejala_minor_objektif ? handleData(gejala_minor_objektif, "nama_gejala"): null;
-    const handleGejala_Minor_subjektif = gejala_minor_subjektif ? handleData(gejala_minor_subjektif, "nama_gejala") : null;
+    const handleFaktorRisiko = faktor_risiko ? handleData(faktor_risiko, "id") : null;
+    const handlePenyebabFisiologis = penyebab_fisiologis ? handleData(penyebab_fisiologis, "id") : null;
+    const handlePenyebabSituasional = penyebab_situasional ? handleData(penyebab_situasional, "id") : null;
+    const handlePenyebabPsikologis = penyebab_psikologis ? handleData(penyebab_psikologis, "id") : null;
+    const handlePenyebabUmum = penyebab_umum ? handleData(penyebab_umum, "id") : null;
+    const handleGejalaTanda_mayor_objektif = gejala_mayor_objektif ? handleData(gejala_mayor_objektif, "id") : null;
+    const handleGejalaTanda_mayor_subjektif = gejala_mayor_subjektif ? handleData(gejala_mayor_subjektif, "id") : null;
+    const handleGejala_Minor_objektif = gejala_minor_objektif ? handleData(gejala_minor_objektif, "id"): null;
+    const handleGejala_Minor_subjektif = gejala_minor_subjektif ? handleData(gejala_minor_subjektif, "id") : null;
 
     try {
       await axios.post(
@@ -210,6 +202,12 @@ export default function FormDiagnosa() {
     const myFunction = eval(myFunc)
     myFunction(filterData)
   }
+
+
+  useEffect(()=>{
+     handleDiagnosaChange();
+    console.log(selectedDiagnosa)
+  },[selectedDiagnosa])
 
   return (
     <Sidebar>

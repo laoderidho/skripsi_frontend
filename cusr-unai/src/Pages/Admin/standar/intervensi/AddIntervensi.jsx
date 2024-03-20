@@ -12,7 +12,6 @@ const AddIntervensi = () => {
   const [observasi, setObservasi] = useState("");
   const [terapeutik, setTerapeutik] = useState("");
   const [edukasi, setEdukasi] = useState("");
-  const [kolaborasi, setKolaborasi] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [submitted, setSubmitted] = useState(false);
@@ -25,7 +24,6 @@ const AddIntervensi = () => {
     const handleObservasi = observasi ? observasi.split("\n") : null;
     const handleTerapeutik = terapeutik ? terapeutik.split("\n") : null;
     const handleEdukasi = edukasi ? edukasi.split("\n") : null;
-    const handleKolaborasi = kolaborasi ? kolaborasi.split("\n") : null;
 
     try {
       const res = await axios.post(
@@ -36,7 +34,6 @@ const AddIntervensi = () => {
           observasi: handleObservasi,
           terapeutik: handleTerapeutik,
           edukasi: handleEdukasi,
-          kolaborasi: handleKolaborasi,
          },
          {
            headers: { 
@@ -142,21 +139,7 @@ const AddIntervensi = () => {
               value={edukasi}
               onChange={(e) => setEdukasi(e.target.value)}
             />
-          </Form.Group>
-
-          <Form.Group as={Col} className="mt-3">
-            <Form.Label>Kolaborasi</Form.Label>
-            <Form.Control
-              id="form-control-input"
-              as="textarea"
-              rows={5}
-              style={{
-                height: "7rem",
-              }}
-              value={kolaborasi}
-              onChange={(e) => setKolaborasi(e.target.value)}
-            />
-          </Form.Group>
+          </Form.Group>  
         </Row>
 
         <div className="d-flex justify-content-end mt-5">
