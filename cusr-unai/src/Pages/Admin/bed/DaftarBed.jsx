@@ -49,6 +49,8 @@ export default function DaftarBed() {
         setShowOtherRoom(e.target.checked);
     };
 
+    
+
     const editForm = async () => {
         try {
             const res = await axios.post(`/admin/bed/edit/${idBed}`, {
@@ -128,8 +130,14 @@ export default function DaftarBed() {
     const navigate = useNavigate();
 
     const handleShow = () => setShowModal(true);
-    const handleClose = () => setShowModal(false);
-
+    
+    const handleClose = () => {
+        setShowModal(false);
+        setNewBed("");
+        setNewLantai("");
+        setNewFasilitas("");
+        setNewRuangan("");
+    };
 
     const getData = async (token) => {
         try {
@@ -200,6 +208,11 @@ export default function DaftarBed() {
             setShowModal(false);
             getData();
             navigate("/admin/bed");
+            setNewBed("");
+            setNewLantai("");
+            setNewFasilitas("");
+            setNewRuangan("");
+
         } catch (error) {
 
         }
