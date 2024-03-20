@@ -8,6 +8,7 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import { Toolbar } from 'primereact/toolbar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Skeleton } from 'primereact/skeleton';
 
 export default function DaftarPerawat() {
 
@@ -16,6 +17,7 @@ export default function DaftarPerawat() {
     const [inputValue, setInputValue] = useState('');
     const [perawat, setPerawat] = useState([]);
     const [filterPerawat, setFilterPerawat] = useState([]);
+    const [loading, setLoading] = useState(true)
 
     const filteredPerawat = () => {
         const filteredPegawai = perawat.filter((item) => {
@@ -37,6 +39,17 @@ export default function DaftarPerawat() {
     useEffect(()=>{
         filteredPerawat()
     },[inputValue])
+
+    const dummyData = []
+
+    for(let i=0; i<5; i++){
+      dummyData.push(
+        {
+          data: <Skeleton />
+        }
+      )
+    }
+
     
 
     const getPasien = async (token) => {
@@ -50,6 +63,7 @@ export default function DaftarPerawat() {
             .then((res) => {
                 console.log(res)
                 setPerawat(res?.data?.data);
+                setLoading(false);
             });
         } catch (error) {
             // AuthorizationRoute(error.response.status);
@@ -103,10 +117,25 @@ export default function DaftarPerawat() {
                 end={endContent}
             ></Toolbar>
 
-            <DataTable value={inputValue ? filterPerawat: perawat} paginator rows={5} tableStyle={{ minWidth:'50rem'}} stripedRows show showGridlines className="mt-3">
-                <Column field="id" header='No'/>
-                <Column field="nama_lengkap" header='Nama'/>
-                <Column field="status" header='status'/>
+            <DataTable value={loading ? dummyData : (inputValue ? filterPerawat: perawat)} paginator rows={5} tableStyle={{ minWidth:'50rem'}} stripedRows show showGridlines className="mt-3">
+                <Column 
+                    field="" 
+                    header={loading ? <Skeleton width="50px" /> : 'No'}
+                    body={(rowData) => (
+                        loading ? rowData.data : rowData.id
+                    )}/>
+                <Column 
+                    field="" 
+                    header={loading ? <Skeleton width="100px" /> : 'Nama'}
+                    body={(rowData) => (
+                    loading ? rowData.data : rowData.nama_lengkap
+                    )}/>
+                <Column 
+                    field="" 
+                    header={loading ? <Skeleton width="50px" /> : 'Status'} 
+                    body={(rowData) => (
+                        loading ? rowData.data : rowData.status
+                    )}/>
                 <Column header=''
                 body={(rowData) => (
                     <Link

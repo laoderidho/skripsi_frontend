@@ -35,6 +35,8 @@ export default function DaftarBed() {
 
     const [showDropdown, setShowDropdown] = useState(true);
     const [showOtherFacility, setShowOtherFacility] = useState(false);
+    const [showOtherFloor, setShowOtherFloor] = useState(false);
+    const [showOtherRoom, setShowOtherRoom] = useState(false);
 
     const [idBed, setIdBed] = useState(null);
 
@@ -43,6 +45,8 @@ export default function DaftarBed() {
     const handleCheckboxChange = (e) => {
         setShowDropdown(!e.target.checked);
         setShowOtherFacility(e.target.checked);
+        setShowOtherFloor(!e.target.checked);
+        setShowOtherRoom(!e.target.checked);
     };
 
     const editForm = async () => {
@@ -334,6 +338,7 @@ export default function DaftarBed() {
                                     <Col>
                                         <Form.Group>
                                             <Form.Label id="form-label">Lantai</Form.Label>
+                                            
                                             <Form.Control
                                                 type="text"
                                                 placeholder="e.g. Lantai 1"

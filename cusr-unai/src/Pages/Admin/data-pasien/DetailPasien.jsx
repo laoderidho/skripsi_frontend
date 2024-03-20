@@ -202,7 +202,7 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="10px"/> : 'NIK'}</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="30px"/> : 'NIK'}</Form.Label>
                   <Form.Control
                     id="form-control-input"                       
                     type="text"
@@ -215,7 +215,7 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Status Penikhan'}</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Status Pernikahan'}</Form.Label>
                   <Form.Select
                     id="form-control-input"
                     type="text"
@@ -233,7 +233,7 @@ const DetailPasien = () => {
               </Card>
               <Card className='mt-3'>
                 <Form.Group>
-                  <Form.Label id='form-label'>Nomor Telepon</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="100px"/> : 'Nomor Telepon'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     type="text"
@@ -246,7 +246,7 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>Alamat</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="50px"/> : 'Alamat'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     as="textarea"
@@ -265,7 +265,7 @@ const DetailPasien = () => {
             <Col xs={4}>
               <Card>
                 <Form.Group>
-                  <Form.Label id='form-label'>No Medical Record</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="200px"/> : 'No Medical Record'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     type="text"
@@ -279,7 +279,7 @@ const DetailPasien = () => {
               </Card>
               <Card className='mt-3'>
                 <Form.Group>
-                  <Form.Label id='form-label'>Alergi</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="50px"/> : 'Alergi'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     type="text"
@@ -294,7 +294,7 @@ const DetailPasien = () => {
               </Card>
               <Card className='mt-3'>
                 <Form.Group>
-                  <Form.Label id='form-label'>Nama Asuransi</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="100px"/> : 'Nama Asuransi'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     type="text"
@@ -306,7 +306,7 @@ const DetailPasien = () => {
                 </Form.Group>
 
                 <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>Nomor Asuransi</Form.Label>
+                  <Form.Label id='form-label'>{loading ? <Skeleton width="100px"/> : 'Nomor Asuransi'}</Form.Label>
                   <Form.Control
                     id="form-control-input"
                     type="text"
