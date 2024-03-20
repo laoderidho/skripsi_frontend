@@ -45,8 +45,8 @@ export default function DaftarBed() {
     const handleCheckboxChange = (e) => {
         setShowDropdown(!e.target.checked);
         setShowOtherFacility(e.target.checked);
-        setShowOtherFloor(!e.target.checked);
-        setShowOtherRoom(!e.target.checked);
+        setShowOtherFloor(e.target.checked);
+        setShowOtherRoom(e.target.checked);
     };
 
     const editForm = async () => {
@@ -338,13 +338,32 @@ export default function DaftarBed() {
                                     <Col>
                                         <Form.Group>
                                             <Form.Label id="form-label">Lantai</Form.Label>
+                                            {showDropdown && (
+                                                <Form.Select
+                                                    value={newLantai}
+                                                    onChange={(e) => setNewLantai(e.target.value)}
+                                                    >
+                                                        <option value="">-</option>
+                                                        {lantai.map(item=>(
+                                                            <option value={item.lantai}>{item.lantai}</option>
+                                                        ))}
+                                                </Form.Select>
+                                            )}
+
+                                            <div>
+                                                {showOtherFloor && (
+                                                    <Form.Control
+                                                    type="text"
+                                                    placeholder="e.g. Lantai 1"
+                                                    value={newLantai}
+                                                    onChange={(e) => setNewLantai(e.target.value)}
+                                                    />
+                                                )}
+                                                <input className="form-check-input" type="checkbox" onChange={handleCheckboxChange}/>
+                                                <Form.Label className="px-2" id="form-label">Lantai lainnya</Form.Label>
+                                            </div>
+
                                             
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="e.g. Lantai 1"
-                                                value={newLantai}
-                                                onChange={(e) => setNewLantai(e.target.value)}
-                                                />
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -366,31 +385,46 @@ export default function DaftarBed() {
                                             )}
 
                                             <div>
-                                                <input className="form-check-input" type="checkbox" onChange={handleCheckboxChange}/>
-                                                <Form.Label className="px-2" id="form-label">Fasilitas lainnya</Form.Label>
-
                                                 {showOtherFacility && (
                                                     <Form.Control
-                                                    type="text"
-                                                    placeholder="Fasilitas Lain"
-                                                    value={newFasilitas}
-                                                    onChange={(e) => setNewFasilitas(e.target.value)}
-                                                    />
+                                                        type="text"
+                                                        placeholder="e.g. Fasilitas Lain"
+                                                        value={newFasilitas}
+                                                        onChange={(e) => setNewFasilitas(e.target.value)}
+                                                        />
                                                 )}
+                                                <input className="form-check-input" type="checkbox" onChange={handleCheckboxChange}/>
+                                                <Form.Label className="px-2" id="form-label">Fasilitas lainnya</Form.Label>
                                             </div>
                                         </Form.Group>
                                     </Col>
                                     <Col md={4}>
                                         <Form.Label id="form-label">Jenis Ruangan</Form.Label>
-                                        <Form.Select
-                                            value={newRuangan}
-                                            onChange={(e) => setNewRuangan(e.target.value)}
-                                                >
-                                                <option value="">-</option>
-                                                {jenis_ruangan.map(item=>(
-                                                    <option value={item.jenis_ruangan}>{item.jenis_ruangan}</option>
-                                                ))}
-                                        </Form.Select>
+                                        {showDropdown && (
+                                            <Form.Select
+                                                value={newRuangan}
+                                                onChange={(e) => setNewRuangan(e.target.value)}
+                                                    >
+                                                    <option value="">-</option>
+                                                    {jenis_ruangan.map(item=>(
+                                                        <option value={item.jenis_ruangan}>{item.jenis_ruangan}</option>
+                                                    ))}
+                                            </Form.Select>
+                                        )}
+
+                                        <div>
+                                            {showOtherRoom && (
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="e.g. Ruangan Lain"
+                                                    value={newRuangan}
+                                                    onChange={(e) => setNewRuangan(e.target.value)}
+                                                    />
+                                            )}
+                                            <input className="form-check-input" type="checkbox" onChange={handleCheckboxChange}/>
+                                            <Form.Label className="px-2" id="form-label">Ruangan lainnya</Form.Label>
+                                        </div>
+                                        
 
                                         {/* <Dropdown
                                             value={newRuangan}
