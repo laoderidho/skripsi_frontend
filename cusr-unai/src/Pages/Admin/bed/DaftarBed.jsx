@@ -33,7 +33,9 @@ export default function DaftarBed() {
     const [kesediaan, setKesediaan] = useState('');
     const [dataStatus,  setDataStatus] = useState('');
 
-    const [showDropdown, setShowDropdown] = useState(true);
+    const [showDropdownFacility, setShowDropdownFacility] = useState(true);
+    const [showDropdownLantai, setShowDropdownLantai] = useState(true);
+    const [showDropdownRuangan, setShowDropdownRuangan] = useState(true);
     const [showOtherFacility, setShowOtherFacility] = useState(false);
     const [showOtherFloor, setShowOtherFloor] = useState(false);
     const [showOtherRoom, setShowOtherRoom] = useState(false);
@@ -42,11 +44,18 @@ export default function DaftarBed() {
 
 
 
-    const handleCheckboxChange = (e) => {
-        setShowDropdown(!e.target.checked);
-        setShowOtherFacility(e.target.checked);
-        setShowOtherFloor(e.target.checked);
-        setShowOtherRoom(e.target.checked);
+    const handleCheckboxChange = (e, dropdownType) => {
+        if (dropdownType === 'nama_fasilitas') {
+            setShowDropdownFacility(!e.target.checked);
+            setShowOtherFacility(e.target.checked);
+        } else if (dropdownType === 'lantai') {
+            setShowDropdownLantai(!e.target.checked);
+            setShowOtherFloor(e.target.checked);
+        } else if (dropdownType === 'jenis_ruangan') {
+            setShowDropdownRuangan(!e.target.checked);
+            setShowOtherRoom(e.target.checked);
+        };
+        
     };
 
     
@@ -351,7 +360,7 @@ export default function DaftarBed() {
                                     <Col>
                                         <Form.Group>
                                             <Form.Label id="form-label">Lantai</Form.Label>
-                                            {showDropdown && (
+                                            {showDropdownLantai && (
                                                 <Form.Select
                                                     value={newLantai}
                                                     onChange={(e) => setNewLantai(e.target.value)}
@@ -372,7 +381,7 @@ export default function DaftarBed() {
                                                     onChange={(e) => setNewLantai(e.target.value)}
                                                     />
                                                 )}
-                                                <input className="form-check-input" type="checkbox" onChange={handleCheckboxChange}/>
+                                                <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'lantai')}/>
                                                 <Form.Label className="px-2" id="form-label">Lantai lainnya</Form.Label>
                                             </div>
 
@@ -384,7 +393,7 @@ export default function DaftarBed() {
                                     <Col md={8}>
                                         <Form.Group>
                                             <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
-                                            {showDropdown && (
+                                            {showDropdownFacility && (
                                                 <Form.Select
                                                     value={newFasilitas}
                                                     onChange={(e) => setNewFasilitas(e.target.value)}
@@ -406,14 +415,14 @@ export default function DaftarBed() {
                                                         onChange={(e) => setNewFasilitas(e.target.value)}
                                                         />
                                                 )}
-                                                <input className="form-check-input" type="checkbox" onChange={handleCheckboxChange}/>
+                                                <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'nama_fasilitas')}/>
                                                 <Form.Label className="px-2" id="form-label">Fasilitas lainnya</Form.Label>
                                             </div>
                                         </Form.Group>
                                     </Col>
                                     <Col md={4}>
                                         <Form.Label id="form-label">Jenis Ruangan</Form.Label>
-                                        {showDropdown && (
+                                        {showDropdownRuangan && (
                                             <Form.Select
                                                 value={newRuangan}
                                                 onChange={(e) => setNewRuangan(e.target.value)}
@@ -434,7 +443,7 @@ export default function DaftarBed() {
                                                     onChange={(e) => setNewRuangan(e.target.value)}
                                                     />
                                             )}
-                                            <input className="form-check-input" type="checkbox" onChange={handleCheckboxChange}/>
+                                            <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'jenis_ruangan')}/>
                                             <Form.Label className="px-2" id="form-label">Ruangan lainnya</Form.Label>
                                         </div>
                                         
