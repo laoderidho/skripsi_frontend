@@ -11,12 +11,7 @@ import { Column } from 'primereact/column';
 import { Skeleton } from 'primereact/skeleton';
 
 
-
-
-
 export default function DaftarPasien() {
-
-    // Autocomplete
 
     const [inputValue, setInputValue] = useState('');
     const [loading, setLoading] = useState(true);
@@ -90,10 +85,6 @@ export default function DaftarPasien() {
 
     useEffect(()=>{
         getPasien(localStorage.getItem('token'));
-        const statusTimeout = setTimeout(() => {
-          console.log("Calling Status")
-          detailStatus();
-        }, 5000);
     }, []);
 
     useEffect(() => {

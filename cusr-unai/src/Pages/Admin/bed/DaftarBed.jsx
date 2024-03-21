@@ -9,6 +9,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/saga-blue/theme.css";
+import { Skeleton } from 'primereact/skeleton';
 
 
 export default function DaftarBed() {
@@ -19,6 +20,7 @@ export default function DaftarBed() {
     const [nama_fasilitas, setNamaFasilitas] = useState([]);
     const [jenis_ruangan, setJenisRuangan] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const [newLantai, setNewLantai] = useState('');
     const [newRuangan, setNewRuangan] = useState('');
@@ -41,7 +43,6 @@ export default function DaftarBed() {
     const [showOtherRoom, setShowOtherRoom] = useState(false);
 
     const [idBed, setIdBed] = useState(null);
-
 
 
     const handleCheckboxChange = (e, dropdownType) => {
@@ -78,6 +79,16 @@ export default function DaftarBed() {
 
         }
     };
+
+    const dummyData = []
+
+    for(let i=0; i<5; i++){
+      dummyData.push(
+        {
+          data: <Skeleton />
+        }
+      )
+    }
 
     const handleShowEdit = () => {
         editForm();
@@ -156,6 +167,7 @@ export default function DaftarBed() {
             .then((res) => {
                 console.log(res)
                 setBed(res?.data?.data);
+                setLoading(false);
             });
         } catch (error) {
         } 
@@ -291,7 +303,6 @@ export default function DaftarBed() {
         setNewRuangan(jenis_ruangan);
         setIdBed(id);
         setIsEditing(true);
-
         setShowModal(true);
     }
 
@@ -299,11 +310,11 @@ export default function DaftarBed() {
     return (
         <Sidebar>
             <div className="container">
-                <h2>Daftar Kamar</h2>
+                <h2>{loading ? <Skeleton width="200px" height="30px"/> : 'Daftar Kamar'}</h2>
                 <Breadcrumb>
-                <Breadcrumb.Item active>Daftar Kamar</Breadcrumb.Item>
+                <Breadcrumb.Item active>{loading? <Skeleton width="100px"/> : 'Daftar Kamar'}</Breadcrumb.Item>
                 <Breadcrumb.Item href="/admin/bed/tambah">
-                    Tambah
+                    {loading? <Skeleton width="60px"/> : 'Tambah' }
                 </Breadcrumb.Item>
                 </Breadcrumb>
             </div>
@@ -314,12 +325,37 @@ export default function DaftarBed() {
                     end={endContent}>
                 </Toolbar>
 
-                <DataTable value={inputValue ? filterBed : bed} paginator rows={20} tableStyle={{ minWidth: '50rem' }} stripedRows show showGridlines className="mt-3">
-                    <Column field="nama_fasilitas" header="Fasilitas Kesehatan"/>
-                    <Column field="lantai" header="Lantai"/>
-                    <Column field="no_bed" header="No Kamar"/>
-                    <Column field="jenis_ruangan" header="Jenis Ruangan"/>
-                    <Column field="status" header="Status"/>
+                <DataTable value={loading ? dummyData : (inputValue ? filterBed : bed)} paginator rows={20} tableStyle={{ minWidth: '50rem' }} stripedRows show showGridlines className="mt-3">
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="120px" /> : 'Fasilitas Kesehatan'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.nama_fasilitas
+                        )}/>
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="50px" /> : 'Lantai'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.lantai
+                        )}/>
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="60px" /> : 'No Kamar'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.no_bed
+                        )}/>
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="80px" /> : 'Jenis Ruangan'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.jenis_ruangan
+                        )}/>
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="50px" /> : 'Status'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.status
+                        )}/>
                     <Column header='' body={(rowData) => (
                         <Link
                             className="link-theme"

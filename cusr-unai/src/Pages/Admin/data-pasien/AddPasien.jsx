@@ -8,6 +8,7 @@ import axios from '../../../axios'
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 import "primereact/resources/themes/saga-blue/theme.css";
+import { Skeleton } from 'primereact/skeleton';
 
 const AddPasien = () => {
 

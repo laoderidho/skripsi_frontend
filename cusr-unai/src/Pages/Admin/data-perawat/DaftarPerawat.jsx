@@ -10,9 +10,9 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Skeleton } from 'primereact/skeleton';
 
+
 export default function DaftarPerawat() {
 
-    // Autocomplete
 
     const [inputValue, setInputValue] = useState('');
     const [perawat, setPerawat] = useState([]);
@@ -102,12 +102,14 @@ export default function DaftarPerawat() {
       <Sidebar>
         {/* Title */}
         <div className="container">
-            <h2>Daftar Perawat</h2>
+            <h2>{loading ? <Skeleton width="200px" height="30px"/> : 'Daftar Perawat'}</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
-                    Daftar Perawat
+                    {loading? <Skeleton width="100px"/> : 'Daftar Perawat'}
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/daftarperawat/tambah">Tambah</Breadcrumb.Item>
+                <Breadcrumb.Item href="/admin/daftarperawat/tambah">
+                    {loading? <Skeleton width="60px"/> : 'Tambah' }
+                </Breadcrumb.Item>
             </Breadcrumb>
         </div>
 

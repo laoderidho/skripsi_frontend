@@ -9,6 +9,7 @@ import { Dropdown } from 'primereact/dropdown';
 import axios from '../../../axios';
 import { Link, useParams } from "react-router-dom";
 import ConfirmModal from '../../../components/menu/ConfirmModal';
+import { Skeleton } from 'primereact/skeleton';
 
 export default function DaftarPasienStatus() {
 
@@ -18,6 +19,7 @@ export default function DaftarPasienStatus() {
     const [idPasien, setIdPasien] = useState(null);
     const token = localStorage.getItem("token");
     const {id} = useParams();
+    const [loading, setLoading] = useState(true);
 
     // Modal Rawat Inap
 
