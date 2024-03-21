@@ -28,17 +28,18 @@ export default function DetailAskepDiagnosa() {
             const res = await axios.post(`/perawat/diagnosa/detail-askep-pasien/${id}`, {
                 headers : { Authorization: `Bearer ${token}`}
             })
+
             setKodeDiagnosa(res.data.data.kode_diagnosa)
-            setNamaDiagnosa(res.data.data.nama_diagnosa)
+            setNamaDiagnosa(res.data.nama_diagnosa)
             setFaktorRisiko(res.data.data.faktor_risiko ? res.data.data.faktor_risiko.split(",") : null);
-            setPenyebabFisiologis(res.data.data.penyebab_fisiologis ? res.data.data.penyebab_fisiologis.split(",") : ["-"]);
-            setPenyebabSituasional(res.data.data.penyebab_situasional ? res.data.data.penyebab_situasional.split(",") : ["-"]);
-            setPenyebabPsikologis(res.data.data.penyebab_psikologis ? res.data.data.penyebab_psikologis.split("\n") : ["-"]);
-            setPenyebabUmum(res.data.data.penyebab_umum ? res.data.data.penyebab_umum.split(",") : ["-"]);
-            setGejalaTandaMayorObjektif(res.data.data.gejala_tanda_major_objektif ? res.data.data.gejala_tanda_major_objektif.split(",") : ["-"]);
-            setGejalaTandaMayorSubjektif(res.data.data.gejala_tanda_major_subjektif ? res.data.data.gejala_tanda_major_subjektif.split(",") : ["-"]);
-            setGejalaTandaMinorObjektif(res.data.data.gejala_tanda_minor_objektif ? res.data.data.gejala_tanda_minor_objektif.split(",") : ["-"]);
-            setGejalaTandaMinorSubjektif(res.data.data.gejala_tanda_minor_subjektif ? res.data.data.gejala_tanda_minor_subjektif.split(",") : ["-"]);
+            setPenyebabFisiologis(res.data.penyebab_fisiologis ? res.data.penyebab_fisiologis : ["-"]);
+            setPenyebabSituasional(res.data.penyebab_situasional ? res.data.penyebab_situasional : ["-"]);
+            setPenyebabPsikologis(res.data.penyebab_psikologis ? res.data.penyebab_psikologis : ["-"]);
+            setPenyebabUmum(res.data.penyebab_umum ? res.data.penyebab_umum : ["-"]);
+            setGejalaTandaMayorObjektif(res.data.gejala_tanda_major_objektif ? res.data.gejala_tanda_major_objektif : ["-"]);
+            setGejalaTandaMayorSubjektif(res.data.gejala_tanda_major_subjektif ? res.data.gejala_tanda_major_subjektif : ["-"]);
+            setGejalaTandaMinorObjektif(res.data.gejala_tanda_minor_objektif ? res.data.gejala_tanda_minor_objektif : ["-"]);
+            setGejalaTandaMinorSubjektif(res.data.gejala_tanda_minor_subjektif ? res.data.gejala_tanda_minor_subjektif : ["-"]);
         } catch (error) {
 
         }

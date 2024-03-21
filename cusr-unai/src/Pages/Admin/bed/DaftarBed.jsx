@@ -552,13 +552,6 @@ export default function DaftarBed() {
                             </Form>
                         </Modal.Body>
                     </Modal>
-
-
-
-                
-           
-
-            
         </Sidebar>
     )
 }
