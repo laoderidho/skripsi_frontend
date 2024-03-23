@@ -132,18 +132,15 @@ export default function FormEvaluasi() {
 
        const selectedLuaranData = res.data;
 
-       console.log(selectedLuaranData.kriteria_luaran);
-
-       setNamaLuaran(selectedLuaranData.luaran.nama_luaran);
+       console.log(selectedLuaranData);
+       setNamaLuaran(selectedLuaranData.luaran.id);
        setSelectedKriteriaLuaran(selectedLuaranData.kriteria_luaran);
      } catch (error) {}
    };
 
 
   const addLuaran = async () => {
-    const handleKriteria = kriteria_luaran
-      ? handleData(kriteria_luaran, "nama_kriteria_luaran")
-      : null;
+    const handleKriteria = kriteria_luaran ? handleData(kriteria_luaran, "id")  : null;
     try {
       await axios.post(
         `perawat/luaran/add/${id}`,
@@ -155,7 +152,7 @@ export default function FormEvaluasi() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      navigate(`/perawat/askep/shift/keterangan/${id}`);
+      navigate(-1);
     } catch (error) {}
   };
 
@@ -216,7 +213,7 @@ export default function FormEvaluasi() {
       {
         headers: { Authorization: `Bearer $(token)` },
       })
-      navigate(`/perawat/askep/shift/keterangan/${id}`);
+      navigate(-1);
 
     }catch(error){
 
@@ -280,7 +277,7 @@ export default function FormEvaluasi() {
         />
       )}
       <div className="container">
-        <h2>Form Evaluasi</h2>
+        <h2>Form Luaran</h2>
       </div>
 
       <div className="container">
@@ -408,6 +405,7 @@ export default function FormEvaluasi() {
                     className="pt-1"
                     onChange={(e) => setKriteriaLuaran(e.value)}
                     maxSelectedLabels={3}
+                    display="chip"
                   ></MultiSelect>
 
                   <span
@@ -416,10 +414,10 @@ export default function FormEvaluasi() {
                     onClick={() =>
                       handleModal(
                         kriteria_luaran &&
-                        kriteria_luaran.map((item) => item.kriteria_luaran),
+                        kriteria_luaran.map((item) => item.nama_kriteria_luaran),
                         kriteria_luaran,
-                        "kriteria_luaran",
-                        "setKriteruaLuaran"
+                        "nama_kriteria_luaran",
+                        "setKriteriaLuaran"
                       )
                     }
                     >See selected options</span>

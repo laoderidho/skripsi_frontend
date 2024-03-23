@@ -40,6 +40,8 @@ export default function FormDiagnosa() {
   const {id} = useParams();
   const navigate = useNavigate();
 
+
+
   // VALUE
 
   const [nama_diagnosa, setNamaDiagnosa] = useState(null);
@@ -175,8 +177,7 @@ export default function FormDiagnosa() {
         {
           headers: { Authorization: `Bearer ${token}` },
         });
-
-        navigate(`/perawat/askep/shift/keterangan/${id}`);
+        navigate(-1);
     } catch (error) {
       
     }

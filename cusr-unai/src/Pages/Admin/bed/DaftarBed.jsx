@@ -44,7 +44,6 @@ export default function DaftarBed() {
 
     const [idBed, setIdBed] = useState(null);
 
-
     const handleCheckboxChange = (e, dropdownType) => {
         if (dropdownType === 'nama_fasilitas') {
             setShowDropdownFacility(!e.target.checked);
@@ -58,8 +57,7 @@ export default function DaftarBed() {
         };
         
     };
-
-    
+ 
 
     const editForm = async () => {
         try {
@@ -119,7 +117,22 @@ export default function DaftarBed() {
     const filteredBed = () => {
         const filteredRoom = bed.filter((item) => {
             return (
-                item.no_bed.toString().includes(inputValue) ||
+                item.nama_fasilitas
+                    .toString()
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase()) ||
+                item.lantai
+                    .toString()
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase()) ||
+                item.no_bed
+                    .toString()
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase()) ||
+                item.jenis_ruangan
+                    .toString()
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase()) ||
                 item.status.toString().toLowerCase().includes(inputValue.toLowerCase()) 
             );
         });
@@ -138,13 +151,25 @@ export default function DaftarBed() {
     };
 
     useEffect(() => {
-        filteredBed();
-        detailSedia();
         getData();
-        getFasilitas();
-        getRuangan();
-        getLantai();
-    },[inputValue])
+        filteredBed();
+    }, [inputValue]);
+
+    useEffect(() => {
+        
+        if (showModal) {
+            detailSedia();
+            getFasilitas();
+            getRuangan();
+            getLantai();
+        }
+    },[showModal]);
+
+    useEffect(() => {
+        if (!showModal) {
+
+        }
+    }, [showModal]);
 
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
@@ -311,12 +336,12 @@ export default function DaftarBed() {
         <Sidebar>
             <div className="container">
                 <h2>{loading ? <Skeleton width="200px" height="30px"/> : 'Daftar Kamar'}</h2>
-                <Breadcrumb>
+                {/* <Breadcrumb>
                 <Breadcrumb.Item active>{loading? <Skeleton width="100px"/> : 'Daftar Kamar'}</Breadcrumb.Item>
                 <Breadcrumb.Item href="/admin/bed/tambah">
                     {loading? <Skeleton width="60px"/> : 'Tambah' }
                 </Breadcrumb.Item>
-                </Breadcrumb>
+                </Breadcrumb> */}
             </div>
 
             <div className="container pt-5">

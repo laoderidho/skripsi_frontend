@@ -53,6 +53,16 @@ export default function DaftarPasienStatus() {
         }
     };
 
+    const dummyData = []
+
+    for(let i=0; i<5; i++){
+      dummyData.push(
+        {
+          data: <Skeleton />
+        }
+      )
+    }
+
     const getBedData = async () => {
         try {
             const res = await axios.post('/admin/bed/filter', {
@@ -108,11 +118,13 @@ export default function DaftarPasienStatus() {
                 item.nama_lengkap
                     .toString()
                     .toLowerCase()
-                    .includes(inputValue.toLowerCase())             
+                    .includes(inputValue.toLowerCase()) ||
+                (item.triase && item.triase.toString().toLowerCase().includes(inputValue.toLowerCase()))            
             );
         });
         setFilterPasien(filteredDiagnosa);
     }
+    
 
     useEffect(()=>{
         filteredPasien()
@@ -127,6 +139,7 @@ export default function DaftarPasienStatus() {
             .then((res) => {
                 console.log(res)
                 setPasien(res?.data?.data);
+                setLoading(false);
             });
         } catch (error) {
 
@@ -162,7 +175,7 @@ export default function DaftarPasienStatus() {
     return (
         <Sidebar>
             <div className='container'>
-                <h2>Daftar Pasien</h2>
+                <h2>Pasien Rawat Inap</h2>
             </div>
             
             <div className='container pt-5'>
@@ -170,9 +183,19 @@ export default function DaftarPasienStatus() {
                     end={endContent}>
                 </Toolbar>
 
-                <DataTable value={inputValue ? filterPasien : pasien} paginator rows={20} tableStyle={{ minWidth: '50rem'}} stripedRows show showGridlines className='mt-3'>
-                    <Column field="id" header='No'/>
-                    <Column field="nama_lengkap" header='Nama'/>
+                <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien) } paginator rows={20} tableStyle={{ minWidth: '50rem'}} stripedRows show showGridlines className='mt-3'>
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="50px" /> : 'No'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.id
+                        )}/>
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="100px" /> : 'Nama'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.nama_lengkap
+                            )}/>
                     <Column 
                         header='Status'
                         body={(rowData) => (

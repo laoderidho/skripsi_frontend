@@ -95,8 +95,8 @@ export default function Router() {
           <Route path="/admin/standarkeperawatan/luaran/:id" element={<DetailLuaran />} />
           <Route path="/admin/luaran/edit/:id" element={<EditLuaran />} />
 
-          {/* Admin | Status */}
-          <Route path="/admin/status" element={<DaftarPasienStatus />} />
+          {/* Admin | Pasien Rawat Inap */}
+          <Route path="/admin/pasienrawatinap" element={<DaftarPasienStatus />} />
           <Route path="/admin/status/lihat-detail/:id" element={<DetailStatus />} />
         
           {/* Admin */}

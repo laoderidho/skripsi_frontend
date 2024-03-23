@@ -13,6 +13,8 @@ nav{
     z-index: 100;
 } 
 
+
+
 #sidebar:hover {
     background-color: transparent;
 }
@@ -24,6 +26,90 @@ nav{
     background-color: #F0F0F0;
 } */
 
+.grid-column {
+    display: grid; 
+    grid-template-columns: auto auto auto;
+    background-color: #e9ecef;
+    margin: 0;
+    grid-gap: 1px;
+}
+
+.grid-column > div {
+    background-color: #fff;
+    padding: 5px 6px;
+    margin: 1px 0;
+}
+
+.grid-column-2 {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 0;
+    grid-gap: 1px;
+}
+
+
+.grid-column-2 > div {
+    background-color: #fff;
+    padding: 5px 6px;
+}
+
+
+
+.p-card {
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+}
+
+.p-card-body {
+    margin: 0;
+    padding: 0;
+}
+
+.div-header {
+    border: 1px solid #e9ecef;
+    padding: 1px;
+}
+
+.div-header col {
+    margin: 0 !important;
+}
+
+div.bordered-form.row {
+    border: 1px solid #e9ecef;
+}
+
+
+.label-form {
+    display: inline-block;
+    width: 120px;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+#form-control-header {
+    border: none ;
+    border-radius: 0;
+}
+
+#form-control-header-form, #form-control-header-form:disabled {
+    background: none !important;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    display: inline-block;
+    height: inherit;
+
+
+}
+
+#form-control-header:disabled {
+    background-color: #fff !important;
+}
 
 #form-control-login {
     width: 100%;
@@ -92,20 +178,19 @@ nav{
 }
 
 .sidebarbutton {
-    background-color: #fff;
+    background-color: none;
     height: 4rem;
 }
 
 
-
-
 .sidebar {
     width: 17rem;
-    background-color:#fff;
+    background-color:#ffffff;
     height: 100vh;
     margin-top: 5rem;
     position: fixed;
-    padding: 1rem;
+    padding-left: 0rem;
+    padding-top: 0rem;
     display: flex;
     flex-direction: column;
     z-index: 99;
@@ -169,16 +254,15 @@ nav{
     text-decoration: none;
     display: block;
     color: #4b5563;
-    padding-left: 1rem;
-    padding-top: 0.7rem;
-    padding-bottom: 0.7rem;
+    padding-left: 1.2rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
     font-size: 1rem;
     display: flex;
     justify-content: left;
     align-items: center;
-
-    
-
+    /* border-bottom: 1px solid #e9ecef; */
+    font-size: 13px;
 }
 
 .sidebar.open {
@@ -188,7 +272,6 @@ nav{
 .sidebar a:hover {
     background-color:#f3f4f6;
     color: #4b5563;
-    border-radius: 0.5rem;
     transition: color 0.3 ease;
 }
 
@@ -205,11 +288,34 @@ nav{
 }
 
 #inner-accordion {
-    margin-left: 3rem;
+    margin-left: 1rem;
+}
+
+.accordion-button:not(.collapsed) .accordion-icon {
+    color: #4b5563 !important;
 }
 
 .accordion-body {
     padding: 0 !important;
+}
+
+.accordion-body a {
+    font-size: 14px;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+
+
+
+.accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+    border-bottom-right-radius:0 !important;
+    border-bottom-left-radius: 0 !important;
 }
 
 
@@ -217,6 +323,9 @@ nav{
     --bs-accordion-bg:#fff;
     --bs-accordion-color: #4b5563 !important;
     --bs-accordion-border-width: 0 !important;
+    --bs-accordion-border-radius: 0 !important;
+    --bs-accordion-inner-border-radius: 0 !important;
+
 
 }
 
@@ -228,6 +337,8 @@ nav{
 
 .accordion-button{
     color: #4b5563;
+    font-size: 13px;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .accordion-button:focus {
@@ -336,6 +447,7 @@ div.p-dropdown-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-don
 
 .p-accordion-header {
     background-color: #fff;
+    
 }
 
 .option-button-svg, .option-button-svg:hover {
@@ -745,10 +857,7 @@ tbody tr {
 
 /* DAFTAR PASIEN LAYOUT */
 
-.p-card {
-    box-shadow: none;
-    border: 0.01rem solid #dee2e6;
-}
+
 
 #form-label {
     font-size: small;

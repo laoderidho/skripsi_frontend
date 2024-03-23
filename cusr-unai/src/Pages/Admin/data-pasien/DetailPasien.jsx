@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/menu/Sidebar'
-import { Breadcrumb, Form, Row, Col, Button, Modal } from 'react-bootstrap'
+import { Breadcrumb, Form, Row, Col, Button, Modal, Accordion } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import ConfirmModal from '../../../components/menu/ConfirmModal'
 import AuthorizationRoute from '../../../AuthorizationRoute'
@@ -140,6 +140,8 @@ const DetailPasien = () => {
     //     //  AuthorizationRoute(error.response.status)
     //   }
     // }
+
+  
     
     return (
       <Sidebar>
@@ -155,119 +157,151 @@ const DetailPasien = () => {
 
         <div className='container pt-2'>
           <Row>
-            <Col xs={4}>
-              <Card className='profile'>
-                
-                <Form.Group>
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Nama Lengkap'}</Form.Label>
-                  <Form.Control
-                    id="form-control-input"
-                    type="text"
-                    placeholder="Masukkan Nama Lengkap"
-                    value={nama_lengkap}
-                    onChange={(e) => setNamaLengkap(e.target.value)}
-                    required
-                    disabled={!isEditing}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Tanggal Lahir'}</Form.Label>
-                  <Form.Control
-                    id="form-control-input"
-                    type="date"
-                    placeholder="Masukkan Nama Lengkap"
-                    value={tanggal_lahir}
-                    onChange={(e) => setTanggalLahir(e.target.value)}
-                    required
-                    disabled={!isEditing}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Jenis Kelamin'}</Form.Label>
-                  <Form.Select
-                    id="form-control-input"
-                    type="text"
-                    placeholder="Tentukan Jenis Kelamin"
-                    value={jenis_kelamin}
-                    onChange={(e) => setJenisKelamin(e.target.value)}
-                    required
-                    disabled={!isEditing}
-                  >
-                    <option>Pilih</option>
-                    <option value="1">Laki Laki</option>
-                    <option value="0">Perempuan</option>
-                  </Form.Select>
-                </Form.Group>
-
-                <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="30px"/> : 'NIK'}</Form.Label>
-                  <Form.Control
-                    id="form-control-input"                       
-                    type="text"
-                    placeholder="Masukkan NIK"
-                    value={nik}
-                    onChange={(e) => setNik(e.target.value)}
-                    required
-                    disabled={!isEditing}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="70px"/> : 'Status Pernikahan'}</Form.Label>
-                  <Form.Select
-                    id="form-control-input"
-                    type="text"
-                    placeholder="Tentukan Jenis Kelamin"
-                    value={status_pernikahan}
-                    onChange={(e) => setStatusPernikahan(e.target.value)}
-                    required
-                    disabled={!isEditing}
-                  >
-                    <option>Pilih</option>
-                    <option value="0">Belum Menikah</option>
-                    <option value="1">Sudah Menikah</option>
-                  </Form.Select>
-                </Form.Group>
-              </Card>
-              <Card className='mt-3'>
-                <Form.Group>
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="100px"/> : 'Nomor Telepon'}</Form.Label>
-                  <Form.Control
-                    id="form-control-input"
-                    type="text"
-                    placeholder="Masukkan Nomor Telepon"
-                    value={no_telepon}
-                    onChange={(e) => setNoTelepon(e.target.value)}
-                    required
-                    disabled={!isEditing}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mt-2">
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="50px"/> : 'Alamat'}</Form.Label>
-                  <Form.Control
-                    id="form-control-input"
-                    as="textarea"
-                    style={{ height: "7rem" }}
-                    type="text"
-                    placeholder="Masukkan Alamat"
-                    value={alamat}
-                    onChange={(e) => setAlamat(e.target.value)}
-                    required
-                    disabled={!isEditing}
-                  />
-                </Form.Group>
-              </Card>
+            <Col xs={6}>
+              <Accordion defaultActiveKey={['0']} alwaysOpen>
+                <Accordion.Item eventKey='0'>
+                  <Accordion.Header>DATA PASIEN</Accordion.Header>
+                  <Accordion.Body>
+                    <Card>
+                      <Row className='grid-column'> 
+                        <Col>
+                          <div>
+                            <Form.Group>
+                                <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="70px"/> : 'Nama Lengkap'}</Form.Label>
+                                <Form.Control
+                                  id="form-control-header-form"
+                                  type="text"
+                                  placeholder="Masukkan Nama Lengkap"
+                                  value={nama_lengkap}
+                                  onChange={(e) => setNamaLengkap(e.target.value)}
+                                  required
+                                  disabled={!isEditing}
+                                />
+                            </Form.Group>
+                          </div>
+                        </Col>
+                        <Col>
+                          <div>
+                            <Form.Group>
+                              <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="70px"/> : 'Tanggal Lahir'}</Form.Label>
+                              <Form.Control
+                                id="form-control-header-form"
+                                type="date"
+                                placeholder="Masukkan Tanggal Lahir"
+                                value={tanggal_lahir}
+                                onChange={(e) => setTanggalLahir(e.target.value)}
+                                required
+                                disabled={!isEditing}
+                              />
+                            </Form.Group>
+                          </div>
+                        </Col>
+                        <Col>
+                          <div>
+                            <Form.Group>
+                              <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="70px"/> : 'Jenis Kelamin'}</Form.Label>
+                              <Form.Select
+                                id="form-control-header-form"
+                                type="text"
+                                placeholder="Tentukan Jenis Kelamin"
+                                value={jenis_kelamin}
+                                onChange={(e) => setJenisKelamin(e.target.value)}
+                                required
+                                disabled={!isEditing}
+                              >
+                                <option>Pilih</option>
+                                <option value="1">Laki Laki</option>
+                                <option value="0">Perempuan</option>
+                              </Form.Select>
+                            </Form.Group>
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row className='grid-column'>
+                        <Col>
+                          <div>
+                            <Form.Group>
+                            <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="30px"/> : 'NIK'}</Form.Label>
+                            <Form.Control
+                              id="form-control-header-form"                       
+                              type="text"
+                              placeholder="Masukkan NIK"
+                              value={nik}
+                              onChange={(e) => setNik(e.target.value)}
+                              required
+                              disabled={!isEditing}
+                            />
+                            </Form.Group>
+                          </div>
+                        </Col>
+                        <Col className='w-100'>
+                          <div>
+                            <Form.Group>
+                                <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="70px"/> : 'Status Pernikahan'}</Form.Label>
+                                <Form.Select
+                                  id="form-control-header-form"
+                                  type="text"
+                                  placeholder="Pilih"
+                                  value={status_pernikahan}
+                                  onChange={(e) => setStatusPernikahan(e.target.value)}
+                                  required
+                                  disabled={!isEditing}
+                                >
+                                  <option>Pilih</option>
+                                  <option value="0">Belum Menikah</option>
+                                  <option value="1">Sudah Menikah</option>
+                                </Form.Select>
+                              </Form.Group>
+                            </div>
+                        </Col>
+                      </Row>
+                      <Row className='grid-column'>
+                        <Col>
+                          <div>
+                            <Form.Group>
+                              <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="100px"/> : 'Nomor Telepon'}</Form.Label>
+                              <Form.Control
+                                id="form-control-header-form"
+                                type="text"
+                                placeholder="Masukkan Nomor Telepon"
+                                value={no_telepon}
+                                onChange={(e) => setNoTelepon(e.target.value)}
+                                required
+                                disabled={!isEditing}
+                              />
+                            </Form.Group>
+                          </div>
+                        </Col>
+                        <Col>
+                          <div>
+                            <Form.Group>
+                              <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="50px"/> : 'Alamat'}</Form.Label>
+                              <Form.Control
+                                id="form-control-header-form"
+                                // as="textarea"
+                                type="text"
+                                placeholder="Masukkan Alamat"
+                                value={alamat}
+                                onChange={(e) => setAlamat(e.target.value)}
+                                required
+                                disabled={!isEditing}
+                              />
+                            </Form.Group>
+                          </div>
+                        </Col>
+                      </Row>
+                    </Card>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             </Col>
 
             <Col xs={4}>
               <Card>
-                <Form.Group>
-                  <Form.Label id='form-label'>{loading ? <Skeleton width="200px"/> : 'No Medical Record'}</Form.Label>
+                <Form.Group className='pt-4'>
+                  <Form.Label id='form-label' className='label-form'>{loading ? <Skeleton width="200px"/> : 'No Medical Record'}</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-header-form"
                     type="text"
                     placeholder="Masukkan No Medical Record"
                     value={no_medical_record}
@@ -318,11 +352,11 @@ const DetailPasien = () => {
                 </Form.Group>
               </Card>
             </Col>
-            <Col xs={1}>
+            {/* <Col xs={1}>
               <Divider layout='vertical'/>
-            </Col>
-            <Col>
-              {/* <Form.Group>
+            </Col> */}
+            {/* <Col>
+              <Form.Group>
                   <Form.Label>Status Rawat Inap:</Form.Label>
                   <div>
                     {dataRawatInap === "merah" ? (
@@ -353,8 +387,8 @@ const DetailPasien = () => {
                     onClick={() => setShowModalRawatInap(!showModalRawatInap)}>
                   Klik untuk ubah status
                   </Link>
-                </div> */}
-            </Col>
+                </div>
+            </Col> */}
           </Row>
 
           <Form className="container mt-5" onSubmit={submitForm}>

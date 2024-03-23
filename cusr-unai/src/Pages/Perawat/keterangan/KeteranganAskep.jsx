@@ -141,6 +141,11 @@ const KeteranganAskep = () => {
                       <Link
                         to={`/perawat/askep/form-implementasi/${askep.id}`}
                         className="btn btn-primary btn-large"
+                        // onClick={(e) => {
+                        //   if (!askep.jam_pemberian_intervensi) {
+                        //     e.preventDefault();
+                        //   }
+                        // }}
                       >
                         <i class="fa-solid fa-plus"></i> Tambah
                       </Link>
@@ -158,6 +163,11 @@ const KeteranganAskep = () => {
                       <Link
                         to={`/perawat/askep/form-evaluasi/${askep.id}`}
                         className="btn btn-primary btn-large"
+                        // onClick={(e) => {
+                        //   if (!askep.jam_pemberian_implementasi) {
+                        //     e.preventDefault();
+                        //   }
+                        // }}
                       >
                         <i class="fa-solid fa-plus"></i> Tambah
                       </Link>

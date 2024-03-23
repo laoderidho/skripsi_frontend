@@ -63,7 +63,7 @@ export default function FormIntervensi() {
 
       const selectedIntervensiData = res.data;
 
-      setNamaIntervensi(selectedIntervensiData.data.nama_intervensi);
+      setNamaIntervensi(selectedIntervensiData.data.id);
       setSelectedObservasi(selectedIntervensiData.tindakan_observasi);
       setSelectedTerapeutik(selectedIntervensiData.tindakan_teraupetik);
       setSelectedEdukasi(selectedIntervensiData.tindakan_edukasi);
@@ -109,13 +109,9 @@ export default function FormIntervensi() {
   };
 
   const addIntervensi = async () => {
-    const handleObservasi = observasi
-      ? handleData(observasi, "nama_tindakan_intervensi")
-      : null;
-    const handleTerapeutik = terapeutik
-      ? handleData(terapeutik, "nama_tindakan_intervensi")
-      : null;
-    const handleEdukasi = edukasi ? handleData(edukasi, "nama_tindakan_intervensi") : null;
+    const handleObservasi = observasi ? handleData(observasi, "id") : null;
+    const handleTerapeutik = terapeutik ? handleData(terapeutik, "id") : null;
+    const handleEdukasi = edukasi ? handleData(edukasi, "id") : null;
 
     try {
         await axios.post(`/perawat/intervensi/update/${id}`, {
@@ -127,7 +123,7 @@ export default function FormIntervensi() {
             headers: { Authorization: `Bearer ${token}`},
         });
 
-        navigate(`/perawat/askep/shift/keterangan/${id}`);
+        navigate(-1);
     } catch (error) {
 
     }
@@ -197,6 +193,7 @@ export default function FormIntervensi() {
                 optionLabel="nama_tindakan_intervensi"
                 className="pt-1"
                 filter
+                display="chip"
               ></MultiSelect>
               <span
                     id="form-label"
@@ -204,9 +201,9 @@ export default function FormIntervensi() {
                     onClick={() =>
                       handleModal(
                         observasi &&
-                        observasi.map((item) => item.observasi),
+                        observasi.map((item) => item.nama_tindakan_intervensi),
                         observasi,
-                        "observasi",
+                        "nama_tindakan_intervensi",
                         "setObservasi"
                       )
                     }
@@ -224,6 +221,7 @@ export default function FormIntervensi() {
                 optionLabel="nama_tindakan_intervensi"
                 className="pt-1"
                 filter
+                display="chip"
               ></MultiSelect>
               <span
                     id="form-label"
@@ -231,9 +229,9 @@ export default function FormIntervensi() {
                     onClick={() =>
                       handleModal(
                         terapeutik &&
-                        terapeutik.map((item) => item.terapeutik),
+                        terapeutik.map((item) => item.nama_tindakan_intervensi),
                         terapeutik,
-                        "terapeutik",
+                        "nama_tindakan_intervensi",
                         "setTerapeutik"
                       )
                     }
@@ -251,6 +249,7 @@ export default function FormIntervensi() {
                 optionLabel="nama_tindakan_intervensi"
                 className="pt-1"
                 filter
+                display="chip"
               ></MultiSelect>
               <span
                     id="form-label"
@@ -258,9 +257,9 @@ export default function FormIntervensi() {
                     onClick={() =>
                       handleModal(
                         edukasi &&
-                        edukasi.map((item) => item.edukasi),
+                        edukasi.map((item) => item.nama_tindakan_intervensi),
                         edukasi,
-                        "edukasi",
+                        "nama_tindakan_intervensi",
                         "setEdukasi"
                       )
                     }
