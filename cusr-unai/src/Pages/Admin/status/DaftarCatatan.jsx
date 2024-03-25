@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router-dom";
 import ConfirmModal from '../../../components/menu/ConfirmModal';
 import { Skeleton } from 'primereact/skeleton';
 
-export default function DaftarPasienStatus() {
+export default function DaftarCatatan() {
 
     const [inputValue, setInputValue] = useState('');
     const [filterPasien, setFilterPasien] = useState();
@@ -132,7 +132,7 @@ export default function DaftarPasienStatus() {
 
     const getPasien = async (token) => {
         try {
-            await axios.post("/admin/pasien/rawat-inap", {
+            await axios.post("/admin/daftarpasien", {
                 headers: { Authorization: `Bearer ${token}`, 
             },
             })
@@ -175,7 +175,7 @@ export default function DaftarPasienStatus() {
     return (
         <Sidebar>
             <div className='container'>
-                <h2>Pasien Rawat Inap</h2>
+                <h2>Catatan Rawat Inap</h2>
             </div>
             
             <div className='container pt-5'>
@@ -183,64 +183,33 @@ export default function DaftarPasienStatus() {
                     end={endContent}>
                 </Toolbar>
 
-                <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien) } showGridlines tableStyle={{ minWidth: '50rem' }} paginator rows={20} className='mt-3'>
+                <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien) }  showGridlines tableStyle={{ minWidth: '50rem' }} paginator rows={20} className='mt-3'>
                     <Column 
                         field="" 
-                        header={loading ? <Skeleton width="50px" /> : 'NAMA'}
+                        header={loading ? <Skeleton width="50px" /> : 'No'}
+                        body={(rowData) => (
+                            loading ? rowData.data : rowData.id
+                        )}/>
+                    <Column 
+                        field="" 
+                        header={loading ? <Skeleton width="100px" /> : 'Nama'}
                         body={(rowData) => (
                             loading ? rowData.data : rowData.nama_lengkap
-                            )}/>        
-                    <Column 
-                        field="" 
-                        header={loading ? <Skeleton width="50px" /> : 'FASILITAS'}
-                        body={(rowData) => (
-                            loading ? rowData.data : rowData.nama_fasilitas
                             )}/>
                     <Column 
-                        field="" 
-                        header={loading ? <Skeleton width="50px" /> : 'LANTAI'}
-                        body={(rowData) => (
-                            loading ? rowData.data : rowData.lantai
-                            )}/> 
-                    <Column 
-                        field="" 
-                        header={loading ? <Skeleton width="90px" /> : 'JENIS RUANGAN'}
-                        body={(rowData) => (
-                            loading ? rowData.data : rowData.jenis_ruangan
-                            )}/>
-                    <Column 
-                        field="" 
-                        header={loading ? <Skeleton width="90px" /> : 'KAMAR'}
-                        body={(rowData) => (
-                            loading ? rowData.data : rowData.no_bed
-                            )}/>
-                    
-                    
-                    <Column 
-                        header={loading ? <Skeleton width="90px" /> : 'TRIASE'}
+                        header=''
                         body={(rowData) => (
                             <>
-                                <div>
-                                    {rowData.triase === "merah" ? (
-                                        <Button href='#' className='triase-merah text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : rowData.triase === "kuning" ? (
-                                        <Button href="#" className='triase-kuning text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : rowData.triase === "hijau" ? (
-                                        <Button href="#" className='triase-hijau text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : rowData.triase === "hitam" ? (
-                                        <Button href="#" className='triase-hitam text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : (
-                                        "Tidak di rawat inap"
-                                    )}
-                                </div>
+                                
+                                <Link id="form-label" to={`/admin/pasien/catatan/${rowData.id}`}>
+                                    <span>Lihat Detail</span>
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="mx-1 my-2" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                        </svg>
+                                    </span>
+                                </Link>
+                                
                             </>
                         )}
                     />
@@ -276,6 +245,18 @@ export default function DaftarPasienStatus() {
                                     options={jenis_triase}
                                     placeholder='Pilih'
                                     className='pt-1'>
+                                </Dropdown>
+                            </Form.Group>
+                            <Form.Group className='pt-3'>
+                                <Form.Label id='form-label'>Pilih Bed</Form.Label>
+                                <Dropdown
+                                    value={pasienBed}
+                                    onChange={(e) => setPasienBed(e.target.value)}
+                                    options={createBedOptions()}
+                                    placeholder="Pilih"
+                                    filter
+                                    className='pt-1'
+                                    id='dropdown-modal'>
                                 </Dropdown>
                             </Form.Group>
                         </Modal.Body>

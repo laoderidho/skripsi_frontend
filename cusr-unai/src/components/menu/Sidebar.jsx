@@ -6,8 +6,8 @@ import { Accordion } from 'react-bootstrap';
 
 export default function Sidebar(props){
 
-    const [sidebar, setSidebar] = useState(true);
     const [dataMenu, setDataMenu] = useState([]);
+    const [sidebar, setSidebar] = useState(true);
     const location = useLocation();
     const currentPath = location.pathname;
   
@@ -17,25 +17,27 @@ export default function Sidebar(props){
         ChangeRoute(adminRoute);
       }, [adminRoute])
 
-   const ChangeRoute = (path) => {
-       if (path) {
-         setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "admin"));
-       } else {
-         setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "perawat"));
-       }
-   };
-   
-   const iconStyle = {
-    marginRight: "1rem"
-   }
+    const ChangeRoute = (path) => {
+        if (path) {
+          setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "admin"));
+          setSidebar(true)
+        } else {
+          setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "perawat"));
+          setSidebar(false)
+        }
+    };
 
-    const getClick = () => {
-        setSidebar(!sidebar);
+
+    const getClick = () => setSidebar(!sidebar)
+
+    
+    const iconStyle = {
+      marginRight: "1rem"
     }
 
     const componentChild = (item)=>{
         return (
-          <Accordion defaultActiveKey="0" alwaysOpen>
+          <Accordion defaultActiveKey="0">
             <Accordion.Item>
               <Accordion.Header> <i className={item.icon}  style={iconStyle}></i> {item.name}</Accordion.Header>
               <Accordion.Body>
@@ -86,7 +88,7 @@ export default function Sidebar(props){
         </div>
 
         {/* Content */}
-        <div className="content">{props.children}</div>
+        <div className={`content ${sidebar ? "content-true" : ""}`}>{props.children}</div>
       </div>
     );
 }

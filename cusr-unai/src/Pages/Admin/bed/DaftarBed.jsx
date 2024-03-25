@@ -350,7 +350,7 @@ export default function DaftarBed() {
                     end={endContent}>
                 </Toolbar>
 
-                <DataTable value={loading ? dummyData : (inputValue ? filterBed : bed)} paginator rows={20} tableStyle={{ minWidth: '50rem' }} stripedRows show showGridlines className="mt-3">
+                <DataTable value={loading ? dummyData : (inputValue ? filterBed : bed)}  showGridlines tableStyle={{ minWidth: '50rem' }} paginator rows={20} className='mt-3'>
                     <Column 
                         field="" 
                         header={loading ? <Skeleton width="120px" /> : 'Fasilitas Kesehatan'}
@@ -379,7 +379,11 @@ export default function DaftarBed() {
                         field="" 
                         header={loading ? <Skeleton width="50px" /> : 'Status'}
                         body={(rowData) => (
-                            loading ? rowData.data : rowData.status
+                            <>
+                                <div>
+                                    {loading ? <Skeleton width="50px"/> : (rowData.status === 0 ? "Kosong" : "Terisi") }
+                                </div>
+                            </>
                         )}/>
                     <Column header='' body={(rowData) => (
                         <Link

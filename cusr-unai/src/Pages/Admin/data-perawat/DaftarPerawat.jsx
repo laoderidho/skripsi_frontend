@@ -102,7 +102,7 @@ export default function DaftarPerawat() {
       <Sidebar>
         {/* Title */}
         <div className="container">
-            <h2>{loading ? <Skeleton width="200px" height="30px"/> : 'Daftar Perawat'}</h2>
+            <h2>{loading ? <Skeleton width="200px" height="30px"/> : 'User'}</h2>
             <Breadcrumb>
                 <Breadcrumb.Item active>
                     {loading? <Skeleton width="100px"/> : 'Daftar Perawat'}

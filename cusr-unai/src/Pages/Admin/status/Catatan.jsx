@@ -8,7 +8,7 @@ import axios from '../../../axios'
 import ConfirmModal from '../../../components/menu/ConfirmModal';
 
 
-export default function DetailStatus() {
+export default function Catatan() {
 
     const [bed, setBed] = useState([]);
     const [pasien, setPasien] = useState([]);
@@ -157,9 +157,9 @@ export default function DetailStatus() {
     return (
         <Sidebar>
             <div className='container'>
-                <h2>Detail</h2>
+                <h2>Catatan</h2>
                 <Breadcrumb>
-                    <Breadcrumb.Item active>Daftar Status</Breadcrumb.Item>
+                    <Breadcrumb.Item active>Catatan</Breadcrumb.Item>
                     <Breadcrumb.Item href="/admin/bed/tambah">
                         Tambah
                     </Breadcrumb.Item>
@@ -183,39 +183,49 @@ export default function DetailStatus() {
                 </Button>
 
                 <Row>
-                    <Col xs={9}>
+                    <Col xs={8}>
                         <ListGroup className='pt-4'>
                             {tanggalRawat &&  tanggalRawat.map(item => (
                                 <ListGroup.Item>
                                     <Row>
-                                        <Col xs={8}>
+                                        <Col xs={12}>
                                             <Form.Label id='form-label'>
                                                 <Row>
+                                                    <Row>
+                                                        <Col>
+                                                            <Row>
+                                                                <span>Tanggal Masuk: {item.tanggal_masuk}</span>
+                                                                <span>Tanggal Keluar: -</span>
+                                                            </Row>
+                                                        </Col>
+                                                        <Col>
+                                                            <Row>
+                                                                <span>Jam Masuk: {item.jam_masuk}</span>
+                                                                <span>Jam Keluar: -</span>
+                                                            </Row>
+                                                        </Col>
+                                                        <Col>
+                                                            <span id='form-label' style={{color:'#4e95e0'}}>Status: Ongoing</span>
+                                                            <br/>
+                                                            <span id="form-label">Triase: {item.triase}</span> 
+                                                        </Col>
+                                                   </Row>
+                                                   <Row>
+                                                        <Col xs={2}>
+                                                            <Button>Edit</Button>
+                                                        </Col>
+                                                        <Col>
+                                                            <Button>Edit</Button>
+                                                        </Col>
+
+                                                   </Row>
+                                                </Row>
+                                                <Row className='pt-2'> 
                                                     <Col>
-                                                        <Row>
-                                                            <span>Tanggal Masuk: {item.tanggal_masuk}</span>
-                                                            <span>Tanggal Keluar: -</span>
-                                                        </Row>
-                                                    </Col>
-                                                    <Col>
-                                                        <Row>
-                                                            <span>Jam Masuk: {item.jam_masuk}</span>
-                                                            <span>Jam Keluar: -</span>
-                                                        </Row>
+                                                        {/* <Button>Edit</Button> */}
                                                     </Col>
                                                 </Row>
                                             </Form.Label>
-                                            <p id='form-label' style={{color:'#4e95e0'}}>Status: Ongoing</p> 
-                                        </Col>
-                                        <Col xs={4}>
-                                            <Row>
-                                                <Col>
-                                                    {/* <Button variant='primary'>Selesai</Button>
-                                                    <Button variant='primary'>Lihat</Button> */}
-                                                    
-                                                </Col>
-                                            </Row>
-                                           
                                         </Col>
                                     </Row>
                                 </ListGroup.Item>

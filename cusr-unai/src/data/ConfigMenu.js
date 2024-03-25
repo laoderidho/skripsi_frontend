@@ -12,12 +12,26 @@ const ConfigMenu = [
     role:'admin',
     child: [
       {
-        path: "/admin/daftarperawat",
-        name: "DAFTAR PERAWAT",
+        path: "/admin/user",
+        name: "USER",
         role: "admin",
         // icon: "fa-solid fa-user-nurse",
         child: null,
       },
+      // {
+      //   path: "/admin/daftarpasien",
+      //   name: "DAFTAR PASIEN",
+      //   role: "admin",
+      //   // icon: "fa-solid fa-list",
+      //   child: null,
+      // },
+    ]
+  },
+  {
+    path:'/',
+    name: 'PASIEN',
+    role: 'admin',
+    child: [
       {
         path: "/admin/daftarpasien",
         name: "DAFTAR PASIEN",
@@ -25,6 +39,14 @@ const ConfigMenu = [
         // icon: "fa-solid fa-list",
         child: null,
       },
+      {
+        path: "/admin/pasien/catatan",
+        name: "CATATAN",
+        role: "admin",
+        // icon: "fa-solid fa-list",
+        child: null,
+      },
+
     ]
   },
   {
@@ -33,15 +55,8 @@ const ConfigMenu = [
     role:'admin',
     child: [
       {
-        path: "/admin/pasienrawatinap",
+        path: "/admin/pasien/rawat-inap",
         name: "PASIEN RAWAT INAP",
-        role: "admin",
-        // icon: "fa-solid fa-list",
-        child: null,
-      },
-      {
-        path: "/admin/daftarpasien",
-        name: "CATATAN",
         role: "admin",
         // icon: "fa-solid fa-list",
         child: null,
@@ -112,42 +127,51 @@ const ConfigMenu = [
   },
   {
     path: "/perawat/profile",
-    name: "Profile",
+    name: "PROFILE",
     role: "perawat",
     // icon: "fa-solid fa-user-nurse",
     child: null,
   },
   {
     path: "/perawat/daftarpasien",
-    name: "ASKEP",
+    name: "ASUHAN KEPERAWATAN",
     role: "perawat",
     // icon: "fa-solid fa-list",
     child: null,
   },
   {
     path: "/perawat/laporan",
-    name: "Laporan",
+    name: "LAPORAN",
     role: "perawat",
     // icon: "fa-solid fa-notes-medical",
     child: null,
   },
   {
     path: "/perawat/pemeriksaan-awal",
-    name: "Pemeriksaan Awal",
+    name: "PEMERIKSAAN AWAL",
     role: "perawat",
     // icon: "fa-solid fa-stethoscope",
     child: null,
   },
   {
-    path: "/perawat/ganti-sandi",
-    name: "Ganti Kata Sandi",
-    role: "perawat",
-    // icon: "fa-solid fa-key",
-    child: null,
+    path:'/',
+    name:'AKUN',
+    role:'perawat',
+    child: [
+      {
+        path: "/perawat/ganti-sandi",
+        name: "Ganti Kata Sandi",
+        role: "perawat",
+        // icon: "fa-solid fa-key",
+        child: null,
+      },
+    ],
+    isOpen: true
   },
+
   {
     path: "/logout",
-    name: "Logout",
+    name: "LOGOUT",
     role: "perawat",
     // icon: "fa-solid fa-right-from-bracket",
     child: null,

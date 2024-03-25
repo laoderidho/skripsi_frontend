@@ -48,7 +48,7 @@ const AddPerawat = () => {
       { 
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'}
       });
-      navigate("/admin/daftarperawat");
+      navigate("/admin/user");
     } catch (error){
         console.log(photo);
     }

@@ -87,7 +87,7 @@ const DetailPerawat = () => {
       { 
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'}
       });
-      navigate("/admin/daftarperawat");
+      navigate("/admin/user");
     } catch (error){
       // AuthorizationRoute(error.response.status)
     }
@@ -287,7 +287,7 @@ const DetailPerawat = () => {
                         />
                     </Form.Group>
                 </Col>
-                <Col>
+                {/* <Col>
                     <Form.Group className="mb-3">
                     <Form.Label id="form-label">{loading ? <Skeleton width="50px"/> : 'Password'}</Form.Label>
                         <InputGroup hasValidation>
@@ -305,7 +305,7 @@ const DetailPerawat = () => {
                                 </Button>
                         </InputGroup>
                     </Form.Group>
-                </Col>
+                </Col> */}
             </Row>
         </div>
 

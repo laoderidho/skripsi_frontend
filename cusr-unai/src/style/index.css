@@ -195,7 +195,7 @@ div.bordered-form.row {
     flex-direction: column;
     z-index: 99;
     box-shadow: 0 0 10px #dee2e6;
-    transition: margin-left 0.5s ease-in-out; 
+    transition: margin-left 0.3s ease-in-out; 
 }
 
 .label {
@@ -265,9 +265,6 @@ div.bordered-form.row {
     font-size: 13px;
 }
 
-.sidebar.open {
-    left: 0;
-}
 
 .sidebar a:hover {
     background-color:#f3f4f6;
@@ -285,6 +282,11 @@ div.bordered-form.row {
 
 .sidebar-false{
     margin-left: -17rem;
+}
+
+.content-true {
+    margin-left: 17rem;
+     transition: margin-left 0.3s ease-in !important;
 }
 
 #inner-accordion {
@@ -657,7 +659,7 @@ th {
 
 
 thead {
-    background-color: #f8f9fa !important;
+    background-color: #f9fafb;
     padding: 1rem;
 }
 
@@ -702,28 +704,28 @@ tbody tr {
 }
 
 .p-datatable {
-    border: 0.001rem solid #dee2e6; 
-    border-radius: 0.2rem;
+    /* border: 0.001rem solid #dee2e6; 
+    border-radius: 0.2rem; */
+}
+
+thead.p-datatable-thead {
+    background-color: #fff !important;
 }
 
 
-
-.p-datatable-thead {
-    border-bottom: 1px solid #dee2e6;
-}
 
 .p-paginator-bottom {
     border: none;
 }
 
+.p-column-title {
+    font-size: 14px;
+    color: #6b7280;
+}
+
 .p-toolbar {
     background-color: #fff;
 }
-
-.p-datatable-tbody {
-
-    /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));  */
-  }
 
 .green-active-button {
     background-color: #4ed14e;
