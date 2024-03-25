@@ -15,21 +15,34 @@ export default function Sidebar(props){
 
     useEffect(()=>{
         ChangeRoute(adminRoute);
-      }, [adminRoute])
+    }, [adminRoute])
 
+    // Fungsi untuk mengubah route
     const ChangeRoute = (path) => {
         if (path) {
-          setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "admin"));
-          setSidebar(true)
+            setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "admin"));
+            setSidebar(true);
         } else {
-          setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "perawat"));
-          setSidebar(false)
+            setDataMenu(ConfigMenu.map((item) => item).filter((item) => item.role === "perawat"));
+            setSidebar(false);
         }
     };
 
+    // Fungsi untuk mengatur status sidebar saat diklik
+    const toggleSidebar = () => {
+        const newSidebarState = !sidebar;
+        setSidebar(newSidebarState);
+        // Simpan status sidebar ke sessionStorage
+        sessionStorage.setItem('sidebarStatus', JSON.stringify(newSidebarState));
+    };
 
-    const getClick = () => setSidebar(!sidebar)
-
+    // Mengambil status sidebar dari sessionStorage saat komponen dimuat
+    useEffect(() => {
+        const storedSidebarStatus = sessionStorage.getItem('sidebarStatus');
+        if (storedSidebarStatus !== null) {
+            setSidebar(JSON.parse(storedSidebarStatus));
+        }
+    }, []);
     
     const iconStyle = {
       marginRight: "1rem"
@@ -60,7 +73,7 @@ export default function Sidebar(props){
           <button
             className="btn sidebarbutton"
             id="sidebar"
-            onClick={getClick}
+            onClick={toggleSidebar}
             type="button"
             data-toggle="collapse"
             data-target
