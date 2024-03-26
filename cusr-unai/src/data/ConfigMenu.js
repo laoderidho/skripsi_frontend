@@ -119,7 +119,7 @@ const ConfigMenu = [
     isOpen: true
   },
   {
-    path: "/logout",
+    path: "/login",
     name: "LOGOUT",
     role: "admin",
     // icon: "fa-solid fa-right-from-bracket",
@@ -170,7 +170,7 @@ const ConfigMenu = [
   },
 
   {
-    path: "/logout",
+    path: "/login",
     name: "LOGOUT",
     role: "perawat",
     // icon: "fa-solid fa-right-from-bracket",
