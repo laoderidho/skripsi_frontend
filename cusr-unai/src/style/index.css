@@ -183,12 +183,10 @@ div.bordered-form.row {
 }
 
 
-.sidebar_full{
-    width: 100%;
-}
+
 
 .sidebar_small {
-    width: 17rem;
+    width: 18rem;
 }
 
 .sidebar {
@@ -292,7 +290,7 @@ div.bordered-form.row {
 }
 
 .content-true {
-    margin-left: 17rem;
+    margin-left: 18rem;
      transition: margin-left 0.3s ease-in !important;
 }
 
@@ -1191,6 +1189,11 @@ svg.p-checkbox-icon[data-p-highlight="true"] {
 }
 
 
+.gap-custom {
+    margin: 0;
+    padding: 0;
+}
+
 
 /* Multiselect */
 
@@ -1601,6 +1604,10 @@ svg.p-checkbox-icon[data-p-highlight="true"] {
 
     .p-multiselect-item {
         white-space: normal;
+    }
+
+    .sidebar_full {
+    width: 100%;
     }
 
     

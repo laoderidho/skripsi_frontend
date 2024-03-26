@@ -70,7 +70,7 @@ export default function Sidebar(props) {
             </nav>
 
             {/* sidebar Menu */}
-            <div className={` sidebar ${sidebar ? (!adminRoute ? "sidebar_full" : "sidebar_small-") : "sidebar-false"}`}>
+            <div className={` sidebar ${sidebar ? (!adminRoute ? "sidebar_full" : "sidebar_small") : "sidebar-false"}`}>
                 {dataMenu.map((item, index) =>
                     item.child ? (
                         componentChild(item)

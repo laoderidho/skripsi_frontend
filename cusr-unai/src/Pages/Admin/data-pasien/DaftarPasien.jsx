@@ -72,25 +72,20 @@ export default function DaftarPasien() {
         }
     };
 
-    const detailStatus = async () => {
-      try{
-        const res = await axios.post(`/pasien/rawat-inap/detailStatus/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setDataRawatInap(res.data.message)
-      }catch(error){
-        AuthorizationRoute(error.response.status)
-      }
-    };
+    // const detailStatus = async () => {
+    //   try{
+    //     const res = await axios.post(`/pasien/rawat-inap/detailStatus/${id}`, {
+    //       headers: { Authorization: `Bearer ${token}` },
+    //     });
+    //     setDataRawatInap(res.data.message)
+    //   }catch(error){
+    //     AuthorizationRoute(error.response.status)
+    //   }
+    // };
 
     useEffect(()=>{
         getPasien(localStorage.getItem('token'));
     }, []);
-
-    useEffect(() => {
-      console.log("Calling Status")
-      detailStatus();
-    },[]);
 
     console.log(pasien)
 
@@ -153,7 +148,7 @@ export default function DaftarPasien() {
             body={(rowData) => (
              loading ? rowData.data : rowData.no_medical_record
             )}/>
-          <Column 
+          {/* <Column 
             field="" 
             header={loading ? <Skeleton width="50px" /> : 'Status'}
             body={(rowData) => (
@@ -181,7 +176,7 @@ export default function DaftarPasien() {
                 )}
               </div>
             )}
-          />
+          /> */}
           <Column 
             header=''
             body={(rowData) => (

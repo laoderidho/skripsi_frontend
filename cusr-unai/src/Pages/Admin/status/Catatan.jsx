@@ -13,6 +13,7 @@ export default function Catatan() {
     const [bed, setBed] = useState([]);
     const [pasien, setPasien] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [showAlertSelesai, setShowAlertSelesai] = useState(false);
     // const [triase, setTriase] = useState('');
     const [nama_fasilitas, setNamaFasilitas] = useState([]);
     const [lantai, setLantai] = useState([]);
@@ -24,6 +25,7 @@ export default function Catatan() {
 
     const [tanggalRawat, setTanggalRawat] = useState([]);
     const [showTanggal, setShowTanggal] = useState(false);
+    const [status, setStatus] = useState('Ongoing')
 
    
 
@@ -39,10 +41,23 @@ export default function Catatan() {
     const [showBedSelect, setShowBedSelect] = useState(false);
     const [showLantaiSelect, setShowLantaiSelect] = useState(false);
     const [showJenisRuanganSelect, setShowRuanganSelect] = useState(false);
+
+    const [idBed, setIdBed] = useState(null);
  
 
-    const handleShow = () => setShowModal(true);
-    const  handleClose = () => setShowModal(false);
+    const handleShow = () => {
+        setShowModal(true);
+    };
+
+    const handleShowAlert = () => {
+        setShowAlertSelesai(true);
+    };
+
+
+    const  handleClose = () => {
+        setShowModal(false);
+        setShowAlertSelesai(false);
+    };
    
 
     const filterFasilitas = async (fasilitasName) => {
@@ -54,6 +69,12 @@ export default function Catatan() {
                 }
             })
             setJenisRuangan(res.data.data)
+
+            if (isEditing) {
+                setSelectedRuangan("");
+                setSelectedLantai("");
+                setInputBed("");
+            }
         } catch (error) {
             console.log(error)
         }
@@ -144,33 +165,56 @@ export default function Catatan() {
         }
     }
 
-    const sembuh = async (token) => {
+    const getSembuh = async (token) => {
         try {
             const res = await axios.post(`/admin/rawat-inap/recover/${id}`, {
                 headers: { Authorization: `Bearer ${token}`}
             });
+            setShowAlertSelesai(false);
+            setStatus('Selesai');
             
         } catch (error) {
-            
+
         }
     }
 
-    const editClick = (triase, inputBed) => {
-        setInputBed(inputBed);
+    const getDetailEditRawatInap = async (id) => {
+        try {
+            const res = await axios.post(`/admin/rawat-inap/detail/${id}`,{
+                    headers : { Authorization: `Bearer ${token}`}
+            })
+            console.log(res.data.bed)
+            setSelectedFasilitas(res.data.bed.nama_fasilitas)
+            setSelectedRuangan(res.data.bed.jenis_ruangan)
+            setJenisRuangan([res.data.bed.jenis_ruangan])
+            setSelectedLantai(res.data.bed.lantai)
+            setLantai([res.data.bed.lantai])
+            setInputBed(res.data.bed.id)
+            setNoBed([{id: res.data.bed.id, no_bed: res.data.bed.no_bed}]);
+        } catch (error){
+
+        }
+    }
+    const editClick = async (id, nama_fasilitas, lantai, no_bed, jenis_ruangan) => {
+        filterFasilitas(nama_fasilitas);
+        handleRuanganChange(jenis_ruangan);
+    
+        getDetailEditRawatInap(id);
+
         setIsEditing(true);
         setShowModal(true);
-        
     }
 
-    const editForm = async (token) => {
+    const editForm = async () => {
         try {
-            await axios.post(`/admin/rawat-inap/update/${id}`, {
+            await axios.post(`/admin/rawat-inap/update/${idBed}`, {
                 no_bed: inputBed
             },
             {
                 headers: { Authorization: `Bearer ${token}`}
             });
             setShowModal(false);
+            getDetailEditRawatInap();
 
         } catch (error) {
 
@@ -183,6 +227,7 @@ export default function Catatan() {
         getBed(token); // perbaikan
         getPasien(token); // perbaikan
         getDate(token)
+
     }, []); // perbaikan
 
   
@@ -228,38 +273,39 @@ export default function Catatan() {
                                                         <Col>
                                                             <Row>
                                                                 <span>Tanggal Masuk: {item.tanggal_masuk}</span>
-                                                                <span>Tanggal Keluar: -</span>
+                                                                {status === 'Selesai' ? <span>Tanggal Keluar: {item.tanggal_keluar}</span> : <span>Tanggal Keluar: -</span>}
                                                             </Row>
                                                         </Col>
                                                         <Col>
                                                             <Row>
                                                                 <span>Jam Masuk: {item.jam_masuk}</span>
-                                                                <span>Jam Keluar: {item.jam_keluar}</span>
+                                                                {status === 'Selesai' ? <span>Jam Keluar: {item.jam_keluar}</span> : <span>Jam Keluar: -</span>}
                                                             </Row>
                                                         </Col>
                                                         <Col>
-                                                            <span id='form-label' style={{color:'#4e95e0'}}>Status: Ongoing</span>
+                                                            <span id='form-label' style={{ color: status === 'Selesai' ? '#212529' : '#4e95e0' }}>Status: {status}</span>
                                                             <br/>
                                                            
                                                         </Col>
                                                    </Row>
-                                                   <Row className='mt-4'>
-                                                        <Col xs={1}>
-                                                            <Link
-                                                                className='btn catatan-button'
-                                                                onClick={() => editClick(inputBed)}
-                                                            >Edit</Link>
-                                                        </Col>
-                                                        {/* <Col>
-                                                            <Button>Edit</Button>
-                                                        </Col> */}
+                                                   <Row className='mt-4 gap-custom'>
+                                                   {!status === 'Selesai' && (
+                                                        <>
+                                                            <Col xs={1}>
+                                                                <Button
+                                                                    className='btn catatan-button'
+                                                                    onClick={() => editClick(item.id)}
+                                                                >Edit</Button>
+                                                            </Col>
+                                                            <Col
+                                                                className=''
+                                                                onClick={handleShowAlert}>
+                                                                <Button>Selesai</Button>
+                                                            </Col>
+                                                        </>
+                                                    )}
 
                                                    </Row>
-                                                </Row>
-                                                <Row className='pt-2'> 
-                                                    <Col>
-                                                        {/* <Button>Edit</Button> */}
-                                                    </Col>
                                                 </Row>
                                             </Form.Label>
                                         </Col>
@@ -317,7 +363,7 @@ export default function Catatan() {
                         </Form.Group> */}
                        
                         <Row className='pt-2'>
-                            <Col md={nama_fasilitas ? 6 : 12}>
+                            <Col md={6}>
                                 <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
                                 <Form.Select name="nama_fasilitas" value={selectedFasilitas} onChange={(e)=> filterFasilitas(e.target.value)}>
                                     <option value="">-</option>
@@ -326,7 +372,7 @@ export default function Catatan() {
                                     ))}
                                 </Form.Select>
                             </Col>
-                           {showJenisRuanganSelect && (
+            
                             <Col md={6}>
                                 <Form.Label id="form-label">Jenis Ruangan</Form.Label>
                                 <Form.Select name="jenis_ruangan" value={selectedRuangan} onChange={(e)=> handleRuanganChange(e.target.value)}>
@@ -335,15 +381,11 @@ export default function Catatan() {
                                         <option value={item}>{item}</option>
                                     ))}
                                 </Form.Select>
-                            </Col>
-                           )}
-
-
-                            
+                            </Col>  
                         </Row>
                         <Row>
-                            {showLantaiSelect && (
-                                    <Col md={lantai ? 6 : 12}>
+                       
+                                    <Col md={6}>
                                         <Form.Label id="form-label">Lantai</Form.Label>
                                         <Form.Select name="lantai" value={selectedLantai} onChange={(e)=> handleLantaiChange(e.target.value)}>
                                             <option value="">-</option>
@@ -352,8 +394,8 @@ export default function Catatan() {
                                             ))}
                                         </Form.Select>
                                     </Col>
-                                )}
-                                {showBedSelect && (
+                      
+                     
                                     <Col md={6}>
                                         <Form.Label id="form-label">Bed</Form.Label>
                                         <Form.Select name="no_bed" value={inputBed} onChange={(e) => setInputBed(e.target.value)}>
@@ -363,7 +405,6 @@ export default function Catatan() {
                                             ))}
                                         </Form.Select>
                                     </Col>
-                                )}
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
@@ -381,6 +422,23 @@ export default function Catatan() {
                     </Modal.Footer>
 
                 </Form>
+            </Modal>
+
+            {/* Alert Selesai */}
+
+            <Modal
+                show={showAlertSelesai} onHide={handleClose} centered>
+                <Modal.Body>
+                    <p>Pasien akan dinyatakan selesai di rawat inap.</p>
+
+                    <ConfirmModal 
+                        onConfirm={getSembuh}
+                        successMessage={"Berhasil"}
+                        cancelMessage= {"Gagal"}
+                        buttonText={"Selesai"}       
+                    />
+                   
+                </Modal.Body>
 
             </Modal>
 

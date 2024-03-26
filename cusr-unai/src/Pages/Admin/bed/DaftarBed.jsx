@@ -264,6 +264,17 @@ export default function DaftarBed() {
         }
     };
 
+    const handleNewFasilitasChange = (e) => {
+        const selectedFasilitas = e.target.value;
+        setNewFasilitas(selectedFasilitas);
+        // Kosongkan nilai lantai, no_bed, dan jenis_ruangan saat edit
+        if (isEditing) {
+            setNewLantai("");
+            setNewBed("");
+            setNewRuangan("");
+        }
+    };
+
     
     
 
@@ -411,15 +422,34 @@ export default function DaftarBed() {
                         <Form onSubmit={addBed}>
                             <Modal.Body>
                                 <Row className="pt-1">
-                                    <Col>
+                                    <Col md={8}>
                                         <Form.Group>
-                                            <Form.Label id="form-label">No Kamar</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="e.g. 205"
-                                                value={newBed}
-                                                onChange={(e) => setNewBed(e.target.value)}
-                                            />
+                                            <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
+                                            {showDropdownFacility && (
+                                                <Form.Select
+                                                    value={newFasilitas}
+                                                    onChange={(e) => handleNewFasilitasChange(e, 'nama_fasilitas')}
+                                                >
+                                                <option 
+                                                    value="">-</option>
+                                                {nama_fasilitas.map(item=>(
+                                                    <option value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
+                                                ))}
+                                                </Form.Select>
+                                            )}
+
+                                            <div>
+                                                {showOtherFacility && (
+                                                    <Form.Control
+                                                        type="text"
+                                                        placeholder="e.g. Fasilitas Lain"
+                                                        value={newFasilitas}
+                                                        onChange={(e) => setNewFasilitas(e.target.value)}
+                                                        />
+                                                )}
+                                                <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'nama_fasilitas')}/>
+                                                <Form.Label className="px-2" id="form-label">Fasilitas lainnya</Form.Label>
+                                            </div>
                                         </Form.Group>
                                     </Col>
                                     <Col>
@@ -456,36 +486,6 @@ export default function DaftarBed() {
                                 </Row>
                                 <Row className="pt-1">
                                     <Col md={8}>
-                                        <Form.Group>
-                                            <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
-                                            {showDropdownFacility && (
-                                                <Form.Select
-                                                    value={newFasilitas}
-                                                    onChange={(e) => setNewFasilitas(e.target.value)}
-                                                >
-                                                <option 
-                                                    value="">-</option>
-                                                {nama_fasilitas.map(item=>(
-                                                    <option value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
-                                                ))}
-                                                </Form.Select>
-                                            )}
-
-                                            <div>
-                                                {showOtherFacility && (
-                                                    <Form.Control
-                                                        type="text"
-                                                        placeholder="e.g. Fasilitas Lain"
-                                                        value={newFasilitas}
-                                                        onChange={(e) => setNewFasilitas(e.target.value)}
-                                                        />
-                                                )}
-                                                <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'nama_fasilitas')}/>
-                                                <Form.Label className="px-2" id="form-label">Fasilitas lainnya</Form.Label>
-                                            </div>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md={4}>
                                         <Form.Label id="form-label">Jenis Ruangan</Form.Label>
                                         {showDropdownRuangan && (
                                             <Form.Select
@@ -511,6 +511,17 @@ export default function DaftarBed() {
                                             <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'jenis_ruangan')}/>
                                             <Form.Label className="px-2" id="form-label">Ruangan lainnya</Form.Label>
                                         </div>
+                                    </Col>
+                                    <Col md={4}>
+                                        <Form.Group>
+                                            <Form.Label id="form-label">No Kamar</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="e.g. 205"
+                                                value={newBed}
+                                                onChange={(e) => setNewBed(e.target.value)}
+                                            />
+                                        </Form.Group>
                                         
 
                                         {/* <Dropdown
