@@ -183,8 +183,15 @@ div.bordered-form.row {
 }
 
 
-.sidebar {
+.sidebar_full{
+    width: 100%;
+}
+
+.sidebar_small {
     width: 17rem;
+}
+
+.sidebar {
     background-color:#ffffff;
     height: 100vh;
     margin-top: 5rem;
@@ -281,7 +288,7 @@ div.bordered-form.row {
 }
 
 .sidebar-false{
-    margin-left: -17rem;
+    margin-left: -20rem;
 }
 
 .content-true {
