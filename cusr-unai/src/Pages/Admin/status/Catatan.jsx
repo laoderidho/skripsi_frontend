@@ -13,13 +13,14 @@ export default function Catatan() {
     const [bed, setBed] = useState([]);
     const [pasien, setPasien] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [triase, setTriase] = useState('');
+    // const [triase, setTriase] = useState('');
     const [nama_fasilitas, setNamaFasilitas] = useState([]);
     const [lantai, setLantai] = useState([]);
     const [no_bed, setNoBed] = useState([]);
     const [jenis_ruangan, setJenisRuangan] = useState([]);
     const [inputBed, setInputBed] = useState(null);
     const [boxes, setBoxes] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
 
     const [tanggalRawat, setTanggalRawat] = useState([]);
     const [showTanggal, setShowTanggal] = useState(false);
@@ -131,14 +132,46 @@ export default function Catatan() {
     const submitForm = async (token) => {
         try {
             await axios.post(`/admin/pasien/rawat-inap/${id}`, {
-                triase: triase,
                 no_bed: inputBed
             },
             {
-                header: { Authorization: `Bearer ${token}` },
+                headers: { Authorization: `Bearer ${token}` },
             });
             setShowModal(false);
             getDate();
+        } catch (error) {
+
+        }
+    }
+
+    const sembuh = async (token) => {
+        try {
+            const res = await axios.post(`/admin/rawat-inap/recover/${id}`, {
+                headers: { Authorization: `Bearer ${token}`}
+            });
+            
+        } catch (error) {
+            
+        }
+    }
+
+    const editClick = (triase, inputBed) => {
+        setInputBed(inputBed);
+        setIsEditing(true);
+        setShowModal(true);
+        
+    }
+
+    const editForm = async (token) => {
+        try {
+            await axios.post(`/admin/rawat-inap/update/${id}`, {
+                no_bed: inputBed
+            },
+            {
+                headers: { Authorization: `Bearer ${token}`}
+            });
+            setShowModal(false);
+
         } catch (error) {
 
         }
@@ -201,22 +234,25 @@ export default function Catatan() {
                                                         <Col>
                                                             <Row>
                                                                 <span>Jam Masuk: {item.jam_masuk}</span>
-                                                                <span>Jam Keluar: -</span>
+                                                                <span>Jam Keluar: {item.jam_keluar}</span>
                                                             </Row>
                                                         </Col>
                                                         <Col>
                                                             <span id='form-label' style={{color:'#4e95e0'}}>Status: Ongoing</span>
                                                             <br/>
-                                                            <span id="form-label">Triase: {item.triase}</span> 
+                                                           
                                                         </Col>
                                                    </Row>
-                                                   <Row>
-                                                        <Col xs={2}>
-                                                            <Button>Edit</Button>
+                                                   <Row className='mt-4'>
+                                                        <Col xs={1}>
+                                                            <Link
+                                                                className='btn catatan-button'
+                                                                onClick={() => editClick(inputBed)}
+                                                            >Edit</Link>
                                                         </Col>
-                                                        <Col>
+                                                        {/* <Col>
                                                             <Button>Edit</Button>
-                                                        </Col>
+                                                        </Col> */}
 
                                                    </Row>
                                                 </Row>
@@ -269,7 +305,7 @@ export default function Catatan() {
                 </Modal.Header>
                 <Form onSubmit={submitForm}>
                     <Modal.Body>
-                        <Form.Group>
+                        {/* <Form.Group>
                             <Form.Label id="form-label">Triase</Form.Label>
                             <Form.Select name="triase" value={triase} onChange={(e)=> setTriase(e.target.value)}>
                                 <option value="">-</option>
@@ -278,9 +314,9 @@ export default function Catatan() {
                                 <option value="merah">Merah</option>
                                 <option value="hitam">Hitam</option>
                             </Form.Select>
-                        </Form.Group>
+                        </Form.Group> */}
                        
-                        <Row className='pt-3'>
+                        <Row className='pt-2'>
                             <Col md={nama_fasilitas ? 6 : 12}>
                                 <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
                                 <Form.Select name="nama_fasilitas" value={selectedFasilitas} onChange={(e)=> filterFasilitas(e.target.value)}>
@@ -337,10 +373,10 @@ export default function Catatan() {
                                 Cancel
                             </Button>
                             <ConfirmModal 
-                                onConfirm={submitForm }
-                                successMessage={"Data berhasil ditambahkan"}
-                                cancelMessage= {"Data gagal ditambahkan"}
-                                buttonText={"Simpan"}       
+                                onConfirm={isEditing? editForm : submitForm}
+                                successMessage={isEditing ? "Data berhasil diubah" : "Data berhasil ditambahkan"}
+                                cancelMessage= {isEditing? "Data gagal diubah" : "Data gagal ditambahkan"}
+                                buttonText={isEditing ? "Edit" : "Simpan"}       
                             />
                     </Modal.Footer>
 

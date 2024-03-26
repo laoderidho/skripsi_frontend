@@ -187,7 +187,7 @@ export default function DaftarBed() {
     const getData = async (token) => {
         try {
             await axios.post(`/admin/bed`, {
-                headers: { Authorization : `Bearer $(token)` },
+                headers: { Authorization : `Bearer $(token)` }
             })
             .then((res) => {
                 console.log(res)
