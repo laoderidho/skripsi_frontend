@@ -56,7 +56,7 @@ import DetailAskepDiagnosa from "../Pages/Perawat/form-ski/Diagnosa/DetailAskepD
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
 import AddDiagnostik from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
-
+import Askep from "../components/pdf/Askep";
 
 export default function Router() {
   return (
@@ -67,6 +67,9 @@ export default function Router() {
           <Route path="/" element={<Login />} />
 
           {/* ==== ADMIN ROUTE ==== */}
+
+          {/* pdf Route */}
+          <Route path="/pdf" element={<Askep />} />
 
           {/* Admin | Daftar Pasien */}
           <Route path="/admin/daftarpasien" element={<DaftarPasien />} />

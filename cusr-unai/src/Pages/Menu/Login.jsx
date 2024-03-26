@@ -19,6 +19,9 @@ export default function Login() {
     if (localStorage.getItem("token")) {
       return localStorage.removeItem("token");
     }
+    if(sessionStorage.getItem("sidebarStatus")){
+      return sessionStorage.removeItem("sidebarStatus")
+    }
   }, []);
 
   const loginForm = async (e) => {
