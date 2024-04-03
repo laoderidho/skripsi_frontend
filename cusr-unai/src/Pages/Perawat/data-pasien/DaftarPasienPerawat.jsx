@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Sidebar from "../../../components/menu/Sidebar";
-import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
+import { Form, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
@@ -8,6 +8,7 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import { Toolbar } from 'primereact/toolbar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { ScrollPanel } from 'primereact/scrollpanel';
 
 export default function DaftarPasien() {
 
@@ -75,19 +76,75 @@ export default function DaftarPasien() {
         }
     }
   return (
-    <Sidebar>
+    <Sidebar
+      title='DAFTAR PASIEN'>
       {/* Title */}
       <div className="container">
         <h2>Daftar Pasien</h2>
       </div>
 
       <div className="container mt-5">
-        <Toolbar
-          end={endContent}
-          >
-        </Toolbar>
 
-        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}    stripedRows show showGridlines className="mt-3">
+        <input
+            className="form-control"
+            id="form-width"
+            type="text"
+            placeholder="Search"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+
+          <Container className="table-box-layout">
+            <span id="form-label">
+              Nama
+            </span>
+          </Container>
+
+          <div className="pt-3">
+            {inputValue ? filterPasien.map((item, index) => (
+              <>
+                <div className="table-body pt-3">
+                    <Row key={index}>
+                      <Col xs={8}>
+                        <p>{item.nama_lengkap}</p>
+                      </Col>
+                      <Col>
+                        <p>
+                          <Link to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
+                            className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
+                        </p>
+                      </Col>
+                  </Row>
+                </div>
+                <hr className="hr-custom"/>
+              </>
+              
+            )) : pasien.map((item, index) => (
+              <>
+                <div className="table-body pt-3">
+                    <Row key={index}>
+                      <Col xs={8}>
+                        <p>{item.nama_lengkap}</p>
+                      </Col>
+                      <Col>
+                        <p>
+                          <Link to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
+                            className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
+                        </p>
+                      </Col>
+                  </Row>
+                </div>
+               <hr className="hr-custom"/>
+              </>
+            ))}
+          </div>
+      </div>
+
+      <div className="container">
+        
+      </div>
+
+      {/* <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}    stripedRows show showGridlines className="mt-3">
           <Column field="nama_lengkap" header='Nama'/>
           <Column 
             header=''
@@ -96,20 +153,9 @@ export default function DaftarPasien() {
                 to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
                 className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
             )}/>
-        </DataTable>
-      </div>
+        </DataTable> */}
 
-      <Form className="container">
-        <div className="search-container">
-
-          {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
-                        Tambah
-                    </Link> */}
-
-        </div>
-
-        
-      </Form>
+      
     </Sidebar>
   );
 }

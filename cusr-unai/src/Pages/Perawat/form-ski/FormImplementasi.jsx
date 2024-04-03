@@ -8,8 +8,11 @@ import SeeModalData from "../../../components/perawat/askep/SeeModalData";
 
 export default function FormImplementasi() {
   const [nama_intervensi, setNamaIntervensi] = useState("");
+
   const [tindakan, setTindakan] = useState([]);
+
   const [checked, setChecked] = useState(false);
+  const [implementasi, setImplementasi] = useState([]);
 
   const [checkedTindakan, setCheckedTindakan] = useState([]);
 
@@ -51,6 +54,7 @@ export default function FormImplementasi() {
     return tindakan;
   };
 
+
   const [checkedItems, setCheckedItems] = useState({});
 
   // Fungsi untuk menangani perubahan status pencentangan pada checkbox
@@ -62,14 +66,33 @@ export default function FormImplementasi() {
     }));
   };
 
-  useEffect(() => {
-    console.log(joinTindakan());
-  }, [checkedItems]);
+
+  const changeData = (data)=>{
+     const parseData = data.join()
+
+    return parseData
+  }
 
   const addImplementasi = async () => {
     try {
-    } catch (err) {}
-  };
+      await axios.post(`/perawat/implementasi/list`, 
+      {
+        tindakan_implementasi: changeData(joinTindakan()),
+      },
+      {
+        headers: { Authorization: `Bearer ${token}`}
+      });
+
+      navigate(-1);
+    } catch (error) {
+      
+    }
+  }
+
+
+  useEffect(() => {
+    joinTindakan()
+  }, [checkedItems]);
 
   const handleModal = (data, allData, nameObj, func)=>{
     if(data == null || data.length == 0){
@@ -92,7 +115,8 @@ export default function FormImplementasi() {
   }
 
   return (
-    <Sidebar>
+    <Sidebar
+    title="FORM IMPLEMENTASI">
       {modalValidationForm && (
         <SeeModalData
           open={modalValidationForm}
@@ -113,20 +137,24 @@ export default function FormImplementasi() {
         <Form className="container">
           <h6>Tindakan</h6>
 
-          {tindakan.map((item, index) => (
+          
+
+          {tindakan.map((item, index)=>(
             <Form.Group key={index}>
-              <Form.Check
-                type="checkbox"
-                label={item.nama_implementasi}
-                checked={checkedItems[item.id] || false}
-                onChange={(e) => handleCheckboxChange(e, item.id)}
-              />
-            </Form.Group>
+                <Form.Check
+                  type="checkbox"
+                  label={item.nama_implementasi}
+                  checked={checkedItems[item.id] || false}
+                  onChange={(e) => handleCheckboxChange(e, item.id)}
+                />
+              </Form.Group>
           ))}
+
+
 
           <div className="d-flex mt-4 justify-content-end">
             <ConfirmModal
-              onConfirm={getDataById}
+              onConfirm={addImplementasi}
               successMessage={"Data berhasil di simpan"}
               cancelMessage={"Data gagal di simpan"}
               buttonText={"Simpan"}

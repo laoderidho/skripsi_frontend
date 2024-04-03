@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import axios from '../../axios'
 import AuthorizationRoute from '../../AuthorizationRoute'
 import Sidebar from '../../components/menu/Sidebar'
+import { Container } from 'react-bootstrap'
+
 
 export default function PerawatDashboard() {
 
@@ -30,13 +32,26 @@ export default function PerawatDashboard() {
             setHello(res.data)
             console.log(res.data)
         } catch (error) {
-            AuthorizationRoute(error.response.status)
+        
         }
     }
 
   return (
-    <Sidebar>
+    <Sidebar
+        title='DASHBOARD'>
 
+        <div className='container pt-3'>
+            <Container className='dashboard-box'>
+                
+            </Container>
+        </div>
+
+        <div className='container pt-3'>
+            <span id='form-label'>Selesaikan rekam medis:</span>
+            <Container className='dashboard-box-layout'>
+
+            </Container>
+        </div>
     </Sidebar>
   )
 }

@@ -1,152 +1,101 @@
-import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Image} from '@react-pdf/renderer';
-import axios from 'axios';
-import LogoUnai from './LogoUnai.png'
+import React, {useState, useEffect} from 'react';
+import LogoUnai from './LogoUnai.png';
+import LogoUnaiSVG from './LogoUnaiSVG.svg';
+import { Row, Col } from 'react-bootstrap';
+import { Link, useParams } from 'react-router-dom';
+import axios from '../../axios';
 
-const styles = StyleSheet.create({
-  body: {
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-    paddingTop: 35,
-    paddingBottom: 65,
-    paddingHorizontal: 35,
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center'
-  },
-  text: {
-    margin: 12,
-    fontSize: 14,
-    textAlign: 'justify',
-  },
-  additionalText: {
-    paddingTop: 17,
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  judulAskep: {
-    paddingTop: 17,
-    fontSize: 20,
-    textAlign: 'center',
-  },
-  image: {
-    marginVertical: 15,
-    marginHorizontal: 15,
-    width: 10,
-    height: 10
-  },
-  div: {
-    flexDirection: 'row', // Arrange items horizontally
-    justifyContent: 'space-between', // Distribute items along the main axis
-    padding: 10,
-  },
-  column: {
-    width: '45%', // Adjust width to leave some space for margins
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: '#000'
-  },
-  row: {
-    flexDirection: 'row', // Arrange items horizontally
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10, // Adjust as needed for spacing between rows
-    height: '20%'
+export default function Askep() {
+
+  const {id, name} = useParams();
+  const token = localStorage.getItem('token');
+
+  const [pasien, setPasien] = useState([])
+
+  const getAskep = async () => {
+    try {
+      const res = await axios.post(`/perawat/laporan/askep/${id}`, {
+        headers: { Authorization: `Bearer ${token}`}
+      });
     
-  },
-  container: {
-    flex: 1,
-    width: '100%',
-  },
-  
-  
-});
+      setPasien(res.data.pasien)
+    } catch (error) {
+    }
+  }
 
-const Askep = () => (
-  <Document>
-    <Page style={styles.body}>
 
-      <Image style={styles.image} src={LogoUnai} />
+  useEffect(()=>{
+    getAskep()
+  },[])
 
-      <Text style={styles.title}>
-        {/* Judul */}
-        KLINIK UNIVERSITAS ADVENT INDONESIA
-        <br/>
-        <Text style={styles.additionalText}>Jl. Kolonel Masturi No. 288 Parompong-Bandung Barat</Text>
-        <br />
-        <Text style={styles.judulAskep}>CATATAN ASUHAN KEPERAWATAN (ASKEP)</Text>
-        <br/>
-        <View style={styles.div}>
+  return (
+    <div className='container'>
+      <div className='header-pdf'>
+        <div className='container-pdf'>
+          <img className='logo-pdf' src={LogoUnai} alt='Logo Unai' />
+          <div className='title-pdf'>
+            <h3>KLINIK UNIVERSITAS ADVENT INDONESIA</h3>
+            <h6 style={{fontWeight:'400'}}>Jl. Kolonel Masturi No. 288 Parompong-Bandung Barat</h6>
+            <p style={{fontSize:'20px'}}>CATATAN ASUHAN KEPERAWATAN (ASKEP)</p>
+          </div>
+        </div>
+      </div>
 
-            {/* Tanggal/Jam */}
-            <View style={styles.row}>
-              <View style={styles.column}>
-                <Text style={styles.text}>Tanggal/Jam</Text>
-              </View>
-            </View>
-            {/* Dx Keperawatan */}
-            <View style={styles.column}>
-              <Text style={styles.text}>Dx Keperawatan</Text>
-            </View>
-            {/* Intervensi */}
-            <View style={styles.column}>
-              <Text style={styles.text}>Intervensi</Text>
-            </View>
-            {/* Implemenetasi */}
-            <View style={styles.column}>
-              <Text style={styles.text}>Implementasi</Text>
-            </View>
-            {/* Luaran */}
-            <View style={styles.column}>
-              <Text style={styles.text}>Luaran</Text>
-            </View>
-             {/* Evaluasi */}
-             <View style={styles.column}>
-              <Text style={styles.text}>Evaluasi</Text>
-            </View>
-            <br/>
-            <View style={styles.container}>
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <Text style={styles.text}>Tanggal/Jam</Text>
-                </View>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <Text style={styles.text}>Dx Keperawatan</Text>
-                </View>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <Text style={styles.text}>Intervensi</Text>
-                </View>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <Text style={styles.text}>Implementasi</Text>
-                </View>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <Text style={styles.text}>Luaran</Text>
-                </View>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.column}>
-                  <Text style={styles.text}>Evaluasi</Text>
-                </View>
-              </View>
-            </View>
-          </View>
-      </Text>
+      <div>
+        <div className='container-svg'>
+          <img className='watermark-pdf' src={LogoUnaiSVG}/>
+        </div>
 
-     
-
-      
-    </Page>
-  </Document>
-);
-
-export default Askep;
+        <div className='table-pdf'>
+          {pasien.map(item => 
+              <Row>
+              <Col xs={10}>Nama: {item.nama_lengkap}</Col>
+              <Col xs={2}>Bed: {item.no_bed}</Col>
+            </Row>
+            )}
+        </div>
+        <table id="table-pdf">
+          <thead>
+            <tr>
+              <th id="tanggal-pdf">Tanggal/Jam</th>
+              <th id="askep-pdf">Dx Keperawatan</th>
+              <th id="askep-pdf">Intervensi</th>
+              <th id="askep-pdf">Implementasi</th>
+              <th id="askep-pdf">Luaran</th>
+              <th id="askep-pdf">Evaluasi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Shift Pagi */}
+            <tr>
+              <td id="pdf-td">19/04/24/ - 07.00</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            {/* Shift Siang */}
+            <tr>
+              <td id="pdf-td">19/04/24 - 13.00</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            {/* Shift Malam */}
+            <tr>
+              <td id="pdf-td">19/04/24 - 21.00</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

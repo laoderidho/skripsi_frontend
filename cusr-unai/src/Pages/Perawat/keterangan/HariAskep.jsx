@@ -55,7 +55,8 @@ const HariAskep = () => {
   }, []);
 
   return (
-    <Sidebar>
+    <Sidebar
+      title='DAFTAR ASKEP'>
       <div className="container">
         <h2>Daftar ASKEP</h2>
       </div>

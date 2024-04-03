@@ -55,7 +55,8 @@ export default function ProfilPasien() {
   }, []);
 
   return (
-    <Sidebar>
+    <Sidebar
+      title='PROFIL'>
       {/* Title */}
       <div className="container">
         <h2>Profil Pasien</h2>
@@ -73,8 +74,18 @@ export default function ProfilPasien() {
 
         <div className="default">
           {/* Nama Lengkap */}
-          <b className="hr-style">Nama Lengkap</b>
-          <p className="mt-2">{nama_lengkap}</p>
+          
+          <div className="content-profile">
+            <span>Nama Lengkap</span>
+            <span>{nama_lengkap}</span>
+          </div>
+          <hr className="hr-custom"></hr>
+
+          <div className="content-profile mt-3">
+            <span>Tanggal Lahir</span>
+            <span>{tanggal_lahir}</span>
+          </div>
+          <hr className="hr-custom"></hr>
 
           {/* Tanggal Lahir */}
           <b className="hr-style">Tanggal Lahir</b>

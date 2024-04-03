@@ -8,6 +8,7 @@ import { Divider } from 'primereact/divider';
 import "primereact/resources/themes/saga-blue/theme.css";
 import axios from '../../../axios'
 import { Skeleton } from 'primereact/skeleton';
+import ConfirmModal from '../../../components/menu/ConfirmModal'
 
 const DetailPerawat = () => {
 
@@ -309,60 +310,52 @@ const DetailPerawat = () => {
             </Row>
         </div>
 
-        <div className='d-flex justify-content-end mt-3'>
-            {!isEditing ? (
-              <Button
-                onClick={() => setIsEditing(true)}
-                id="custom-margin"
-                variant='primary'  
-                className='btn justify-content-center align-items-center white-button'>
-                  Edit
-              </Button>
-            ) : 
-            (
-              <input
-                 type="submit"
-                 id="custom-margin"
-                 variant='primary' 
-                 className='btn justify-content-center align-items-center blue-button'
-                 />
+        <Form className="container mt-5" onSubmit={submitForm}>
+            <div className="d-flex justify-content-end mt-3">
+              {!isEditing ? (
              
-            )
-            }
+                <Button
+                  onClick={() => setIsEditing(true)}
+                  id="custom-margin"
+                  className="btn edit-button"
+                >
+                  Edit
+                </Button>
+  
+              ) : (
 
-            <Button
-              onClick={() => setShowModal(true)}
-              variant='primary'
-              type="button"
-              className='btn justify-content-center align-items-center red-button'>
+              <> 
+                <Button
+                  id="custom-margin"
+                  className="btn edit-button"
+                  onClick={() => setIsEditing(false)}  
+                >
+                  Cancel
+                </Button>
+
+                <ConfirmModal
+                  onConfirm={submitForm}
+                  successMessage={"Data Pasien berhasil diubah"}
+                  cancelMessage={"Data Pasien gagal diubah"}
+                  buttonText={"Simpan"}
+                  to={`/admin/daftarperawat/${id}`}
+                />
+
+              </>  
+              )}
+
+              {!isEditing && (
+                <Button
+                onClick={() => setShowModal(true)}
+                className='btn delete-button'
+                type="button"
+              >
                 Delete
-            </Button>
-            
-            <Modal
-              show={showModal}
-              onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Konfirmasi</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  Apakah Anda yakin ingin menghapus data ini?
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button 
-                    variant='secondary'
-                    onClick={() => setShowModal(false)}
-                    className='btn justify-content-center align-items-center white-button'>
-                      Batal
-                  </Button>
-                  <Button 
-                    variant='primary'
-                    onClick={deletePerawat}
-                    className='btn justify-content-center align-items-center red-button'>
-                      Hapus
-                  </Button>
-                </Modal.Footer>
-            </Modal>
-          </div>
+              </Button>
+              )}
+
+            </div>
+          </Form>
         
       </Form>
     </Sidebar>

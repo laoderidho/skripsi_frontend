@@ -263,7 +263,8 @@ export default function FormEvaluasi() {
   }, [evaluasiLuaran]);
 
   return (
-    <Sidebar>
+    <Sidebar
+    title="FORM EVALUASI">
       {modalValidationForm && (
         <SeeModalData
           open={modalValidationForm}

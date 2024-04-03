@@ -150,7 +150,8 @@ export default function FormIntervensi() {
   }
 
   return (
-    <Sidebar>
+    <Sidebar 
+      title="FORM INTERVENSI">
       {modalValidationForm && (
         <SeeModalData
           open={modalValidationForm}

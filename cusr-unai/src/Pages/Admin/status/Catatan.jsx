@@ -25,7 +25,6 @@ export default function Catatan() {
 
     const [tanggalRawat, setTanggalRawat] = useState([]);
     const [showTanggal, setShowTanggal] = useState(false);
-    const [status, setStatus] = useState('Ongoing')
 
    
 
@@ -171,7 +170,7 @@ export default function Catatan() {
                 headers: { Authorization: `Bearer ${token}`}
             });
             setShowAlertSelesai(false);
-            setStatus('Selesai');
+            await  getDate(token);
             
         } catch (error) {
 
@@ -273,23 +272,23 @@ export default function Catatan() {
                                                         <Col>
                                                             <Row>
                                                                 <span>Tanggal Masuk: {item.tanggal_masuk}</span>
-                                                                {status === 'Selesai' ? <span>Tanggal Keluar: {item.tanggal_keluar}</span> : <span>Tanggal Keluar: -</span>}
+                                                                {item.status === 'sembuh' ? <span>Tanggal Keluar: {item.tanggal_keluar}</span> : <span>Tanggal Keluar: -</span>}
                                                             </Row>
                                                         </Col>
                                                         <Col>
                                                             <Row>
                                                                 <span>Jam Masuk: {item.jam_masuk}</span>
-                                                                {status === 'Selesai' ? <span>Jam Keluar: {item.jam_keluar}</span> : <span>Jam Keluar: -</span>}
+                                                                {item.status === 'sembuh' ? <span>Jam Keluar: {item.jam_keluar}</span> : <span>Jam Keluar: -</span>}
                                                             </Row>
                                                         </Col>
                                                         <Col>
-                                                            <span id='form-label' style={{ color: status === 'Selesai' ? '#212529' : '#4e95e0' }}>Status: {status}</span>
+                                                            <span id='form-label' style={{ color: item.status === 'sembuh' ? '#212529' : '#4e95e0' }}>Status: {item.status === 'sembuh' ? "Selesai" : "Ongoing"}</span>
                                                             <br/>
                                                            
                                                         </Col>
                                                    </Row>
                                                    <Row className='mt-4 gap-custom'>
-                                                   {!status === 'Selesai' && (
+                                                   {item.status !== 'sembuh' && (
                                                         <>
                                                             <Col xs={1}>
                                                                 <Button

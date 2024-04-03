@@ -56,9 +56,9 @@ export default function Login() {
         textModal={error}
       />
       <div className="card-login bg-white rounded">
-        <div className="image-logo container pt-5 pb-3 d-flex justify-content-evenly">
+        <div className="image-logo container d-flex justify-content-evenly">
           <img src="./assets/img/logo.svg" alt="tes" className="w-40" />
-          <strong className="pt-2">Klinik Universitas Advent Indonesia</strong>
+          <p className="pt-3">Klinik Universitas Advent Indonesia</p>
         </div>
         <Form className="container" onSubmit={loginForm}>
           <Form.Group>

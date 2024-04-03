@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Sidebar from '../../../components/menu/Sidebar'
 import { Breadcrumb, Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import ConfirmModal from '../../../components/menu/ConfirmModal'
 import AuthorizationRoute from '../../../AuthorizationRoute'
 import axios from '../../../axios'
 
@@ -18,6 +19,7 @@ const AddPerawat = () => {
   const [photo, setPhoto] = useState("");
   const [shift, setShift] = useState("");
   const navigate = useNavigate();
+  const {id} = useParams();
   const token=localStorage.getItem("token");
   const [showPassword, setShowPassword] = useState(false);
   
@@ -29,8 +31,7 @@ const AddPerawat = () => {
     setShowPassword(!showPassword);
   };
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  const submitForm = async () => {
     try {
       const res = await axios.post(`admin/users/tambah`, {
         nama_lengkap: nama_lengkap,
@@ -182,7 +183,7 @@ const AddPerawat = () => {
               </Form.Select>
             </Form.Group> */}
 
-            <Form.Group className="mb-3">
+            {/* <Form.Group className="mb-3">
               <Form.Label>Photo</Form.Label>
               <Form.Control 
                 id="form-control-input"
@@ -192,7 +193,7 @@ const AddPerawat = () => {
                 placeholder="Pilih Photo"
                 onChange={handlePhotoChange}
                 />
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group className="mb-3">
               <Form.Label>Shift</Form.Label>
@@ -250,10 +251,13 @@ const AddPerawat = () => {
         </div>
 
         <div className='d-flex justify-content-end mt-3'>
-          <Button 
-            variant='primary' 
-            type="submit" 
-            className='btn justify-content-center align-items-center blue-button'>Simpan</Button>
+            <ConfirmModal
+                  onConfirm={submitForm}
+                  successMessage={"Data Perawat berhasil ditambah"}
+                  cancelMessage={"Data Perawat gagal ditambah"}
+                  buttonText={"Simpan"}
+                  to={`/admin/daftarperawat/${id}`}
+                />
         </div>
       </Form>
     </Sidebar>

@@ -63,10 +63,9 @@ export default function DaftarPasienLaporan() {
                     
             </div>
 
-            <Table className="table table-striped table-hover">
+            <table className="bordered" id='border'>
                 <thead>
-                    <tr>
-                     
+                    <tr className="table-head">
                         <th>Nama</th>
                         <th className="button-space"></th>
                     </tr>
@@ -77,7 +76,7 @@ export default function DaftarPasienLaporan() {
                         <td>{item.nama_lengkap}</td>
                         <td>
                             <Link 
-                                to={`/admin/daftarpasien/${item.id}`}
+                                to={`/perawat/laporan/${item.id}/${item.nama_lengkap}`}
                                 class="d-flex justify-content-center align-items-center">
                                 Lihat Laporan
                             </Link>
@@ -85,7 +84,7 @@ export default function DaftarPasienLaporan() {
                     </tr>
                     ))}
                 </tbody>
-            </Table>
+            </table>
         </Form>
       </Sidebar>
       

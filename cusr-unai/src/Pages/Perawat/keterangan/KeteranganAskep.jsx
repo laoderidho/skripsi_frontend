@@ -19,14 +19,14 @@ const KeteranganAskep = () => {
   const {id, tanggal, shift} = useParams();
   const navigate =  useNavigate();
   const token = localStorage.getItem("token");
-
   const [keteranganData, setKeteranganData] = useState([]);
   const [listAskep, setListAskep] = useState([]);
+
 
   
   const getListAskep = async () => {
 
-     const convertDate = ` '${tanggal}' `
+     const convertDate = `'${tanggal}' `
     try{
       const response = await axios.post(`/perawat/list-askep/${id}/${shift}/${convertDate}`, {
         headers: {
@@ -40,19 +40,7 @@ const KeteranganAskep = () => {
     }
   };
 
-  // const getDateDiagnose = async () =>{
-  //   try {
-  //     const response = await axios.post(`/perawat/diagnosa/getdate/${id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     setDiagnosa(response.data);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  
 
   useEffect(() => {
     // getDateDiagnose();
@@ -82,119 +70,125 @@ const KeteranganAskep = () => {
   }
 
   return (
-    <Sidebar>
+    <Sidebar
+      title="ASKEP">
       <div className="container">
         <h2>Askep</h2>
       </div>
 
       <div className="container">
-        <Link
-          to={`/perawat/askep/form-diagnosa/${id}`}
-          className="btn d-flex justify-content-center align-items-center diagnosa-button"
-        >
-          Tambah Diagnosa
-        </Link>
-
+        
+        <div>
+          <Link
+            to={`/perawat/askep/form-diagnosa/${id}`}
+            className="btn d-flex justify-content-center align-items-center diagnosa-button"
+          >
+            Tambah Diagnosa
+          </Link>
+        </div>
         {listAskep &&
           listAskep.map((askep, index) => (
-            <table className="bordered" id="border">
-              <thead className="table-head">
-                <tr>
-                  <th>Keterangan</th>
-                  <th>Tanggal/Jam</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{askep.jam_pemberian_diagnosa ? (
-                    <Link to={`/perawat/askep/diagnosa/${askep.id}`} className='label-askep'>Diagnosa</Link>
-                   ) : ( "Diagnosa" )} </td>
-                  <td>
-                    {askep.tanggal_pemberian_diagnosa}/{askep.jam_pemberian_diagnosa}
-                  </td>
-                </tr>
-                <tr>
-                  <td>{askep.jam_pemberian_intervensi ? (
-                    <Link to={`/perawat/askep/intervensi/${askep.id}`} className='label-askep'>Intervensi</Link>
-                  ) : ( "Intervensi" )}</td>
-                  <td>
-                    {askep.jam_pemberian_intervensi ? (
-                      `${askep.tanggal}/${askep.jam_pemberian_intervensi}`
-                    ) : (
-                      <Link
-                        to={`/perawat/askep/form-intervensi/${askep.id}`}
-                        className="btn btn-primary btn-large"
-                      >
-                        <i class="fa-solid fa-plus"></i> Tambah
-                      </Link>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>{askep.jam_pemberian_implementasi ? (
-                    <Link tp={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
-                  ) : ( "Implementasi" )}</td>
-                  <td>
-                    {askep.jam_pemberian_implementasi ? (
-                      `${askep.tanggal}/${askep.jam_pemberian_implementasi}`
-                    ) : (
-                      <Link
-                        to={`/perawat/askep/form-implementasi/${askep.id}`}
-                        className="btn btn-primary btn-large"
-                        // onClick={(e) => {
-                        //   if (!askep.jam_pemberian_intervensi) {
-                        //     e.preventDefault();
-                        //   }
-                        // }}
-                      >
-                        <i class="fa-solid fa-plus"></i> Tambah
-                      </Link>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>{askep.jam_pemberian_luaran ? (
-                    <Link to={`/perawat/askep/luaran/${askep.id}`} className='label-askep'>Luaran</Link>
-                  ) : ( "Luaran" )}</td>
-                  <td>
-                    {askep.jam_penilaian_luaran ? (
-                      `${askep.tanggal}/${askep.jam_penilaian_luaran}`
-                    ) : (
-                      <Link
-                        to={`/perawat/askep/form-evaluasi/${askep.id}`}
-                        className="btn btn-primary btn-large"
-                        // onClick={(e) => {
-                        //   if (!askep.jam_pemberian_implementasi) {
-                        //     e.preventDefault();
-                        //   }
-                        // }}
-                      >
-                        <i class="fa-solid fa-plus"></i> Tambah
-                      </Link>
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td>{askep.jam_pemberian_luaran ? (
-                    <Link to={`/perawat/askep/evaluasi/${askep.id}`} className='label-askep'>Evaluasi</Link>
-                  ) : ( "Evaluasi" )}</td>
-                  <td>
-                    {askep.jam_pemberian_evaluasi ? (
-                      `${askep.tanggal}/${askep.jam_pemberian_evaluasi}`
-                    ) : (
-                      <Link
-                        to={`/perawat/askep/form-evaluasi/${askep.id}`}
-                        className="btn btn-primary btn-large"
-                      >
-                        <i class="fa-solid fa-plus"></i> Tambah
-                      </Link>
-                    )}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <>
+              <p id='form-label' className='pt-3'>User: {askep.nama_lengkap}</p>
+              <table className="bordered" id="border">
+                <thead className="table-head">
+                  <tr>
+                    <th>Keterangan</th>
+                    <th>Tanggal/Jam</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  {/* Diagnosa */}
+                  <tr>
+                    <td>{askep.jam_pemberian_diagnosa ? (
+                      <Link to={`/perawat/askep/diagnosa/${askep.id}`} className='label-askep'>Diagnosa</Link>
+                    ) : ( "Diagnosa" )} </td>
+                    <td>
+                      {askep.tanggal_pemberian_diagnosa}/{askep.jam_pemberian_diagnosa}
+                    </td>
+                  </tr>
+
+                  {/* Intervensi */}
+                  <tr>
+                    <td>{askep.jam_pemberian_intervensi ? (
+                      <Link to={`/perawat/askep/intervensi/${askep.id}`} className='label-askep'>Intervensi</Link>
+                    ) : ( "Intervensi" )}</td>
+                    <td>
+                      {askep.tanggal_pemberian_intervensi ? (
+                        `${askep.tanggal_pemberian_intervensi}/${askep.jam_pemberian_intervensi}`
+                      ) : ( askep.access == false ? 'Belum Terisi' :
+                        <Link
+                          to={`/perawat/askep/form-intervensi/${askep.id}`}
+                          className="btn btn-primary btn-large"
+                        >
+                          <i class="fa-solid fa-plus"></i> Tambah
+                        </Link>
+                      )}
+                    </td>
+                  </tr>
+
+                  {/* Implementasi */}
+                  <tr>
+                    <td>{askep.jam_pemberian_implementasi ? (
+                      <Link tp={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
+                    ) : ( "Implementasi" )}</td>
+                    <td>
+                      {askep.tanggal_pemberian_implementasi ? (
+                        `${askep.tanggal_pemberian_implementasi}/${askep.jam_pemberian_implementasi}`
+                      ) : ( askep.access == false ? 'Belum Terisi' :
+                        <Link
+                          to={`/perawat/askep/form-implementasi/${askep.id}`}
+                          className="btn btn-primary btn-large"
+                        >
+                          <i class="fa-solid fa-plus"></i> Tambah
+                        </Link>
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>{askep.jam_pemberian_luaran ? (
+                      <Link to={`/perawat/askep/luaran/${askep.id}`} className='label-askep'>Luaran</Link>
+                    ) : ( "Luaran" )}</td>
+                    <td>
+                      {askep.tanggal_penilaian_luaran ? (
+                        `${askep.tanggal_pemberian_luaran}/${askep.jam_pemberian_luaran}`
+                      ) : ( askep.access == false ? 'Belum Terisi' :
+                        <Link
+                          to={`/perawat/askep/form-evaluasi/${askep.id}`}
+                          className="btn btn-primary btn-large"    
+                        >
+                          <i class="fa-solid fa-plus"></i> Tambah
+                        </Link>
+                        
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>{askep.jam_pemberian_evaluasi ? (
+                      <Link to={`/perawat/askep/evaluasi/${askep.id}`} className='label-askep'>Evaluasi</Link>
+                    ) : ( "Evaluasi" )}</td>
+                    <td>
+                      {askep.tanggal_pemberian_evaluasi ? (
+                        `${askep.tanggal_pemberian_evaluasi}/${askep.jam_pemberian_evaluasi}`
+                      ) : ( askep.access == false ? 'Belum Terisi' :
+                        <Link
+                          to={`/perawat/askep/form-evaluasi/${askep.id}`}
+                          className="btn btn-primary btn-large"
+                        >
+                          <i class="fa-solid fa-plus"></i> Tambah
+                        </Link>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
           ))}
 
+        <div>
+
+        </div>
         {/* Render Diagnosa */}
         {diagnosa.map((diag, index) => (
           <div key={diag.id} className="box-panel">

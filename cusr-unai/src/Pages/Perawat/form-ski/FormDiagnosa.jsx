@@ -211,7 +211,8 @@ export default function FormDiagnosa() {
   },[selectedDiagnosa])
 
   return (
-    <Sidebar>
+    <Sidebar
+      title=" FORM DIAGNOSA">
       {modalValidationForm && (
         <SeeModalData
           open={modalValidationForm}

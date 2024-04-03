@@ -52,11 +52,16 @@ import FormEvaluasi from "../Pages/Perawat/form-ski/FormEvaluasi";
 import Keterangan from "../Pages/Perawat/keterangan/Keterangan";
 import FormImplementasi from "../Pages/Perawat/form-ski/FormImplementasi";
 import DetailAskepDiagnosa from "../Pages/Perawat/form-ski/Diagnosa/DetailAskepDiagnosa";
+import DetailAskepIntervensi from "../Pages/Perawat/form-ski/Intervensi/DetailAskepIntervensi";
+import DetailAskepLuaran from "../Pages/Perawat/form-ski/luaran/DetailAskepLuaran";
+import DownloadLaporan from "../Pages/Perawat/laporan/DownloadLaporan";
+
 
 // protected route Function
 import ProtectedRoute from "./ProtectedRoute";
 import AddDiagnostik from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
 import Askep from "../components/pdf/Askep";
+import PDF from "../components/pdf/PDF";
 
 export default function Router() {
   return (
@@ -68,8 +73,7 @@ export default function Router() {
 
           {/* ==== ADMIN ROUTE ==== */}
 
-          {/* pdf Route */}
-          <Route path="/pdf" element={<Askep />} />
+          
 
           {/* Admin | Daftar Pasien */}
           <Route path="/admin/daftarpasien" element={<DaftarPasien />} />
@@ -132,8 +136,13 @@ export default function Router() {
           {/* Form SKI*/}
           <Route path="/perawat/askep/form-diagnosa/:id" element={<FormDiagnosa />} />
           <Route path="/perawat/askep/diagnosa/:id" element={<DetailAskepDiagnosa />} />
+
           <Route path="/perawat/askep/form-intervensi/:id" element={<FormIntervensi />} />
+          <Route path="/perawat/askep/intervensi/:id" element={<DetailAskepIntervensi />} />
+
           <Route path="/perawat/askep/form-implementasi/:id" element={<FormImplementasi />} /> 
+
+          <Route path="/perawat/askep/luaran/:id" element={<DetailAskepLuaran />} />
           <Route path="/perawat/askep/form-evaluasi/:id" element={<FormEvaluasi />} />
 
           {/* Profil Pemeriksaan */}
@@ -144,6 +153,12 @@ export default function Router() {
 
           {/* Laporan */}
           <Route path="/perawat/laporan" element={<DaftarPasienLaporan />} />
+          <Route path="/perawat/laporan/:id/:nama" element={<DownloadLaporan />} />
+
+          {/* PDF */}
+          <Route path="/pdf" element={<Askep />} />
+          <Route path="/perawat/pdf/:id" element={<PDF />} />
+          
 
 
 
