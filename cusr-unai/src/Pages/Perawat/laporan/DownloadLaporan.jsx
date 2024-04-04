@@ -12,32 +12,19 @@ const DownloadLaporan = () => {
   const {id, nama} = useParams();
   const token = localStorage.getItem('token');
 
-  const getAskep = async () => {
-    try {
-      const res = await axios.post(`/perawat/laporan/askep/${id}`,
-      {
-        headers: { Authorization: `Bearer ${token}`},
-      });
-      setNamaLengkap(res.data.name);
-    } catch (error) {
-
-    }
-  }
-
   const getList = async () => {
     try {
-      const res = await axios.post(`/perawat/laporan/datePerawatan/${id}`,
+      const res = await axios.post(`/perawat/laporan/date-perawatan/${id}`,
       {
         headers: { Authorization: `Bearer ${token}`}
       });
-      setGetRow(res.data.data)
+      setGetRow(res.data)
     } catch (error) {
       
     }
   }
 
   useEffect(() => {
-    getAskep();
     getList();
   })
 
@@ -50,22 +37,22 @@ const DownloadLaporan = () => {
               <p>{nama}</p>
             </Form.Group>
 
-            <input className="form-control" type="text" placeholder="Search" />
+            <input className="form-control my-3" type="text" placeholder="Search" />
 
             <table className='bordered' id='border'>
               <thead className='table-head'>
                 <tr>
-                  <th>Nama</th>
+                  <th>Tanggal</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {getRow && getRow.map(item => (
                   <tr>
-                    <td>{item.tanggal_masuk}</td>
+                    <td>{item.tanggal_masuk} - {item.tanggal_keluar ? item.tanggal_keluar : "sekarang" }</td>
                     <td>
                       <Link
-                        to={`/perawat/pdf/${id}`}>
+                        to={`/perawat/pdf/${item.id}`} target='_blank'>
                           Download
                       </Link>
                     </td>

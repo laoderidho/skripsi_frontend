@@ -4,6 +4,8 @@ import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
+import {Skeleton} from 'primereact/skeleton';
+
 
 export default function DaftarPasienLaporan() {
 
@@ -21,6 +23,7 @@ export default function DaftarPasienLaporan() {
     },[])
 
 
+
     const token = localStorage.getItem('token')
 
     // Table
@@ -36,13 +39,7 @@ export default function DaftarPasienLaporan() {
         }catch(error){
             // AuthorizationRoute(error.response.status)
         }
-    }
-
-
-    
-
-    console.log(pasien)
-    
+    }    
 
   return (
       <Sidebar>
@@ -54,7 +51,7 @@ export default function DaftarPasienLaporan() {
         {/* Search */}
 
         <Form className="container">
-            <div className="search-container">
+            <div className="search-container mb-5">
                     <input className="form-control" type="text" placeholder="Search" value={inputValue} />
 
                     {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">

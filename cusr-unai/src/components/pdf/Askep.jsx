@@ -19,6 +19,7 @@ export default function Askep() {
       });
     
       setPasien(res.data.pasien)
+      console.log(res.data)
     } catch (error) {
     }
   }

@@ -26,7 +26,7 @@ export default function Sidebar(props) {
             const res = await axios.post(`/perawat/shift`, {
                 headers: { Authorization : `Bearer ${token}`}
             });
-            if(res.data === shift ){
+            if(res.data !== shift || shift === null){
                 sessionStorage.setItem('shift', res.data)
             }
         } catch (error) {
