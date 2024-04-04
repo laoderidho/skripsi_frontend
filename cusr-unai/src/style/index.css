@@ -640,9 +640,13 @@ table {
     font-weight: 500;
 }
 
-#pdf-td {
+.pdf-td {
     text-align: center;
+    width: 13rem !important;
+    
 }
+
+.pdf
 
 #tanggal-pdf {
     width: 9rem;

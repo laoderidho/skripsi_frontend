@@ -11,15 +11,16 @@ export default function Askep() {
   const token = localStorage.getItem('token');
 
   const [pasien, setPasien] = useState([])
+  const [laporan, setLaporan] = useState([])
 
   const getAskep = async () => {
     try {
       const res = await axios.post(`/perawat/laporan/askep/${id}`, {
         headers: { Authorization: `Bearer ${token}`}
       });
-    
       setPasien(res.data.pasien)
-      console.log(res.data)
+      setLaporan(res.data.pemeriksaan)
+      console.log(res.data.pemeriksaan)
     } catch (error) {
     }
   }
@@ -68,32 +69,120 @@ export default function Askep() {
           </thead>
           <tbody>
             {/* Shift Pagi */}
-            <tr>
-              <td id="pdf-td">19/04/24/ - 07.00</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+            {laporan.map((item, index)=>(
+                  <tr>
+                  <td className="pdf-td">{item.tanggal_pemeriksaan}/{item.jam_pemeriksaan}</td>
+                  <td className='pdf-diagnosa p-2'>
+                     Nama diagnosa: <br></br>{item.diagnosa ? item.diagnosa.nama_diagnosa : "-" }
+                    <div className='mt-3'>
+                      Faktor Risiko: <br></br>
+                      <ul>
+                        
+                      </ul>
+                    </div>
+
+                    <h4 className='pt-3'>Penyebab</h4>
+                    <div className='mt-3'>
+                      Penyebab Fisiologis: <br></br>
+                      <ul>
+                        {item.diagnosa.penyebab_fisiologis.length ? item.diagnosa.penyebab_fisiologis.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+
+                    <div className='mt-3'>
+                      Penyebab Situasional: <br></br>
+                      <ul>
+                        {item.diagnosa.penyebab_situasional.length ? item.diagnosa.penyebab_situasional.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+
+                    <div className='mt-3'>
+                      Penyebab Psikologis: <br></br>
+                      <ul>
+                        {item.diagnosa.penyebab_psikologis.length ? item.diagnosa.penyebab_psikologis.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+
+                    <div className='mt-3'>
+                      Penyebab Umum: <br></br>
+                      <ul>
+                        {item.diagnosa.penyebab_umum.length ? item.diagnosa.penyebab_umum.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+
+
+                    <h3>Gejala Tanda Mayor</h3>
+
+                    <div className='mt-3'>
+                      Objektif: <br></br>
+                      <ul>
+                        {item.diagnosa.gejala_tanda_mayor_objektif.length ? item.diagnosa.gejala_tanda_mayor_objektif.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+
+                    <div className='mt-3'>
+                      Subjektif: <br></br>
+                      <ul>
+                        {item.diagnosa.gejala_tanda_mayor_subjektif.length ? item.diagnosa.gejala_tanda_mayor_subjektif.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+
+                    <h3>Gejala Tanda Minor</h3>
+
+                    <div className='mt-3'>
+                      Objektif: <br></br>
+                      <ul>
+                        {item.diagnosa.gejala_tanda_minor_objektif.length ? item.diagnosa.gejala_tanda_minor_objektif.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+
+                    <div className='mt-3'>
+                      Subjektif: <br></br>
+                      <ul>
+                        {item.diagnosa.gejala_tanda_minor_subjektif.length ? item.diagnosa.gejala_tanda_minor_subjektif.map(item=>(
+                          <li>{item}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+            ))}
             {/* Shift Siang */}
-            <tr>
+            {/* <tr>
               <td id="pdf-td">19/04/24 - 13.00</td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
-            </tr>
+            </tr> */}
             {/* Shift Malam */}
-            <tr>
+            {/* <tr>
               <td id="pdf-td">19/04/24 - 21.00</td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>
