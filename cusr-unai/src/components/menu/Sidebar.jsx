@@ -73,7 +73,9 @@ export default function Sidebar(props) {
                     <Accordion.Header><i className={item.icon} style={iconStyle}></i> {item.name}</Accordion.Header>
                     <Accordion.Body>
                         {item.child.map((item, index) => (
-                            <Link key={index} to={item.path}>
+                            <Link key={index} to={item.path}
+                            className={item.path === location.pathname ? "active" : ""}
+                                >
                                 <i className={item.icon} id="inner-accordion" style={iconStyle}></i>
                                 {item.name}
                             </Link>

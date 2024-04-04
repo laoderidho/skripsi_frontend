@@ -1177,6 +1177,20 @@ table#border.bordered {
     text-align: left;
 }
 
+.tbody-box-layout {
+    width: 100%;
+    max-width: 100%; 
+    height: 68vh;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border-radius: 0.4rem;
+    margin-top: 0.7rem;
+    position: fixed;
+}
+
+.active {
+    color: #4287f5;
+}
+
 .table-body {
     align-items: center;
     

@@ -100,7 +100,7 @@ export default function DaftarPasien() {
             </span>
           </Container>
 
-          <div className="pt-3">
+          <div className="tbody-box-layout pt-3">
             {inputValue ? filterPasien.map((item, index) => (
               <>
                 <div className="table-body pt-3">
@@ -121,7 +121,7 @@ export default function DaftarPasien() {
               
             )) : pasien.map((item, index) => (
               <>
-                <div className="table-body pt-3">
+                <div className="container pt-3">
                     <Row key={index}>
                       <Col xs={8}>
                         <p>{item.nama_lengkap}</p>
