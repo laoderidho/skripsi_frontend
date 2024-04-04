@@ -262,6 +262,9 @@ export default function FormEvaluasi() {
     resultPenilaianLuaran();
   }, [evaluasiLuaran]);
 
+  // show data multiple select
+  const [kritesiaShowData, setKriteriaShowData] = useState(false);
+
   return (
     <Sidebar
     title="FORM EVALUASI">
@@ -396,32 +399,34 @@ export default function FormEvaluasi() {
 
                 <Form.Group className="mt-5">
                   <Form.Label>Kriteria</Form.Label>
-                  <MultiSelect
-                    value={kriteria_luaran}
-                    disabled={!selectedLuaran}
-                    options={selectedKriteriaLuaran}
-                    optionLabel="nama_kriteria_luaran"
-                    placeholder="pilih kriteria"
-                    filter
-                    className="pt-1"
-                    onChange={(e) => setKriteriaLuaran(e.value)}
-                    maxSelectedLabels={3}
-                    display="chip"
-                  ></MultiSelect>
+                  {
+                    !kritesiaShowData &&
+                    <MultiSelect
+                      value={kriteria_luaran}
+                      disabled={!selectedLuaran}
+                      options={selectedKriteriaLuaran}
+                      optionLabel="nama_kriteria_luaran"
+                      placeholder="pilih kriteria"
+                      filter
+                      className="pt-1"
+                      onChange={(e) => setKriteriaLuaran(e.value)}
+                      maxSelectedLabels={3}
+                      display="chip"
+                    ></MultiSelect>
+                  }
+                  {
+                    kritesiaShowData &&
+                    <SeeModalData
+                      data={kriteria_luaran &&
+                      kriteria_luaran.map((item) => item.nama_kriteria_luaran)}
+                      allData={kriteria_luaran}
+                      onObj={"nama_kriteria_luaran"}
+                      myFunc={"setKriteriaLuaran"}
+                      callDataBack={handleBackData}
+                    />
+                  }
 
-                  <span
-                    id="form-label"
-                    className="see-option-link"
-                    onClick={() =>
-                      handleModal(
-                        kriteria_luaran &&
-                        kriteria_luaran.map((item) => item.nama_kriteria_luaran),
-                        kriteria_luaran,
-                        "nama_kriteria_luaran",
-                        "setKriteriaLuaran"
-                      )
-                    }
-                    >See selected options</span>
+                    <Form.Check className="mt-2" checked={kritesiaShowData} onChange={()=>setKriteriaShowData(!kritesiaShowData)} type="checkbox" label="Tampilkan data" />
                 </Form.Group>
 
                 {/* TEXTAREA */}

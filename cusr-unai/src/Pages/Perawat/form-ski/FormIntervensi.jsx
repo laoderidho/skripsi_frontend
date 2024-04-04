@@ -29,13 +29,6 @@ export default function FormIntervensi() {
   const [terapeutik, setTerapeutik] = useState(null);
   const [edukasi, setEdukasi] = useState(null);
 
-  // Modal Validation
-  const [informationForm, setInformationForm] = useState([])
-  const [modalValidationForm, setModalValidationForm] = useState(false)
-  const [dataValidationForm, setDataValidationForm] = useState([])
-  const [obj, setObj] = useState("")
-  const [getfunc, setGetFunc] = useState("")
-
   const createIntervensiOptions = () => {
     if (!intervensi || intervensi.length === 0) {
       return [{ value: "", label: "Pilih Intervensi" }];
@@ -129,19 +122,6 @@ export default function FormIntervensi() {
     }
   };
 
-  const handleModal = (data, allData, nameObj, func)=>{
-    if(data == null || data.length == 0){
-      setInformationForm(false)
-    }else{
-      setInformationForm(data)
-      setDataValidationForm(allData)
-      setObj(nameObj)
-      setGetFunc(func)
-    }
-    setModalValidationForm(true)
-  }
-
-  const CloseValidationFormModal = () => setModalValidationForm(false)
 
   const handleBackData = (newData, allData, onObj, myFunc)=>{
     const filterData = allData.filter((item) => newData.includes(item[onObj]))
@@ -149,21 +129,17 @@ export default function FormIntervensi() {
     myFunction(filterData)
   }
 
+
+  // multi select show
+
+  const [showDatObservasi, setShowDataObservasi] = useState(false)
+  const [showDataTerapeutik, setShowDataTerapeutik] = useState(false)
+  const [showDataEdukasi, setShowDataEdukasi] = useState(false)
+
   return (
     <Sidebar 
       title="FORM INTERVENSI">
-      {modalValidationForm && (
-        <SeeModalData
-          open={modalValidationForm}
-          data={informationForm}
-          name={"Data yang dipilih"}
-          onHide={CloseValidationFormModal}
-          allData={dataValidationForm}
-          onObj={obj}
-          myFunc={getfunc}
-          callDataBack={handleBackData}
-        />
-      )}
+     
       <div className="container">
         <h2>Form Intervensi</h2>
       </div>
@@ -185,86 +161,98 @@ export default function FormIntervensi() {
             <Form.Group className="mt-5">
               <h6>Tindakan</h6>
               <Form.Label>Observasi</Form.Label>
-              <MultiSelect
-                value={observasi}
-                onChange={(e) => setObservasi(e.value)}
-                options={selectedObservasi}
-                disabled={!selectedIntervensi}
-                placeholder="Pilih Tindakan Observasi"
-                optionLabel="nama_tindakan_intervensi"
-                className="pt-1"
-                filter
-                display="chip"
-              ></MultiSelect>
-              <span
-                    id="form-label"
-                    className="see-option-link"
-                    onClick={() =>
-                      handleModal(
-                        observasi &&
-                        observasi.map((item) => item.nama_tindakan_intervensi),
-                        observasi,
-                        "nama_tindakan_intervensi",
-                        "setObservasi"
-                      )
-                    }
-                    >See selected options</span>
+
+              {
+                !showDatObservasi &&
+                  <MultiSelect
+                    value={observasi}
+                    onChange={(e) => setObservasi(e.value)}
+                    options={selectedObservasi}
+                    disabled={!selectedIntervensi}
+                    placeholder="Pilih Tindakan Observasi"
+                    optionLabel="nama_tindakan_intervensi"
+                    className="pt-1"
+                    filter
+                    display="chip"
+                  ></MultiSelect>    
+              }
+              {
+                showDatObservasi &&
+                <SeeModalData
+                    data={observasi &&
+                    observasi.map((item) => item.nama_tindakan_intervensi)}
+                    allData={observasi}
+                    onObj={"nama_tindakan_intervensi"}
+                    myFunc={"setObservasi"}
+                    callDataBack={handleBackData}
+                 />
+              }
+
+              <Form.Check className="mt-2" checked={showDatObservasi} onChange={()=>setShowDataObservasi(!showDatObservasi)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-3">
               <Form.Label>Terapeutik</Form.Label>
-              <MultiSelect
-                value={terapeutik}
-                onChange={(e) => setTerapeutik(e.value)}
-                options={selectedTerapeutik}
-                disabled={!selectedIntervensi}
-                placeholder="Pilih Tindakan Terapeutik"
-                optionLabel="nama_tindakan_intervensi"
-                className="pt-1"
-                filter
-                display="chip"
-              ></MultiSelect>
-              <span
-                    id="form-label"
-                    className="see-option-link"
-                    onClick={() =>
-                      handleModal(
-                        terapeutik &&
-                        terapeutik.map((item) => item.nama_tindakan_intervensi),
-                        terapeutik,
-                        "nama_tindakan_intervensi",
-                        "setTerapeutik"
-                      )
-                    }
-                    >See selected options</span>
+
+              {
+                !showDataTerapeutik &&
+                  <MultiSelect
+                    value={terapeutik}
+                    onChange={(e) => setTerapeutik(e.value)}
+                    options={selectedTerapeutik}
+                    disabled={!selectedIntervensi}
+                    placeholder="Pilih Tindakan Terapeutik"
+                    optionLabel="nama_tindakan_intervensi"
+                    className="pt-1"
+                    filter
+                    display="chip"
+                  ></MultiSelect>
+              }
+              {
+                showDataTerapeutik &&
+                <SeeModalData
+                    data={terapeutik &&
+                    terapeutik.map((item) => item.nama_tindakan_intervensi)}
+                    allData={terapeutik}
+                    onObj={"nama_tindakan_intervensi"}
+                    myFunc={"setTerapeutik"}
+                    callDataBack={handleBackData}
+                 />
+              }
+
+              <Form.Check className="mt-2" checked={showDataTerapeutik} onChange={()=>setShowDataTerapeutik(!showDataTerapeutik)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-3">
               <Form.Label>Edukasi</Form.Label>
-              <MultiSelect
-                value={edukasi}
-                onChange={(e) => setEdukasi(e.value)}
-                options={selectedEdukasi}
-                disabled={!selectedIntervensi}
-                placeholder="Pilih Tindakan Edukasi"
-                optionLabel="nama_tindakan_intervensi"
-                className="pt-1"
-                filter
-                display="chip"
-              ></MultiSelect>
-              <span
-                    id="form-label"
-                    className="see-option-link"
-                    onClick={() =>
-                      handleModal(
-                        edukasi &&
-                        edukasi.map((item) => item.nama_tindakan_intervensi),
-                        edukasi,
-                        "nama_tindakan_intervensi",
-                        "setEdukasi"
-                      )
-                    }
-                    >See selected options</span>
+
+              {
+                !showDataEdukasi &&
+                  <MultiSelect
+                    value={edukasi}
+                    onChange={(e) => setEdukasi(e.value)}
+                    options={selectedEdukasi}
+                    disabled={!selectedIntervensi}
+                    placeholder="Pilih Tindakan Edukasi"
+                    optionLabel="nama_tindakan_intervensi"
+                    className="pt-1"
+                    filter
+                    display="chip"
+                  ></MultiSelect>
+              }
+              {
+                showDataEdukasi &&
+                <SeeModalData
+                    data={edukasi &&
+                    edukasi.map((item) => item.nama_tindakan_intervensi)}
+                    allData={edukasi}
+                    onObj={"nama_tindakan_intervensi"}
+                    myFunc={"setEdukasi"}
+                    callDataBack={handleBackData}
+                 />
+              }
+              
+              <Form.Check className="mt-2" checked={showDataEdukasi} onChange={()=>setShowDataEdukasi(!showDataEdukasi)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-3">

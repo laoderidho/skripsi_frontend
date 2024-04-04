@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, Button, Modal, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import axios from "../../../axios";
 import "../../../../src/style/accordion.css";
 import { Dropdown } from "primereact/dropdown";
@@ -55,14 +55,6 @@ export default function FormDiagnosa() {
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState(null);
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState(null);
 
-  // modal Information validation form 
-  const [informationForm, setInformationForm] = useState([])
-  const [modalValidationForm, setModalValidationForm] = useState(false)
-  const [dataValidationForm, setDataValidationForm] = useState([])
-  const [obj, setObj] = useState("")
-  const [getfunc, setGetFunc] = useState("")
-  const [tempData, setTempData] = useState([])
-
 
   const createDiagnosaOptions = () => {
     if (!diagnosa || diagnosa.length === 0) {
@@ -95,6 +87,7 @@ export default function FormDiagnosa() {
       );
 
       const selectedDiagnosaData = res.data;
+      console.log(selectedDiagnosaData);
 
       setNamaDiagnosa(selectedDiagnosaData.diagnosa.id);
       setSelectedFaktorRisiko(selectedDiagnosaData.faktor_risiko);
@@ -183,21 +176,6 @@ export default function FormDiagnosa() {
     }
   };
 
-
-  const handleModal = (data, allData, nameObj, func)=>{
-    if(data == null || data.length == 0){
-      setInformationForm(false)
-    }else{
-      setInformationForm(data)
-      setDataValidationForm(allData)
-      setObj(nameObj)
-      setGetFunc(func)
-    }
-    setModalValidationForm(true)
-  }
-
-  const CloseValidationFormModal = () => setModalValidationForm(false)
-
   const handleBackData = (newData, allData, onObj, myFunc)=>{
     const filterData = allData.filter((item) => newData.includes(item[onObj]))
     const myFunction = eval(myFunc)
@@ -210,21 +188,20 @@ export default function FormDiagnosa() {
     console.log(selectedDiagnosa)
   },[selectedDiagnosa])
 
+
+  // multi select show
+  const [showDataFaktorRisiko, setShowDataFaktorRisiko] = useState(false);
+  const [showDataPenyebabFisiologis, setShowDataPenyebabFisiologis] = useState(false);
+  const [showDataPenyebabSituasional, setShowDataPenyebabSituasional] = useState(false);
+  const [showDataPenyebabPsikologis, setShowDataPenyebabPsikologis] = useState(false);
+  const [showDataGejalaMayorSubjektif, setShowDataGejalaMayorSubjektif] = useState(false);
+  const [showDataGejalaMayorObjektif, setShowDataGejalaMayorObjektif] = useState(false);
+  const [showDataGejalaMinorSubjektif, setShowDataGejalaMinorSubjektif] = useState(false);
+  const [showDataGejalaMinorObjektif, setShowDataGejalaMinorObjektif] = useState(false);
+
   return (
     <Sidebar
       title=" FORM DIAGNOSA">
-      {modalValidationForm && (
-        <SeeModalData
-          open={modalValidationForm}
-          data={informationForm}
-          name={"Data yang dipilih"}
-          onHide={CloseValidationFormModal}
-          allData={dataValidationForm}
-          onObj={obj}
-          myFunc={getfunc}
-          callDataBack={handleBackData}
-        />
-      )}
       <div className="container">
         <h2>Form Diagnosa</h2>
       </div>
@@ -245,37 +222,38 @@ export default function FormDiagnosa() {
 
             <Form.Group className="mt-3">
               <Form.Label id="form-label">Faktor Risiko</Form.Label>
-              <MultiSelect
-                value={faktor_risiko}
-                disabled={!selectedDiagnosa}
-                options={selectedFaktorRisiko}
-                placeholder="Pilih Faktor Risiko"
-                optionLabel="faktor_risiko"
-                className="pt-1"
-                onChange={(e) => setFaktorRisiko(e.value)}
-                filter
-                display="chip"
-              ></MultiSelect>
-              <span
-                id="form-label"
-                className="see-option-link"
-                onClick={() =>
-                  handleModal(
-                    faktor_risiko &&
-                    faktor_risiko.map((item) => item.faktor_risiko),
-                    faktor_risiko,
-                    "faktor_risiko",
-                    "setFaktorRisiko"
-                  )
-                }
-              >
-                See selected options
-              </span>
+
+              {!showDataFaktorRisiko && 
+                <MultiSelect
+                  value={faktor_risiko}
+                  disabled={!selectedDiagnosa}
+                  options={selectedFaktorRisiko}
+                  placeholder="Pilih Faktor Risiko"
+                  optionLabel="nama"
+                  className="pt-1"
+                  onChange={(e) => setFaktorRisiko(e.value)}
+                  filter
+                  display="chip"
+                ></MultiSelect>
+              }
+
+              {showDataFaktorRisiko && 
+                <SeeModalData
+                    data={faktor_risiko &&
+                    faktor_risiko.map((item) => item.nama)}
+                    allData={faktor_risiko}
+                    onObj={"nama"}
+                    myFunc={"setFaktorRisiko"}
+                    callDataBack={handleBackData}
+                />
+              }
+              <Form.Check className="mt-2" checked={showDataFaktorRisiko} onChange={()=>setShowDataFaktorRisiko(!showDataFaktorRisiko)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
             <Form.Group className="mt-5">
               <h6>Penyebab</h6>
               <Form.Label id="form-label">Penyebab Fisiologis</Form.Label>
-              <MultiSelect
+              {!showDataPenyebabFisiologis && 
+                <MultiSelect
                 value={penyebab_fisiologis}
                 disabled={!selectedDiagnosa}
                 options={selectedPenyebabFisiologis}
@@ -287,25 +265,27 @@ export default function FormDiagnosa() {
                 onChange={(e) => setPenyebabFisiologis(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span
-                id="form-label"
-                className="see-option-link"
-                onClick={() =>
-                  handleModal(
-                    penyebab_fisiologis &&
-                    penyebab_fisiologis.map((item) => item.nama_penyebab),
-                    penyebab_fisiologis,
-                    "nama_penyebab",
-                    "setPenyebabFisiologis"
-                  )
-                }
-              >
-                See selected options
-              </span>
+              }
+              {
+              showDataPenyebabFisiologis && 
+              <SeeModalData
+                    data={penyebab_fisiologis &&
+                    penyebab_fisiologis.map((item) => item.nama_penyebab)}
+                    allData={penyebab_fisiologis}
+                    onObj={"nama_penyebab"}
+                    myFunc={"setPenyebabFisiologis"}
+                    callDataBack={handleBackData}
+                />
+              }
+
+              <Form.Check className="mt-2" checked={showDataPenyebabFisiologis} onChange={()=>setShowDataPenyebabFisiologis(!showDataPenyebabFisiologis)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-3">
               <Form.Label id="form-label">Penyebab Situasional</Form.Label>
+
+            {
+              !showDataPenyebabSituasional &&
               <MultiSelect
                 value={penyebab_situasional}
                 disabled={!selectedDiagnosa}
@@ -318,7 +298,8 @@ export default function FormDiagnosa() {
                 onChange={(e) => setPenyebabSituasional(e.value)}
                 maxSelectedLabels={3}
               ></MultiSelect>
-              <span
+            }
+              {/* <span
                 id="form-label"
                 className="see-option-link"
                 onClick={() =>
@@ -332,164 +313,183 @@ export default function FormDiagnosa() {
                 }
               >
                 See selected options
-              </span>
+              </span> */}
+
+              {
+                showDataPenyebabSituasional &&
+                <SeeModalData
+                    data={penyebab_situasional &&
+                    penyebab_situasional.map((item) => item.nama_penyebab)}
+                    allData={penyebab_situasional}
+                    onObj={"nama_penyebab"}
+                    myFunc={"setPenyebabSituasional"}
+                    callDataBack={handleBackData}
+                />
+              }         
+            <Form.Check className="mt-2" checked={showDataPenyebabSituasional} onChange={()=>setShowDataPenyebabSituasional(!showDataPenyebabSituasional)} type="checkbox" label="Tampilkan data" />
+            
             </Form.Group>
 
             <Form.Group className="mt-3">
               <Form.Label id="form-label">Penyebab Psikologis</Form.Label>
-              <MultiSelect
-                value={penyebab_psikologis}
-                disabled={!selectedDiagnosa}
-                options={selectedPenyebabPsikologis}
-                optionLabel="nama_penyebab"
-                placeholder="Pilih Penyebab Psikologis"
-                filter
-                display="chip"
-                className="pt-1"
-                onChange={(e) => setPenyebabPsikologis(e.value)}
-                maxSelectedLabels={3}
-              ></MultiSelect>
-              <span
-                id="form-label"
-                className="see-option-link"
-                onClick={() =>
-                  handleModal(
-                    penyebab_psikologis &&
-                      penyebab_psikologis.map((item) => item.nama_penyebab),
-                    penyebab_psikologis,
-                    "nama_penyebab",
-                    "setPenyebabPsikologis"
-                  )
-                }
-              >
-                See selected options
-              </span>
+              {
+                !showDataPenyebabPsikologis &&
+                  <MultiSelect
+                    value={penyebab_psikologis}
+                    disabled={!selectedDiagnosa}
+                    options={selectedPenyebabPsikologis}
+                    optionLabel="nama_penyebab"
+                    placeholder="Pilih Penyebab Psikologis"
+                    filter
+                    display="chip"
+                    className="pt-1"
+                    onChange={(e) => setPenyebabPsikologis(e.value)}
+                    maxSelectedLabels={3}
+                  ></MultiSelect>
+              }
+              {
+                showDataPenyebabPsikologis &&
+                <SeeModalData
+                    data={penyebab_psikologis &&
+                    penyebab_psikologis.map((item) => item.nama_penyebab)}
+                    allData={penyebab_psikologis}
+                    onObj={"nama_penyebab"}
+                    myFunc={"setPenyebabPsikologis"}
+                    callDataBack={handleBackData}
+                />
+              }
+            <Form.Check className="mt-2" checked={showDataPenyebabPsikologis} onChange={()=>setShowDataPenyebabPsikologis(!showDataPenyebabPsikologis)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Mayor</h6>
               <Form.Label id="form-label">Subjektif</Form.Label>
-              <MultiSelect
-                value={gejala_mayor_subjektif}
-                disabled={!selectedDiagnosa}
-                options={selectedGejalaMayorSubjektif}
-                optionLabel="nama_gejala"
-                placeholder="Pilih Subjektif"
-                filter
-                display="chip"
-                className="pt-1"
-                onChange={(e) => setGejalaMayorSubjektif(e.value)}
-                maxSelectedLabels={3}
-              ></MultiSelect>
-              <span
-                id="form-label"
-                className="see-option-link"
-                onClick={() =>
-                  handleModal(
-                    gejala_mayor_subjektif &&
-                      gejala_mayor_subjektif.map((item) => item.nama_gejala),
-                    gejala_mayor_subjektif,
-                    "nama_gejala",
-                    "setGejalaMayorSubjektif"
-                  )
-                }
-              >
-                See selected options
-              </span>
+              {
+                !showDataGejalaMayorSubjektif &&
+                  <MultiSelect
+                    value={gejala_mayor_subjektif}
+                    disabled={!selectedDiagnosa}
+                    options={selectedGejalaMayorSubjektif}
+                    optionLabel="nama_gejala"
+                    placeholder="Pilih Subjektif"
+                    filter
+                    display="chip"
+                    className="pt-1"
+                    onChange={(e) => setGejalaMayorSubjektif(e.value)}
+                    maxSelectedLabels={3}
+                  ></MultiSelect>
+              }
+              {
+                showDataGejalaMayorSubjektif &&
+                <SeeModalData
+                    data={gejala_mayor_subjektif &&
+                    gejala_mayor_subjektif.map((item) => item.nama_gejala)}
+                    allData={gejala_mayor_subjektif}
+                    onObj={"nama_gejala"}
+                    myFunc={"setGejalaMayorSubjektif"}
+                    callDataBack={handleBackData}
+                />
+              }
+
+              <Form.Check className="mt-2" checked={showDataGejalaMayorSubjektif} onChange={()=>setShowDataGejalaMayorSubjektif(!showDataGejalaMayorSubjektif)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-3">
               <Form.Label id="form-label">Objektif</Form.Label>
-              <MultiSelect
-                value={gejala_mayor_objektif}
-                disabled={!selectedDiagnosa}
-                options={selectedGejalaMayorObjektif}
-                optionLabel="nama_gejala"
-                placeholder="Pilih Objektif"
-                filter
-                display="chip"
-                className="pt-1"
-                onChange={(e) => setGejalaMayorObjektif(e.value)}
-                maxSelectedLabels={3}
-              ></MultiSelect>
-              <span
-                id="form-label"
-                className="see-option-link"
-                onClick={() =>
-                  handleModal(
-                    gejala_mayor_objektif &&
-                      gejala_mayor_objektif.map((item) => item.nama_gejala),
-                    gejala_mayor_objektif,
-                    "nama_gejala",
-                    "setGejalaMayorObjektif"
-                  )
-                }
-              >
-                See selected options
-              </span>
+              {
+                !showDataGejalaMayorObjektif &&
+                <MultiSelect
+                  value={gejala_mayor_objektif}
+                  disabled={!selectedDiagnosa}
+                  options={selectedGejalaMayorObjektif}
+                  optionLabel="nama_gejala"
+                  placeholder="Pilih Objektif"
+                  filter
+                  display="chip"
+                  className="pt-1"
+                  onChange={(e) => setGejalaMayorObjektif(e.value)}
+                  maxSelectedLabels={3}
+                ></MultiSelect>
+              }
+              {
+                showDataGejalaMayorObjektif &&
+                <SeeModalData
+                    data={gejala_mayor_objektif &&
+                    gejala_mayor_objektif.map((item) => item.nama_gejala)}
+                    allData={gejala_mayor_objektif}
+                    onObj={"nama_gejala"}
+                    myFunc={"setGejalaMayorObjektif"}
+                    callDataBack={handleBackData}
+                />
+              }
+
+              <Form.Check className="mt-2" checked={showDataGejalaMayorObjektif} onChange={()=>setShowDataGejalaMayorObjektif(!showDataGejalaMayorObjektif)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-5">
               <h6>Gejala dan Tanda Minor</h6>
               <Form.Label id="form-label">Subjektif</Form.Label>
-              <MultiSelect
-                value={gejala_minor_subjektif}
-                disabled={!selectedDiagnosa}
-                options={selectedGejalaMinorSubjektif}
-                optionLabel="nama_gejala"
-                placeholder="Pilih Subjektif"
-                filter
-                display="chip"
-                className="pt-1"
-                onChange={(e) => setGejalaMinorSubjektif(e.value)}
-                maxSelectedLabels={3}
-              ></MultiSelect>
-              <span
-                id="form-label"
-                className="see-option-link"
-                onClick={() =>
-                  handleModal(
-                    gejala_minor_subjektif &&
-                      gejala_minor_subjektif.map((item) => item.nama_gejala),
-                    gejala_minor_subjektif,
-                    "nama_gejala",
-                    "setGejalaMinorSubjektif"
-                  )
-                }
-              >
-                See selected options
-              </span>
+
+              {
+                !showDataGejalaMinorSubjektif &&
+                <MultiSelect
+                  value={gejala_minor_subjektif}
+                  disabled={!selectedDiagnosa}
+                  options={selectedGejalaMinorSubjektif}
+                  optionLabel="nama_gejala"
+                  placeholder="Pilih Subjektif"
+                  filter
+                  display="chip"
+                  className="pt-1"
+                  onChange={(e) => setGejalaMinorSubjektif(e.value)}
+                  maxSelectedLabels={3}
+                ></MultiSelect>
+              }
+
+              {
+                showDataGejalaMinorSubjektif &&
+                <SeeModalData
+                    data={gejala_minor_subjektif &&
+                    gejala_minor_subjektif.map((item) => item.nama_gejala)}
+                    allData={gejala_minor_subjektif}
+                    onObj={"nama_gejala"}
+                    myFunc={"setGejalaMinorSubjektif"}
+                    callDataBack={handleBackData}
+                />
+              }
+
+              <Form.Check className="mt-2" checked={showDataGejalaMinorSubjektif} onChange={()=>setShowDataGejalaMinorSubjektif(!showDataGejalaMinorSubjektif)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-3">
               <Form.Label id="form-label">Objektif</Form.Label>
-              <MultiSelect
-                value={gejala_minor_objektif}
-                disabled={!selectedDiagnosa}
-                options={selectedGejalaMinorObjektif}
-                optionLabel="nama_gejala"
-                placeholder="Pilih Objektif"
-                className="pt-1"
-                onChange={(e) => setGejalaMinorObjektif(e.value)}
-                maxSelectedLabels={3}
-                filter
-                display="chip"
-              ></MultiSelect>
-              <span
-                id="form-label"
-                className="see-option-link"
-                onClick={() =>
-                  handleModal(
-                    gejala_minor_objektif &&
-                      gejala_minor_objektif.map((item) => item.nama_gejala),
-                    gejala_minor_objektif,
-                    "nama_gejala",
-                    "setGejalaMinorObjektif"
-                  )
-                }
-              >
-                See selected options
-              </span>
+              {
+                !showDataGejalaMinorObjektif &&
+                <MultiSelect
+                  value={gejala_minor_objektif}
+                  disabled={!selectedDiagnosa}
+                  options={selectedGejalaMinorObjektif}
+                  optionLabel="nama_gejala"
+                  placeholder="Pilih Objektif"
+                  className="pt-1"
+                  onChange={(e) => setGejalaMinorObjektif(e.value)}
+                  maxSelectedLabels={3}
+                  filter
+                  display="chip"
+                ></MultiSelect>
+              }
+              {
+                showDataGejalaMinorObjektif &&
+                <SeeModalData
+                    data={gejala_minor_objektif &&
+                    gejala_minor_objektif.map((item) => item.nama_gejala)}
+                    allData={gejala_minor_objektif}
+                    onObj={"nama_gejala"}
+                    myFunc={"setGejalaMinorObjektif"}
+                    callDataBack={handleBackData}
+                />
+              }
+              <Form.Check className="mt-2" checked={showDataGejalaMinorObjektif} onChange={()=>setShowDataGejalaMinorObjektif(!showDataGejalaMinorObjektif)} type="checkbox" label="Tampilkan data" />
             </Form.Group>
 
             <Form.Group className="mt-3">
