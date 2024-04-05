@@ -1,40 +1,36 @@
-import React,{useEffect, useState} from 'react'
-import { Modal } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react';
+import { Accordion } from 'react-bootstrap';
 
+const SeeModalData = ({ data, name, allData, onObj, myFunc, callDataBack }) => {
+    const [dataModal, setDataModal] = useState(data);
 
-const SeeModalData = ({open, data, name, onHide, allData, onObj, myFunc, callDataBack}) => {
-
-    const [show, setShow] = useState(open)
-    const [dataModal, setDataModal] = useState(data)
-
-    useEffect(() => {setDataModal(data)}, [data])
+    useEffect(() => {
+        setDataModal(data);
+    }, [data]);
 
     const handleRemoveItem = (index) => {
         const newData = [...dataModal];
-        newData.splice(index, 1); 
+        newData.splice(index, 1);
         setDataModal(newData);
-        callDataBack(newData, allData, onObj, myFunc)
+        callDataBack(newData, allData, onObj, myFunc);
     };
 
-  return (
-    <Modal show={show} onHide={() => onHide()} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>{name}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {dataModal ? (
-          dataModal.map((item, index) => (
-            <li className='modal-tag'>
-              {item}
-              <span className='remove-tag' onClick={() => handleRemoveItem(index)}>&times;</span>
-            </li>
-          ))
-        ) : (
-          <p>-</p>
-        )}
-      </Modal.Body>
-    </Modal>
-  );
+    return (
+              <div>
+                <ul>
+                    {dataModal ? (
+                        dataModal.map((item, index) => (
+                            <li key={index} className='modal-tag'>
+                                {item}
+                                <span className='remove-tag' onClick={() => handleRemoveItem(index)}>&times;</span>
+                            </li>
+                        ))
+                    ) : (
+                        <p>-</p>
+                    )}
+                </ul>
+            </div>
+    );
 }
 
-export default SeeModalData
+export default SeeModalData;

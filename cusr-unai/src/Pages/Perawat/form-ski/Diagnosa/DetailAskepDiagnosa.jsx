@@ -31,7 +31,7 @@ export default function DetailAskepDiagnosa() {
 
             setKodeDiagnosa(res.data.data.kode_diagnosa)
             setNamaDiagnosa(res.data.nama_diagnosa)
-            setFaktorRisiko(res.data.data.faktor_risiko ? res.data.data.faktor_risiko.split(",") : ["-"]);
+            setFaktorRisiko(res.data.faktor_risiko ? res.data.faktor_risiko : ["-"]);
             setPenyebabFisiologis(res.data.penyebab_fisiologis ? res.data.penyebab_fisiologis : ["-"]);
             setPenyebabSituasional(res.data.penyebab_situasional ? res.data.penyebab_situasional : ["-"]);
             setPenyebabPsikologis(res.data.penyebab_psikologis ? res.data.penyebab_psikologis : ["-"]);
