@@ -72,7 +72,7 @@ export default function Askep() {
             {laporan.map((item, index)=>(
                   <tr>
                   <td className="pdf-td">{item.tanggal_pemeriksaan}/{item.jam_pemeriksaan}</td>
-                  <td className='pdf-diagnosa p-2'>
+                   <td className='pdf-diagnosa p-2'>
                      Nama diagnosa: <br></br>{item.diagnosa ? item.diagnosa.nama_diagnosa : "-" }
                     <div className='mt-3'>
                       Faktor Risiko: <br></br>
@@ -159,9 +159,36 @@ export default function Askep() {
                       </ul>
                     </div>
                   </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                   <td className='pdf-intevensi p-2'>
+                    Nama Intervensi: <br></br>{item.intervensi ? item.intervensi.nama_intervensi : "-"}
+                    <h3 className='pt-3'>Tindakan</h3>
+                    <div className='mt-3'>
+                      <ul>
+                        {item.intervensi.message == "Success" ? item.intervensi.tindakan_intervensi.map(item=>(
+                          <li>{item.nama_tindakan_intervensi}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+                  </td>
+                  
+                  <td className='pdf-intervensi p-2'>
+                    <div className='mt-3'>
+                      <ul>
+                        {item.implementasi.length ? item.implementasi.map(item=>(
+                          <li>{item.nama_implementasi}</li>
+                        )) : "-"}
+                      </ul>
+                    </div>
+                  </td>
+
+                  <td className='pdf-diagnosa p-2'>
+                    {/* Nama Luaran: <br></br>{item.luaran.message == "Success" ? item.luaran.data : "-"} */}
+                    <ul>
+                      {item.luaran.message == "Success" ? item.luaran.data.map(item=>(
+                        <li>{item.nama_luaran}</li>
+                      )) : "-"}
+                    </ul>
+                  </td>
                   <td></td>
                 </tr>
             ))}

@@ -78,8 +78,8 @@ export default function Diagnosis() {
           </Link>
         </div>
 
-        <Table className="table table-striped table-hover">
-          <thead>
+        <table>
+          <thead id='thead-admin'>
             <tr>
               <th>No</th>
               <th>Kode Diagnosa</th>
@@ -120,7 +120,7 @@ export default function Diagnosis() {
                   </tr>
                 ))}
           </tbody>
-        </Table>
+        </table>
       </Form>
     </Sidebar>
   );

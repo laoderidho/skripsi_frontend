@@ -766,6 +766,10 @@ table {
     border-radius: 0 0 0.2rem 0;
 } 
 
+.pdf-intervensi {
+    margin-bottom: 7rem;
+}
+
 
 
 thead {
@@ -809,9 +813,9 @@ thead {
     box-shadow: inset 0 0 0.1rem #dee2e6; 
 }
 
-tbody tr {
+/* tbody tr {
     border-bottom: 1px solid #dee2e6;
-}
+} */
 
 .p-datatable {
     /* border: 0.001rem solid #dee2e6; 
@@ -1185,6 +1189,14 @@ table#border.bordered {
     border-radius: 0.4rem;
     margin-top: 0.7rem;
     position: fixed;
+}
+
+#thead-admin {
+    background-color: #4287f51e;
+    height: 3rem;
+    border: 1px solid #000;
+    border-radius: 0.3rem !important;
+    padding-left: 0.5rem;
 }
 
 .active {

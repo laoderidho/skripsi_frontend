@@ -106,6 +106,7 @@ export default function FormEvaluasi() {
   };
 
   const LoopLuaranId = (itemId) => {
+    console.log(itemId)
     const newIdEvaluasiLuaran = [...idEvaluasiLuaran];
     newIdEvaluasiLuaran.push(itemId);
     setIdEvaluasiLuaran(newIdEvaluasiLuaran);
@@ -299,7 +300,7 @@ export default function FormEvaluasi() {
                               <Form.Select
                                 onChange={(e) => {
                                   loopNilaiLuaran(index, e.target.value);
-                                  LoopLuaranId(item.id);
+                                  LoopLuaranId(item.id_evaluasi);
                                 }}
                               >
                                 <option>pilih</option>
