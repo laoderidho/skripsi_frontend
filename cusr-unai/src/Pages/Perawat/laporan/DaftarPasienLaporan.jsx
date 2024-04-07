@@ -13,6 +13,7 @@ export default function DaftarPasienLaporan() {
 
     const [inputValue, setInputValue] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+    const isMobile = window.innerWidth <= 600;
 
     const [pasien, setPasien] = useState([]);
 
@@ -42,48 +43,97 @@ export default function DaftarPasienLaporan() {
     }    
 
   return (
-      <Sidebar>
-        {/* Title */}
-        <div className="container">
-            <h2>Daftar Pasien</h2>
-        </div>
+     <React.Fragment>
+        {isMobile ? (
+            <React.Fragment>
+                 <Sidebar
+                    title='LAPORAN'>
+                    {/* Title */}
 
-        {/* Search */}
+                    {/* Search */}
 
-        <Form className="container">
-            <div className="search-container mb-5">
-                    <input className="form-control" type="text" placeholder="Search" value={inputValue} />
+                    <Form className="container">
+                        <div className="search-container mb-5">
+                                <input className="form-control" type="text" placeholder="Search" value={inputValue} />
 
-                    {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
-                        Tambah
-                    </Link> */}
-                    
-            </div>
+                                {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
+                                    Tambah
+                                </Link> */}
+                                
+                        </div>
 
-            <table className="bordered" id='border'>
-                <thead>
-                    <tr className="table-head">
-                        <th>Nama</th>
-                        <th className="button-space"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pasien.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.nama_lengkap}</td>
-                        <td>
-                            <Link 
-                                to={`/perawat/laporan/${item.id}/${item.nama_lengkap}`}
-                                class="d-flex justify-content-center align-items-center">
-                                Lihat Laporan
-                            </Link>
-                        </td>
-                    </tr>
-                    ))}
-                </tbody>
-            </table>
-        </Form>
-      </Sidebar>
+                        <table className="bordered" id='border'>
+                            <thead>
+                                <tr className="table-head">
+                                    <th>Nama</th>
+                                    <th className="button-space"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {pasien.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.nama_lengkap}</td>
+                                    <td>
+                                        <Link 
+                                            to={`/perawat/laporan/${item.id}/${item.nama_lengkap}`}
+                                            class="d-flex justify-content-center align-items-center">
+                                            Lihat Laporan
+                                        </Link>
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </Form>
+                </Sidebar>
+            </React.Fragment>
+        ) : (
+            <React.Fragment>
+                <Sidebar>
+                    {/* Title */}
+                    <div className="container">
+                        <h2>Daftar Pasien</h2>
+                    </div>
+
+                    {/* Search */}
+
+                    <Form className="container">
+                        <div className="search-container mb-5">
+                                <input className="form-control" type="text" placeholder="Search" value={inputValue} />
+
+                                {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
+                                    Tambah
+                                </Link> */}
+                                
+                        </div>
+
+                        <table className="bordered" id='border'>
+                            <thead>
+                                <tr className="table-head">
+                                    <th>Nama</th>
+                                    <th className="button-space"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {pasien.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.nama_lengkap}</td>
+                                    <td>
+                                        <Link 
+                                            to={`/perawat/laporan/${item.id}/${item.nama_lengkap}`}
+                                            class="d-flex justify-content-center align-items-center">
+                                            Lihat Laporan
+                                        </Link>
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </Form>
+                </Sidebar>
+            </React.Fragment>
+        )}
+     </React.Fragment>
       
   );
 }

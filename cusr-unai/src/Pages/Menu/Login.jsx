@@ -39,6 +39,7 @@ export default function Login() {
         navigate("/perawat/profile");
       }
       localStorage.setItem("token", res.data.access_token);
+      localStorage.setItem("username", res.data.username);
       setShowAnimate(false);
     } catch (error) {
       setShow(true);

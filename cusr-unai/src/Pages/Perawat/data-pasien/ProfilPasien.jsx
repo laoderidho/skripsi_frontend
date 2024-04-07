@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../../components/menu/Sidebar";
-import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
+import { Form, Button, Table, Breadcrumb,Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
@@ -22,6 +22,7 @@ export default function ProfilPasien() {
 
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const isMobile = window.innerWidth <=600;
 
   useEffect(() => {
     getDataById();
@@ -55,79 +56,206 @@ export default function ProfilPasien() {
   }, []);
 
   return (
-    <Sidebar
-      title='PROFIL'>
-      {/* Title */}
-      <div className="container">
-        <h2>Profil Pasien</h2>
-      </div>
+    <React.Fragment>
+      {isMobile ? (
+        <Sidebar
+        title='PROFIL'>
 
-      {/* Search */}
-
-      <div className="container">
-        <Link
-          to={`/perawat/askep/${perawatan_id}`}
-          className="btn blue-button-left-align"
-        >
-          Lihat Pencatatan
-        </Link>
-
-        <div className="default">
-          {/* Nama Lengkap */}
+          <div className="container mt-2">
+            <div className="alert-pasien">
+              <div className='space-label'>
+                  <Row>
+                    <Col>
+                      <Row>
+                        <span className='shift-label'>Pasien</span>
+                      </Row>
+                      <Row>
+                        <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                      </Row>
+                    </Col>
+                    <Col>
+                      <Row>
+                        <Link to={`/perawat/askep/${perawatan_id}`} className="btn blue-button-left-align">
+                          Lihat Pencatatan
+                        </Link>
+                      </Row>
+                    </Col>
+                  </Row>
+                </div>
+            </div>
+          </div>
           
-          <div className="content-profile">
-            <span>Nama Lengkap</span>
-            <span>{nama_lengkap}</span>
+
+          <div className="container mt-4">
+            <p id='form-label'>INFO PASIEN</p>
+            <div>
+              {/* Nama */}
+              <div className="content-profile">
+                <span id='form-label' className="title-profile">NAMA</span>
+                <span>{nama_lengkap}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+              {/* Tanggal Lahir */}
+              <div className="content-profile mt-3">
+                <span id='form-label' className="title-profile">TANGGAL LAHIR</span>
+                <span>{tanggal_lahir}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+              {/* Jenis Kelamin */}
+              <div className="content-profile mt-3">
+                <span id='form-label' className="title-profile">JENIS KELAMIN</span>
+                <span>{jenis_kelamin === 1 ? 'Laki-laki' : 'Perempuan'}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+              {/* Status Pernikahan */}
+              <div className="content-profile mt-3">
+                <span id='form-label' className="title-profile">STATUS PERNIKAHAN</span>
+                <span>{status_pernikahan === 0 ? 'Belum Menikah' : 'Sudah Menikah'}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+              {/* NIK */}
+              <div className="content-profile mt-3">
+                <span id='form-label' className="title-profile">NIK</span>
+                <span>{nik}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+
+            </div>
+
+            <p id='form-label' className="mt-4">INFO KONTAK PASIEN</p>
+            <div>
+              {/* Nomor Telepon */}
+              <div className="content-profile mt-3">
+                  <span id='form-label' className="title-profile">NO TELEPON</span>
+                  <span>{no_telepon}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+              {/* Alamat */}
+              <div className="content-profile mt-3">
+                  <span id='form-label' className="title-profile">ALAMAT</span>
+                  <span>{alamat}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+            </div>
+
+            <p id='form-label' className="mt-4">INFO MEDIS PASIEN</p>
+            <div>
+              {/* No Rekam Medis */}
+              <div className="content-profile mt-3">
+                  <span id='form-label' className="title-profile">NO REKAM MEDIS</span>
+                  <span>{no_medical_record}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+              {/* Alergi */}
+              <div className="content-profile mt-3">
+                  <span id='form-label' className="title-profile">ALERGI</span>
+                  <span>{alergi}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+            </div>
+
+            <p id='form-label' className="mt-4">INFO ASURANSI PASIEN</p>
+            <div>
+              {/* Nama Asuransi */}
+              <div className="content-profile mt-3">
+                  <span id='form-label' className="title-profile">NAMA ASURANSI</span>
+                  <span>{nama_asuransi}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+
+              {/* Nomor Asuransi */}
+              <div className="content-profile mt-3">
+                  <span id='form-label' className="title-profile">NO ASURANSI</span>
+                  <span>{no_asuransi}</span>
+              </div>
+              <hr className="hr-custom"></hr>
+            </div>
           </div>
-          <hr className="hr-custom"></hr>
+        </Sidebar>
+      ) : (
+        <React.Fragment>
+          <Sidebar>
+            {/* Title */}
+            <div className="container">
+              <h2>Profil Pasien</h2>
+            </div>
 
-          <div className="content-profile mt-3">
-            <span>Tanggal Lahir</span>
-            <span>{tanggal_lahir}</span>
-          </div>
-          <hr className="hr-custom"></hr>
+            {/* Search */}
 
-          {/* Tanggal Lahir */}
-          <b className="hr-style">Tanggal Lahir</b>
-          <p className="mt-2">{tanggal_lahir}</p>
+            <div className="container">
+              <Link
+                to={`/perawat/askep/${perawatan_id}`}
+                className="btn blue-button-left-align"
+              >
+                Lihat Pencatatan
+              </Link>
 
-          {/* Jenis Kelamin */}
-          <b className="hr-style">Jenis Kelamin</b>
-          <p className="mt-2">{jenis_kelamin}</p>
+              <div className="default">
+                {/* Nama Lengkap */}
+                
+                <div className="content-profile">
+                  <span>Nama Lengkap</span>
+                  <span>{nama_lengkap}</span>
+                </div>
+                <hr className="hr-custom"></hr>
+      {/* 
+                <div className="content-profile mt-3">
+                  <span>Tanggal Lahir</span>
+                  <span>{tanggal_lahir}</span>
+                </div>
+                <hr className="hr-custom"></hr> */}
 
-          {/* No Telepon */}
-          <b className="hr-style">Nomor Telepon</b>
-          <p className="mt-2">{no_telepon}</p>
+                {/* Tanggal Lahir */}
+                <b className="hr-style mt-2">Tanggal Lahir</b>
+                <p className="mt-2">{tanggal_lahir}</p>
 
-          {/* Alamat */}
-          <b className="hr-style">Alamat</b>
-          <p className="mt-2">{alamat}</p>
+                {/* Jenis Kelamin */}
+                <b className="hr-style">Jenis Kelamin</b>
+                <p className="mt-2">{jenis_kelamin}</p>
 
-          {/* Status Pernikahan */}
-          <b className="hr-style">Status Pernikahan</b>
-          <p className="mt-2">{status_pernikahan}</p>
+                {/* No Telepon */}
+                <b className="hr-style">Nomor Telepon</b>
+                <p className="mt-2">{no_telepon}</p>
 
-          {/* NIK */}
-          <b className="hr-style">NIK</b>
-          <p className="mt-2">{nik}</p>
+                {/* Alamat */}
+                <b className="hr-style">Alamat</b>
+                <p className="mt-2">{alamat}</p>
 
-          {/* Alergi */}
-          <b className="hr-style">Alergi</b>
-          <p className="mt-2">{alergi}</p>
+                {/* Status Pernikahan */}
+                <b className="hr-style">Status Pernikahan</b>
+                <p className="mt-2">{status_pernikahan}</p>
 
-          {/* Nama Asuransi */}
-          <b className="hr-style">Nama Asuransi</b>
-          <p className="mt-2">{nama_asuransi}</p>
+                {/* NIK */}
+                <b className="hr-style">NIK</b>
+                <p className="mt-2">{nik}</p>
 
-          {/* Nomor Asuransi */}
-          <b className="hr-style">Nomor Asuransi</b>
-          <p className="mt-2">{no_asuransi}</p>
+                {/* Alergi */}
+                <b className="hr-style">Alergi</b>
+                <p className="mt-2">{alergi}</p>
 
-          {/* No Medical Record */}
-          <b className="hr-style">No Medical Record</b>
-          <p className="mt-2">{no_medical_record}</p>
-        </div>
-      </div>
-    </Sidebar>
+                {/* Nama Asuransi */}
+                <b className="hr-style">Nama Asuransi</b>
+                <p className="mt-2">{nama_asuransi}</p>
+
+                {/* Nomor Asuransi */}
+                <b className="hr-style">Nomor Asuransi</b>
+                <p className="mt-2">{no_asuransi}</p>
+
+                {/* No Medical Record */}
+                <b className="hr-style">No Medical Record</b>
+                <p className="mt-2">{no_medical_record}</p>
+              </div>
+            </div>
+          </Sidebar>
+        </React.Fragment>
+      )}
+    </React.Fragment>
   );
 }
