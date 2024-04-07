@@ -49,8 +49,6 @@ const ShiftHarian = () => {
         <React.Fragment>
           <Sidebar 
             title='SHIFT'>
-            
-
             <div className='container pt-3'>
               <div className="alert-pasien">
                   <div className='space-label'>

@@ -1757,6 +1757,23 @@ svg.p-checkbox-icon[data-p-highlight="true"] {
         padding-left: 0.5rem;
     }
 
+    .box {
+        width: 100%;
+        max-width: 100%;
+        height: 4.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        border-radius: 0.4rem;
+        margin-top: 0.7rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+        z-index: 2;
+        background-color: #fff; /* add a background color if needed */
+        position: relative;
+        border-bottom: 4px solid #085b93;
+    }
+
     .blue-button-left-align {
         background-color: #085b93;
         color: #ffffff;
