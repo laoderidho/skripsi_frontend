@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Modal } from "react-bootstrap";
 import axios from "../../../axios";
 import "../../../../src/style/accordion.css";
 import { Dropdown } from "primereact/dropdown";
@@ -41,6 +41,7 @@ export default function FormDiagnosa() {
   const {id} = useParams();
   const navigate = useNavigate();
   const isMobile = window.innerWidth <=600;
+
 
 
 
@@ -87,6 +88,34 @@ export default function FormDiagnosa() {
   };
   
   const token = localStorage.getItem("token");
+
+
+  const [seeDataCondition, setSeeDataCondition] = useState(null)
+
+  const handleShowAllData = () => {
+    setShowDataFaktorRisiko(true);
+    setShowDataPenyebabFisiologis(true);
+    setShowDataPenyebabSituasional(true);
+    setShowDataPenyebabPsikologis(true);
+    setShowDataGejalaMayorSubjektif(true);
+    setShowDataGejalaMayorObjektif(true);
+    setShowDataGejalaMinorSubjektif(true);
+    setShowDataGejalaMinorObjektif(true);
+    setSeeDataCondition(true)
+  }
+
+
+  const handleHideData = () =>{
+    setShowDataFaktorRisiko(false);
+    setShowDataPenyebabFisiologis(false);
+    setShowDataPenyebabSituasional(false);
+    setShowDataPenyebabPsikologis(false);
+    setShowDataGejalaMayorSubjektif(false);
+    setShowDataGejalaMayorObjektif(false);
+    setShowDataGejalaMinorSubjektif(false);
+    setShowDataGejalaMinorObjektif(false);
+    setSeeDataCondition(false)
+  }
 
   const handleDiagnosaChange = async () => {
     try {
@@ -219,33 +248,36 @@ export default function FormDiagnosa() {
         <React.Fragment>
           <Sidebar
             title=" FORM DIAGNOSA">
-
-                        <div className="container mt-2">
-                          <div className="alert-pasien">
-                            <div className='space-label'>
-                              <Row>
-                                <Col>
-                                  <Row>
-                                    <span className='shift-label'>Pasien</span>
-                                  </Row>
-                                  <Row>
-                                    <span id='form-label' className="alert-info">{nama_lengkap}</span>
-                                  </Row>
-                                </Col>
-                                <Col>
-                                  <Row>
-                                    {/* <Link to={`/perawat/askep/${}`} className="btn blue-button-left-align">
-                                      Lihat Pencatatan
-                                    </Link> */}
-                                  </Row>
-                                </Col>
-                              </Row>
-                            </div>
-                          </div>
-                        </div>
-            
             <div className="container">
-              <Form className="container">
+              <div className="container-fluid container">
+                <div className="container mt-2">
+                  <div className="alert-pasien">
+                    <div className='space-label'>
+                      <Row>
+                        <Col>
+                        <Row>
+                            <span className='shift-label'>Pasien</span>
+                        </Row>
+                          <Row>
+                            <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                          </Row>
+                        </Col>
+                        <Col>
+                        <Row>
+                          {/* <Link to={`/perawat/askep/${}`} className="btn blue-button-left-align">
+                            Lihat Pencatatan
+                          </Link> */}
+                        </Row>
+                        </Col>
+                      </Row>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="container form-margin">
+              <Form>
                 <Form.Group className="mt-4">
                   <Form.Label id="form-label">Diagnosa</Form.Label>
 
@@ -286,7 +318,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }
-                    <button className="mt-2" onClick={() => setShowDataFaktorRisiko(!showDataFaktorRisiko)} type="button"></button>
+                    <button className="btn button-switch" onClick={() => setShowDataFaktorRisiko(!showDataFaktorRisiko)} type="button">{showDataFaktorRisiko ? 'Edit data' : 'Tampilkan data'}</button>
 
 
                   </Form.Group>
@@ -318,8 +350,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }
-
-                    <Form.Check className="mt-2" checked={showDataPenyebabFisiologis} onChange={()=>setShowDataPenyebabFisiologis(!showDataPenyebabFisiologis)} type="checkbox" label="Tampilkan data" />
+                    <button className="btn button-switch" onClick={() => setShowDataPenyebabFisiologis(!showDataPenyebabFisiologis)} type="button">{showDataPenyebabFisiologis ? 'Edit data' : 'Tampilkan data'}</button>
                   </Form.Group>
 
                   <Form.Group className="mt-3">
@@ -367,7 +398,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }         
-                  <Form.Check className="mt-2" checked={showDataPenyebabSituasional} onChange={()=>setShowDataPenyebabSituasional(!showDataPenyebabSituasional)} type="checkbox" label="Tampilkan data" />
+                  <button className="btn button-switch" onClick={() => setShowDataPenyebabSituasional(!showDataPenyebabSituasional)} type="button">{showDataPenyebabSituasional ? 'Edit data' : 'Tampilkan data'}</button>
                   
                   </Form.Group>
 
@@ -399,7 +430,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }
-                  <Form.Check className="mt-2" checked={showDataPenyebabPsikologis} onChange={()=>setShowDataPenyebabPsikologis(!showDataPenyebabPsikologis)} type="checkbox" label="Tampilkan data" />
+                  <button className="btn button-switch" onClick={() => setShowDataPenyebabPsikologis(!showDataPenyebabPsikologis)} type="button">{showDataPenyebabPsikologis ? 'Edit data' : 'Tampilkan data'}</button>
                   </Form.Group>
 
                   <Form.Group className="mt-5">
@@ -431,8 +462,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }
-
-                    <Form.Check className="mt-2" checked={showDataGejalaMayorSubjektif} onChange={()=>setShowDataGejalaMayorSubjektif(!showDataGejalaMayorSubjektif)} type="checkbox" label="Tampilkan data" />
+                    <button className="btn button-switch" onClick={() => setShowDataGejalaMayorSubjektif(!showDataGejalaMayorSubjektif)} type="button">{showDataGejalaMayorSubjektif ? 'Edit data' : 'Tampilkan data'}</button>
                   </Form.Group>
 
                   <Form.Group className="mt-3">
@@ -463,8 +493,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }
-
-                    <Form.Check className="mt-2" checked={showDataGejalaMayorObjektif} onChange={()=>setShowDataGejalaMayorObjektif(!showDataGejalaMayorObjektif)} type="checkbox" label="Tampilkan data" />
+                    <button className="btn button-switch" onClick={() => setShowDataGejalaMayorObjektif(!showDataGejalaMayorObjektif)} type="button">{showDataGejalaMayorObjektif ? 'Edit data' : 'Tampilkan data'}</button>
                   </Form.Group>
 
                   <Form.Group className="mt-5">
@@ -498,8 +527,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }
-
-                    <Form.Check className="mt-2" checked={showDataGejalaMinorSubjektif} onChange={()=>setShowDataGejalaMinorSubjektif(!showDataGejalaMinorSubjektif)} type="checkbox" label="Tampilkan data" />
+                    <button className="btn button-switch" onClick={() => setShowDataGejalaMinorSubjektif(!showDataGejalaMinorSubjektif)} type="button">{showDataGejalaMinorSubjektif ? 'Edit data' : 'Tampilkan data'}</button>
                   </Form.Group>
 
                   <Form.Group className="mt-3">
@@ -530,7 +558,7 @@ export default function FormDiagnosa() {
                           callDataBack={handleBackData}
                       />
                     }
-                    <Form.Check className="mt-2" checked={showDataGejalaMinorObjektif} onChange={()=>setShowDataGejalaMinorObjektif(!showDataGejalaMinorObjektif)} type="checkbox" label="Tampilkan data" />
+                    <button className="btn button-switch" onClick={() => setShowDataGejalaMinorObjektif(!showDataGejalaMinorObjektif)} type="button">{showDataGejalaMinorObjektif ? 'Edit data' : 'Tampilkan data'}</button>
                   </Form.Group>
 
                   <Form.Group className="mt-3">
@@ -544,6 +572,11 @@ export default function FormDiagnosa() {
                     ></Form.Control>
                   </Form.Group>
                 </Form.Group>
+
+                {/* Modal See All Data */}
+
+                <button onClick={!seeDataCondition ? handleShowAllData : handleHideData} className="btn button-switch" type="button">{!seeDataCondition ? 'See All Data' : 'Edit Data'}</button>
+
 
                 <div className="d-flex justify-content-end mt-3">
                   <ConfirmModal
@@ -859,6 +892,7 @@ export default function FormDiagnosa() {
                       disabled={!selectedDiagnosa}
                       placeholder="Catatan"
                       onChange={(e) => setCatatan(e.target.value)}
+                      style={{height: '4rem'}}
                     ></Form.Control>
                   </Form.Group>
                 </Form.Group>

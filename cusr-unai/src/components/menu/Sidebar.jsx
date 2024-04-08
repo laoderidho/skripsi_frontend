@@ -94,7 +94,6 @@ export default function Sidebar(props) {
         <div>
             {isMobile ? (
                 <React.Fragment>
-
                     <div className='header-navbar-mobile'>
                     {isProfilePath ? (
                             <React.Fragment>

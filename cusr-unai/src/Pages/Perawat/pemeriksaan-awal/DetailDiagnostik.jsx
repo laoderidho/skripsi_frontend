@@ -29,6 +29,7 @@ const DetailDiagnostik = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   
+  
   useEffect(() => {
     getDataById();
   },[]);

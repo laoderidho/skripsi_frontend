@@ -14,11 +14,12 @@ export default function DaftarPasien() {
 
     // Autocomplete
 
+    const [pasien, setPasien] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [filterPasien, setFilterPasien] = useState([]);
     const isMobile = window.innerWidth <=600;
 
-    const [pasien, setPasien] = useState([]);
+    
 
 
     useEffect(()=>{

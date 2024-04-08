@@ -4,6 +4,9 @@ import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import "primereact/resources/themes/saga-blue/theme.css";
 
 export default function DaftarPasienAwal() {
 
@@ -12,6 +15,8 @@ export default function DaftarPasienAwal() {
     const [inputValue, setInputValue] = useState('');
     const [filterPasien, setFilterPasien] = useState([]);
     const [pasien, setPasien] = useState([]);
+
+    const isMobile = window.innerWidth <=600;
 
     const filteredPasien = () => {
         const filteredDiagnosa = pasien.filter((item) => {
@@ -56,61 +61,98 @@ export default function DaftarPasienAwal() {
     
 
   return (
-      <Sidebar>
-        {/* Title */}
-        <div className="container">
-            <h2>Daftar Pasien</h2>
-        </div>
+      <React.Fragment>
+        {isMobile ? (
+            <React.Fragment>
+                <Sidebar 
+                    title='DIAGNOSTIK'>
 
-        {/* Search */}
+                    {/* Search */}
 
-        <Form className="container">
-            <div className="search-container">
-                    <input 
-                        className="form-control" 
-                        type="text" 
-                        placeholder="Search" 
-                        value={inputValue} 
-                        onChange={(e) => setInputValue(e.target.value)} />
-            </div>
+                    <div className="container">
+                            <span id='form-label' className="text-alert-search">Ketik untuk mencari data pasien</span>
+                                <input 
+                                    className="form-control custom-search" 
+                                    type="text" 
+                                    placeholder="Search" 
+                                    value={inputValue} 
+                                    onChange={(e) => setInputValue(e.target.value)} />
 
-            <Table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                     
-                        <th>Nama</th>
-                        <th className="button-space"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {inputValue
-                    ? filterPasien.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.nama_lengkap}</td>
-                            <td>
+
+                        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}  stripedRows show showGridlines>
+                            <Column field="nama_lengkap" header='Nama'/>
+                            <Column 
+                            header=''
+                            body={(item) => (
                                 <Link
-                                    to={`/perawat/profil/pemeriksaan/${item.id}`}
-                                    >
-                                    Lihat
-                                </Link>
-                            </td>
-                        </tr>
-                    ))
-                    : pasien.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.nama_lengkap}</td>
-                            <td>
-                                <Link
-                                    to={`/perawat/profil/pemeriksaan/${item.id}`}
-                                    >
-                                    Lihat
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
-        </Form>
-      </Sidebar>
+                                to={`/perawat/profil/pemeriksaan/${item.id}`}
+                                className="btn d-flex justify-content-center align-items-center simple-button">Lihat</Link>
+                            )}/>
+                        </DataTable>
+
+
+                        
+                    </div>
+                </Sidebar>
+            </React.Fragment>
+        ) : (
+            <Sidebar>
+                {/* Title */}
+                <div className="container">
+                    <h2>Daftar Pasien</h2>
+                </div>
+
+                {/* Search */}
+
+                <Form className="container">
+                    <div className="search-container">
+                            <input 
+                                className="form-control" 
+                                type="text" 
+                                placeholder="Search" 
+                                value={inputValue} 
+                                onChange={(e) => setInputValue(e.target.value)} />
+                    </div>
+
+                    <Table className="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                            
+                                <th>Nama</th>
+                                <th className="button-space"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {inputValue
+                            ? filterPasien.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.nama_lengkap}</td>
+                                    <td>
+                                        <Link
+                                            to={`/perawat/profil/pemeriksaan/${item.id}`}
+                                            >
+                                            Lihat
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))
+                            : pasien.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.nama_lengkap}</td>
+                                    <td>
+                                        <Link
+                                            to={`/perawat/profil/pemeriksaan/${item.id}`}
+                                            >
+                                            Lihat
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </Form>
+            </Sidebar>
+        )}
+      </React.Fragment>
   );
 }

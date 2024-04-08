@@ -61,32 +61,38 @@ export default function ProfilPasien() {
         <Sidebar
         title='PROFIL'>
 
-          <div className="container mt-2">
-            <div className="alert-pasien">
-              <div className='space-label'>
-                  <Row>
-                    <Col>
+            <div className="container">
+              <div className="container-fluid container">
+                <div className="container mt-2">
+                  <div className="alert-pasien">
+                    <div className='space-label'>
                       <Row>
-                        <span className='shift-label'>Pasien</span>
+                        <Col>
+                        <Row>
+                            <span className='shift-label'>Pasien</span>
+                        </Row>
+                          <Row>
+                            <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                          </Row>
+                        </Col>
+                        <Col>
+                          <Row>
+                            <div className="mt-2" style={{marginRight:'0.5rem'}} >
+                              <Link to={`/perawat/askep/${perawatan_id}`} className="btn blue-button-left-align">
+                                Lihat Pencatatan
+                              </Link>
+                            </div>
+                          </Row>
+                        </Col>
                       </Row>
-                      <Row>
-                        <span id='form-label' className="alert-info">{nama_lengkap}</span>
-                      </Row>
-                    </Col>
-                    <Col>
-                      <Row>
-                        <Link to={`/perawat/askep/${perawatan_id}`} className="btn blue-button-left-align">
-                          Lihat Pencatatan
-                        </Link>
-                      </Row>
-                    </Col>
-                  </Row>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-          </div>
           
 
-          <div className="container mt-4">
+          <div className="container" style={{marginTop:'5rem'}}>
             <p id='form-label'>INFO PASIEN</p>
             <div>
               {/* Nama */}

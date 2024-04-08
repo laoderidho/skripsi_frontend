@@ -42,17 +42,17 @@ const DownloadLaporan = () => {
             <table className='bordered' id='border'>
               <thead className='table-head'>
                 <tr>
-                  <th>Tanggal</th>
-                  <th></th>
+                  <th className='font-adjust'>Tanggal</th>
+                  <th className='font-adjust'></th>
                 </tr>
               </thead>
               <tbody>
                 {getRow && getRow.map(item => (
                   <tr>
-                    <td>{item.tanggal_masuk} - {item.tanggal_keluar ? item.tanggal_keluar : "sekarang" }</td>
+                    <td cclassName='font-adjust-td'>{item.tanggal_masuk} - {item.tanggal_keluar ? item.tanggal_keluar : "sekarang" }</td>
                     <td>
                       <Link
-                        to={`/perawat/pdf/${item.id}`} target='_blank'>
+                        to={`/perawat/pdf/${item.id}`} className='btn blue-button-left-align' target='_blank'>
                           Download
                       </Link>
                     </td>

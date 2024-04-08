@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import Sidebar from "../../../components/menu/Sidebar";
 import { Form, Button, Table, Container, Row, Col, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -19,6 +19,7 @@ export default function ProfilPemeriksaan() {
     const {id} = useParams();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const isMobile = window.innerWidth <=600;
 
     useEffect(() => {
         getDataById();
@@ -46,6 +47,16 @@ export default function ProfilPemeriksaan() {
         } catch (error) {
 
         }
+    };
+
+    const ubahFormatTanggal = (tanggal) => {
+        const dateObj = new Date(tanggal);
+        const formattedDate = dateObj.toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+        return formattedDate;
     };
 
 
@@ -78,60 +89,150 @@ export default function ProfilPemeriksaan() {
     
 
   return (
-      <Sidebar>
-        {/* Title */}
-        <div className="container">
-            <h2>Data Diagnostik</h2>
-        </div>
+      <Fragment>
+        {isMobile ? (
+            <Fragment>
+                <Sidebar>
+                    {/* Title */}
+                    <div className="container">
+                        <h2>Data Diagnostik</h2>
+                    </div>
 
-        {/* Search */}
+                    <div className="container">
+                        <div className="container-fluid container">
+                            <div className="container mt-2">
+                            <div className="alert-pasien">
+                                <div className='space-label'>
+                                <Row>
+                                    <Col>
+                                    <Row>
+                                        <span className='shift-label'>Pasien</span>
+                                    </Row>
+                                    <Row>
+                                        <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                                    </Row>
+                                    </Col>
+                                    <Col>
+                                    <Row>
+                                        <div className="mt-2" style={{marginRight:'0.5rem'}} >
+                                        <Link to={`/perawat/diagnostik/tambah/${id}`} className="btn blue-button-left-align">
+                                            Tambah Diagnostik
+                                        </Link>
+                                        </div>
+                                    </Row>
+                                    </Col>
+                                </Row>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
 
-        <div className="container">
-            <Table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Nama</th>
-                            <th>
-                                <Link
-                                to={`/perawat/profilpasien/${id}`}>{nama_lengkap}</Link>
-                            </th>
-                    </tr>
-                </thead>
-            </Table>
+                    <div className="container form-margin">
+                    <span id='form-label' className="text-alert-search">Ketik untuk mencari data pasien</span>
+                        <input
+                            className="form-control custom-search"
+                            type="text"
+                            placeholder="Search"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)} />
 
-            <input
-                className="form-control"
-                type="text"
-                placeholder="Search"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)} />
+                    </div>
 
-        </div>
+                    <Container>
+                        
+                        {boxes && boxes.map((date,index) => (
+                            <Row key={index}>
+                                <Col>
+                                    <Link 
+                                        to={`/perawat/diagnostik/${date.id}`}
+                                        className="btn box">
+                                        <span className="">{date.updated_at}</span>
+                                        <span className=""></span>
+                                    </Link>
+                                </Col>
+                            </Row>
+                        ))}
+                    </Container>
+                </Sidebar>
+            </Fragment>
+        ) : (
+            <Fragment>
+                <Sidebar>
+                    {/* Title */}
+                    <div className="container">
+                        <h2>Data Diagnostik</h2>
+                    </div>
 
-        <Container>
-            <Row>
-                <Col>
-                    <Link 
-                        to={`/perawat/diagnostik/tambah/${id}`}
-                        className="btn d-flex justify-content-center align-items-center blue-button-lg mt-1">Tambah</Link>
-                </Col>
-            </Row>
-            {boxes && boxes.map((date,index) => (
-                <Row key={index}>
-                    <Col>
-                        <Link 
-                            to={`/perawat/diagnostik/${date.id}`}
-                            className="btn box">
-                            <span className="">{date.updated_at}</span>
-                            <span className=""></span>
-                        </Link>
-                    </Col>
-                </Row>
-            ))}
+                    <div className="container">
+                        <div className="container-fluid container">
+                            <div className="container mt-2">
+                            <div className="alert-pasien">
+                                <div className='space-label'>
+                                <Row>
+                                    <Col>
+                                    <Row>
+                                        <span className='shift-label'>Pasien</span>
+                                    </Row>
+                                    <Row>
+                                        <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                                    </Row>
+                                    </Col>
+                                    <Col>
+                                    <Row>
+                                        <div className="mt-2" style={{marginRight:'0.5rem'}} >
+                                        <Link to={`/perawat/diagnostik/tambah/${id}`} className="btn blue-button-left-align">
+                                            Tambah Diagnostik
+                                        </Link>
+                                        </div>
+                                    </Row>
+                                    </Col>
+                                </Row>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                    <div className="container form-margin">
+
+                        <input
+                            className="form-control custom-search"
+                            type="text"
+                            placeholder="Search"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)} />
+
+                    </div>
+
+                    <Container>
+                        <Row>
+                            <Col>
+                                <Link 
+                                    to={`/perawat/diagnostik/tambah/${id}`}
+                                    className="btn d-flex justify-content-center align-items-center blue-button-lg mt-1">Tambah</Link>
+                            </Col>
+                        </Row>
+                        {boxes && boxes.map((date,index) => (
+                            <Row key={index}>
+                                <Col>
+                                    <Link 
+                                        to={`/perawat/diagnostik/${date.id}`}
+                                        className="btn box">
+                                        <span className="">{date.updated_at}</span>
+                                        <span className=""></span>
+                                    </Link>
+                                </Col>
+                            </Row>
+                        ))}
 
 
-        </Container>
-      </Sidebar>
+                    </Container>
+                </Sidebar>
+            </Fragment>
+            
+        )}
+      </Fragment>
       
   );
 }

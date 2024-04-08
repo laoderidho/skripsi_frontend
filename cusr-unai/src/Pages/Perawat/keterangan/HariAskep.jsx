@@ -75,31 +75,35 @@ const HariAskep = () => {
       {isMobile ? (
         <React.Fragment>
           <Sidebar title='DAFTAR ASKEP'>
-            <div className="container mt-2">
-              <div className="alert-pasien">
-                <div className='space-label'>
-                  <Row>
-                    <Col>
+            <div className="container">
+              <div className="container-fluid container">
+                <div className="container mt-2">
+                  <div className="alert-pasien">
+                    <div className='space-label'>
                       <Row>
-                        <span className='shift-label'>Pasien</span>
+                        <Col>
+                        <Row>
+                            <span className='shift-label'>Pasien</span>
+                        </Row>
+                          <Row>
+                            <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                          </Row>
+                        </Col>
+                        <Col>
+                        <Row>
+                          {/* <Link to={`/perawat/askep/${}`} className="btn blue-button-left-align">
+                            Lihat Pencatatan
+                          </Link> */}
+                        </Row>
+                        </Col>
                       </Row>
-                      <Row>
-                        <span id='form-label' className="alert-info">{nama_lengkap}</span>
-                      </Row>
-                    </Col>
-                    <Col>
-                      <Row>
-                        {/* <Link to={`/perawat/askep/${}`} className="btn blue-button-left-align">
-                          Lihat Pencatatan
-                        </Link> */}
-                      </Row>
-                    </Col>
-                  </Row>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="container mt-3">
+            <div className="container" style={{marginTop: '5rem'}}>
               
               <div>
                 <span id='form-label'>Tambah Askep</span>
