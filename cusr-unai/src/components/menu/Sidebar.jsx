@@ -68,7 +68,7 @@ export default function Sidebar(props) {
 
     const componentChild = (item) => {
         return (
-            <Accordion defaultActiveKey="0">
+            <Accordion defaultActiveKey="0" alwaysOpen>
                 <Accordion.Item>
                     <Accordion.Header><i className={item.icon} style={iconStyle}></i> {item.name}</Accordion.Header>
                     <Accordion.Body>
@@ -203,32 +203,7 @@ export default function Sidebar(props) {
                                 </Row>
                             </Link>
                         </div>
-                        {/* <button
-                            className="btn back"
-                            onClick={goBack}
-                            type='button'
-                            style={{ marginRight: '1rem'}}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" width='28' height='28' viewBox="0 0 24 24" strokeWidth="1.5" stroke="#4287f5" class="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                            </svg>
-                        </button> */}
-                        {/* <button
-                            className="btn sidebarbutton-mobile"
-                            // id="sidebar"
-                            onClick={toggleSidebar}
-                            type="button"
-                            style={{ marginLeft: "1rem"}}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg"  fill="none" width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#4287f5" className="w-6 h-6 mobile-sidebar">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                        </button> */}
                     </nav>
-                    {/* <nav className='navbar-shift'>
-                        <div className='navbar-alert'>
-                            <p className='navbar-span'>Saat ini anda sedang memasuki Shift {shift}</p>
-                        </div>
-                    </nav> */}
 
                     <div className={` sidebar ${sidebar ? (!adminRoute ? "sidebar_full" : "sidebar_small") : "sidebar-false"}`}>
                         {dataMenu.map((item, index) =>
@@ -254,7 +229,7 @@ export default function Sidebar(props) {
                             type="button"
                             style={{ marginLeft: "1rem" }}
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg"  fill="none" width="30" height="30" viewBox="0 0 24 24" strokeWidth="1.0" stroke="currentColor" className="w-6 h-6 mobile-sidebar">
+                            <svg xmlns="http://www.w3.org/2000/svg"  fill="none" width="30" height="30" viewBox="0 0 24 24" strokeWidth="2.0" stroke="#085b93" className="w-6 h-6 mobile-sidebar">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                             </svg>
                         </button>
@@ -275,14 +250,9 @@ export default function Sidebar(props) {
                     </div>
 
                     {/* Content */}
-                    <div className={`content ${sidebar ? "content-true" : ""}`}>{children}</div>
-                </React.Fragment>
-
-                
+                    <div className={`content ${sidebar ? "content-true" : "content-false"}`}>{children}</div>
+                </React.Fragment>         
             )}
-
-
-        
     </div>
     );
 }

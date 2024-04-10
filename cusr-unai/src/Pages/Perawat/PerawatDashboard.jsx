@@ -122,20 +122,36 @@ export default function PerawatDashboard() {
             </React.Fragment>
         ) : (
             <React.Fragment>
-                <Sidebar
-                    title='DASHBOARD'>
+                <Sidebar>
 
                     <div className='container pt-3'>
-                        <Container className='dashboard-box'>
-                            
-                        </Container>
+                        <p style={{color:'#0859b3', fontWeight:'500', fontSize:'15px'}}>Selamat datang, {username}</p>
+                    </div>
+
+                    <div className='container'>
+                        <span id='form-label' className="text-alert-search">Ketik untuk mencari nama pasien</span>
+                            <input
+                            className="form-control custom-search"
+                            id="form-width"
+                            type="text"
+                            placeholder="Search"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            />
                     </div>
 
                     <div className='container pt-3'>
-                        <span id='form-label'>Selesaikan rekam medis:</span>
-                        <Container className='dashboard-box-layout'>
-
-                        </Container>
+                        <span id='form-label'>PASIEN YANG SEDANG DIRAWAT</span>
+                        <DataTable value={pasien} paginator rows={5}  stripedRows show showGridlines>
+                            <Column field="nama_lengkap" header='Nama'/>
+                            <Column 
+                            header=''
+                            body={(item) => (
+                                <Link
+                                to={`/perawat/askep/${item.id}`}
+                                className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
+                            )}/>
+                        </DataTable>
                     </div>
                 </Sidebar>
             </React.Fragment>

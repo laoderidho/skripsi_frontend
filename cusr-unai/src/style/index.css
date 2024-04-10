@@ -2,7 +2,9 @@
     font-family: "Inter", sans-serif;
 }
 
-
+nav.bg-white {
+    background-color: #fff !important;
+}
 
 .blue-login {
     background-color: #fff;
@@ -15,6 +17,7 @@
 nav{
     z-index: 100;
 } 
+
 
 
 
@@ -193,7 +196,8 @@ div.bordered-form.row {
 }
 
 .sidebar {
-    background-color:#ffffff;
+    background-color:#085b93;
+    width: 17rem;
     height: 100vh;
     margin-top: 5rem;
     position: fixed;
@@ -202,7 +206,6 @@ div.bordered-form.row {
     display: flex;
     flex-direction: column;
     z-index: 99;
-    box-shadow: 0 0 10px #dee2e6;
     transition: margin-left 0.3s ease-in-out; 
 }
 
@@ -251,7 +254,8 @@ div.bordered-form.row {
 .sidebar a {
     text-decoration: none;
     display: block;
-    color: #4b5563;
+    background-color: #085b93;
+    color: #fff;
     padding-left: 1.2rem;
     padding-top: 1.2rem;
     padding-bottom: 1.2rem;
@@ -280,12 +284,17 @@ div.bordered-form.row {
 
 
 .sidebar-false{
-    margin-left: -20rem;
+    margin-left: -18rem;
+}
+
+.content-false {
+    margin-left: 0rem;
+    transition: margin-left 0.2s ease-in !important;
 }
 
 .content-true {
     margin-left: 18rem;
-     transition: margin-left 0.3s ease-in !important;
+    transition: margin-left 0.2s ease-in !important;
 }
 
 #inner-accordion {
@@ -471,9 +480,6 @@ div.p-dropdown-panel.p-component.p-ripple-disabled.p-connected-overlay-enter-don
     margin: 0 auto;
 }
 
-/* .option-text {
-    margin-right: 0.7rem;
-} */
 
 
 .search-input {
@@ -761,41 +767,34 @@ thead {
 }
 
 .simple-button {
-    background-color: #ffffff;
-    color: #6e84b1;
-    height: 3rem;
-    width: 60%;
-    max-width: 60%;
+    background-color: #085b93;
+    color: #fff;
+    height: 1.7rem;
+    width: 7rem;
     text-align: center;
-    border-radius: 0.3rem;
-    border: 0.01rem solid #dee2e6;
-    box-shadow: inset 0 0 0.1rem #dee2e6;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    font-size: 13px;
+    border-color: #085b93;
 }
 
 .simple-button:hover {
-    background-color: #ffffff;
-    color: #6e84b1d8;
-    height: 3rem;
-    width: 60%;
-    max-width:60%;
+    background-color: #fff;
+    color: #085b93;
+    height: 1.7rem;
+    width: 7rem;
     text-align: center;
-    border-radius: 0.3rem;
-    border: 0.01rem solid #dee2e6;
-    box-shadow: inset 0 0 0.1rem #dee2e6; 
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    font-size: 13px;
+    border-color: #085b93;
 }
 
 /* tbody tr {
     border-bottom: 1px solid #dee2e6;
 } */
 
-.p-datatable {
-    /* border: 0.001rem solid #dee2e6; 
-    border-radius: 0.2rem; */
-}
 
-thead.p-datatable-thead {
-    background-color: #fff !important;
-}
 
 table#border.bordered {
     margin-top: 0;
@@ -810,7 +809,8 @@ table#border.bordered {
 
 .p-column-title {
     font-size: 14px;
-    color: #6b7280;
+    color: #085b93;
+    font-weight: 500;
 }
 
 .p-toolbar {
@@ -1291,7 +1291,45 @@ table#border.bordered {
     border-radius: 0.2rem;
 }
 
-/* MultiSelect */
+
+.p-datatable .p-datatable-thead > tr > th {
+    font-family: "Inter", sans-serif;
+}
+
+.p-datatable .p-datatable-thead > tr:first-child > th:first-child {
+    background: #f6fafd !important ;
+    border: 1px solid #ebeff6;
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+    border-right: 0px;
+}
+
+.p-datatable .p-datatable-thead > tr:first-child > th:last-child {
+    background: #f6fafd !important ;
+    border: 1px solid #ebeff6;
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+    border-left: 0px;
+}
+
+
+
+.p-datatable .p-datatable-tbody > tr > td {
+    margin-bottom: 1rem !important;
+    background: #f6fafd !important ;
+    border-bottom: 1px solid #ebeff6 !important;
+}
+
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: #085b93;
+    color: #fff;
+    border: 1px solid #085b93;
+    border-radius: 1.5rem;
+}
+
+
+
 
 .p-checkbox .p-checkbox-box {
     border: 0.02rem solid #ced4da;
@@ -1613,6 +1651,12 @@ svg.p-checkbox-icon[data-p-highlight="true"] {
 
 .text-alert-search {
     color: #085b93;
+}
+
+.custom-search {
+    border-color: #085b93;
+    width: 30%;
+    max-width: 30%;
 }
 
 

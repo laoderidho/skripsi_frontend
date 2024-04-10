@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Sidebar from "../../../components/menu/Sidebar";
 import { Form, Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "../../../axios";
 import AuthorizationRoute from "../../../AuthorizationRoute";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -9,6 +9,8 @@ import { Toolbar } from 'primereact/toolbar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ScrollPanel } from 'primereact/scrollpanel';
+import ProfilPasienDesktop from "./ProfilPasienDesktop";
+
 
 export default function DaftarPasien() {
 
@@ -17,6 +19,11 @@ export default function DaftarPasien() {
     const [pasien, setPasien] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [filterPasien, setFilterPasien] = useState([]);
+    const [selectedPasien, setSelectedPasien] = useState(null);
+    const id = useParams();
+    const navigate = useNavigate();
+
+
     const isMobile = window.innerWidth <=600;
 
     
@@ -62,6 +69,11 @@ export default function DaftarPasien() {
 
     const token = localStorage.getItem('token')
 
+    const handleViewProfile = (item) => {
+      // Navigasi ke halaman profil pasien
+      navigate(`/perawat/profilpasien/${item.id}/${item.perawatan_id}`);
+    }
+
     // Table
 
     const getdataPasien = async () =>{
@@ -77,6 +89,14 @@ export default function DaftarPasien() {
             // AuthorizationRoute(error.response.status)
         }
     }
+
+    const itemPath = [
+      {label: 'Daftar Pasien', path: '/perawat/daftarpasien'},
+      {label: 'Info Pasien', path: '/perawat/profilpasien/:id/:perawatan_id'},
+      
+
+    ]
+
   return (
     <React.Fragment>
       {isMobile ? (
@@ -106,13 +126,7 @@ export default function DaftarPasien() {
                       className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
                   )}/>
               </DataTable>
-            </div>
-
-            
-
-            
-
-            
+            </div>           
           </Sidebar>
         </React.Fragment>
       ) : (
@@ -122,6 +136,8 @@ export default function DaftarPasien() {
             <div className="container">
               <h2>Daftar Pasien</h2>
             </div>
+
+            
 
             <div className="container">
 
@@ -133,95 +149,30 @@ export default function DaftarPasien() {
                   placeholder="Search"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                />
-
-                {/* <Container className="table-box-layout">
-                  <span id="form-label">
-                    Nama
-                  </span>
-                </Container> */}
-
-                <div className="container">
-                  <table id="border">
-                      <thead>
-                          <tr>
-                              <th>Nama</th>
-                              <th></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {pasien.map((item, index) => (
-                              <tr key={index}>
-                                  <td>{item.nama_lengkap}</td>
-                                  <td>
-                                      <Link 
-                                          to={`/perawat/laporan/${item.id}/${item.nama_lengkap}`}
-                                          className="btn d-flex justify-content-center align-items-center simple-button">
-                                          Lihat Laporan
-                                      </Link>
-                                  </td>
-                              </tr>
-                          ))}
-                      </tbody>
-                  </table>
-                </div>
-
-                {/* <div className="tbody-box-layout pt-3">
-                  {inputValue ? filterPasien.map((item, index) => (
-                    <>
-                      <div className="table-body pt-3">
-                          <Row key={index}>
-                            <Col xs={8}>
-                              <p>{item.nama_lengkap}</p>
-                            </Col>
-                            <Col>
-                              <p>
-                                <Link to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
-                                  className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
-                              </p>
-                            </Col>
-                        </Row>
-                      </div>
-                      <hr className="hr-custom"/>
-                    </>
-                    
-                  )) : pasien.map((item, index) => (
-                    <>
-                      <div className="container pt-3">
-                          <Row key={index}>
-                            <Col xs={8}>
-                              <p>{item.nama_lengkap}</p>
-                            </Col>
-                            <Col>
-                              <p>
-                                <Link to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
-                                  className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
-                              </p>
-                            </Col>
-                        </Row>
-                      </div>
-                    <hr className="hr-custom"/>
-                    </>
-                  ))}
-                </div> */}
-            </div>
+                />            
+            </div>  
 
             <div className="container">
-              
+                  <Row>
+                    <Col xs={6}>
+                        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5} stripedRows show showGridlines>
+                            <Column field="nama_lengkap" header='Nama' />
+                            <Column
+                                header=''
+                                body={(item) => (
+                                    <button
+                                        onClick={() => handleViewProfile(item)}
+                                        className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</button>
+                                )} />
+                        </DataTable>
+                    </Col>
+                    <Col xs={4} className="pt-4">
+                        <ScrollPanel style={{ width: '100%', height: '600px', backgroundColor: '#f6fafd' }}>
+                          <ProfilPasienDesktop selectedPasien={selectedPasien}/>
+                        </ScrollPanel>
+                    </Col>
+                </Row>
             </div>
-
-            {/* <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}    stripedRows show showGridlines className="mt-3">
-                <Column field="nama_lengkap" header='Nama'/>
-                <Column 
-                  header=''
-                  body={(item) => (
-                    <Link
-                      to={`/perawat/profilpasien/${item.id}/${item.perawatan_id}`}
-                      className="btn d-flex justify-content-center align-items-center simple-button">Lihat Profil</Link>
-                  )}/>
-              </DataTable> */}
-
-            
           </Sidebar>
         </React.Fragment>
       )}
