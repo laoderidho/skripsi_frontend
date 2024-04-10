@@ -16,16 +16,12 @@ const AddPerawat = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
-  const [photo, setPhoto] = useState("");
   const [shift, setShift] = useState("");
   const navigate = useNavigate();
   const {id} = useParams();
   const token=localStorage.getItem("token");
   const [showPassword, setShowPassword] = useState(false);
-  
-  const handlePhotoChange = (e) => {
-    setPhoto(e.target.files[0])
-  };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -43,7 +39,6 @@ const AddPerawat = () => {
         password: password,
         status: status,
         role: "perawat",
-        photo: photo,
         shift: shift,
       },
       { 
@@ -51,7 +46,7 @@ const AddPerawat = () => {
       });
       navigate("/admin/user");
     } catch (error){
-        console.log(photo);
+
     }
     
   };

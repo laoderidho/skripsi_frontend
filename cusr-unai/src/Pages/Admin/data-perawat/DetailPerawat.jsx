@@ -69,10 +69,9 @@ const DetailPerawat = () => {
     setShowPassword(!showPassword);
   };
 
-  const submitForm = async (e) => {
-    e.preventDefault();
+  const submitForm = async () => {
     try {
-      const res = await axios.post(`/admin/users/detail/${id}`, {
+      const res = await axios.post(`/admin/users/update/${id}`, {
         nama_lengkap: nama_lengkap,
         tanggal_lahir: tanggal_lahir,
         jenis_kelamin: jenis_kelamin,
@@ -86,7 +85,7 @@ const DetailPerawat = () => {
         shift: shift,
       },
       { 
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data'}
+        headers: { Authorization: `Bearer ${token}`}
       });
       navigate("/admin/user");
     } catch (error){
@@ -100,6 +99,7 @@ const DetailPerawat = () => {
         await axios.post(`/admin/users/delete/${id}`, {
             headers: { Authorization: `Bearer ${token}`}
         });
+        navigate("/admin/user");
     } catch (error) {
         
     }
@@ -109,12 +109,12 @@ const DetailPerawat = () => {
   return (
     <Sidebar>
       <div className="container">
-        <h2>Tambah Perawat</h2>
+        <h2>  {!isEditing ? "Detail Perawat" : "Update Perawat"}</h2>
         <Breadcrumb>
           <Breadcrumb.Item href="/admin/daftarperawat">
             {loading ? <Skeleton width="200px" height="30px"/> : 'Daftar Perawat'}
           </Breadcrumb.Item>
-          <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
+          <Breadcrumb.Item active>{!isEditing ? "Detail" : "Update"}</Breadcrumb.Item>
         </Breadcrumb>
       </div>
 
@@ -239,18 +239,6 @@ const DetailPerawat = () => {
               </Form.Select>
             </Form.Group> */}
 
-            <Form.Group className="mb-3">
-              <Form.Label id="form-label">{loading ? <Skeleton width="50px"/> : 'Photo'}</Form.Label>
-              <Form.Control 
-                id="form-control-input"
-                className='form-input-photo'
-                type="file" 
-                accept='.jpg, .png'
-                placeholder="Pilih Photo"
-                onChange={handlePhotoChange}
-                disabled={!isEditing}
-                />
-            </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label id="form-label">{loading ? <Skeleton width="50px"/> : 'Shift'}</Form.Label>
@@ -338,20 +326,18 @@ const DetailPerawat = () => {
                   successMessage={"Data Pasien berhasil diubah"}
                   cancelMessage={"Data Pasien gagal diubah"}
                   buttonText={"Simpan"}
-                  to={`/admin/daftarperawat/${id}`}
                 />
 
               </>  
               )}
 
               {!isEditing && (
-                <Button
-                onClick={() => setShowModal(true)}
-                className='btn delete-button'
-                type="button"
-              >
-                Delete
-              </Button>
+                 <ConfirmModal
+                  onConfirm={deletePerawat}
+                  successMessage={"Data Pasien berhasil Dihapus"}
+                  cancelMessage={"Data Pasien gagal Dihapus"}
+                  buttonText={"Hapus"}
+                />
               )}
 
             </div>
