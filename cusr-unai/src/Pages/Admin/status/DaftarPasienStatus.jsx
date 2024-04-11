@@ -216,34 +216,6 @@ export default function DaftarPasienStatus() {
                             )}/>
                     
                     
-                    <Column 
-                        header={loading ? <Skeleton width="90px" /> : 'TRIASE'}
-                        body={(rowData) => (
-                            <>
-                                <div>
-                                    {rowData.triase === "merah" ? (
-                                        <Button href='#' className='triase-merah text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : rowData.triase === "kuning" ? (
-                                        <Button href="#" className='triase-kuning text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : rowData.triase === "hijau" ? (
-                                        <Button href="#" className='triase-hijau text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : rowData.triase === "hitam" ? (
-                                        <Button href="#" className='triase-hitam text-white p-1'>
-                                            
-                                        </Button>
-                                    ) : (
-                                        "Tidak di rawat inap"
-                                    )}
-                                </div>
-                            </>
-                        )}
-                    />
                     {/* <Column 
                         header=''
                         body={(rowData) => (
