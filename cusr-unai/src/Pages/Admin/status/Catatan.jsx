@@ -42,14 +42,17 @@ export default function Catatan() {
     const [showJenisRuanganSelect, setShowRuanganSelect] = useState(false);
 
     const [idBed, setIdBed] = useState(null);
+
+    const [perawatanid, setPerawatanId] = useState(null);
  
 
     const handleShow = () => {
         setShowModal(true);
     };
 
-    const handleShowAlert = () => {
+    const handleShowAlert = (id) => {
         setShowAlertSelesai(true);
+        setPerawatanId(id);
     };
 
 
@@ -164,9 +167,9 @@ export default function Catatan() {
         }
     }
 
-    const getSembuh = async (token) => {
+    const getSembuh = async () => {
         try {
-            const res = await axios.post(`/admin/rawat-inap/recover/${id}`, {
+            const res = await axios.post(`/admin/rawat-inap/recover/${perawatanid}`, {
                 headers: { Authorization: `Bearer ${token}`}
             });
             setShowAlertSelesai(false);
@@ -298,7 +301,7 @@ export default function Catatan() {
                                                             </Col>
                                                             <Col
                                                                 className=''
-                                                                onClick={handleShowAlert}>
+                                                                onClick={()=>handleShowAlert(item.id)}>
                                                                 <Button>Selesai</Button>
                                                             </Col>
                                                         </>
