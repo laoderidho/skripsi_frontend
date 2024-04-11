@@ -69,7 +69,7 @@ export default function DashboardPage() {
   return (
     <Sidebar>
         <div className="container">
-        <h2>Tambah Perawat</h2>
+        <h2>Dashboard</h2>
         <Breadcrumb>
           <Breadcrumb.Item active href="/admin/Dashboard">
             Admin

@@ -250,7 +250,7 @@ const KeteranganAskep = () => {
                                   <Link to={`/perawat/askep/luaran/${askep.id}`} className='label-askep'>Luaran</Link>
                                 ) : ( "Luaran" )}</td>
                                 <td className='font-adjust-td'>
-                                  {askep.tanggal_penilaian_luaran ? (
+                                  {askep.tanggal_pemberian_luaran ? (
                                     `${askep.tanggal_pemberian_luaran}/${askep.jam_pemberian_luaran}`
                                   ) : ( askep.access == false ? 'Belum Terisi' :
                                     <Link
@@ -423,7 +423,7 @@ const KeteranganAskep = () => {
                                   <Link to={`/perawat/askep/luaran/${askep.id}`} className='label-askep'>Luaran</Link>
                                 ) : ( "Luaran" )}</td>
                                 <td>
-                                  {askep.tanggal_penilaian_luaran ? (
+                                  {askep.tanggal_pemberian_luaran ? (
                                     `${askep.tanggal_pemberian_luaran}/${askep.jam_pemberian_luaran}`
                                   ) : ( askep.access == false ? 'Belum Terisi' :
                                     <Link

@@ -190,7 +190,7 @@ const HariAskep = () => {
                             </Row>
                             <Row>
                               <span>
-                                <Link to={`/perawat/askep/${`/perawat/askep/form-diagnosa/${id}`}`} className="btn blue-button-left-align">
+                                <Link to={`${`/perawat/askep/form-diagnosa/${id}`}`} className="btn blue-button-left-align">
                                 Tambah
                               </Link>
                               </span>

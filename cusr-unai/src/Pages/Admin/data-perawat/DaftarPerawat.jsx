@@ -136,7 +136,7 @@ export default function DaftarPerawat() {
                     field="" 
                     header={loading ? <Skeleton width="50px" /> : 'Status'} 
                     body={(rowData) => (
-                        loading ? rowData.data : rowData.status
+                        loading ? rowData.data : (rowData.status == 1 ? 'Aktif' : 'Nonaktif')
                     )}/>
                 <Column header=''
                 body={(rowData) => (
