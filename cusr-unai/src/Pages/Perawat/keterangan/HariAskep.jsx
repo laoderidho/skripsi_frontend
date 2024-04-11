@@ -8,19 +8,34 @@ import {
   Col,
   Container,
 } from "react-bootstrap";
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import "primereact/resources/themes/saga-blue/theme.css";
 import Sidebar from "../../../components/menu/Sidebar";
 import { Link } from "react-router-dom";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useNavigate, useParams } from "react-router-dom";
+import { ScrollPanel } from 'primereact/scrollpanel';
 import axios from "../../../axios";
 
 const HariAskep = () => {
   const [nama_lengkap, setNamaLengkap] = useState("");
-  const { id } = useParams();
+  const { id, tanggal } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [row, setRow] = useState([]);
   const isMobile = window.innerWidth <=600;
+
+  const getDataShiftById = async () => {
+    try {
+      const res = await axios.post(
+        `/perawat/listaskep/setname/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setNamaLengkap(res.data.name);
+    } catch (error) {}
+  };
 
   const getDataById = async () => {
     try {
@@ -48,8 +63,13 @@ const HariAskep = () => {
     }
   };
 
+  const handleShowAskep = () => {
+    
+  }
+
   useEffect(() => {
     getDataById();
+    getDataShiftById();
     handleAddRow();
     console.log(id);
   }, []);
@@ -130,7 +150,7 @@ const HariAskep = () => {
                             <Form.Label id='form-label'>
                               <Row>
                                 <Col>
-                                  <span>Tanggal: {tambahkanHari(item.tanggal_pemeriksaan)}</span>
+                                  <span>{`${item.hari}-${item.tanggal_pemeriksaan}`}</span>
                                   <div className="mt-2">
                                     <Link to={`/perawat/askep/shift/${id}/${item.tanggal_pemeriksaan}`}
                                     className="btn blue-button-left-align-small">Lihat</Link>
@@ -152,59 +172,73 @@ const HariAskep = () => {
         <React.Fragment>
           <Sidebar>
             <div className="container">
-              <h2>Daftar ASKEP</h2>
+              <h5>Daftar ASKEP</h5>
             </div>
 
-            <div className="container">
-              <Table className="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>Nama</th>
-                    <th>
-                      <Link to={`/perawat/profilpasien/${id}`}>
-                        {nama_lengkap}
-                      </Link>
-                    </th>
-                  </tr>
-                </thead>
-              </Table>
-
-              <Link
-                to={`/perawat/askep/form-diagnosa/${id}`}
-                className="btn d-flex justify-content-center align-items-center blue-button-lg mt-1"
-              >
-                Tambah
-              </Link>
-
-              <input className="form-control" type="text" placeholder="Search" />
-
+            <div className="container mt-2">
               <Row>
-                <Col>
-                  <ListGroup className="pt-4">
-                    {row && row.map(item => (
-                      <ListGroup.Item>
+                <Col xs={3}>
+                  <div className="alert-pasien-askep">
+                      <div className='space-label'>
                         <Row>
-                          <Col xs={8}>
-                            <Form.Label id='form-label'>
-                              <Row>
-                                <Col>
-                                  <Row>
-                                    {/* Menggunakan fungsi untuk mengubah format tanggal dan menambahkan nama hari */}
-                                    <Link to={`/perawat/askep/shift/${id}/${item.tanggal_pemeriksaan}`}>
-                                      {tambahkanHari(item.tanggal_pemeriksaan)}
-                                    </Link>
-                                  </Row>
-                                </Col>
-                              </Row>
-                            </Form.Label>
+                          <Col>
+                          <Row>
+                              <span className='shift-label'>Pasien</span>
+                          </Row>
+                            <Row>
+                              <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                            </Row>
+                            <Row>
+                              <span>
+                                <Link to={`/perawat/askep/${`/perawat/askep/form-diagnosa/${id}`}`} className="btn blue-button-left-align">
+                                Tambah
+                              </Link>
+                              </span>
+                            </Row>
                           </Col>
                         </Row>
-                      </ListGroup.Item>
-                    ))}
-                  </ListGroup>
+                      </div>
+                    </div>
+
+                    <div className="container">
+                      <Row>
+                        <Col>
+                            <ScrollPanel className="mt-2">
+                              {row && row.map(item => (
+                                <Accordion activeIndex={0}>
+                                  <AccordionTab header={tambahkanHari(item.tanggal_pemeriksaan)}>
+                                    <ListGroup variant="flush">
+                                      <ListGroup.Item>
+                                        <Link to={`/perawat/askep/shift/keterangan/${id}/${item.tanggal_pemeriksaan}/1`}>Shift 1</Link>
+                                      </ListGroup.Item>
+                                      <ListGroup.Item>
+                                        <Link to={`/perawat/askep/shift/keterangan/${id}/${item.tanggal_pemeriksaan}/2`}>Shift 2</Link>
+                                      </ListGroup.Item>
+                                      <ListGroup.Item>
+                                        <Link to={`/perawat/askep/shift/keterangan/${id}/${item.tanggal_pemeriksaan}/3`}>Shift 3</Link>
+                                      </ListGroup.Item>
+                                    </ListGroup>
+
+                                  </AccordionTab>
+                                </Accordion>
+                              ))}
+                            </ScrollPanel>
+                        </Col>
+                      </Row>
+                    </div>  
                 </Col>
+
+                <Col xs={3} className="scroll-panel-box-askep">
+                  {/* <ScrollPanel style={{ width: '100%', height: '700px', backgroundColor: '#f6fafd' }}>
+                  
+                  </ScrollPanel> */}
+                </Col>
+
+              
               </Row>
             </div>
+
+            
           </Sidebar>
         </React.Fragment>
       )}

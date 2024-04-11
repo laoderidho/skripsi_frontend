@@ -31,17 +31,26 @@ export default function Askep() {
   },[])
 
   return (
-    <div className='container'>
-      <div className='header-pdf'>
+    <div className=''>
+      <div className=''>
         <div className='container-pdf'>
-          <img className='logo-pdf' src={LogoUnai} alt='Logo Unai' />
-          <div className='title-pdf'>
-            <h3>KLINIK UNIVERSITAS ADVENT INDONESIA</h3>
-            <h6 style={{fontWeight:'400'}}>Jl. Kolonel Masturi No. 288 Parompong-Bandung Barat</h6>
-            <p style={{fontSize:'20px'}}>CATATAN ASUHAN KEPERAWATAN (ASKEP)</p>
-          </div>
+          <span>
+            <img className='logo-pdf' src={LogoUnai} alt='Logo Unai' />
+          </span>
+          <span style={{marginLeft: '0.5rem'}}>
+            <p>KLINIK UNIVERSITAS ADVENT INDONESIA</p>
+          </span>
+        </div>
+        <div className='container-pdf-heading'>
+          <p style={{fontWeight:'400', fontSize: '11px', marginLeft: '1.7rem'}}>Jl. Kolonel Masturi No. 288 Parompong-Bandung Barat</p>
         </div>
       </div>
+
+        {/* <div className=''>
+        
+            <h6 style={{fontWeight:'400'}}>Jl. Kolonel Masturi No. 288 Parompong-Bandung Barat</h6>
+            <p style={{fontSize:'20px'}}>CATATAN ASUHAN KEPERAWATAN (ASKEP)</p>
+          </div> */}
 
       <div>
         <div className='container-svg'>

@@ -339,16 +339,26 @@ div.bordered-form.row {
 
 }
 
-.accordion-button:not(.collapsed){
+/* .accordion-button:not(.collapsed){
     background-color: #fff;
     color: #4b5563;
     box-shadow: none;
-}
+} */
 
 .accordion-button{
-    color: #4b5563;
+    color: #fff;
     font-size: 13px;
-    border-bottom: 1px solid #e9ecef;
+    background-color: #085b93;
+}
+
+.accordion-button:active {
+    color: #085b93;
+    background-color: #085b93;
+}
+
+.accordion-button:hover {
+    background-color: #fff;
+    color: #085b93;
 }
 
 .accordion-button:focus {
@@ -357,7 +367,7 @@ div.bordered-form.row {
 }
 
 .accordion-button::after {
-   background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 stroke=%27%23ffffff%27%3e%3cpath fill-rule=%27evenodd%27 d=%27M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z%27/%3e%3c/svg%3e");
+   color: #085b93;
 }
 
 .accordion-button:not(.colapsed)::after{
@@ -632,31 +642,30 @@ table {
 
 .logo-pdf {
     display: inline-block;
-    width: 90px;
-    height: 90px;
+    width: 20px;
+    height: 20px;
     margin-bottom: 5rem;
 }
 
 .header-pdf {
     display: flex;
-    justify-content: center;
-    align-items: center;
+   align-items: center;
+   justify-content: left;
 }
 
 .title-pdf {
     text-align: center;
     display: inline-block;
     margin-left: 2rem;
-    margin-top: 4rem;
+   
 }
 
 .container-pdf {
-    display: inline-block;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
+    display: flex;
+    height: 2rem;
 }
+
+
 
 .watermark-pdf {
    opacity: 0.03;
@@ -1013,9 +1022,24 @@ table#border.bordered {
 .blue-button-left-align {
     background-color: #085b93;
     color: #ffffff;
-    border-radius: 0.2rem;
-    /* margin-bottom: 1rem; */ 
+    border-radius: 1rem;
+    font-size: 13px;
     border: 1px solid #085b93;
+    width: 11rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 0.3rem ;
+}
+
+.blue-button-left-align-askep {
+    background-color: #085b93;
+    color: #ffffff;
+    border-radius: 1rem;
+    font-size: 13px;
+    border: 1px solid #085b93;
+    width: 11rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 0.6rem ;
+    margin-left: 0.7rem;
 }
 
 
@@ -1658,6 +1682,112 @@ svg.p-checkbox-icon[data-p-highlight="true"] {
     width: 30%;
     max-width: 30%;
 }
+
+
+
+.alert-pasien {
+    background-color: #f6fafd;
+    border: 1px solid #dfedf8;
+    border-radius: 0.3rem;
+    border-left: 4px solid #085b93;
+    height: 4rem;
+    padding-left: 0.5rem;
+    padding-top: 0.1rem;
+    text-align: left;
+    margin-top: 0.5rem;
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
+    
+}
+
+.alert-pasien-askep {
+    background-color: #f6fafd;
+    border: 1px solid #dfedf8;
+    border-radius: 0.3rem;
+    border-left: 4px solid #085b93;
+    height: 6rem;
+    padding-left: 0.5rem;
+    padding-top: 0.1rem;
+    text-align: left;
+    margin-top: 0.5rem;
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
+    
+}
+
+.alert-info {
+    font-weight: 500;
+    color: #085b93;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.content-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+}
+
+.hr-custom {
+    margin: 0;
+    margin-top: 6px;
+    color: #085b93;
+
+}
+
+.title-profile {
+    color: #b1b1b1;
+}
+
+.p-scrollpanel-wrapper {
+    border: 1px solid #085b9321;
+    border-radius: 0.3rem;
+}
+
+.scroll-panel-box {
+    margin-top: 2rem;
+}
+
+.scroll-panel-box-askep {
+    margin-top: 0.5rem;
+}
+
+.scroll-panel-inner {
+    margin-left: 0.3rem;
+}
+
+.blue-button-left-align-custom {
+    background-color: #085b93;
+    color: #ffffff;
+    border-radius: 1rem;
+    font-size: 13px;
+    border: 1px solid #085b93;
+    width: 8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    height: 1.5rem;
+    margin-top: 0.3rem ;
+    text-decoration: none;
+}
+
+.page {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 2cm;
+    margin: 1cm auto;
+    border: 1px solid #d3d3d3;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.subpage {
+    padding: 1cm;
+    border: 1px solid #000 !important;
+    height: 256mm;
+    outline: 2cm #f6fafd;
+    overflow: hidden !important;
+}
+
 
 
 

@@ -82,7 +82,7 @@ export default function DaftarPasienLaporan() {
                                         value={inputValue} 
                                         onChange={(e) => setInputValue(e.target.value)} />
 
-                        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}  stripedRows show showGridlines>
+                        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={10}  stripedRows show showGridlines>
                             <Column field="nama_lengkap" header='Nama'/>
                             <Column 
                             header=''
@@ -105,39 +105,26 @@ export default function DaftarPasienLaporan() {
 
                     {/* Search */}
 
-                    <Form className="container">
-                        <div className="search-container mb-5">
-                                <input className="form-control" type="text" placeholder="Search" value={inputValue} />
+                    <div className="container">
+                        <span id='form-label' className="text-alert-search">Ketik untuk mencari data pasien</span>
+                                    <input 
+                                        className="form-control custom-search" 
+                                        type="text" 
+                                        placeholder="Search" 
+                                        value={inputValue} 
+                                        onChange={(e) => setInputValue(e.target.value)} />
 
-                                {/* <Link to="/admin/daftarpasien/tambah" className="btn d-flex justify-content-center align-items-center blue-button">
-                                    Tambah
-                                </Link> */}
-                                
-                        </div>
-
-                        <table className="bordered" id='border'>
-                            <thead>
-                                <tr className="table-head">
-                                    <th>Nama</th>
-                                    <th className="button-space"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {pasien.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.nama_lengkap}</td>
-                                    <td>
-                                        <Link 
-                                            to={`/perawat/laporan/${item.id}/${item.nama_lengkap}`}
-                                            class="d-flex justify-content-center align-items-center">
-                                            Lihat Laporan
-                                        </Link>
-                                    </td>
-                                </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </Form>
+                        <DataTable value={inputValue ? filterPasien : pasien} paginator rows={20}  stripedRows show showGridlines>
+                            <Column field="nama_lengkap" header='Nama'/>
+                            <Column 
+                            header=''
+                            body={(item) => (
+                                <Link
+                                to={`/perawat/laporan/${item.id}/${item.nama_lengkap}`}
+                                className="btn d-flex justify-content-center align-items-center blue-button-left-align-custom">Lihat Laporan</Link>
+                            )}/>
+                        </DataTable>
+                    </div>
                 </Sidebar>
             </React.Fragment>
         )}

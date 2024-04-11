@@ -22,12 +22,26 @@ const PDF = () => {
 
     return (
         <div>
-            <button type='button' onClick={handleDownloadPdf}>Download</button>
-            <div>Download PDF</div>
-            <div ref={printRef}>
-                <Askep />
-
+            <div>
+                <span>Download PDF Askep </span>
+                <span>
+                    <button type='button' onClick={handleDownloadPdf} className='btn blue-button-left-align'>Download</button>
+                </span>
             </div>
+
+            <div className='container'>
+                <div className='book'>
+                    <div className='page'>
+                        <div className='subpage'>
+                            <div ref={printRef}>
+                                <Askep />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
         </div>
     );
 };

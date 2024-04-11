@@ -131,7 +131,7 @@ export default function DaftarPasien() {
           >
         </Toolbar>
 
-        <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien)} paginator rows={5}  tableStyle={{ minWidth: '50rem' }}  stripedRows show showGridlines className="mt-3">
+        <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien)} paginator rows={20}  tableStyle={{ minWidth: '50rem' }}  stripedRows show showGridlines className="mt-3">
           <Column 
             field="" 
             header={loading ? <Skeleton width="50px" /> : 'No'}

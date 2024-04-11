@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Table, Modal, Form, Container, Row, Col } from "react-bootstrap";
+import { Button, Table, Modal, Form, Container, Row, Col, ListGroup } from "react-bootstrap";
 import Sidebar from '../../../components/menu/Sidebar'
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from 'react-router-dom'
@@ -7,6 +7,8 @@ import axios from "../../../axios";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/saga-blue/theme.css";
+import { ScrollPanel } from 'primereact/scrollpanel';
+import { Accordion, AccordionTab } from 'primereact/accordion';
 
 
 const KeteranganAskep = () => {
@@ -16,6 +18,7 @@ const KeteranganAskep = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({});
   const [showTime, setShowTime] = useState(false);
+  const [row, setRow] = useState([]);
   const {id, tanggal, shift} = useParams();
   const navigate =  useNavigate();
   const token = localStorage.getItem("token");
@@ -24,6 +27,8 @@ const KeteranganAskep = () => {
   const isMobile = window.innerWidth <=600;
   const shiftActive = sessionStorage.getItem('shift');
   const dateNow =  new Date();
+  const [activeIndex, setActiveIndex] = useState(null);
+ 
 
   const [nama_lengkap, setNamaLengkap] = useState('');
 
@@ -42,19 +47,45 @@ const KeteranganAskep = () => {
   
   const getListAskep = async () => {
 
-     const convertDate = `'${tanggal}' `
-    try{
-      const response = await axios.post(`/perawat/list-askep/${id}/${shift}/${convertDate}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setListAskep(response.data);
-      console.log(response.data);
-    }catch(error){
-      console.error(error);
+    const convertDate = `'${tanggal}' `
+      try{
+        const response = await axios.post(`/perawat/list-askep/${id}/${shift}/${convertDate}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setListAskep(response.data);
+        console.log(response.data);
+      }catch(error){
+        console.error(error);
+      }
+    };
+
+  useEffect(()=>{
+    getListAskep();
+  },[id, shift, tanggal])
+
+  const handleAddRow = async () => {
+    try {
+      const res = await axios.post(
+        `/perawat/listaskep/list-pemeriksaan/${id} `,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setRow(res.data);
+    } catch (error) {
+      console.log(error)
     }
   };
+
+  // const tambahkanHari = (tanggal) => {
+  //   const [day, month, year] = tanggal.split('/');
+  //   const newDate = new Date(`${year}-${month}-${day}`);
+  //   const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  //   const dayName = days[newDate.getDay()];
+  //   return `${dayName}, ${tanggal}`;
+  // };
 
   
 
@@ -62,6 +93,7 @@ const KeteranganAskep = () => {
     // getDateDiagnose();
     getListAskep();
     getDataById();
+    handleAddRow();
   },[]);
 
 
@@ -143,8 +175,7 @@ const KeteranganAskep = () => {
               </div>
               {listAskep &&
                 listAskep.map((askep, index) => (
-                  <>
-                    
+                  <>                    
                     <div className='container-label'>
                       <p id='label-user-askep' className='pt-3'>User: {askep.nama_lengkap}</p>
                     </div>
@@ -257,330 +288,185 @@ const KeteranganAskep = () => {
                     </div>
                   </>
                 ))}
-
-              <div>
-
-              </div>
-              {/* Render Diagnosa */}
-              {diagnosa.map((diag, index) => (
-                <div key={diag.id} className="box-panel">
-                  <div className="flexbox justify-content modify">
-                    <span>User: {diag.user}</span>
-                    <span style={{ paddingLeft: "8rem" }}>No: </span>
-                  </div>
-
-                  {/* <Container className="container-modify">
-                    <Row>
-                      <Col>
-                        <Link style={{ paddingLeft: "0.7rem" }}>Diagnosa</Link>
-
-                        <div>
-                          <span>
-                            <p
-                              style={{
-                                paddingLeft: "0.7rem",
-                                fontSize: "14px",
-                                paddingTop: "0rem",
-                              }}
-                            >
-                              {diag.hari} - {diag.tanggal}
-                            </p>
-                          </span>
-                        </div>
-                      </Col>
-                      <Col>
-                        <Link 
-                          to={`/perawat/askep/form-intervensi/${diag.id}`}
-                          className='btn d-flex justify-content-center align-items-center option-button-svg mt-1'>
-                            <span>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                              </svg>
-                            </span>
-                            <span className='option-text'>Intervensi</span>
-                          </Link>
-                      </Col>
-                    </Row>
-                  </Container> */}
-
-                  <div>
-                    <br></br>
-                  </div>
-                </div>
-              ))}
-
-              {/* Render Intervensi */}
-              {intervensi.map((inter, index) => (
-                <div key={inter.id} className="box-panel">
-                  <Container className="container-modify">
-                    <Row>
-                      <Col>
-                        <Link style={{ paddingLeft: "0.7rem" }}>Intervensi</Link>
-
-                        <div>
-                          <span>
-                            <p
-                              style={{
-                                paddingLeft: "0.7rem",
-                                fontSize: "14px",
-                                paddingTop: "0rem",
-                              }}
-                            >
-                              {inter.hari} - {inter.tanggal}
-                            </p>
-                          </span>
-                        </div>
-                      </Col>
-                      <Col>
-                        <Link
-                          to={`/perawat/askep/form-intervensi/${id}`}
-                          className="btn d-flex justify-content-center align-items-center option-button-svg mt-1"
-                        >
-                          <span>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              className="svg-askep"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M12 4.5v15m7.5-7.5h-15"
-                              />
-                            </svg>
-                          </span>
-                          <span className="option-text">Implementasi</span>
-                        </Link>
-                      </Col>
-                    </Row>
-                  </Container>
-                </div>
-              ))}
             </div>
           </Sidebar>
         </React.Fragment>
       ) : (
+
+        // Desktop
         <Sidebar
           title="ASKEP">
           <div className="container">
-            <h2>Askep</h2>
+              <h5>Daftar ASKEP</h5>
           </div>
 
-          <div className="container">
-            
-            <div>
-              <Link
-                to={`/perawat/askep/form-diagnosa/${id}`}
-                className="btn d-flex justify-content-center align-items-center diagnosa-button"
-              >
-                Tambah Diagnosa
-              </Link>
-            </div>
-            {listAskep &&
-              listAskep.map((askep, index) => (
-                <>
-                  <p id='form-label' className='pt-3'>User: {askep.nama_lengkap}</p>
-                  <table className="bordered" id="border">
-                    <thead className="table-head">
-                      <tr>
-                        <th>Keterangan</th>
-                        <th>Tanggal/Jam</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      
-                      {/* Diagnosa */}
-                      <tr>
-                        <td>{askep.jam_pemberian_diagnosa ? (
-                          <Link to={`/perawat/askep/diagnosa/${askep.id}`} className='label-askep'>Diagnosa</Link>
-                        ) : ( "Diagnosa" )} </td>
-                        <td>
-                          {askep.tanggal_pemberian_diagnosa}/{askep.jam_pemberian_diagnosa}
-                        </td>
-                      </tr>
-
-                      {/* Intervensi */}
-                      <tr>
-                        <td>{askep.jam_pemberian_intervensi ? (
-                          <Link to={`/perawat/askep/intervensi/${askep.id}`} className='label-askep'>Intervensi</Link>
-                        ) : ( "Intervensi" )}</td>
-                        <td>
-                          {askep.tanggal_pemberian_intervensi ? (
-                            `${askep.tanggal_pemberian_intervensi}/${askep.jam_pemberian_intervensi}`
-                          ) : ( askep.access == false ? 'Belum Terisi' :
-                            <Link
-                              to={`/perawat/askep/form-intervensi/${askep.id}`}
-                              className="btn btn-primary btn-large"
-                            >
-                              <i class="fa-solid fa-plus"></i> Tambah
-                            </Link>
-                          )}
-                        </td>
-                      </tr>
-
-                      {/* Implementasi */}
-                      <tr>
-                        <td>{askep.jam_pemberian_implementasi ? (
-                          <Link tp={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
-                        ) : ( "Implementasi" )}</td>
-                        <td>
-                          {askep.tanggal_pemberian_implementasi ? (
-                            `${askep.tanggal_pemberian_implementasi}/${askep.jam_pemberian_implementasi}`
-                          ) : ( askep.access == false ? 'Belum Terisi' :
-                            <Link
-                              to={`/perawat/askep/form-implementasi/${askep.id}`}
-                              className="btn btn-primary btn-large"
-                            >
-                              <i class="fa-solid fa-plus"></i> Tambah
-                            </Link>
-                          )}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>{askep.jam_pemberian_luaran ? (
-                          <Link to={`/perawat/askep/luaran/${askep.id}`} className='label-askep'>Luaran</Link>
-                        ) : ( "Luaran" )}</td>
-                        <td>
-                          {askep.tanggal_penilaian_luaran ? (
-                            `${askep.tanggal_pemberian_luaran}/${askep.jam_pemberian_luaran}`
-                          ) : ( askep.access == false ? 'Belum Terisi' :
-                            <Link
-                              to={`/perawat/askep/form-evaluasi/${askep.id}`}
-                              className="btn btn-primary btn-large"    
-                            >
-                              <i class="fa-solid fa-plus"></i> Tambah
-                            </Link>
-                            
-                          )}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>{askep.jam_pemberian_evaluasi ? (
-                          <Link to={`/perawat/askep/evaluasi/${askep.id}`} className='label-askep'>Evaluasi</Link>
-                        ) : ( "Evaluasi" )}</td>
-                        <td>
-                          {askep.tanggal_pemberian_evaluasi ? (
-                            `${askep.tanggal_pemberian_evaluasi}/${askep.jam_pemberian_evaluasi}`
-                          ) : ( askep.access == false ? 'Belum Terisi' :
-                            <Link
-                              to={`/perawat/askep/form-evaluasi/${askep.id}`}
-                              className="btn btn-primary btn-large"
-                            >
-                              <i class="fa-solid fa-plus"></i> Tambah
-                            </Link>
-                          )}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </>
-              ))}
-
-            <div>
-
-            </div>
-            {/* Render Diagnosa */}
-            {diagnosa.map((diag, index) => (
-              <div key={diag.id} className="box-panel">
-                <div className="flexbox justify-content modify">
-                  <span>User: {diag.user}</span>
-                  <span style={{ paddingLeft: "8rem" }}>No: </span>
-                </div>
-
-                {/* <Container className="container-modify">
-                  <Row>
-                    <Col>
-                      <Link style={{ paddingLeft: "0.7rem" }}>Diagnosa</Link>
-
-                      <div>
-                        <span>
-                          <p
-                            style={{
-                              paddingLeft: "0.7rem",
-                              fontSize: "14px",
-                              paddingTop: "0rem",
-                            }}
-                          >
-                            {diag.hari} - {diag.tanggal}
-                          </p>
-                        </span>
+          <div className="container mt-2">
+              <Row>
+                <Col xs={3}>
+                  <div className="alert-pasien-askep">
+                      <div className='space-label'>
+                        <Row>
+                          <Col>
+                            <Row>
+                                <span className='shift-label'>Pasien</span>
+                            </Row>
+                            <Row>
+                              <span id='form-label' className="alert-info">{nama_lengkap}</span>
+                            </Row>
+                            <Row>
+                              <span>
+                                <Link to={`/perawat/askep/form-diagnosa/${id}`} className="btn blue-button-left-align-askep">
+                                Tambah Diagnosa
+                              </Link>
+                              </span>
+                            </Row>
+                          </Col>
+                        </Row>
                       </div>
-                    </Col>
-                    <Col>
-                      <Link 
-                        to={`/perawat/askep/form-intervensi/${diag.id}`}
-                        className='btn d-flex justify-content-center align-items-center option-button-svg mt-1'>
-                          <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='svg-askep'>
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                          </span>
-                          <span className='option-text'>Intervensi</span>
-                        </Link>
-                    </Col>
-                  </Row>
-                </Container> */}
+                    </div>
 
-                <div>
-                  <br></br>
-                </div>
-              </div>
-            ))}
+                    <div className="container">
+                      <Row>
+                        <Col>
+                          {row && row.map((item, index) => (
+                                  <Accordion 
+                                    key={index}
+                                    activeIndex={activeIndex === index ? 0 : null} 
+                                    onTabChange={() => setActiveIndex(index)}>
+                                    <AccordionTab header={`${item.hari}-${item.tanggal_pemeriksaan}`}>
+                                      <ListGroup variant="flush">
+                                        <ListGroup.Item>
+                                          <Link to={`/perawat/askep/shift/keterangan/${id}/${item.tanggal_pemeriksaan}/1`}>Shift 1</Link>
+                                        </ListGroup.Item>
+                                        <ListGroup.Item>
+                                          <Link to={`/perawat/askep/shift/keterangan/${id}/${item.tanggal_pemeriksaan}/2`}>Shift 2</Link>
+                                        </ListGroup.Item>
+                                        <ListGroup.Item>
+                                          <Link to={`/perawat/askep/shift/keterangan/${id}/${item.tanggal_pemeriksaan}/3`}>Shift 3</Link>
+                                        </ListGroup.Item>
+                                      </ListGroup>
 
-            {/* Render Intervensi */}
-            {intervensi.map((inter, index) => (
-              <div key={inter.id} className="box-panel">
-                <Container className="container-modify">
-                  <Row>
-                    <Col>
-                      <Link style={{ paddingLeft: "0.7rem" }}>Intervensi</Link>
+                                    </AccordionTab>
+                                  </Accordion>
+                                ))}  
+                        </Col>
+                      </Row>
+                    </div>  
+                </Col>
 
-                      <div>
-                        <span>
-                          <p
-                            style={{
-                              paddingLeft: "0.7rem",
-                              fontSize: "14px",
-                              paddingTop: "0rem",
-                            }}
-                          >
-                            {inter.hari} - {inter.tanggal}
-                          </p>
-                        </span>
-                      </div>
-                    </Col>
-                    <Col>
-                      <Link
-                        to={`/perawat/askep/form-intervensi/${id}`}
-                        className="btn d-flex justify-content-center align-items-center option-button-svg mt-1"
-                      >
-                        <span>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            className="svg-askep"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M12 4.5v15m7.5-7.5h-15"
-                            />
-                          </svg>
-                        </span>
-                        <span className="option-text">Implementasi</span>
-                      </Link>
-                    </Col>
-                  </Row>
-                </Container>
-              </div>
-            ))}
-          </div>
+                <Col xs={4} className="scroll-panel-box-askep">
+                  <ScrollPanel style={{ width: '100%', height: '580px', backgroundColor: '#f6fafd' }}>
+                    <div className='scroll-panel-inner'>
+
+                    {listAskep &&
+                      listAskep.map((askep, index) => (
+                        <>
+                          <p id='form-label' className='pt-3'>User: {askep.nama_lengkap}</p>
+                          <table className="bordered" id="border">
+                            <thead className="table-head">
+                              <tr>
+                                <th>Keterangan</th>
+                                <th>Tanggal/Jam</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              
+                              {/* Diagnosa */}
+                              <tr>
+                                <td>{askep.jam_pemberian_diagnosa ? (
+                                  <Link to={`/perawat/askep/diagnosa/${askep.id}`} className='label-askep'>Diagnosa</Link>
+                                ) : ( "Diagnosa" )} </td>
+                                <td>
+                                  {askep.tanggal_pemberian_diagnosa}/{askep.jam_pemberian_diagnosa}
+                                </td>
+                              </tr>
+
+                              {/* Intervensi */}
+                              <tr>
+                                <td>{askep.jam_pemberian_intervensi ? (
+                                  <Link to={`/perawat/askep/intervensi/${askep.id}`} className='label-askep'>Intervensi</Link>
+                                ) : ( "Intervensi" )}</td>
+                                <td>
+                                  {askep.tanggal_pemberian_intervensi ? (
+                                    `${askep.tanggal_pemberian_intervensi}/${askep.jam_pemberian_intervensi}`
+                                  ) : ( askep.access == false ? 'Belum Terisi' :
+                                    <Link
+                                      to={`/perawat/askep/form-intervensi/${askep.id}`}
+                                      className="btn btn-primary btn-large"
+                                    >
+                                      <i class="fa-solid fa-plus"></i> Tambah
+                                    </Link>
+                                  )}
+                                </td>
+                              </tr>
+
+                              {/* Implementasi */}
+                              <tr>
+                                <td>{askep.jam_pemberian_implementasi ? (
+                                  <Link tp={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
+                                ) : ( "Implementasi" )}</td>
+                                <td>
+                                  {askep.tanggal_pemberian_implementasi ? (
+                                    `${askep.tanggal_pemberian_implementasi}/${askep.jam_pemberian_implementasi}`
+                                  ) : ( askep.access == false ? 'Belum Terisi' :
+                                    <Link
+                                      to={`/perawat/askep/form-implementasi/${askep.id}`}
+                                      className="btn btn-primary btn-large"
+                                    >
+                                      <i class="fa-solid fa-plus"></i> Tambah
+                                    </Link>
+                                  )}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>{askep.jam_pemberian_luaran ? (
+                                  <Link to={`/perawat/askep/luaran/${askep.id}`} className='label-askep'>Luaran</Link>
+                                ) : ( "Luaran" )}</td>
+                                <td>
+                                  {askep.tanggal_penilaian_luaran ? (
+                                    `${askep.tanggal_pemberian_luaran}/${askep.jam_pemberian_luaran}`
+                                  ) : ( askep.access == false ? 'Belum Terisi' :
+                                    <Link
+                                      to={`/perawat/askep/form-evaluasi/${askep.id}`}
+                                      className="btn btn-primary btn-large"    
+                                    >
+                                      <i class="fa-solid fa-plus"></i> Tambah
+                                    </Link>
+                                    
+                                  )}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>{askep.jam_pemberian_evaluasi ? (
+                                  <Link to={`/perawat/askep/evaluasi/${askep.id}`} className='label-askep'>Evaluasi</Link>
+                                ) : ( "Evaluasi" )}</td>
+                                <td>
+                                  {askep.tanggal_pemberian_evaluasi ? (
+                                    `${askep.tanggal_pemberian_evaluasi}/${askep.jam_pemberian_evaluasi}`
+                                  ) : ( askep.access == false ? 'Belum Terisi' :
+                                    <Link
+                                      to={`/perawat/askep/form-evaluasi/${askep.id}`}
+                                      className="btn btn-primary btn-large"
+                                    >
+                                      <i class="fa-solid fa-plus"></i> Tambah
+                                    </Link>
+                                  )}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </>
+                      ))}
+                    </div>
+                  </ScrollPanel>
+                </Col>
+                <Col>
+                  
+                </Col>
+
+              
+              </Row>
+            </div>
         </Sidebar>
       )}
     </React.Fragment>
