@@ -841,7 +841,9 @@ table#border.bordered {
 }
 
 .p-toolbar {
-    background-color: #fff;
+    background-color: #f6fafd;
+    border: 1px solid #085b9336;
+
 }
 
 .green-active-button {
@@ -885,7 +887,7 @@ table#border.bordered {
 .confirm-button {
     background-color: #085b93;
     color: #fff;
-    width:20%;
+    width: 6rem;
     max-width: 20%;
     border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
@@ -894,7 +896,7 @@ table#border.bordered {
 .confirm-button:hover {
     background-color: #085b93;
     color: #fff;
-    width:20%;
+    width: 6rem;
     max-width: 20%;
     border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
@@ -906,35 +908,36 @@ table#border.bordered {
     background-color: transparent;
     width:10%;
     max-width: 40%;
-    color: #6e84b1;
-    border: 0.01rem solid #6e84b1;
+    color: #085b93;
+    border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
 }
 
 .edit-button:hover {
-    background-color: #ffffffb4;
+    background-color: #085b93;
     width:10%;
     max-width: 40%;
-    color: #6e84b1;
-    border: 0.01rem solid #6e84b1b2;
+    color: #fff;
+    border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
 }
 
 /* DELETE */
 
 .delete-button {
-    background-color: #6e84b1;
+    background-color: #085b93;
     width:10%;
     max-width: 40%;
-    border: 0.01rem solid #6e84b1;
+    border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
 }
 
 .delete-button:hover {
-    background-color: #6e84b1d8;
+    background-color: #fff;
+    color: #085b93;
     width:10%;
     max-width: 40%;
-    border: 0.01rem solid #6e84b1d8;
+    border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
 }
 
@@ -964,13 +967,13 @@ table#border.bordered {
 
 .link-theme {
     background-color: none !important;
-    color: #6e84b1;
+    color: #085b93;
     text-decoration: none;
 }
 
 .link-theme:hover {
     background-color: none !important;
-    color: #6e84b1d8;
+    color: #085b93d3;
     text-decoration: underline;
 }
 
@@ -993,7 +996,7 @@ table#border.bordered {
 }
 
 .blue-button {
-    background-color: #4287f5;
+    background-color: #085b93;
     color: #ffffff;
     border-radius: 0.2rem;
     /* padding-left: 2rem; */
@@ -1002,31 +1005,32 @@ table#border.bordered {
     margin-bottom: 1rem;
 
     float: right;
-    border: 1px solid #007BFF;
+    border: 1px solid #085b93;
 }
 
 .blue-button-table {
-    background-color: #4287f5;
+    background-color: #085b93;
     color: #ffffff !important;
     border-radius: 0.25rem;
     padding-left: 2rem;
     padding-right: 2rem;
     text-align: center !important;
-    border: 1px solid #4287f5;
+    border: 1px solid #085b93;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
 }
 
 .blue-button-table:hover {
-    background-color: #4287f5c7 !important;
-    color: #fff;
+    background-color: #fff !important;
+    color: #085b93 !important;
+    border: 1px solid #085b93;
     border-radius: 0.25rem !important;
 }
 
 
 .blue-button-lg {
-    background-color: #4287f5;
+    background-color: #085b93;
     color: #ffffff;
     border-radius: 0.2rem;
     padding-left: 2rem;
@@ -1034,7 +1038,7 @@ table#border.bordered {
     margin-top: 5rem;
     margin-bottom: 1rem;
     float: right;
-    border: 1px solid #4287f5;
+    border: 1px solid #085b93;
 }
 
 .blue-button-left-align {

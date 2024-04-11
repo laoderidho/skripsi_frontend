@@ -216,7 +216,7 @@ export default function DaftarPasienStatus() {
                             )}/>
                     
                     
-                    <Column 
+                    {/* <Column 
                         header={loading ? <Skeleton width="90px" /> : 'TRIASE'}
                         body={(rowData) => (
                             <>
@@ -243,7 +243,7 @@ export default function DaftarPasienStatus() {
                                 </div>
                             </>
                         )}
-                    />
+                    /> */}
                     {/* <Column 
                         header=''
                         body={(rowData) => (

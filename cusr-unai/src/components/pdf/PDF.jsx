@@ -47,11 +47,11 @@ const PDF = () => {
 
     return (
         <div>
-            <div className='container'>
+            <div className='container d-flex justify-content-center align-items-center mt-3'>
                 <span>Download PDF Askep </span>
-                <di>
+                <div className='px-2'>
                     <button type='button' onClick={handleDownloadPdf} className='btn blue-button-left-align'>Download</button>
-                </di>
+                </div>
             </div>
 
             <div className='container'>

@@ -94,41 +94,43 @@ export default function Askep() {
                   </td>
                    <td className='pdf-diagnosa p-2'>
                       {/* NAMA DIAGNOSA */}
-                      <p style={{fontSize: '11px'}}>Diagnosa: </p>
+                      <p style={{fontSize: '11px', fontWeight: '500'}}>Diagnosa: </p>
                       <p style={{fontSize: '11px'}}>{item.diagnosa ? item.diagnosa.nama_diagnosa : "-" }</p>
 
-                    <div className='mt-3'>
-                      <p style={{fontSize: '11px'}}>Faktor Risiko:</p>
-                        <ul className='ul-pdf'>
-                          {item.faktor_risiko && item.faktor_risiko.length !== 0 ? (
-                              item.faktor_risiko.map((item, index) => (
-                                <li key={index} className='li-pdf'>
-                                  <p style={{fontSize: '11px'}}>{item}</p>
-                                </li>
-                              ))
-                            ) : (
-                             "-"
-                            )}
-                        </ul>
-                    </div>
+              
+                      <div className='mt-3'>
+                        {item.faktor_risiko && item.faktor_risiko.length !== 0 && <p style={{fontSize: '11px'}}>Faktor Risiko:</p>}
+                          <ul className='ul-pdf'>
+                            {item.faktor_risiko && item.faktor_risiko.length !== 0 ? (
+                                item.faktor_risiko.map((item, index) => (
+                                  <li key={index} className='li-pdf'>
+                                    <p style={{fontSize: '11px'}}>{item}</p>
+                                  </li>
+                                ))
+                              ) : (
+                              " "
+                              )}
+                          </ul>
+                      </div>
+
 
             
-                    {showData && item && (
+                 
                         <div className='mt-3'>
-                        <p style={{fontSize: '11px'}}>Penyebab Fisiologis:</p>
+                          {item.diagnosa.penyebab_fisiologis.length !==0 && <p style={{fontSize: '11px'}}>Penyebab Fisiologis:</p>}
                         <ul className='ul-pdf'>
                           {item.diagnosa.penyebab_fisiologis.length ? item.diagnosa.penyebab_fisiologis.map(item=>(
                             <li className='li-pdf'>
                               <p style={{fontSize: '11px'}}>{item}</p>
                             </li>
-                          )) : "-"}
+                          )) : ""}
                         </ul>
                       </div>
-                    )}
+   
 
-                    {showData && item && (
+              
                         <div className='mt-3'>
-                          <p style={{fontSize: '11px'}}>Penyebab Situasional:</p>
+                          {item.diagnosa.penyebab_situasional.length !==0 && <p style={{fontSize: '11px'}}>Penyebab Situasional:</p>}
                           <ul className='ul-pdf'>
                             {item.diagnosa.penyebab_situasional.length ? item.diagnosa.penyebab_situasional.map(item => (
                               <li className='li-pdf'>
@@ -137,94 +139,93 @@ export default function Askep() {
                             )) : ""}
                           </ul>
                         </div>
-                      )}
-
+         
                     <div className='mt-3'>
-                      <p style={{fontSize: '11px'}}>Penyebab Psikologis:</p>
+                      {item.diagnosa.penyebab_psikologis.length !==0 &&   <p style={{fontSize: '11px'}}>Penyebab Psikologis:</p>}                 
                       <ul className='ul-pdf'>
                         {item.diagnosa.penyebab_psikologis.length ? item.diagnosa.penyebab_psikologis.map(item=>(
                           <li className='li-pdf'>
                             <p style={{fontSize: '13px'}}>{item}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
 
                     <div className='mt-3'>
-                      <p style={{fontSize: '11px'}}>Penyebub Umum:</p>
+                      {item.diagnosa.penyebab_umum.length !==0 &&  <p style={{fontSize: '11px'}}>Penyebub Umum:</p> }
                       <ul className='ul-pdf'>
                         {item.diagnosa.penyebab_umum.length ? item.diagnosa.penyebab_umum.map(item=>(
                           <li className='li-pdf'>
                             <p style={{fontSize: '11px'}}>{item}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
 
 
-                    <p style={{fontSize: '11px'}}>Gejala Tanda Mayor</p>
+                    <p style={{fontSize: '11px', fontWeight: '500'}}>Gejala Tanda Mayor</p>
 
                     <div className='mt-3'>
-                      <p style={{fontSize: '11px'}}>Subjektif:</p>
+                      {item.diagnosa.gejala_tanda_mayor_subjektif.length !==0 && <p style={{fontSize: '11px'}}>Subjektif:</p>}
                       <ul className='ul-pdf'>
                         {item.diagnosa.gejala_tanda_mayor_subjektif.length ? item.diagnosa.gejala_tanda_mayor_subjektif.map(item=>(
                           <li className='li-pdf'>
                             <p style={{fontSize: '11px'}}>{item}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
 
                     <div className='mt-3'>
-                      <p style={{fontSize: '11px'}}>Objektif:</p>
+                      {item.diagnosa.gejala_tanda_mayor_objektif.length !==0 && <p style={{fontSize: '11px'}}>Objektif:</p>}
                       <ul className='ul-pdf'>
                         {item.diagnosa.gejala_tanda_mayor_objektif.length ? item.diagnosa.gejala_tanda_mayor_objektif.map(item=>(
                           <li className='li-pdf'>
                             <p style={{fontSize: '11px'}}>{item}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
 
                     
 
-                    <p style={{fontSize: '11px'}}>Gejala Tanda Minor</p>
+                    <p style={{fontSize: '11px', fontWeight: '500'}}>Gejala Tanda Minor</p>
 
                     <div className='mt-3'>
-                    <p style={{fontSize: '11px'}}>Subjektif:</p>
+                      {item.diagnosa.gejala_tanda_minor_subjektif.length !==0 && <p style={{fontSize: '11px'}}>Subjektif:</p>}
                       <ul className='ul-pdf'>
                         {item.diagnosa.gejala_tanda_minor_subjektif.length ? item.diagnosa.gejala_tanda_minor_subjektif.map(item=>(
                           <li className='li-pdf'>
                             <p style={{fontSize: '11px'}}>{item}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
 
                     <div className='mt-3'>
-                      <p style={{fontSize: '11px'}}>Objektif:</p>
+                      {item.diagnosa.gejala_tanda_minor_objektif.length !==0 && <p style={{fontSize: '11px'}}>Objektif:</p>}
                       <ul className='ul-pdf'>
                         {item.diagnosa.gejala_tanda_minor_objektif.length ? item.diagnosa.gejala_tanda_minor_objektif.map(item=>(
                           <li className='li-pdf'>
                             <p style={{fontSize: '11px'}}>{item}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
 
                     
                   </td>
                    <td className='pdf-intevensi p-2'>
-                    <p style={{fontSize: '11px'}}>Intervensi:</p> 
+                    <p style={{fontSize: '11px',fontWeight: '500'}}>Intervensi:</p> 
                     <p style={{fontSize: '11px'}}>{item.intervensi ? item.intervensi.nama_intervensi : "-"}</p>
-                    <p style={{fontSize: '11px'}} className='pt-3'>Tindakan</p>
+                    <p style={{fontSize: '11px', fontWeight: '500'}} className='pt-1'>Tindakan</p>
                     <div className='mt-3'>
                       <ul className='ul-pdf'>
                         {item.intervensi.message == "Success" ? item.intervensi.tindakan_intervensi.map(item=>(
                           <li className='li-pdf'>
                             <p style={{fontSize: '11px'}} className='mt-1'>{item.nama_tindakan_intervensi}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
                   </td>
@@ -236,7 +237,7 @@ export default function Askep() {
                           <li className='li-pdf'>
                             <p style={{fontSize: '11px'}}>{item.nama_implementasi}</p>
                           </li>
-                        )) : "-"}
+                        )) : ""}
                       </ul>
                     </div>
                   </td>
@@ -246,7 +247,7 @@ export default function Askep() {
                     <ul className='ul-pdf'>
                       {item.luaran.message == "Success" ? item.luaran.data.map(item=>(
                         <li className='li-pdf'>{item.nama_luaran}</li>
-                      )) : "-"}
+                      )) : ""}
                     </ul>
                   </td>
                   <td className=''>

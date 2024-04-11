@@ -282,7 +282,7 @@ export default function FormEvaluasi() {
         />
       )}
       <div className="container">
-        <h2>Form Luaran</h2>
+        <h2>{formVisible && (isLuaran ? "Berikan Evaluasi" : "Tambah Luaran")}</h2>
       </div>
 
       <div className="container">

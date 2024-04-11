@@ -75,7 +75,7 @@ export default function FormImplementasi() {
 
   const addImplementasi = async () => {
     try {
-      await axios.post(`/perawat/implementasi/list`, 
+      await axios.post(`/perawat/implementasi/list/${id}`, 
       {
         tindakan_implementasi: changeData(joinTindakan()),
       },

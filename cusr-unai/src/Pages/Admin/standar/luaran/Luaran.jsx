@@ -3,6 +3,10 @@ import Sidebar from "../../../../components/menu/Sidebar";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from '../../../../axios';
+import { Column } from 'primereact/column';
+import "primereact/resources/themes/saga-blue/theme.css";
+import { Toolbar } from 'primereact/toolbar';
+import { DataTable } from 'primereact/datatable';
 
 export default function Luaran() {
 
@@ -45,6 +49,27 @@ export default function Luaran() {
         getLuaran(localStorage.getItem('token'))
     },[])
 
+    const endContent = (
+      <React.Fragment>
+        <input
+            className="form-control"
+            id="form-width"
+            type="text"
+            placeholder="Search"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+      </React.Fragment>
+    );
+  
+    const startContent = (
+      <React.Fragment>
+        <Link
+          to={`/admin/intervensi/tambah`}
+          className="btn blue-button-table">Tambah</Link>
+      </React.Fragment>
+    );
+
     return (
       <Sidebar>
         {/* Title */}
@@ -60,68 +85,29 @@ export default function Luaran() {
 
         {/* Search */}
 
-        <Form className="container">
-          <div className="search-container">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Search"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
-
-            <Link
-              to="/admin/luaran/tambah"
-              className="btn d-flex justify-content-center align-items-center blue-button"
+        <div className="container">
+          
+        <Toolbar
+            start={startContent}
+            end={endContent}
             >
-              Tambah
-            </Link>
-          </div>
+          </Toolbar>
 
-          <Table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Kode Luaran</th>
-                <th>Nama Luaran</th>
-                <th className="button-space"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {inputValue
-                ? filterLuaran.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.kode_luaran}</td>
-                      <td>{item.nama_luaran}</td>
-                      <td>
-                        <Link
-                          to={`/admin/standarkeperawatan/luaran/${item.id}`}
-                          class="btn d-flex justify-content-center align-items-center simple-button"
-                        >
-                          Lihat
-                        </Link>
-                      </td>
-                    </tr>
-                  ))
-                : luaran.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.kode_luaran}</td>
-                      <td>{item.nama_luaran}</td>
-                      <td>
-                        <Link
-                          to={`/admin/standarkeperawatan/luaran/${item.id}`}
-                          class="btn d-flex justify-content-center align-items-center simple-button"
-                        >
-                          Lihat
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-            </tbody>
-          </Table>
-        </Form>
+        <div className="">
+          <DataTable value={inputValue ? filterLuaran : luaran} paginator rows={10}  stripedRows show showGridlines>
+                            <Column field="id" header='No'/>
+                            <Column field="kode_luaran" header='Kode Luaran'/>
+                            <Column field="nama_luaran" header='Nama Luaran'/>
+                            <Column 
+                            header=''
+                            body={(item) => (
+                                <Link
+                                to={`/admin/standarkeperawatan/luaran/${item.id}`}
+                                className="btn d-flex justify-content-center align-items-center blue-button-left-align">Lihat</Link>
+                            )}/>
+                        </DataTable>
+        </div>
+        </div>
       </Sidebar>
     );
 }
