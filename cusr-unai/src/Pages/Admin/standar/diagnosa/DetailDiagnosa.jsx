@@ -15,6 +15,7 @@ const DetailDiagnosa = () => {
   const [penyebab_psikologis, setPenyebabPsikologis] = useState("");
   const [gejala_mayor_subjektif, setGejalaMayorSubjektif] = useState("");
   const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState("");
+  
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState("");
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState("");
   const [penyebab_umum, setPenyebabUmum] = useState("");

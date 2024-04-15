@@ -4,6 +4,7 @@ import {Form, Button} from 'react-bootstrap'
 import axios from '../../axios'
 import AuthorizationRoute from '../../AuthorizationRoute'
 import { useNavigate } from 'react-router-dom'
+import ConfirmModal from '../../components/menu/ConfirmModal'
 
 const GantiSandi = () => {
 
@@ -44,15 +45,15 @@ const GantiSandi = () => {
 
   return (
     <Sidebar>
-      <h1 className="text-center">Ganti kata Sandi</h1>
+      <h2 className='container'>Ganti Kata Sandi</h2>
 
-      <Form
-        onSubmit={submitChangePassword}
-        className="w-100 d-flex flex-column align-items-center"
+      <div
+        className="container mt-3"
       >
-        <Form.Group className="w-75 mb-4 mt-5 d-flex align-items-center flex-column">
-          <Form.Label>Kata Sandi Lama</Form.Label>
+        <Form.Group className="">
+          <Form.Label id='form-label'>Kata Sandi Lama</Form.Label>
           <Form.Control
+            id='form-control-input'
             type="password"
             placeholder="Masukkan kata sandi lama"
             value={oldPassword}
@@ -60,9 +61,10 @@ const GantiSandi = () => {
           />
         </Form.Group>
 
-        <Form.Group className="w-75 mb-4 d-flex align-items-center flex-column">
-          <Form.Label>Kata Sandi Baru</Form.Label>
+        <Form.Group className=''>
+          <Form.Label id='form-label'>Kata Sandi Baru</Form.Label>
           <Form.Control
+            id='form-control-input'
             type="password"
             placeholder="Masukkan kata sandi baru"
             value={newPassword}
@@ -70,9 +72,12 @@ const GantiSandi = () => {
           />
         </Form.Group>
 
-        <Form.Group className="w-75 mb-4 d-flex align-items-center flex-column">
-          <Form.Label>Konfirmasi Kata Sandi Baru</Form.Label>
+        
+
+        <Form.Group className="">
+          <Form.Label id='form-label'>Konfirmasi Kata Sandi Baru</Form.Label>
           <Form.Control
+            id='form-control-input'
             type="password"
             placeholder="Masukkan Konfirmasi kata sandi baru"
             value={confirmPassword}
@@ -80,10 +85,18 @@ const GantiSandi = () => {
           />
         </Form.Group>
 
-        <Button type="submit" className="btn btn-primary w-25">
-          Simpan
-        </Button>
-      </Form>
+          <div className='d-flex justify-content-start mt-3'>
+            <ConfirmModal
+                  onConfirm={submitChangePassword}
+                  successMessage={"Kata sandi berhasil diubah"}
+                  cancelMessage={"Kata sandi gagal diubah"}
+                  buttonText={"Ubah Sandi"}
+                  to={`/login`}
+                />
+          </div>
+
+
+      </div>
     </Sidebar>
   );
 }

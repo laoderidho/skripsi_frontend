@@ -18,6 +18,17 @@ nav{
     z-index: 100;
 } 
 
+.card-perawat {
+    color: #fff;
+    background-color: #085b93;
+}
+
+.card-pasien {
+    background-color: #fff;
+    border-color: #085b93;
+    color: #085b93;
+}
+
 
 
 
@@ -122,9 +133,11 @@ div.bordered-form.row {
     max-width: 100%;
 }
 
+
+
 #form-control-input {
-    width: 100%;
-    max-width: 100%;
+    width: 40%;
+    max-width: 40%;
     height: 3.2rem;
     border-radius: 0.23rem;
 }
@@ -339,11 +352,11 @@ div.bordered-form.row {
 
 }
 
-/* .accordion-button:not(.collapsed){
+.accordion-button:not(.collapsed){
     background-color: #fff;
-    color: #4b5563;
+    color: #085b93;
     box-shadow: none;
-} */
+}
 
 .accordion-button{
     color: #fff;
@@ -887,8 +900,7 @@ table#border.bordered {
 .confirm-button {
     background-color: #085b93;
     color: #fff;
-    width: 6rem;
-    max-width: 20%;
+    width: 5rem;
     border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
 }
@@ -896,8 +908,7 @@ table#border.bordered {
 .confirm-button:hover {
     background-color: #085b93;
     color: #fff;
-    width: 6rem;
-    max-width: 20%;
+    width: 5rem;
     border: 0.01rem solid #085b93;
     border-radius: 0.2rem; 
 }
@@ -1298,10 +1309,12 @@ table#border.bordered {
 
 
 .blue-button:hover {
-    background-color: #0069D9;
+    background-color: #085b93e8;
     color: #ffffff;
 
 }
+
+
 
 .table-striped tbody tr:nth-last-of-type(odd) {
     background-color: #f7f7f7;

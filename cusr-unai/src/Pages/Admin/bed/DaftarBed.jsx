@@ -57,6 +57,18 @@ export default function DaftarBed() {
         };
         
     };
+
+    const deleteForm = async (id) => {
+        try {
+            const res = await axios.post(`/admin/bed/delete/${id}`, {
+                headers: { Authorization: `Bearer ${token}`}
+            });
+
+            getData();
+        } catch (error) {
+            
+        }
+    }
  
 
     const editForm = async () => {
@@ -342,6 +354,16 @@ export default function DaftarBed() {
         setShowModal(true);
     }
 
+    // const deleteClick = (id) => {
+    //     deleteForm(id);
+
+    //     setNewFasilitas('');
+    //     setNewLantai('');
+    //     setNewBed('');
+    //     setNewRuangan('');
+    //     setIdBed('');
+    // }
+
 
     return (
         <Sidebar>
@@ -404,6 +426,15 @@ export default function DaftarBed() {
                                 Edit
                         </Link>
                     )} /> 
+                    <Column header='' body={(rowData) => (
+                        <ConfirmModal 
+                            onConfirm={()=> deleteForm(rowData.id)}
+                            successMessage={"Data berhasil dihapus"}
+                            cancelMessage= {"Data gagal dihapus"}
+                            buttonText={"Delete"}       
+                            className='link-theme'
+                        />
+                    )} />
 
                 </DataTable>
             </div>
@@ -537,6 +568,7 @@ export default function DaftarBed() {
 
                         </Modal.Body>
                         <Modal.Footer>
+
                             <Button 
                                 onClick={() => setShowModal(false)}
                                 variant="secondary">               

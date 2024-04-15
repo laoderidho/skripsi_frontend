@@ -80,22 +80,22 @@ export default function DashboardPage() {
       <Container>
         <Row>
           <Col>
-            <Card className='bg-success text-white'>
+            <Card className='card-perawat'>
               <Card.Body className="d-flex flex-column align-items-center">
                 <i className="fa-solid fa-user-nurse fa-3x pb-1"></i>
                 <h2 className=''>Perawat</h2>
                 <h2>{Perawat && Perawat}</h2>
-                <Link to="/admin/user" className="btn btn-success w-100 m-0">Lihat <i class="fa-solid fa-arrow-right"></i></Link>
+                <Link to="/admin/user" className="btn white-button w-100 m-0">Lihat <i class="fa-solid fa-arrow-right"></i></Link>
               </Card.Body>
             </Card>
           </Col>
           <Col>
-            <Card className='bg-primary text-white'>
+            <Card className='card-pasien'>
               <Card.Body className="d-flex flex-column align-items-center">
                 <i className="fa-solid fa-user fa-3x pb-1"></i>
                 <h2 className=''>Pasien</h2>
                 <h2>{Pasien && Pasien}</h2>
-                <Link to="/admin/daftarpasien" className="btn btn-primary w-100 m-0">Lihat <i class="fa-solid fa-arrow-right"></i></Link>
+                <Link to="/admin/daftarpasien" className="btn blue-button w-100 m-0">Lihat <i class="fa-solid fa-arrow-right"></i></Link>
               </Card.Body>
             </Card>
           </Col>
