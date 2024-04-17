@@ -5,37 +5,11 @@ import { Row, Col } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import axios from '../../axios';
 
-export default function Askep() {
+export default function Askep({data, pasien}) {
 
-  const {id, name} = useParams();
-  const token = localStorage.getItem('token');
-  const [showData, setShowData] = useState(null);
+  const item = data;
 
-  const [pasien, setPasien] = useState([])
-  const [laporan, setLaporan] = useState([])
-
-
-  const getAskep = async () => {
-    try {
-      const res = await axios.post(`/perawat/laporan/askep/${id}`, {
-        headers: { Authorization: `Bearer ${token}`}
-      });
-      setPasien(res.data.pasien)
-      setLaporan(res.data.pemeriksaan)
-      console.log(res.data.pemeriksaan)
-    } catch (error) {
-    }
-  }
-
-  const handleShow = () => {
-     setShowData(true); 
-  }
-
-
-  useEffect(()=>{
-    getAskep()
-    handleShow()
-  },[])
+  const pasienData = pasien[0];
 
   return (
     <div className=''>
@@ -65,12 +39,10 @@ export default function Askep() {
         </div> */}
 
         <div className='table-pdf'>
-          {pasien.map(item => 
-              <Row>
-              <Col xs={10} style={{fontWeight:'400', fontSize: '11px', marginLeft: '1.7rem'}}>Nama: {item.nama_lengkap}</Col>
-              <Col xs={2} style={{fontWeight:'400', fontSize: '11px', marginLeft: '1.7rem'}}>Bed: {item.no_bed}</Col>
+           <Row>
+              <Col xs={10}>Nama: {pasienData.nama_lengkap}</Col>
+              <Col xs={2}>Bed: {pasienData.no_bed}</Col>
             </Row>
-            )}
         </div>
         <table id="table-pdf">
           <thead>
@@ -84,14 +56,8 @@ export default function Askep() {
             </tr>
           </thead>
           <tbody>
-            {/* Shift Pagi */}
-            {laporan.map((item, index)=>(
-                <tr className='pdf-tr'>
-                  <td className="td-pdf p-2">
-                    <p style={{fontSize: '11px'}}>{item.tanggal_pemeriksaan}/
-                    <br></br>
-                    {item.jam_pemeriksaan}</p>
-                  </td>
+            <tr>
+                  <td className="pdf-td">{item.tanggal_pemeriksaan}/{item.jam_pemeriksaan}</td>
                    <td className='pdf-diagnosa p-2'>
                       {/* NAMA DIAGNOSA */}
                       <p style={{fontSize: '11px', fontWeight: '500'}}>Diagnosa: </p>
@@ -254,7 +220,8 @@ export default function Askep() {
                     
                   </td>
                 </tr>
-            ))}
+            {/* Shift Pagi */}
+          
             {/* Shift Siang */}
             {/* <tr>
               <td id="pdf-td">19/04/24 - 13.00</td>

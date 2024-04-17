@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Sidebar from "../../../../components/menu/Sidebar";
+import Sidebar from "../../../../components/menu/SidebarAdmin";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from '../../../../axios';
@@ -7,12 +7,14 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import "primereact/resources/themes/saga-blue/theme.css";
 import { Toolbar } from 'primereact/toolbar';
+import { BreadCrumb } from 'primereact/breadcrumb';
 
 export default function Intervensi() {
 
     const [inputValue, setInputValue] = useState('');
     const [intervensi, setIntervensi] = useState([]);
     const [filterIntervensi, setFilterIntervensi] = useState([]);
+    const isMobile = window.innerWidth <=600;
 
     const filteredIntervensi = (value) => {
           const filteredIntervensi = intervensi.filter((item) => {
@@ -78,43 +80,112 @@ export default function Intervensi() {
       </React.Fragment>
     );
 
+    const items = [{label: 'Admin'}, {label: 'SKI'}, {label: ''}]
+
     return (
-      <Sidebar>
-        {/* Title */}
-        <div className="container">
-          <h2>Data Standar Intervensi Keperawatan Indonesia</h2>
-          <Breadcrumb>
-            <Breadcrumb.Item active>Intervensi</Breadcrumb.Item>
-            <Breadcrumb.Item href="/admin/intervensi/tambah">
-              Tambah
-            </Breadcrumb.Item>
-          </Breadcrumb>
-        </div>
+      <React.Fragment>
+        {isMobile ? (
+          <>
+            <Sidebar>
+              <div className="container d-flex align-items-center form-margin container-breadcrumb">
+                                  <span>
+                                      <Link to={`/admin/standarkeperawatan/diagnosis`}>
+                                          <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                          </svg>
+                                      </Link>
+                                  </span>
+                                      <BreadCrumb model={items} />
 
-        {/* Search */}
+                                      <span>
+                                          <p className='title-breadcrumb'>Intervensi</p>
+                                      </span>
+              </div>
+              <div className="container">
+                <h3>Standar Intervensi Keperawatan Indonesia</h3>
+              </div>
 
-        <div className="container">
-          <Toolbar
-            start={startContent}
-            end={endContent}
-            >
-          </Toolbar>
+              <div className="container pt-3">
+                <Link
+                  to={`/admin/intervensi/tambah`}
+                  className="btn blue-button-table">Tambah</Link>
 
-          <div className="">
-          <DataTable value={inputValue ? filterIntervensi : intervensi} paginator rows={10}  stripedRows show showGridlines>
-                            <Column field="id" header='No'/>
-                            <Column field="kode_intervensi" header='Kode Intervensi'/>
-                            <Column field="nama_intervensi" header='Nama Intervensi'/>
-                            <Column 
-                            header=''
-                            body={(item) => (
-                                <Link
-                                to={`/admin/standarkeperawatan/intervensi/${item.id}`}
-                                className="btn d-flex justify-content-center align-items-center blue-button-left-align">Lihat</Link>
-                            )}/>
-                        </DataTable>
-          </div>
-        </div>
-      </Sidebar>
+                <input
+                    className="form-control custom-search mt-2"
+                    id="form-width "
+                    type="text"
+                    placeholder="Search"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                  />
+
+              </div>
+
+              <div className="container">    
+                <DataTable value={inputValue ? filterIntervensi : intervensi} paginator rows={10}  tableStyle={{ minWidth: '2rem' }} stripedRows show showGridlines>
+                                  {/* <Column field="id" header='No'/> */}
+                                  <Column field="kode_intervensi" header='Kode Intervensi'/>
+                                  <Column field="nama_intervensi" header='Nama Intervensi'/>
+                                  <Column 
+                                  header=''
+                                  body={(item) => (
+                                      <Link
+                                      to={`/admin/standarkeperawatan/intervensi/${item.id}`}
+                                      className="btn d-flex justify-content-center align-items-center simple-button">Lihat</Link>
+                                  )}/>
+                              </DataTable>
+       
+              </div>
+            </Sidebar>
+          </>
+        ) : (
+          <>
+            <Sidebar>
+                <div className="container d-flex align-items-center form-margin container-breadcrumb">
+                                    <span>
+                                        <Link to={`/admin/standarkeperawatan/diagnosis`}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                            </svg>
+                                        </Link>
+                                    </span>
+                                        <BreadCrumb model={items} />
+
+                                        <span>
+                                            <p className='title-breadcrumb'>Intervensi</p>
+                                        </span>
+                </div>
+                <div className="container">
+                  <h3>Standar Intervensi Keperawatan Indonesia</h3>
+                </div>
+
+                {/* Search */}
+
+                <div className="container pt-5">
+                  <Toolbar
+                    start={startContent}
+                    end={endContent}
+                    >
+                  </Toolbar>
+
+                  <div className="">
+                  <DataTable value={inputValue ? filterIntervensi : intervensi} paginator rows={10}  tableStyle={{ minWidth: '2rem' }} stripedRows show showGridlines>
+                                    <Column field="id" header='No'/>
+                                    <Column field="kode_intervensi" header='Kode Intervensi'/>
+                                    <Column field="nama_intervensi" header='Nama Intervensi'/>
+                                    <Column 
+                                    header=''
+                                    body={(item) => (
+                                        <Link
+                                        to={`/admin/standarkeperawatan/intervensi/${item.id}`}
+                                        className="btn d-flex justify-content-center align-items-center simple-button">Lihat</Link>
+                                    )}/>
+                                </DataTable>
+                  </div>
+                </div>
+              </Sidebar>
+          </>
+        )}
+      </React.Fragment>
     );
 }

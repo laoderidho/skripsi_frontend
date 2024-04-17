@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from '../../../components/menu/Sidebar';
+import Sidebar from '../../../components/menu/SidebarAdmin';
 import { Toolbar } from 'primereact/toolbar';
 import { Breadcrumb, Modal, Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link, useParams } from 'react-router-dom';
 import axios from '../../../axios'
 import ConfirmModal from '../../../components/menu/ConfirmModal';
+import { BreadCrumb } from 'primereact/breadcrumb';
 
 
 export default function Catatan() {
@@ -40,16 +41,20 @@ export default function Catatan() {
     const [showBedSelect, setShowBedSelect] = useState(false);
     const [showLantaiSelect, setShowLantaiSelect] = useState(false);
     const [showJenisRuanganSelect, setShowRuanganSelect] = useState(false);
+    const isMobile = window.innerWidth <=600;
 
     const [idBed, setIdBed] = useState(null);
+
+    const [perawatanid, setPerawatanId] = useState(null);
  
 
     const handleShow = () => {
         setShowModal(true);
     };
 
-    const handleShowAlert = () => {
+    const handleShowAlert = (id) => {
         setShowAlertSelesai(true);
+        setPerawatanId(id);
     };
 
 
@@ -164,9 +169,9 @@ export default function Catatan() {
         }
     }
 
-    const getSembuh = async (token) => {
+    const getSembuh = async () => {
         try {
-            const res = await axios.post(`/admin/rawat-inap/recover/${id}`, {
+            const res = await axios.post(`/admin/rawat-inap/recover/${perawatanid}`, {
                 headers: { Authorization: `Bearer ${token}`}
             });
             setShowAlertSelesai(false);
@@ -229,218 +234,470 @@ export default function Catatan() {
 
     }, []); // perbaikan
 
+    const items = [{label: 'Pasien'}, {label: 'Catatan'}, {label: ''}]
+
   
 
     return (
-        <Sidebar>
-            <div className='container'>
-                <h2>Catatan</h2>
-                <Breadcrumb>
-                    <Breadcrumb.Item active>Catatan</Breadcrumb.Item>
-                    <Breadcrumb.Item href="/admin/bed/tambah">
-                        Tambah
-                    </Breadcrumb.Item>
-                </Breadcrumb>
-            </div>
+        <React.Fragment>
+            {isMobile ? (
+                <>
+                    <Sidebar>
 
-            <div className='container'>
-                <Row>
-                    <Col xs={3}>
-                        <div className='detail-box' role='alert'>
-                            <Form.Label id='form-label'>Nama</Form.Label>
-                            <p>{pasien.nama_lengkap}</p>
+                        <div className="container d-flex align-items-center form-margin container-breadcrumb">
+                              <span>
+                              <Link to={`/admin/daftarpasien`}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                  </svg>
+                              </Link>
+                              </span>
+                              <BreadCrumb model={items} />
+
+                              <span>
+                              <p className='title-breadcrumb'>Catatan Rawat Inap</p>
+                              </span>
                         </div>
-                    </Col>
-                </Row>
-            </div>
+                        <div className='container'>
+                            <h3>Catatan</h3>
+                        </div>
 
-            <div className='container pt-3'>
-                <Button variant='primary' className="btn blue-button-table" onClick={handleShow}>
-                    Tambah
-                </Button>
+                        <div className="container mt-2">
+                                    <div className="alert-pasien-custom">
+                                        <div className='space-label'>
+                                        <Row>
+                                            <Col>
+                                            <Row>
+                                                <span className='shift-label'>Nama</span>
+                                            </Row>
+                                            <Row>
+                                                <span id='form-label' className="alert-info ">{pasien.nama_lengkap}</span>
+                                            </Row>
+                                            </Col>
+                                            
+                                        </Row>
+                                        </div>
+                                    </div>
+                        </div>
 
-                <Row>
-                    <Col xs={8}>
-                        <ListGroup className='pt-4'>
-                            {tanggalRawat &&  tanggalRawat.map(item => (
-                                <ListGroup.Item>
-                                    <Row>
-                                        <Col xs={12}>
-                                            <Form.Label id='form-label'>
-                                                <Row>
-                                                    <Row>
-                                                        <Col>
-                                                            <Row>
-                                                                <span>Tanggal Masuk: {item.tanggal_masuk}</span>
-                                                                {item.status === 'sembuh' ? <span>Tanggal Keluar: {item.tanggal_keluar}</span> : <span>Tanggal Keluar: -</span>}
-                                                            </Row>
-                                                        </Col>
-                                                        <Col>
-                                                            <Row>
-                                                                <span>Jam Masuk: {item.jam_masuk}</span>
-                                                                {item.status === 'sembuh' ? <span>Jam Keluar: {item.jam_keluar}</span> : <span>Jam Keluar: -</span>}
-                                                            </Row>
-                                                        </Col>
-                                                        <Col>
-                                                            <span id='form-label' style={{ color: item.status === 'sembuh' ? '#212529' : '#4e95e0' }}>Status: {item.status === 'sembuh' ? "Selesai" : "Ongoing"}</span>
-                                                            <br/>
-                                                           
-                                                        </Col>
-                                                   </Row>
-                                                   <Row className='mt-4 gap-custom'>
-                                                   {item.status !== 'sembuh' && (
-                                                        <>
-                                                            <Col xs={1}>
-                                                                <Button
-                                                                    className='btn catatan-button'
-                                                                    onClick={() => editClick(item.id)}
-                                                                >Edit</Button>
-                                                            </Col>
-                                                            <Col
-                                                                className=''
-                                                                onClick={handleShowAlert}>
-                                                                <Button>Selesai</Button>
-                                                            </Col>
-                                                        </>
-                                                    )}
-
-                                                   </Row>
-                                                </Row>
-                                            </Form.Label>
-                                        </Col>
-                                    </Row>
-                                </ListGroup.Item>
-                            ))}
-                        </ListGroup>
-                           
-                    </Col>
-                </Row>
-                {/* {tanggalRawat && tanggalRawat.map(item=>(
-                    
-                    <Row>
-                        <Col xs={5}>
-                            <Card className='mt-2'>
-                                <Card.Body>
-                                    <Row>
-                                        <Col>
-                                            <Form.Label id='form-label'>Tanggal Masuk: {item.tanggal_masuk}</Form.Label>
-                                            <p id='form-label'>Tanggal Keluar: -</p>
-                                            <p id='form-label'>Status: Ongoing</p>
-                                        </Col>
-                                        <Col>
-
-                                        </Col>
-                                    </Row>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-                ))} */}
-            </div>
-
-
-
-            {/* Modal Form */}
-
-            <Modal
-                show={showModal} onHide={handleClose} centered
-            >
-                <Modal.Header>
-                    <p></p>
-                </Modal.Header>
-                <Form onSubmit={submitForm}>
-                    <Modal.Body>
-                        {/* <Form.Group>
-                            <Form.Label id="form-label">Triase</Form.Label>
-                            <Form.Select name="triase" value={triase} onChange={(e)=> setTriase(e.target.value)}>
-                                <option value="">-</option>
-                                <option value="hijau">Hijau</option>
-                                <option value="kuning">Kuning</option>
-                                <option value="merah">Merah</option>
-                                <option value="hitam">Hitam</option>
-                            </Form.Select>
-                        </Form.Group> */}
-                       
-                        <Row className='pt-2'>
-                            <Col md={6}>
-                                <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
-                                <Form.Select name="nama_fasilitas" value={selectedFasilitas} onChange={(e)=> filterFasilitas(e.target.value)}>
-                                    <option value="">-</option>
-                                    {bed.map(item => (
-                                        <option key={item.id} value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
-                                    ))}
-                                </Form.Select>
-                            </Col>
-            
-                            <Col md={6}>
-                                <Form.Label id="form-label">Jenis Ruangan</Form.Label>
-                                <Form.Select name="jenis_ruangan" value={selectedRuangan} onChange={(e)=> handleRuanganChange(e.target.value)}>
-                                    <option value="">-</option>
-                                    {jenis_ruangan.map(item=>(
-                                        <option value={item}>{item}</option>
-                                    ))}
-                                </Form.Select>
-                            </Col>  
-                        </Row>
-                        <Row>
-                       
-                                    <Col md={6}>
-                                        <Form.Label id="form-label">Lantai</Form.Label>
-                                        <Form.Select name="lantai" value={selectedLantai} onChange={(e)=> handleLantaiChange(e.target.value)}>
-                                            <option value="">-</option>
-                                            {lantai.map(item => (
-                                                <option value={item}>{item}</option>
-                                            ))}
-                                        </Form.Select>
-                                    </Col>
-                      
-                     
-                                    <Col md={6}>
-                                        <Form.Label id="form-label">Bed</Form.Label>
-                                        <Form.Select name="no_bed" value={inputBed} onChange={(e) => setInputBed(e.target.value)}>
-                                            <option value="">-</option>
-                                            {no_bed.map(item => (
-                                                <option value={item.id}>{item.no_bed}</option>
-                                            ))}
-                                        </Form.Select>
-                                    </Col>
-                        </Row>
-                    </Modal.Body>
-                    <Modal.Footer>
-                            <Button 
-                                onClick={() => setShowModal(false)}
-                                variant="secondary">               
-                                Cancel
+                        <div className='container pt-3'>
+                            <Button variant='primary' className="btn blue-button-table" onClick={handleShow}>
+                                Tambah
                             </Button>
-                            <ConfirmModal 
-                                onConfirm={isEditing? editForm : submitForm}
-                                successMessage={isEditing ? "Data berhasil diubah" : "Data berhasil ditambahkan"}
-                                cancelMessage= {isEditing? "Data gagal diubah" : "Data gagal ditambahkan"}
-                                buttonText={isEditing ? "Edit" : "Simpan"}       
-                            />
-                    </Modal.Footer>
 
-                </Form>
-            </Modal>
+                            <Row>
+                                <Col xs={12}>
+                                    <ListGroup className='pt-4'>
+                                        {tanggalRawat &&  tanggalRawat.map(item => (
+                                            <ListGroup.Item>
+                                                <Row>
+                                                    <Col xs={12}>
+                                                        <Form.Label id='form-label'>
+                                                            <Row>
+                                                                <Row>
+                                                                    <Col>
+                                                                        <Row>
+                                                                            <span>Tanggal Masuk: {item.tanggal_masuk}</span>
+                                                                            {item.status === 'sembuh' ? <span>Tanggal Keluar: {item.tanggal_keluar}</span> : <span>Tanggal Keluar: -</span>}
+                                                                        </Row>
+                                                                    </Col>
+                                                                    <Col>
+                                                                        <Row>
+                                                                            <span>Jam Masuk: {item.jam_masuk}</span>
+                                                                            {item.status === 'sembuh' ? <span>Jam Keluar: {item.jam_keluar}</span> : <span>Jam Keluar: -</span>}
+                                                                        </Row>
+                                                                    </Col>
+                                                                    <Col>
+                                                                        <span id='form-label' style={{ color: item.status === 'sembuh' ? '#212529' : '#4e95e0' }}>Status: {item.status === 'sembuh' ? "Selesai" : "Ongoing"}</span>
+                                                                        <br/>
+                                                                    
+                                                                    </Col>
+                                                            </Row>
+                                                            <Row className='mt-4 gap-custom'>
+                                                            {item.status !== 'sembuh' && (
+                                                                    <>
+                                                                        <Col xs={1}>
+                                                                            <Button
+                                                                                className='btn edit-button'
+                                                                                onClick={() => editClick(item.id)}
+                                                                            >Edit</Button>
+                                                                        </Col>
+                                                                        <Col xs={4}>
+                                                                            <Button style={{marginLeft: '4rem'}} className='btn confirm-button'
+                                                                            onClick={()=>handleShowAlert(item.id)}>Selesai</Button>
+                                                                        </Col>
+                                                                    </>
+                                                                )}
 
-            {/* Alert Selesai */}
+                                                            </Row>
+                                                            </Row>
+                                                        </Form.Label>
+                                                    </Col>
+                                                </Row>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                    
+                                </Col>
+                            </Row>
+                            {/* {tanggalRawat && tanggalRawat.map(item=>(
+                                
+                                <Row>
+                                    <Col xs={5}>
+                                        <Card className='mt-2'>
+                                            <Card.Body>
+                                                <Row>
+                                                    <Col>
+                                                        <Form.Label id='form-label'>Tanggal Masuk: {item.tanggal_masuk}</Form.Label>
+                                                        <p id='form-label'>Tanggal Keluar: -</p>
+                                                        <p id='form-label'>Status: Ongoing</p>
+                                                    </Col>
+                                                    <Col>
 
-            <Modal
-                show={showAlertSelesai} onHide={handleClose} centered>
-                <Modal.Body>
-                    <p>Pasien akan dinyatakan selesai di rawat inap.</p>
+                                                    </Col>
+                                                </Row>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            ))} */}
+                        </div>
 
-                    <ConfirmModal 
-                        onConfirm={getSembuh}
-                        successMessage={"Berhasil"}
-                        cancelMessage= {"Gagal"}
-                        buttonText={"Selesai"}       
-                    />
-                   
-                </Modal.Body>
 
-            </Modal>
 
-        </Sidebar>
+                        {/* Modal Form */}
+
+                        <Modal
+                            show={showModal} onHide={handleClose} centered
+                        >
+                            <Modal.Header>
+                                <p></p>
+                            </Modal.Header>
+                            <Form onSubmit={submitForm}>
+                                <Modal.Body>
+                                    {/* <Form.Group>
+                                        <Form.Label id="form-label">Triase</Form.Label>
+                                        <Form.Select name="triase" value={triase} onChange={(e)=> setTriase(e.target.value)}>
+                                            <option value="">-</option>
+                                            <option value="hijau">Hijau</option>
+                                            <option value="kuning">Kuning</option>
+                                            <option value="merah">Merah</option>
+                                            <option value="hitam">Hitam</option>
+                                        </Form.Select>
+                                    </Form.Group> */}
+                                
+                                    <Row className='pt-2'>
+                                        <Col md={6}>
+                                            <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
+                                            <Form.Select name="nama_fasilitas" value={selectedFasilitas} onChange={(e)=> filterFasilitas(e.target.value)}>
+                                                <option value="">-</option>
+                                                {bed.map(item => (
+                                                    <option key={item.id} value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
+                                                ))}
+                                            </Form.Select>
+                                        </Col>
+                        
+                                        <Col md={6}>
+                                            <Form.Label id="form-label">Jenis Ruangan</Form.Label>
+                                            <Form.Select name="jenis_ruangan" value={selectedRuangan} onChange={(e)=> handleRuanganChange(e.target.value)}>
+                                                <option value="">-</option>
+                                                {jenis_ruangan.map(item=>(
+                                                    <option value={item}>{item}</option>
+                                                ))}
+                                            </Form.Select>
+                                        </Col>  
+                                    </Row>
+                                    <Row>
+                                
+                                                <Col md={6}>
+                                                    <Form.Label id="form-label">Lantai</Form.Label>
+                                                    <Form.Select name="lantai" value={selectedLantai} onChange={(e)=> handleLantaiChange(e.target.value)}>
+                                                        <option value="">-</option>
+                                                        {lantai.map(item => (
+                                                            <option value={item}>{item}</option>
+                                                        ))}
+                                                    </Form.Select>
+                                                </Col>
+                                
+                                
+                                                <Col md={6}>
+                                                    <Form.Label id="form-label">Bed</Form.Label>
+                                                    <Form.Select name="no_bed" value={inputBed} onChange={(e) => setInputBed(e.target.value)}>
+                                                        <option value="">-</option>
+                                                        {no_bed.map(item => (
+                                                            <option value={item.id}>{item.no_bed}</option>
+                                                        ))}
+                                                    </Form.Select>
+                                                </Col>
+                                    </Row>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                        <Button 
+                                            onClick={() => setShowModal(false)}
+                                            variant="secondary">               
+                                            Cancel
+                                        </Button>
+                                        <ConfirmModal 
+                                            onConfirm={isEditing? editForm : submitForm}
+                                            successMessage={isEditing ? "Data berhasil diubah" : "Data berhasil ditambahkan"}
+                                            cancelMessage= {isEditing? "Data gagal diubah" : "Data gagal ditambahkan"}
+                                            buttonText={isEditing ? "Edit" : "Simpan"}       
+                                        />
+                                </Modal.Footer>
+
+                            </Form>
+                        </Modal>
+
+                        {/* Alert Selesai */}
+
+                        <Modal
+                            show={showAlertSelesai} onHide={handleClose} centered>
+                            <Modal.Body>
+                                <p>Pasien akan dinyatakan selesai di rawat inap.</p>
+
+                                <ConfirmModal 
+                                    onConfirm={getSembuh}
+                                    successMessage={"Berhasil"}
+                                    cancelMessage= {"Gagal"}
+                                    buttonText={"Selesai"}       
+                                />
+                            
+                            </Modal.Body>
+
+                        </Modal>
+
+                    </Sidebar>
+                </>
+            ) : (
+                <>
+                    <Sidebar>
+                        <div className="container d-flex align-items-center form-margin container-breadcrumb">
+                                <span>
+                                <Link to={`/admin/daftarpasien`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+                                </Link>
+                                </span>
+                                <BreadCrumb model={items} />
+
+                                <span>
+                                <p className='title-breadcrumb'>Catatan Rawat Inap</p>
+                                </span>
+                            </div>
+
+                            <div className='container'>
+                                <h3>Catatan</h3>
+                        </div>
+
+                        
+                                <div className="container mt-2">
+                                    <div className="alert-pasien-custom">
+                                        <div className='space-label'>
+                                        <Row>
+                                            <Col>
+                                            <Row>
+                                                <span className='shift-label'>Nama</span>
+                                            </Row>
+                                            <Row>
+                                                <span id='form-label' className="alert-info ">{pasien.nama_lengkap}</span>
+                                            </Row>
+                                            </Col>
+                                            
+                                        </Row>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        <div className='container pt-5'>
+                            <Button variant='primary' className="btn blue-button-table" onClick={handleShow}>
+                                Tambah
+                            </Button>
+
+                            <Row>
+                                <Col xs={8}>
+                                    <ListGroup className='pt-4'>
+                                        {tanggalRawat &&  tanggalRawat.map(item => (
+                                            <ListGroup.Item>
+                                                <Row>
+                                                    <Col xs={12}>
+                                                        <Form.Label id='form-label'>
+                                                            <Row>
+                                                                <Row>
+                                                                    <Col xs={6}>
+                                                                        <Row>
+                                                                            <span>Tanggal Masuk: {item.tanggal_masuk}</span>
+                                                                            {item.status === 'sembuh' ? <span>Tanggal Keluar: {item.tanggal_keluar}</span> : <span>Tanggal Keluar: -</span>}
+                                                                        </Row>
+                                                                    </Col>
+                                                                    <Col xs={4}>
+                                                                        <Row>
+                                                                            <span>Jam Masuk: {item.jam_masuk}</span>
+                                                                            {item.status === 'sembuh' ? <span>Jam Keluar: {item.jam_keluar}</span> : <span>Jam Keluar: -</span>}
+                                                                        </Row>
+                                                                    </Col>
+                                                                    <Col xs={1}>
+                                                                        <span id='form-label' style={{ color: item.status === 'sembuh' ? '#212529' : '#4e95e0' }}>Status: {item.status === 'sembuh' ? "Selesai" : "Ongoing"}</span>
+                                                                        <br/>
+                                                                    
+                                                                    </Col>
+                                                            </Row>
+                                                            <Row className='mt-4 gap-custom'>
+                                                            {item.status !== 'sembuh' && (
+                                                                    <>
+                                                                        <Col xs={2}>
+                                                                            <Button
+                                                                                className='btn edit-button'
+                                                                                onClick={() => editClick(item.id)}
+                                                                            >Edit</Button>
+                                                                        </Col>
+                                                                        <Col>
+                                                                            <Button className='btn confirm-button'
+                                                                            onClick={()=>handleShowAlert(item.id)}>Selesai</Button>
+                                                                        </Col>
+                                                                    </>
+                                                                )}
+
+                                                            </Row>
+                                                            </Row>
+                                                        </Form.Label>
+                                                    </Col>
+                                                </Row>
+                                            </ListGroup.Item>
+                                        ))}
+                                    </ListGroup>
+                                    
+                                </Col>
+                            </Row>
+                            {/* {tanggalRawat && tanggalRawat.map(item=>(
+                                
+                                <Row>
+                                    <Col xs={5}>
+                                        <Card className='mt-2'>
+                                            <Card.Body>
+                                                <Row>
+                                                    <Col>
+                                                        <Form.Label id='form-label'>Tanggal Masuk: {item.tanggal_masuk}</Form.Label>
+                                                        <p id='form-label'>Tanggal Keluar: -</p>
+                                                        <p id='form-label'>Status: Ongoing</p>
+                                                    </Col>
+                                                    <Col>
+
+                                                    </Col>
+                                                </Row>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            ))} */}
+                        </div>
+
+
+
+                        {/* Modal Form */}
+
+                        <Modal
+                            show={showModal} onHide={handleClose} centered
+                        >
+                            <Modal.Header>
+                                <p></p>
+                            </Modal.Header>
+                            <Form onSubmit={submitForm}>
+                                <Modal.Body>
+                                    {/* <Form.Group>
+                                        <Form.Label id="form-label">Triase</Form.Label>
+                                        <Form.Select name="triase" value={triase} onChange={(e)=> setTriase(e.target.value)}>
+                                            <option value="">-</option>
+                                            <option value="hijau">Hijau</option>
+                                            <option value="kuning">Kuning</option>
+                                            <option value="merah">Merah</option>
+                                            <option value="hitam">Hitam</option>
+                                        </Form.Select>
+                                    </Form.Group> */}
+                                
+                                    <Row className='pt-2'>
+                                        <Col md={6}>
+                                            <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
+                                            <Form.Select name="nama_fasilitas" value={selectedFasilitas} onChange={(e)=> filterFasilitas(e.target.value)}>
+                                                <option value="">-</option>
+                                                {bed.map(item => (
+                                                    <option key={item.id} value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
+                                                ))}
+                                            </Form.Select>
+                                        </Col>
+                        
+                                        <Col md={6}>
+                                            <Form.Label id="form-label">Jenis Ruangan</Form.Label>
+                                            <Form.Select name="jenis_ruangan" value={selectedRuangan} onChange={(e)=> handleRuanganChange(e.target.value)}>
+                                                <option value="">-</option>
+                                                {jenis_ruangan.map(item=>(
+                                                    <option value={item}>{item}</option>
+                                                ))}
+                                            </Form.Select>
+                                        </Col>  
+                                    </Row>
+                                    <Row>
+                                
+                                                <Col md={6}>
+                                                    <Form.Label id="form-label">Lantai</Form.Label>
+                                                    <Form.Select name="lantai" value={selectedLantai} onChange={(e)=> handleLantaiChange(e.target.value)}>
+                                                        <option value="">-</option>
+                                                        {lantai.map(item => (
+                                                            <option value={item}>{item}</option>
+                                                        ))}
+                                                    </Form.Select>
+                                                </Col>
+                                
+                                
+                                                <Col md={6}>
+                                                    <Form.Label id="form-label">Bed</Form.Label>
+                                                    <Form.Select name="no_bed" value={inputBed} onChange={(e) => setInputBed(e.target.value)}>
+                                                        <option value="">-</option>
+                                                        {no_bed.map(item => (
+                                                            <option value={item.id}>{item.no_bed}</option>
+                                                        ))}
+                                                    </Form.Select>
+                                                </Col>
+                                    </Row>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                        <Button 
+                                            onClick={() => setShowModal(false)}
+                                            variant="secondary">               
+                                            Cancel
+                                        </Button>
+                                        <ConfirmModal 
+                                            onConfirm={isEditing? editForm : submitForm}
+                                            successMessage={isEditing ? "Data berhasil diubah" : "Data berhasil ditambahkan"}
+                                            cancelMessage= {isEditing? "Data gagal diubah" : "Data gagal ditambahkan"}
+                                            buttonText={isEditing ? "Edit" : "Simpan"}       
+                                        />
+                                </Modal.Footer>
+
+                            </Form>
+                        </Modal>
+
+                        {/* Alert Selesai */}
+
+                        <Modal
+                            show={showAlertSelesai} onHide={handleClose} centered>
+                            <Modal.Body>
+                                <p>Pasien akan dinyatakan selesai di rawat inap.</p>
+
+                                <ConfirmModal 
+                                    onConfirm={getSembuh}
+                                    successMessage={"Berhasil"}
+                                    cancelMessage= {"Gagal"}
+                                    buttonText={"Selesai"}       
+                                />
+                            
+                            </Modal.Body>
+
+                        </Modal>
+
+                    </Sidebar>
+                </>
+            )}
+        </React.Fragment>
     )
 }
