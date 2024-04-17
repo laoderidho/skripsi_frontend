@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const instance = axios.create({
-  baseURL: "http://127.0.0.1:8000/api", // Sesuaikan dengan URL API Laravel Anda
+  baseURL: "https://api.klinikunai.site/api", // Sesuaikan dengan URL API Laravel Anda
   timeout: 10000, // Sesuaikan dengan kebutuhan Anda
   headers: {
     "Content-Type": "application/json",

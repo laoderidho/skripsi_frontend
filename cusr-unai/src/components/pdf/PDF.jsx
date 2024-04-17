@@ -54,11 +54,11 @@ const PDF = () => {
 
     return (
         <div>
-            <div>
+            <div className='container d-flex justify-content-center align-items-center'>
                 <span>Download PDF Askep </span>
-                <span>
+                <div className='px-2'>
                     <button type='button' onClick={handleDownloadPdf} className='btn blue-button-left-align'>Download</button>
-                </span>
+                </div>
             </div>
             <div className='container mt-5'>
                 <div className=''>
@@ -74,6 +74,14 @@ const PDF = () => {
                             </div>
                         </div>
                     </div>
+                    <div className='page-break'></div>
+                    {/* <div className='page'>
+                        <div className='subpage' ref={printRef2}>
+                            <div className='pdf-inner'>
+                                <Askep />
+                            </div>
+                        </div>
+                    </div> */}
                 </div>
             </div>
         </div>

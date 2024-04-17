@@ -30,7 +30,7 @@ const EditPasien = () => {
     //   getDataById();
     // },[]);
     console.log(test)
-    const submitForm = async (e) => {
+    const editForm = async (e) => {
       e.preventDefault();
       try {
         const res = await axios.post("/admin/daftarpasien/tambah", {

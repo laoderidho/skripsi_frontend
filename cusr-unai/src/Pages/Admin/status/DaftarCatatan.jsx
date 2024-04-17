@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Sidebar from '../../../components/menu/Sidebar';
+import Sidebar from '../../../components/menu/SidebarAdmin';
 import "primereact/resources/themes/saga-blue/theme.css";
 import { Form, Button, Modal, Container, Col, Row} from "react-bootstrap";
 import { Toolbar } from 'primereact/toolbar';
@@ -10,6 +10,8 @@ import axios from '../../../axios';
 import { Link, useParams } from "react-router-dom";
 import ConfirmModal from '../../../components/menu/ConfirmModal';
 import { Skeleton } from 'primereact/skeleton';
+import { BreadCrumb } from 'primereact/breadcrumb';
+
 
 export default function DaftarCatatan() {
 
@@ -20,6 +22,7 @@ export default function DaftarCatatan() {
     const token = localStorage.getItem("token");
     const {id} = useParams();
     const [loading, setLoading] = useState(true);
+    const isMobile = window.innerWidth <=600;
 
     // Modal Rawat Inap
 
@@ -171,115 +174,269 @@ export default function DaftarCatatan() {
         setIdPasien(id)
       }
 
+      const items = [{label: 'Admin'}, {label: 'Pasien'}, {label: ''}]
+
 
     return (
-        <Sidebar>
-            <div className='container'>
-                <h2>Catatan Rawat Inap</h2>
-            </div>
-            
-            <div className='container pt-5'>
-                <Toolbar
-                    end={endContent}>
-                </Toolbar>
+        <React.Fragment>
+            {isMobile ? (
+                <>
+                    <Sidebar>
+                        <div className="container d-flex align-items-center form-margin container-breadcrumb">
+                              <span>
+                              <Link to={`/admin/pasien/catatan`}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                  </svg>
+                              </Link>
+                              </span>
+                              <BreadCrumb model={items} />
 
-                <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien) }  showGridlines tableStyle={{ minWidth: '50rem' }} paginator rows={20} className='mt-3'>
-                    <Column 
-                        field="" 
-                        header={loading ? <Skeleton width="50px" /> : 'No'}
-                        body={(rowData) => (
-                            loading ? rowData.data : rowData.id
-                        )}/>
-                    <Column 
-                        field="" 
-                        header={loading ? <Skeleton width="100px" /> : 'Nama'}
-                        body={(rowData) => (
-                            loading ? rowData.data : rowData.nama_lengkap
-                            )}/>
-                    <Column 
-                        header=''
-                        body={(rowData) => (
-                            <>
+                              <span>
+                              <p className='title-breadcrumb'>Catatan Rawat Inap</p>
+                              </span>
+                        </div>
+                        <div className='container'>
+                            <h3>Catatan Rawat Inap</h3>
+                        </div>
+
+                        <div className="container mt-3">
+                            <input
+                                className="form-control custom-search mt-2"
+                                id="form-width"
+                                type="text"
+                                placeholder="Search"
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                />  
+                        </div> 
+                        
+                        <div className='container'>
+                            <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien) }  showGridlines tableStyle={{ minWidth: '2rem' }} paginator rows={20} className='mt-1'>
+                                <Column 
+                                    field="" 
+                                    header={loading ? <Skeleton width="50px" /> : 'No'}
+                                    body={(rowData) => (
+                                        loading ? rowData.data : rowData.id
+                                    )}/>
+                                <Column 
+                                    field="" 
+                                    header={loading ? <Skeleton width="100px" /> : 'Nama'}
+                                    body={(rowData) => (
+                                        loading ? rowData.data : rowData.nama_lengkap
+                                        )}/>
+                                <Column 
+                                    header=''
+                                    body={(rowData) => (
+                                        <>
+                                            
+                                            <Link id="form-label" className='btn dashboard-button d-flex justify-content-center align-items-center' to={`/admin/pasien/catatan/${rowData.id}`}>
+                                                <span style={{color: '#085b93', marginTop: '0.1rem'}}>Lihat Detail</span>
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" style={{marginLeft: '0.4rem', marginBottom: '0.1rem'}} width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="#085b93">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                                    </svg>
+                                                </span>
+                                            </Link>
+                                            
+                                        </>
+                                    )}
+                                />
+                                {/* <Column 
+                                    header=''
+                                    body={(rowData) => (
+                                        <Link 
+                                            className='link-theme'
+                                            onClick={() => editClick(rowData.id)}>
+                                                Edit
+                                        </Link>
+                                    )}
+                                /> */}
+
+                            </DataTable>
+
+                            {/* Modal Status */}
+
+                            <Modal
+                                show={showModalRawatInap}
+                                onHide={() => setShowModalRawatInap(!showModalRawatInap)} centered>
                                 
-                                <Link id="form-label" to={`/admin/pasien/catatan/${rowData.id}`}>
-                                    <span>Lihat Detail</span>
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="mx-1 my-2" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                        </svg>
-                                    </span>
+                                <Modal.Header>
+                                    <p>Klik untuk mengubah status pasien</p>
+                                </Modal.Header>
+                                <Form onSubmit={addRawatInap}>
+                                    <Modal.Body>
+                                    <Form.Group className='pt-1'>
+                                            <Form.Label id='form-label'>Pilih Status</Form.Label>
+                                            <Dropdown 
+                                                value={triase}
+                                                onChange={(e) => setTriase(e.target.value)}
+                                                options={jenis_triase}
+                                                placeholder='Pilih'
+                                                className='pt-1'>
+                                            </Dropdown>
+                                        </Form.Group>
+                                        <Form.Group className='pt-3'>
+                                            <Form.Label id='form-label'>Pilih Bed</Form.Label>
+                                            <Dropdown
+                                                value={pasienBed}
+                                                onChange={(e) => setPasienBed(e.target.value)}
+                                                options={createBedOptions()}
+                                                placeholder="Pilih"
+                                                filter
+                                                className='pt-1'
+                                                id='dropdown-modal'>
+                                            </Dropdown>
+                                        </Form.Group>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button
+                                            variant="secondary"
+                                            onClick={() => setShowModalRawatInap(!showModalRawatInap)}>
+                                                Close
+                                        </Button>
+                                        {pasienBed && triase ? (
+                                            <ConfirmModal
+                                                onConfirm={addRawatInap}
+                                                successMessage={"Data berhasil di ubah"}
+                                                cancelMessage={"Data gagal di ubah"}
+                                                buttonText={"Simpan"}/>
+                                        ) : (
+                                            <Button variant='primary' disabled>Simpan</Button>
+                                        )}
+                                    </Modal.Footer>
+                                </Form>
+                            </Modal>
+                        </div>
+                        
+                    </Sidebar>
+                </>
+            ) : (
+                <>
+                    <Sidebar>
+                        <div className="container d-flex align-items-center container-breadcrumb">
+                                <span>
+                                <Link to={`/admin/pasien/catatan`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
                                 </Link>
+                                </span>
+                                <BreadCrumb model={items} />
+
+                                <span>
+                                <p className='title-breadcrumb'>Catatan Rawat Inap</p>
+                                </span>
+                            </div>
+                            <div className='container'>
+                                <h3>Catatan Rawat Inap</h3>
+                            </div>
+                        
+                        <div className='container pt-5'>
+                            <Toolbar
+                                end={endContent}>
+                            </Toolbar>
+
+                            <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien) }  showGridlines tableStyle={{ minWidth: '2rem' }} paginator rows={20} className='mt-3'>
+                                <Column 
+                                    field="" 
+                                    header={loading ? <Skeleton width="50px" /> : 'No'}
+                                    body={(rowData) => (
+                                        loading ? rowData.data : rowData.id
+                                    )}/>
+                                <Column 
+                                    field="" 
+                                    header={loading ? <Skeleton width="100px" /> : 'Nama'}
+                                    body={(rowData) => (
+                                        loading ? rowData.data : rowData.nama_lengkap
+                                        )}/>
+                                <Column 
+                                    header=''
+                                    body={(rowData) => (
+                                        <>
+                                            
+                                            <Link id="form-label" className='btn dashboard-button d-flex justify-content-center align-items-center' to={`/admin/pasien/catatan/${rowData.id}`}>
+                                                <span style={{color: '#085b93', marginTop: '0.2rem'}}>Lihat Detail</span>
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" style={{marginLeft: '0.4rem', marginBottom: '0.1rem'}} width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="#085b93">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                                    </svg>
+                                                </span>
+                                            </Link>
+                                            
+                                        </>
+                                    )}
+                                />
+                                {/* <Column 
+                                    header=''
+                                    body={(rowData) => (
+                                        <Link 
+                                            className='link-theme'
+                                            onClick={() => editClick(rowData.id)}>
+                                                Edit
+                                        </Link>
+                                    )}
+                                /> */}
+
+                            </DataTable>
+
+                            {/* Modal Status */}
+
+                            <Modal
+                                show={showModalRawatInap}
+                                onHide={() => setShowModalRawatInap(!showModalRawatInap)} centered>
                                 
-                            </>
-                        )}
-                    />
-                    {/* <Column 
-                        header=''
-                        body={(rowData) => (
-                            <Link 
-                                className='link-theme'
-                                onClick={() => editClick(rowData.id)}>
-                                    Edit
-                            </Link>
-                        )}
-                    /> */}
-
-                </DataTable>
-
-                {/* Modal Status */}
-
-                <Modal
-                    show={showModalRawatInap}
-                    onHide={() => setShowModalRawatInap(!showModalRawatInap)} centered>
-                    
-                    <Modal.Header>
-                        <p>Klik untuk mengubah status pasien</p>
-                    </Modal.Header>
-                    <Form onSubmit={addRawatInap}>
-                        <Modal.Body>
-                        <Form.Group className='pt-1'>
-                                <Form.Label id='form-label'>Pilih Status</Form.Label>
-                                <Dropdown 
-                                    value={triase}
-                                    onChange={(e) => setTriase(e.target.value)}
-                                    options={jenis_triase}
-                                    placeholder='Pilih'
-                                    className='pt-1'>
-                                </Dropdown>
-                            </Form.Group>
-                            <Form.Group className='pt-3'>
-                                <Form.Label id='form-label'>Pilih Bed</Form.Label>
-                                <Dropdown
-                                    value={pasienBed}
-                                    onChange={(e) => setPasienBed(e.target.value)}
-                                    options={createBedOptions()}
-                                    placeholder="Pilih"
-                                    filter
-                                    className='pt-1'
-                                    id='dropdown-modal'>
-                                </Dropdown>
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                variant="secondary"
-                                onClick={() => setShowModalRawatInap(!showModalRawatInap)}>
-                                    Close
-                            </Button>
-                            {pasienBed && triase ? (
-                                <ConfirmModal
-                                    onConfirm={addRawatInap}
-                                    successMessage={"Data berhasil di ubah"}
-                                    cancelMessage={"Data gagal di ubah"}
-                                    buttonText={"Simpan"}/>
-                            ) : (
-                                <Button variant='primary' disabled>Simpan</Button>
-                            )}
-                        </Modal.Footer>
-                    </Form>
-                </Modal>
-            </div>
-            
-        </Sidebar>
+                                <Modal.Header>
+                                    <p>Klik untuk mengubah status pasien</p>
+                                </Modal.Header>
+                                <Form onSubmit={addRawatInap}>
+                                    <Modal.Body>
+                                    <Form.Group className='pt-1'>
+                                            <Form.Label id='form-label'>Pilih Status</Form.Label>
+                                            <Dropdown 
+                                                value={triase}
+                                                onChange={(e) => setTriase(e.target.value)}
+                                                options={jenis_triase}
+                                                placeholder='Pilih'
+                                                className='pt-1'>
+                                            </Dropdown>
+                                        </Form.Group>
+                                        <Form.Group className='pt-3'>
+                                            <Form.Label id='form-label'>Pilih Bed</Form.Label>
+                                            <Dropdown
+                                                value={pasienBed}
+                                                onChange={(e) => setPasienBed(e.target.value)}
+                                                options={createBedOptions()}
+                                                placeholder="Pilih"
+                                                filter
+                                                className='pt-1'
+                                                id='dropdown-modal'>
+                                            </Dropdown>
+                                        </Form.Group>
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button
+                                            variant="secondary"
+                                            onClick={() => setShowModalRawatInap(!showModalRawatInap)}>
+                                                Close
+                                        </Button>
+                                        {pasienBed && triase ? (
+                                            <ConfirmModal
+                                                onConfirm={addRawatInap}
+                                                successMessage={"Data berhasil di ubah"}
+                                                cancelMessage={"Data gagal di ubah"}
+                                                buttonText={"Simpan"}/>
+                                        ) : (
+                                            <Button variant='primary' disabled>Simpan</Button>
+                                        )}
+                                    </Modal.Footer>
+                                </Form>
+                            </Modal>
+                        </div>
+                        
+                    </Sidebar>
+                </>
+            )}
+        </React.Fragment>
     )
 }

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../../../components/menu/Sidebar";
+import Sidebar from "../../../../components/menu/SidebarAdmin";
 import { Form, Button, Table, Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "../../../../axios";
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import "primereact/resources/themes/saga-blue/theme.css";
+import { Toolbar } from 'primereact/toolbar';
+import { BreadCrumb } from 'primereact/breadcrumb';
 
 export default function Diagnosis() {
   const [inputValue, setInputValue] = useState("");
   const [filterDataDiagnosa, setFilterDataDiagnosa] = useState([]);
   const [diagnosa, setDiagnosa] = useState([]);
-
+  const isMobile = window.innerWidth <=600;
 
   const FilterSearchValue = () => {
     const filteredDiagnosa = diagnosa.filter((item) => {
@@ -44,84 +49,135 @@ export default function Diagnosis() {
     getDiagnosa(localStorage.getItem("token"));
   }, []);
 
+  const endContent = (
+    <React.Fragment>
+      <input
+          className="form-control"
+          id="form-width"
+          type="text"
+          placeholder="Search"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+    </React.Fragment>
+  );
+
+  const startContent = (
+    <React.Fragment>
+      <Link
+        to={`/admin/diagnosa/tambah`}
+        className="btn blue-button-table">Tambah</Link>
+    </React.Fragment>
+  );
+
+  const items = [{label: 'Admin'}, {label: 'SKI'}, {label: ''}]
+
 
   return (
-    <Sidebar>
-      {/* Title */}
-      <div className="container">
-        <h2>Data Standar Diagnosa Keperawatan Indonesia</h2>
-        <Breadcrumb>
-          <Breadcrumb.Item active>Diagnosis</Breadcrumb.Item>
-          <Breadcrumb.Item href="/admin/diagnosa/tambah">
-            Tambah
-          </Breadcrumb.Item>
-        </Breadcrumb>
-      </div>
+    <React.Fragment>
+      {isMobile ? (
+        <>
+          <Sidebar>
+              <div className="container d-flex align-items-center form-margin container-breadcrumb">
+                            <span>
+                                <Link to={`/admin/standarkeperawatan/diagnosis`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+                                </Link>
+                            </span>
+                                <BreadCrumb model={items} />
 
-      {/* Search */}
+                                <span>
+                                    <p className='title-breadcrumb'>Diagnosis</p>
+                                </span>
+              </div>
 
-      <Form className="container">
-        <div className="search-container">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Search"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
+              <div className="container">
+                <h3>Standar Diagnosis Keperawatan Indonesia</h3>
+              </div>
 
-          <Link
-            to="/admin/diagnosa/tambah"
-            className="btn d-flex justify-content-center align-items-center blue-button"
-          >
-            Tambah
-          </Link>
-        </div>
+              <div className="container pt-3">
+                <Link
+                  to={`/admin/diagnosa/tambah`}
+                  className="btn blue-button-table">Tambah</Link>
 
-        <table>
-          <thead id='thead-admin'>
-            <tr>
-              <th>No</th>
-              <th>Kode Diagnosa</th>
-              <th>Nama Diagnosa</th>
-              <th className="button-space"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {inputValue
-              ? filterDataDiagnosa.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.id}</td>
-                    <td>{item.kode_diagnosa}</td>
-                    <td>{item.nama_diagnosa}</td>
-                    <td>
-                      <Link
-                        to={`/admin/standarkeperawatan/diagnosis/${item.id}`}
-                        class="btn d-flex justify-content-center align-items-center simple-button"
-                      >
-                        Lihat
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              : diagnosa.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.id}</td>
-                    <td>{item.kode_diagnosa}</td>
-                    <td>{item.nama_diagnosa}</td>
-                    <td>
-                      <Link
-                        to={`/admin/standarkeperawatan/diagnosis/${item.id}`}
-                        class="btn d-flex justify-content-center align-items-center simple-button"
-                      >
-                        Lihat
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-          </tbody>
-        </table>
-      </Form>
-    </Sidebar>
+                <input
+                    className="form-control custom-search mt-2"
+                    id="form-width "
+                    type="text"
+                    placeholder="Search"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                  />
+
+              </div>
+
+              <div className="container">
+
+                <div className="">
+                  <DataTable value={inputValue ? filterDataDiagnosa : diagnosa} paginator rows={5}  tableStyle={{ minWidth: '2rem' }} stripedRows show showGridlines>
+                                    {/* <Column field="id" header='No'/> */}
+                                    <Column field="kode_diagnosa" header='Kode Diagnosa'/>
+                                    <Column field="nama_diagnosa" header='Nama Diagnosa'/>
+                                    <Column 
+                                    header=''
+                                    body={(item) => (
+                                        <Link
+                                        to={`/admin/standarkeperawatan/diagnosis/${item.id}`}
+                                        className="btn d-flex justify-content-center align-items-center simple-button">Lihat</Link>
+                                    )}/>
+                                </DataTable>
+                </div>
+              </div>
+            </Sidebar>
+        </>
+      ) : (
+        <>
+          <Sidebar>
+                <div className="container d-flex align-items-center form-margin container-breadcrumb">
+                            <span>
+                                <Link to={`/admin/pasien/rawat-inap`}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width='17' height='17' fill='#fff' viewBox="0 0 24 24" stroke-width="1.5" stroke="#085b93" class="w-6 h-6 mb-3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+                                </Link>
+                            </span>
+                                <BreadCrumb model={items} />
+
+                                <span>
+                                    <p className='title-breadcrumb'>Diagnosis</p>
+                                </span>
+                </div>
+              <div className="container">
+                <h3>Standar Diagnosis Keperawatan Indonesia</h3>
+              </div>
+
+              <div className="container pt-5">
+                <Toolbar
+                    start={startContent}
+                    end={endContent}
+                    >
+                  </Toolbar>
+
+                <div className="">
+                  <DataTable value={inputValue ? filterDataDiagnosa : diagnosa} paginator rows={10}  tableStyle={{ minWidth: '2rem' }} stripedRows show showGridlines>
+                                    <Column field="id" header='No'/>
+                                    <Column field="kode_diagnosa" header='Kode Diagnosa'/>
+                                    <Column field="nama_diagnosa" header='Nama Diagnosa'/>
+                                    <Column 
+                                    header=''
+                                    body={(item) => (
+                                        <Link
+                                        to={`/admin/standarkeperawatan/diagnosis/${item.id}`}
+                                        className="btn d-flex justify-content-center align-items-center simple-button">Lihat</Link>
+                                    )}/>
+                                </DataTable>
+                </div>
+              </div>
+            </Sidebar>
+        </>
+      )}
+    </React.Fragment>
   );
 }
