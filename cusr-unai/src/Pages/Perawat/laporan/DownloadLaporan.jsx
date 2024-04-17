@@ -26,7 +26,7 @@ const DownloadLaporan = () => {
 
   useEffect(() => {
     getList();
-  })
+  },[])
 
   return (
     <Sidebar
