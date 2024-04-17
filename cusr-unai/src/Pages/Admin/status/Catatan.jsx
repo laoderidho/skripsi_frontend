@@ -197,27 +197,23 @@ export default function Catatan() {
 
         }
     }
-    const editClick = async (id, nama_fasilitas, lantai, no_bed, jenis_ruangan) => {
-        filterFasilitas(nama_fasilitas);
-        handleRuanganChange(jenis_ruangan);
-    
-        getDetailEditRawatInap(id);
+    const editClick = async (id) => {
 
+        getDetailEditRawatInap(id);
+        setPerawatanId(id);
         setIsEditing(true);
         setShowModal(true);
     }
 
     const editForm = async () => {
         try {
-            await axios.post(`/admin/rawat-inap/update/${idBed}`, {
+            await axios.post(`/admin/rawat-inap/update/${perawatanid}`, {
                 no_bed: inputBed
             },
             {
                 headers: { Authorization: `Bearer ${token}`}
             });
             setShowModal(false);
-            getDetailEditRawatInap();
-
         } catch (error) {
 
         }
@@ -352,18 +348,7 @@ export default function Catatan() {
                     <p></p>
                 </Modal.Header>
                 <Form onSubmit={submitForm}>
-                    <Modal.Body>
-                        {/* <Form.Group>
-                            <Form.Label id="form-label">Triase</Form.Label>
-                            <Form.Select name="triase" value={triase} onChange={(e)=> setTriase(e.target.value)}>
-                                <option value="">-</option>
-                                <option value="hijau">Hijau</option>
-                                <option value="kuning">Kuning</option>
-                                <option value="merah">Merah</option>
-                                <option value="hitam">Hitam</option>
-                            </Form.Select>
-                        </Form.Group> */}
-                       
+                    <Modal.Body>  
                         <Row className='pt-2'>
                             <Col md={6}>
                                 <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>

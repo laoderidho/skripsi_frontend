@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import LogoUnai from './LogoUnai.png';
 import LogoUnaiSVG from './LogoUnaiSVG.svg';
 import { Row, Col } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
-import axios from '../../axios';
 
 export default function Askep({data, pasien}) {
 
