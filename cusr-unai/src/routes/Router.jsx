@@ -56,6 +56,7 @@ import DetailAskepIntervensi from "../Pages/Perawat/form-ski/Intervensi/DetailAs
 import DetailAskepLuaran from "../Pages/Perawat/form-ski/luaran/DetailAskepLuaran";
 import DownloadLaporan from "../Pages/Perawat/laporan/DownloadLaporan";
 import DetailAskepEvaluasi from "../Pages/Perawat/form-ski/evaluasi/DetailAskepEvaluasi";
+import DetailAskepImplementasi from "../Pages/Perawat/form-ski/Implementasi/DetailAskepImplementasi";
 
 
 // protected route Function
@@ -146,6 +147,7 @@ export default function Router() {
           <Route path="/perawat/askep/luaran/:id" element={<DetailAskepLuaran />} />
           <Route path="/perawat/askep/form-evaluasi/:id" element={<FormEvaluasi />} />
           <Route path="/perawat/askep/evaluasi/:id" element={<DetailAskepEvaluasi />} />
+          <Route path="/perawat/askep/implementasi/:id" element={<DetailAskepImplementasi/>} />
 
           {/* Profil Pemeriksaan */}
           <Route path="/perawat/profil/pemeriksaan/:id" element={<ProfilPemeriksaan />} />

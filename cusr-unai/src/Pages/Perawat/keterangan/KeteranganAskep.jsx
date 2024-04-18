@@ -228,7 +228,7 @@ const KeteranganAskep = () => {
                               {/* Implementasi */}
                               <tr>
                                 <td className='font-adjust-td'>{askep.jam_pemberian_implementasi ? (
-                                  <Link tp={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
+                                  <Link to={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
                                 ) : ( "Implementasi" )}</td>
                                 <td className='font-adjust-td'>
                                   {askep.tanggal_pemberian_implementasi ? (
