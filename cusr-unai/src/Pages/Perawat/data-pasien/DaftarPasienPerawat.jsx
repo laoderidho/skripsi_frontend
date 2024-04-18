@@ -149,7 +149,7 @@ export default function DaftarPasien() {
                   onChange={(e) => setInputValue(e.target.value)}
                 />
 
-              <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}  stripedRows show showGridlines>
+              <DataTable value={inputValue ? filterPasien : pasien} paginator rows={5}  tableStyle={{ minWidth: '2rem' }} stripedRows show showGridlines>
                 <Column field="nama_lengkap" header='Nama'/>
                 <Column 
                   header=''

@@ -92,7 +92,7 @@ export default function ProfilPemeriksaan() {
       <Fragment>
         {isMobile ? (
             <Fragment>
-                <Sidebar>
+                <Sidebar title='DIAGNOSTIK'>
                     {/* Title */}
                     <div className="container">
                         <h2>Data Diagnostik</h2>

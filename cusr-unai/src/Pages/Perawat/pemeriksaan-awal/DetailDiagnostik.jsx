@@ -113,7 +113,7 @@ const DetailDiagnostik = () => {
   };
   
   return (
-    <Sidebar>
+    <Sidebar title='DETAIL DX'>
     <div className="container">
       <h2>Form Diagnostik</h2>
     </div>
@@ -125,7 +125,7 @@ const DetailDiagnostik = () => {
             <h4>Anamnesis</h4>
             <Form.Label>Keluhan Utama</Form.Label>
             <Form.Control
-              id="form-control-input"
+              id="form-control-input custom-search"
               as="textarea"
               type="text" 
               style={{ height: "4rem" }}
@@ -139,7 +139,7 @@ const DetailDiagnostik = () => {
           <Form.Group className="mb-3">
             <Form.Label>Riwayat Penyakit</Form.Label>
             <Form.Control 
-              id="form-control-input"
+              id="form-control-input custom-search"
               type="text" 
               as="textarea"
               style={{ height: "4rem" }}
@@ -153,7 +153,7 @@ const DetailDiagnostik = () => {
           <Form.Group className="mb-3">
             <Form.Label>Riwayat Alergi</Form.Label>
             <Form.Control 
-              id="form-control-input"
+              id="form-control-input custom-search"
               type="text" 
               as="textarea"
               style={{ height: "4rem" }}
@@ -167,7 +167,7 @@ const DetailDiagnostik = () => {
           <Form.Group className="mb-3">
             <Form.Label>Risiko Jatuh</Form.Label>
             <Form.Control 
-              id="form-control-input"
+              id="form-control-input custom-search"
               type="text" 
               as="textarea"
               style={{ height: "4rem" }}
@@ -181,7 +181,7 @@ const DetailDiagnostik = () => {
           <Form.Group className="mb-3">
             <Form.Label>Risiko Nyeri</Form.Label>
             <Form.Control
-              id="form-control-input"
+              id="form-control-input custom-search"
               as="textarea"
               style={{ height: "4rem" }}
               type="text"
@@ -199,7 +199,7 @@ const DetailDiagnostik = () => {
             <Form.Label>Suhu</Form.Label>
             <div class="input-group">
               <Form.Control
-                  id="suhu"
+                  id="suhu custom-search"
                   type="text" 
                   class="form-control" 
                   value={suhu}
@@ -214,7 +214,7 @@ const DetailDiagnostik = () => {
             <Form.Label>Tekanan Darah</Form.Label>
             <div class="input-group">
               <Form.Control 
-               id="small-box-left"
+               id="small-box-left custom-search"
                type="text"
                min="1"
                max="200"
@@ -267,7 +267,7 @@ const DetailDiagnostik = () => {
           <Form.Group className="mb-3">
             <Form.Label>Kesadaran</Form.Label>
             <Form.Control 
-              id="form-control-input"
+              id="form-control-input custom-search"
               type="text" 
               value={kesadaran}
               onChange={(e) => setKesadaran(e.target.value)}
@@ -309,7 +309,7 @@ const DetailDiagnostik = () => {
           <Form.Group className="mb-3">
             <Form.Label>Pemeriksaan Fisik</Form.Label>
             <Form.Control 
-              id="form-control-input"
+              id="form-control-input custom-search"
               type="text" 
               value={pemeriksaan_fisik}
               onChange={(e) => setPemeriksaanFisik(e.target.value)}
