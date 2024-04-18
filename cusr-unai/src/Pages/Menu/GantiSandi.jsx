@@ -15,8 +15,7 @@ const GantiSandi = () => {
   const navigate = useNavigate()
 
 
-  const submitChangePassword = async (e) =>{
-    e.preventDefault()
+  const submitChangePassword = async () =>{
     try {
       const res = await axios.post(
         "/update-password",
