@@ -17,7 +17,7 @@ import AddDiagnosa from "../Pages/Admin/standar/diagnosa/AddDiagnosa";
 import AddIntervensi from "../Pages/Admin/standar/intervensi/AddIntervensi";
 import AddLuaran from "../Pages/Admin/standar/luaran/AddLuaran";
 import AddPasien from "../Pages/Admin/data-pasien/AddPasien";
-import EditPasien from "../Pages/Admin/data-pasien/EditPasien";
+// import EditPasien from "../Pages/Admin/data-pasien/EditPasien";
 import DetailPasien from "../Pages/Admin/data-pasien/DetailPasien";
 import DetailDiagnosa from "../Pages/Admin/standar/diagnosa/DetailDiagnosa";
 import DaftarPerawat from "../Pages/Admin/data-perawat/DaftarPerawat";

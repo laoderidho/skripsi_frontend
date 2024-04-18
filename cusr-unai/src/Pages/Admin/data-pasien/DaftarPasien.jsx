@@ -129,7 +129,7 @@ export default function DaftarPasien() {
                                 </svg>
                             </Link>
                             </span>
-                            <BreadCrumb model={items} />
+                            <BreadCrumb model={items}/>
 
                             <span>
                             <p className='title-breadcrumb'>Daftar Pasien</p>

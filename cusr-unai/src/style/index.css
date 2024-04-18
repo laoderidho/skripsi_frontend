@@ -1936,6 +1936,10 @@ ol , ul .p-breadcrumb-list {
 
     }
 
+    nav.p-breadcrumb.p-component {
+        z-index: -1;
+    }
+
     .svg-alert-askep {
         z-index: 20;
     }
@@ -1964,41 +1968,14 @@ ol , ul .p-breadcrumb-list {
         font-size: 14px;
     }
 
+    .curs-nav{
+        z-index: -1;
+    }
+
+    .navbar{
+        z-index: 100 !important;
+    }
     
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Buat Mobile */
 @media (max-width: 600px) {
     .content {
@@ -2074,7 +2051,7 @@ ol , ul .p-breadcrumb-list {
         padding: 0;
         background: none;
         border: none;
-        z-index: 1;
+        z-index: -10000000;
     }
 
     .p-dashboard {
@@ -2823,26 +2800,6 @@ ol , ul .p-breadcrumb-list {
         border-top-right-radius: 0.3rem;
         border-bottom-right-radius: 0.3rem;
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    
-
-    
-   
-    
 }
 
 

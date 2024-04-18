@@ -6,7 +6,7 @@ import AuthorizationRoute from '../../../AuthorizationRoute'
 import ConfirmModal from '../../../components/menu/ConfirmModal'
 import axios from '../../../axios'
 import { Card } from 'primereact/card';
-import { Divider } from 'primereact/divider';
+
 import "primereact/resources/themes/saga-blue/theme.css";
 import { Skeleton } from 'primereact/skeleton';
 
@@ -67,12 +67,12 @@ const AddPasien = () => {
 
       <Form className="container pt-2">
           <Row>
-            <Col xs={4}>
+            <Col xs={6}>
               <Card className='profile'>
                 <Form.Group>
                   <Form.Label id='form-label'>Nama Lengkap</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Masukkan Nama Lengkap"
                     value={nama_lengkap}
@@ -84,7 +84,7 @@ const AddPasien = () => {
                 <Form.Group className="mt-2">
                   <Form.Label id='form-label'>Tanggal Lahir</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="date"
                     placeholder="Masukkan Nama Lengkap"
                     value={tanggal_lahir}
@@ -96,7 +96,7 @@ const AddPasien = () => {
                 <Form.Group className="mt-2">
                   <Form.Label id='form-label'>Jenis Kelamin</Form.Label>
                   <Form.Select
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Tentukan Jenis Kelamin"
                     value={jenis_kelamin}
@@ -112,7 +112,7 @@ const AddPasien = () => {
                 <Form.Group className="mt-2">
                   <Form.Label id='form-label'>NIK</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Masukkan NIK"
                     value={nik}
@@ -124,7 +124,7 @@ const AddPasien = () => {
                 <Form.Group className="mt-2">
                   <Form.Label id='form-label'>Status Pernikahan</Form.Label>
                   <Form.Select
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Tentukan Jenis Kelamin"
                     value={status_pernikahan}
@@ -141,7 +141,7 @@ const AddPasien = () => {
                 <Form.Group>
                   <Form.Label id='form-label'>Nomor Telepon</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Masukkan Nomor Telepon"
                     value={no_telepon}
@@ -153,7 +153,7 @@ const AddPasien = () => {
                 <Form.Group className="mt-2">
                   <Form.Label id='form-label'>Alamat</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     as="textarea"
                     style={{ height: "7rem" }}
                     type="text"
@@ -166,12 +166,12 @@ const AddPasien = () => {
               </Card>
             </Col>
 
-            <Col xs={4}>
+            <Col xs={6}>
               <Card>
                 <Form.Group>
                   <Form.Label id='form-label'>No Medical Record</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Masukkan No Medical Record"
                     value={no_medical_record}
@@ -184,7 +184,7 @@ const AddPasien = () => {
                 <Form.Group>
                   <Form.Label id='form-label'>Alergi</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     as='textarea'
                     placeholder="Masukkan Alergi"
@@ -198,7 +198,7 @@ const AddPasien = () => {
                 <Form.Group>
                   <Form.Label id='form-label'>Nama Asuransi</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Masukkan Asuransi"
                     value={nama_asuransi}
@@ -209,7 +209,7 @@ const AddPasien = () => {
                 <Form.Group className="mt-2">
                   <Form.Label id='form-label'>Nomor Asuransi</Form.Label>
                   <Form.Control
-                    id="form-control-input"
+                    id="form-control-input custom-search"
                     type="text"
                     placeholder="Masukkan Nomor Asuransi"
                     value={nomor_asuransi}
@@ -218,11 +218,7 @@ const AddPasien = () => {
                 </Form.Group>
               </Card>
             </Col>
-            <Col xs={1}>
-              <Divider layout='vertical'/>
-            </Col>
           </Row>
-
           <div className='d-flex justify-content-end mt-3'>
             <ConfirmModal
                   onConfirm={submitForm}
