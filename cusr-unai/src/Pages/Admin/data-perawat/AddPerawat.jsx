@@ -70,7 +70,7 @@ const AddPerawat = () => {
             <Form.Group className="mb-3">
               <Form.Label>Nama Lengkap</Form.Label>
               <Form.Control
-                id="form-control-input"
+                id="form-control-input custom-search"
                 type="text" 
                 placeholder="Masukkan Nama Lengkap" 
                 value={nama_lengkap}
@@ -82,7 +82,7 @@ const AddPerawat = () => {
             <Form.Group className="mb-3">
               <Form.Label>Tanggal Lahir</Form.Label>
               <Form.Control 
-                id="form-control-input"
+                id="form-control-input custom-search"
                 type="date" 
                 placeholder="Masukkan Nama Lengkap" 
                 value={tanggal_lahir}
@@ -94,7 +94,7 @@ const AddPerawat = () => {
             <Form.Group className="mb-3">
               <Form.Label>Jenis Kelamin</Form.Label>
               <Form.Select 
-                id="form-control-input"
+                id="form-control-input custom-search"
                 placeholder="Tentukan Jenis Kelamin"
                 value={jenis_kelamin}
                 onChange={(e) => setJenisKelamin(e.target.value)}
@@ -121,7 +121,7 @@ const AddPerawat = () => {
             <Form.Group className="mb-3">
               <Form.Label>Alamat</Form.Label>
               <Form.Control
-                id="form-control-input"
+                id="form-control-input custom-search"
                 as="textarea"
                 style={{ height: "7rem" }}
                 type="text"
@@ -137,7 +137,7 @@ const AddPerawat = () => {
             <Form.Group className="mb-3">
               <Form.Label>Status</Form.Label>
               <Form.Select 
-                id="form-control-input"
+                id="form-control-input custom-search"
                 type="text" 
                 placeholder="Tentukan Status"
                 value={status}
@@ -153,7 +153,7 @@ const AddPerawat = () => {
             <Form.Group className="mb-3">
               <Form.Label>Nomor Telepon</Form.Label>
               <Form.Control 
-                id="form-control-input"
+                id="form-control-input custom-search"
                 type="text" 
                 placeholder="Masukkan Nomor Telepon" 
                 value={no_telepon}
@@ -193,7 +193,7 @@ const AddPerawat = () => {
             <Form.Group className="mb-3">
               <Form.Label>Shift</Form.Label>
               <Form.Select 
-                id="form-control-input"
+                id="form-control-input custom-search"
                 type="text" 
                 placeholder="Tentukan Role"
                 value={shift}
@@ -215,7 +215,7 @@ const AddPerawat = () => {
                     <Form.Group className="mb-3">
                     <Form.Label>Email</Form.Label>
                     <Form.Control 
-                        id="form-control-input"
+                        id="form-control-input custom-search"
                         type="email" 
                         placeholder="Masukkan Email"
                         value={email}
@@ -229,7 +229,7 @@ const AddPerawat = () => {
                     <Form.Label>Password</Form.Label>
                         <InputGroup hasValidation>
                             <Form.Control 
-                                id="form-control-input"
+                                id="form-control-input custom-search"
                                 type={showPassword ? 'text' : 'password'} 
                                 placeholder="Masukkan Password" 
                                 value={password}

@@ -8,9 +8,10 @@ export default function Askep({data, pasien}) {
   const item = data;
 
   const pasienData = pasien[0];
+  console.log(data)
 
   return (
-    <div className=''>
+    <div className='mt-5'>
       <div className=''>
         <div className='container-pdf'>
           <span>
@@ -210,12 +211,22 @@ export default function Askep({data, pasien}) {
                     {/* Nama Luaran: <br></br>{item.luaran.message == "Success" ? item.luaran.data : "-"} */}
                     <ul className='ul-pdf'>
                       {item.luaran.message == "Success" ? item.luaran.data.map(item=>(
-                        <li className='li-pdf'>{item.nama_luaran}</li>
+                        <li className='li-pdf'>
+                          <p style={{fontSize: '11px'}}>{item.nama_luaran}</p>
+                        </li>
                       )) : ""}
                     </ul>
                   </td>
+
+
                   <td className=''>
-                    
+                      <ul className='ul-pdf'>
+                        {item.evaluasi.message == "Success" ? item.evaluasi.luaran.map(item=>(
+                          <li className='li-pdf'>
+                            <p style={{fontSize: '11px'}}>{item.nama_luaran}: {item.hasil_luaran}</p>
+                          </li>
+                        )):""}
+                      </ul>
                   </td>
                 </tr>
             {/* Shift Pagi */}
