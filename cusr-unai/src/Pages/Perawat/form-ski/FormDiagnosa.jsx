@@ -575,7 +575,7 @@ export default function FormDiagnosa() {
 
                 {/* Modal See All Data */}
 
-                <button onClick={!seeDataCondition ? handleShowAllData : handleHideData} className="btn button-switch" type="button">{!seeDataCondition ? 'See All Data' : 'Edit Data'}</button>
+                <button onClick={!seeDataCondition ? handleShowAllData : handleHideData} className="btn button-switch-verification" type="button">{!seeDataCondition ? 'Verifikasi Data' : 'Edit Data'}</button>
 
 
                 <div className="d-flex justify-content-end mt-3">

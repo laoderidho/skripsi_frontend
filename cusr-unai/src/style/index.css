@@ -1990,6 +1990,8 @@ ol , ul .p-breadcrumb-list {
         z-index: 1;
     }
 
+
+
     .alert-admin {
         background-color: #f8f8ed;
         width: 88%;
@@ -2395,6 +2397,24 @@ ol , ul .p-breadcrumb-list {
         font-size: 13px;
         color: #085b93;
     }
+
+    .button-switch-verification {
+        color: #085b93;
+        width: 100%;
+        max-width: 100%;
+        border: 1px solid #085b93;
+        border-radius: 0.2rem;
+        margin-top: 1rem;
+        font-size: 15px;
+
+
+    }
+
+    div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+        background-color: #085b93 !important;
+    }
+
+
 
     .form-margin {
         margin-top: 5rem;

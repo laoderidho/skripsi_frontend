@@ -18,13 +18,6 @@ const ConfigMenu = [
         // icon: "fa-solid fa-user-nurse",
         child: null,
       },
-      // {
-      //   path: "/admin/daftarpasien",
-      //   name: "DAFTAR PASIEN",
-      //   role: "admin",
-      //   // icon: "fa-solid fa-list",
-      //   child: null,
-      // },
     ]
   },
   {
@@ -46,7 +39,13 @@ const ConfigMenu = [
         // icon: "fa-solid fa-list",
         child: null,
       },
-
+      {
+        path: "/admin/pasien/askep",
+        name: "ASKEP",
+        role: "admin",
+        // icon: "fa-solid fa-list",
+        child: null,
+      },
     ]
   },
   {
@@ -63,7 +62,7 @@ const ConfigMenu = [
       },
       {
         path: "/admin/bed",
-        name: "KAMAR",
+        name: "BED",
         role: "admin",
         // icon: "fa-solid fa-bed",
         child: null,
