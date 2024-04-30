@@ -122,18 +122,17 @@ export default function Intervensi() {
               </div>
 
               <div className="container">    
-                <DataTable value={inputValue ? filterIntervensi : intervensi} paginator rows={10}  tableStyle={{ minWidth: '2rem' }} stripedRows show showGridlines>
-                                  {/* <Column field="id" header='No'/> */}
-                                  <Column field="kode_intervensi" header='Kode Intervensi'/>
-                                  <Column field="nama_intervensi" header='Nama Intervensi'/>
-                                  <Column 
-                                  header=''
-                                  body={(item) => (
-                                      <Link
-                                      to={`/admin/standarkeperawatan/intervensi/${item.id}`}
-                                      className="btn d-flex justify-content-center align-items-center simple-button">Lihat</Link>
-                                  )}/>
-                              </DataTable>
+              <DataTable value={inputValue ? filterIntervensi : intervensi} paginator rows={10}  tableStyle={{ minWidth: '2rem' }} stripedRows show showGridlines sortField="nama_intervensi" sortOrder={1}>
+                <Column field="kode_intervensi" header='Kode Intervensi'/>
+                <Column field="nama_intervensi" header='Nama Intervensi' sortable/>
+                <Column 
+                  header=''
+                  body={(item) => (
+                    <Link
+                      to={`/admin/standarkeperawatan/intervensi/${item.id}`}
+                      className="btn d-flex justify-content-center align-items-center simple-button">Lihat</Link>
+                  )}/>
+              </DataTable>
        
               </div>
             </Sidebar>
