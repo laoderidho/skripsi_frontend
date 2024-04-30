@@ -7,6 +7,7 @@ import axios from '../../../axios';
 const DownloadLaporan = () => {
 
   const [nama_lengkap, setNamaLengkap] = useState('');
+  
   const [getRow, setGetRow] = useState([]);
 
   const {id, nama} = useParams();
@@ -23,6 +24,8 @@ const DownloadLaporan = () => {
       
     }
   }
+
+  
 
   useEffect(() => {
     getList();
@@ -49,7 +52,7 @@ const DownloadLaporan = () => {
               <tbody>
                 {getRow && getRow.map(item => (
                   <tr>
-                    <td cclassName='font-adjust-td'>{item.tanggal_masuk} - {item.tanggal_keluar ? item.tanggal_keluar : "sekarang" }</td>
+                    <td className='font-adjust-td'>{item.tanggal_masuk} - {item.tanggal_keluar ? item.tanggal_keluar : "sekarang" }</td>
                     <td>
                       <Link
                         to={`/perawat/pdf/${item.id}`} className='btn blue-button-left-align' target='_blank'>
