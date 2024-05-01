@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import axios from '../../../axios'
 import ConfirmModal from '../../../components/menu/ConfirmModal';
 import { BreadCrumb } from 'primereact/breadcrumb';
+import { filterProps } from 'framer-motion';
 
 
 export default function Catatan() {
@@ -22,6 +23,7 @@ export default function Catatan() {
     const [jenis_ruangan, setJenisRuangan] = useState([]);
     const [inputBed, setInputBed] = useState(null);
     const [boxes, setBoxes] = useState([]);
+    const [nokamar, setNoKamar] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
 
     const [tanggalRawat, setTanggalRawat] = useState([]);
@@ -34,6 +36,7 @@ export default function Catatan() {
     const [selectedLantai, setSelectedLantai] = useState('');
     const [selectedRuangan, setSelectedRuangan] = useState('')
     const [selectedBed, setSelectedBed] = useState('');
+    const [selectedNoKamar, setSelectedNoKamar]= useState('');
 
 
     const token = localStorage.getItem("token");
@@ -62,63 +65,21 @@ export default function Catatan() {
         setShowModal(false);
         setShowAlertSelesai(false);
     };
-   
 
-    const filterFasilitas = async (fasilitasName) => {
-        setSelectedFasilitas(fasilitasName);
+    const filterBedWithAll = async(no_kamar) =>{
         try {
-            const res = await axios.post(`/admin/ruangan/filter-ruangan/${fasilitasName}`,{
+            const res = await axios.post(`/admin/ruangan/filter-bed/${no_kamar}`,{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            setJenisRuangan(res.data.data)
-
-            if (isEditing) {
-                setSelectedRuangan("");
-                setSelectedLantai("");
-                setInputBed("");
-            }
-        } catch (error) {
-            console.log(error)
-        }
-        setShowRuanganSelect(true);
-        
-    };
-    
-
-    const handleRuanganChange = async (jenis_ruangan) => {
-        setSelectedRuangan(jenis_ruangan)
-        console.log(jenis_ruangan)
-        try {
-            const res = await axios.post(`/admin/ruangan/filter-lantai/${selectedFasilitas}/${jenis_ruangan}`,
-            {
-                headers: { Authorization: `Bearer ${token}`}
-            })
-            setLantai(res.data.data)
-        } catch (error) {
-            console.log(error)
-        } 
-
-        setShowLantaiSelect(true);
-    }
-
-    const handleLantaiChange = async (lantai) => {
-        setSelectedLantai(lantai)
-        console.log(lantai)
-        try {
-            const res = await axios.post(`/admin/ruangan/filter-bed/${selectedFasilitas}/${selectedRuangan}/${lantai}`,
-            {
-                headers: { Authorization: `Bearer ${token}`},
-            })
             setNoBed(res.data.data)
+            setSelectedNoKamar(no_kamar)
         } catch (error) {
             console.log(error)
         }
-
-        setShowBedSelect(true);
     }
-
+   
 
     const getPasien = async (token) => {
         try {
@@ -133,10 +94,13 @@ export default function Catatan() {
 
     const getBed = async (token) => {
         try {
-            const response = await axios.post(`/admin/ruangan/nama-fasilitas`, {
+            const response = await axios.post(`/admin/bed`, {
                 headers: { Authorization: `Bearer ${token}` }, // perbaikan
             });
-            setBed(response?.data?.data);
+            const data = response.data.data;
+            const no_kamar = data.map(item => item.no_kamar);
+            const unique = [...new Set(no_kamar)];
+            setNoKamar(unique);
         } catch (error) {
             console.error(error);
         }
@@ -188,11 +152,6 @@ export default function Catatan() {
                     headers : { Authorization: `Bearer ${token}`}
             })
             console.log(res.data.bed)
-            setSelectedFasilitas(res.data.bed.nama_fasilitas)
-            setSelectedRuangan(res.data.bed.jenis_ruangan)
-            setJenisRuangan([res.data.bed.jenis_ruangan])
-            setSelectedLantai(res.data.bed.lantai)
-            setLantai([res.data.bed.lantai])
             setInputBed(res.data.bed.id)
             setNoBed([{id: res.data.bed.id, no_bed: res.data.bed.no_bed}]);
         } catch (error){
@@ -383,33 +342,11 @@ export default function Catatan() {
                                     </Form.Group> */}
                                 
                                     <Row className='pt-2'>
-                                        <Col md={6}>
-                                            <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
-                                            <Form.Select name="nama_fasilitas" value={selectedFasilitas} onChange={(e)=> filterFasilitas(e.target.value)}>
-                                                <option value="">-</option>
-                                                {bed.map(item => (
-                                                    <option key={item.id} value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
-                                                ))}
-                                            </Form.Select>
-                                        </Col>
-                        
-                                        <Col md={6}>
-                                            <Form.Label id="form-label">Jenis Ruangan</Form.Label>
-                                            <Form.Select name="jenis_ruangan" value={selectedRuangan} onChange={(e)=> handleRuanganChange(e.target.value)}>
-                                                <option value="">-</option>
-                                                {jenis_ruangan.map(item=>(
-                                                    <option value={item}>{item}</option>
-                                                ))}
-                                            </Form.Select>
-                                        </Col>  
-                                    </Row>
-                                    <Row>
-                                
                                                 <Col md={6}>
-                                                    <Form.Label id="form-label">Lantai</Form.Label>
-                                                    <Form.Select name="lantai" value={selectedLantai} onChange={(e)=> handleLantaiChange(e.target.value)}>
+                                                    <Form.Label id="form-label">Nomor Kamar</Form.Label>
+                                                    <Form.Select name="lantai" value={selectedLantai} onChange={(e)=> filterBedWithAll(e.target.value)}>
                                                         <option value="">-</option>
-                                                        {lantai.map(item => (
+                                                        {nokamar.map(item => (
                                                             <option value={item}>{item}</option>
                                                         ))}
                                                     </Form.Select>
@@ -610,35 +547,14 @@ export default function Catatan() {
                                             <option value="hitam">Hitam</option>
                                         </Form.Select>
                                     </Form.Group> */}
-                                
-                                    <Row className='pt-2'>
-                                        <Col md={6}>
-                                            <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
-                                            <Form.Select name="nama_fasilitas" value={selectedFasilitas} onChange={(e)=> filterFasilitas(e.target.value)}>
-                                                <option value="">-</option>
-                                                {bed.map(item => (
-                                                    <option key={item.id} value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
-                                                ))}
-                                            </Form.Select>
-                                        </Col>
-                        
-                                        <Col md={6}>
-                                            <Form.Label id="form-label">Jenis Ruangan</Form.Label>
-                                            <Form.Select name="jenis_ruangan" value={selectedRuangan} onChange={(e)=> handleRuanganChange(e.target.value)}>
-                                                <option value="">-</option>
-                                                {jenis_ruangan.map(item=>(
-                                                    <option value={item}>{item}</option>
-                                                ))}
-                                            </Form.Select>
-                                        </Col>  
-                                    </Row>
-                                    <Row>
+                   
+                                        <Row>
                                 
                                                 <Col md={6}>
-                                                    <Form.Label id="form-label">Lantai</Form.Label>
-                                                    <Form.Select name="lantai" value={selectedLantai} onChange={(e)=> handleLantaiChange(e.target.value)}>
+                                                    <Form.Label id="form-label">Kamar</Form.Label>
+                                                    <Form.Select name="lantai" value={selectedNoKamar} onChange={(e)=> filterBedWithAll(e.target.value)}>
                                                         <option value="">-</option>
-                                                        {lantai.map(item => (
+                                                        {nokamar.map(item => (
                                                             <option value={item}>{item}</option>
                                                         ))}
                                                     </Form.Select>
