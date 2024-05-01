@@ -59,6 +59,7 @@ const KeteranganAskep = () => {
       }catch(error){
         console.error(error);
       }
+      
     };
 
   useEffect(()=>{
@@ -229,7 +230,7 @@ const KeteranganAskep = () => {
                               <tr>
                                 <td className='font-adjust-td'>{askep.jam_pemberian_implementasi ? (
                                   <Link to={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>
-                                ) : ( "Implementasi" )}</td>
+                                ) : (<Link to={`/perawat/askep/implementasi/${askep.id}`} className='label-askep'>Implementasi</Link>)}</td>
                                 <td className='font-adjust-td'>
                                   {askep.tanggal_pemberian_implementasi ? (
                                     `${askep.tanggal_pemberian_implementasi}/${askep.jam_pemberian_implementasi}`

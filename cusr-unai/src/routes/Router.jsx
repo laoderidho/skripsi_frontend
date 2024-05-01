@@ -32,6 +32,8 @@ import DaftarBed from "../Pages/Admin/bed/DaftarBed";
 import DaftarPasienStatus from "../Pages/Admin/status/DaftarPasienStatus";
 import Catatan from "../Pages/Admin/status/Catatan";
 import DaftarCatatan from "../Pages/Admin/status/DaftarCatatan";
+import DaftarPasienAskep from "../Pages/Admin/askep/DaftarPasienAskep";
+import AskepLaporan from "../Pages/Admin/askep/AskepLaporan";
 
 // Perawat Component Import
 import PerawatDashboard from "../Pages/Perawat/PerawatDashboard";
@@ -74,6 +76,8 @@ export default function Router() {
           <Route path="/" element={<Login />} />
 
           {/* ==== ADMIN ROUTE ==== */}
+          <Route path="/admin/pasien/askep" element={<DaftarPasienAskep/>} />
+          <Route path="/admin/pasien/askep/:id" element={<AskepLaporan />} />
 
           
 
@@ -109,6 +113,13 @@ export default function Router() {
           <Route path="/admin/pasien/rawat-inap" element={<DaftarPasienStatus />} />
           <Route path="/admin/pasien/catatan" element={<DaftarCatatan/> } />
           <Route path="/admin/pasien/catatan/:id" element={<Catatan />} />
+
+          {/* PDF */}
+          <Route path="/pdf" element={<Askep />} />
+          <Route path="/admin/pasien/askep/download-pdf/:id" element={<PDF />} />
+
+          {/* Admin | Laporan ASKEP */}
+
         
           {/* Admin */}
           <Route path="/admin/dashboard" element={<DashboardPage />} />
@@ -159,9 +170,7 @@ export default function Router() {
           <Route path="/perawat/laporan" element={<DaftarPasienLaporan />} />
           <Route path="/perawat/laporan/:id/:nama" element={<DownloadLaporan />} />
 
-          {/* PDF */}
-          <Route path="/pdf" element={<Askep />} />
-          <Route path="/perawat/pdf/:id" element={<PDF />} />
+          
           
 
 

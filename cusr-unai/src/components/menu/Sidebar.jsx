@@ -181,7 +181,7 @@ export default function Sidebar(props) {
                                 </Row>
                             </Link>
                         </div>
-                        <div className={`navbar-child ${currentPath === "/perawat/laporan" ? "link-active" : ""}`}>
+                        {/* <div className={`navbar-child ${currentPath === "/perawat/laporan" ? "link-active" : ""}`}>
                             <Link className={`navbar-link ${currentPath === "/perawat/laporan" ? "link-active-text" : ""}`} to={`/perawat/laporan`}>
                                 <Row>
                                     <Col>
@@ -193,7 +193,7 @@ export default function Sidebar(props) {
                                     </Col>
                                 </Row>
                             </Link>
-                        </div>
+                        </div> */}
                         <div className={`navbar-child ${currentPath === "/login" ? "link-active" : ""}`}>
                             <Link className={`navbar-link ${currentPath === "/login" ? "link-active-text" : ""}`} to={`/login`}>
                                 <Row>

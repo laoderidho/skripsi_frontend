@@ -159,22 +159,22 @@ export default function DaftarPasien() {
             <div className="container">
 
               <DataTable value={loading ? dummyData : (inputValue ? filterPasien : pasien)} paginator rows={10}  tableStyle={{ minWidth: '2rem' }}  stripedRows show showGridlines className="mt-1">
-                <Column 
+                {/* <Column 
                   field="" 
                   header={loading ? <Skeleton width="50px" /> : 'No'}
                   body={(rowData) => (
                     loading ? rowData.data : rowData.id
-                  )}/>
+                  )}/> */}
                 <Column field="" 
                   header={loading ? <Skeleton width="100px" /> : 'Nama'}
                   body={(rowData) => (
                   loading ? rowData.data : rowData.nama_lengkap
                   )}/>
-                {/* <Column field="" 
-                  header={loading ? <Skeleton width="100px" /> : 'Medical Record'} 
+                <Column field="" 
+                  header={loading ? <Skeleton width="100px" /> : 'Tanggal Lahir'} 
                   body={(rowData) => (
-                  loading ? rowData.data : rowData.no_medical_record
-                  )}/> */}
+                  loading ? rowData.data : rowData.tanggal_lahir
+                  )}/>
                 {/* <Column 
                   field="" 
                   header={loading ? <Skeleton width="50px" /> : 'Status'}
@@ -258,9 +258,9 @@ export default function DaftarPasien() {
                     loading ? rowData.data : rowData.nama_lengkap
                     )}/>
                   <Column field="" 
-                    header={loading ? <Skeleton width="100px" /> : 'Medical Record'} 
+                    header={loading ? <Skeleton width="100px" /> : 'Tanggal Lahir'} 
                     body={(rowData) => (
-                    loading ? rowData.data : rowData.no_medical_record
+                    loading ? rowData.data : rowData.tanggal_lahir
                     )}/>
                   {/* <Column 
                     field="" 

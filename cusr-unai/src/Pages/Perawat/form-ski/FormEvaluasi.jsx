@@ -264,7 +264,22 @@ export default function FormEvaluasi() {
   }, [evaluasiLuaran]);
 
   // show data multiple select
-  const [kritesiaShowData, setKriteriaShowData] = useState(false);
+  const [kriteriaShowData, setKriteriaShowData] = useState(false);
+
+  const [seeDataCondition, setSeeDataCondition] = useState(null)
+
+  const handleShowAllData = () =>  {
+    setKriteriaShowData(true);
+    setSeeDataCondition(true);
+
+  }
+
+  const handleHideData = () => {
+    setKriteriaShowData(false);
+    setSeeDataCondition(false);
+  }
+
+  
 
   return (
     <Sidebar
@@ -290,7 +305,7 @@ export default function FormEvaluasi() {
           <>
             {isLuaran ? (
               <div className="container">
-                <Form className="container">
+                <Form className="">
                   <Form.Group className="mt-4">
                     {/*Luaran Input data*/}
                     <h6>Penilaian Luaran</h6>
@@ -401,13 +416,13 @@ export default function FormEvaluasi() {
                 <Form.Group className="mt-5">
                   <Form.Label>Kriteria</Form.Label>
                   {
-                    !kritesiaShowData &&
+                    !kriteriaShowData &&
                     <MultiSelect
                       value={kriteria_luaran}
                       disabled={!selectedLuaran}
                       options={selectedKriteriaLuaran}
                       optionLabel="nama_kriteria_luaran"
-                      placeholder="pilih kriteria"
+                      placeholder="Pilih"
                       filter
                       className="pt-1"
                       onChange={(e) => setKriteriaLuaran(e.value)}
@@ -416,7 +431,7 @@ export default function FormEvaluasi() {
                     ></MultiSelect>
                   }
                   {
-                    kritesiaShowData &&
+                    kriteriaShowData &&
                     <SeeModalData
                       data={kriteria_luaran &&
                       kriteria_luaran.map((item) => item.nama_kriteria_luaran)}
@@ -426,8 +441,7 @@ export default function FormEvaluasi() {
                       callDataBack={handleBackData}
                     />
                   }
-
-                    <Form.Check className="mt-2" checked={kritesiaShowData} onChange={()=>setKriteriaShowData(!kritesiaShowData)} type="checkbox" label="Tampilkan data" />
+                    <button className="btn button-switch" onClick={() => setKriteriaShowData(!kriteriaShowData)} type="button">{kriteriaShowData ? 'Edit data' : 'Tampilkan data'}</button>
                 </Form.Group>
 
                 {/* TEXTAREA */}
@@ -445,6 +459,8 @@ export default function FormEvaluasi() {
                   </Form.Group>
                 </Form.Group>
 
+                <button onClick={!seeDataCondition ? handleShowAllData : handleHideData} className="btn button-switch-verification">{!seeDataCondition ? 'Verifikasi Data' : 'Edit Data' }</button>
+
                 <div className="mt-3 d-flex justify-content-end">
                   <ConfirmModal
                     onConfirm={addLuaran}
@@ -457,6 +473,7 @@ export default function FormEvaluasi() {
             )}
           </>
         )}
+
 
         {!formVisible && (
           <div className="container">

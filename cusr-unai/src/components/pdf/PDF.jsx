@@ -38,7 +38,7 @@ const PDF = () => {
 
     const getAskep = async () => {
         try {
-            const res = await axios.post(`/perawat/laporan/askep/${id}`, {
+            const res = await axios.post(`/admin/laporan/askep/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setPasien(res.data.pasien);
