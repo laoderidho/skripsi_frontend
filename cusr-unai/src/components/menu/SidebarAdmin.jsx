@@ -16,27 +16,14 @@ export default function SidebarAdmin(props) {
     const isMobile = window.innerWidth <= 600;
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    // const [shift, setShift] = useState('');
+ 
 
-    const shift = sessionStorage.getItem('shift')
+    
     
 
-    const getShift = async () => {
-        try {
-            const res = await axios.post(`/perawat/shift`, {
-                headers: { Authorization : `Bearer ${token}`}
-            });
-            if(res.data !== shift || shift === null){
-                sessionStorage.setItem('shift', res.data)
-            }
-        } catch (error) {
-            
-        }
-    }
+    
 
-    useEffect(()=>{
-        getShift()
-    },[])
+    
 
     const goBack = () => {
         navigate(-1);

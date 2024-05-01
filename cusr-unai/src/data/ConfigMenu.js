@@ -33,6 +33,13 @@ const ConfigMenu = [
         child: null,
       },
       {
+        path: "/admin/pasien/anamnesis",
+        name: "ANAMNESIS",
+        role: "admin",
+        // icon: "fa-solid fa-list",
+        child: null,
+      },
+      {
         path: "/admin/pasien/catatan",
         name: "CATATAN",
         role: "admin",

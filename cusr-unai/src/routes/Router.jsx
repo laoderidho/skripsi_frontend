@@ -34,6 +34,8 @@ import Catatan from "../Pages/Admin/status/Catatan";
 import DaftarCatatan from "../Pages/Admin/status/DaftarCatatan";
 import DaftarPasienAskep from "../Pages/Admin/askep/DaftarPasienAskep";
 import AskepLaporan from "../Pages/Admin/askep/AskepLaporan";
+import DaftarPasienAnamnesis from "../Pages/Admin/anamnesis/DaftarPasienAnamnesis";
+import DetailAnamnesis from "../Pages/Admin/anamnesis/DetailAnamnesis";
 
 // Perawat Component Import
 import PerawatDashboard from "../Pages/Perawat/PerawatDashboard";
@@ -76,10 +78,14 @@ export default function Router() {
           <Route path="/" element={<Login />} />
 
           {/* ==== ADMIN ROUTE ==== */}
+
+          {/* Admin | Laporan */}
           <Route path="/admin/pasien/askep" element={<DaftarPasienAskep/>} />
           <Route path="/admin/pasien/askep/:id" element={<AskepLaporan />} />
 
-          
+          {/* Admin | Anamnesis */}
+          <Route path="/admin/pasien/anamnesis" element={<DaftarPasienAnamnesis />} />
+          <Route path="/admin/pasien/anamnesis/:id" element={<DetailAnamnesis />} />
 
           {/* Admin | Daftar Pasien */}
           <Route path="/admin/daftarpasien" element={<DaftarPasien />} />

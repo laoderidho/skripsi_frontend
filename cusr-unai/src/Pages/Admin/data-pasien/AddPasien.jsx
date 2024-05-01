@@ -6,7 +6,6 @@ import AuthorizationRoute from '../../../AuthorizationRoute'
 import ConfirmModal from '../../../components/menu/ConfirmModal'
 import axios from '../../../axios'
 import { Card } from 'primereact/card';
-
 import "primereact/resources/themes/saga-blue/theme.css";
 import { Skeleton } from 'primereact/skeleton';
 
@@ -27,7 +26,10 @@ const AddPasien = () => {
   const {id} = useParams();
   const token=localStorage.getItem("token");
 
+  const isNikValid = nik.length === 16;
+
   const submitForm = async () => {
+
     try {
       const res = await axios.post("/admin/daftarpasien/tambah", {
         nama_lengkap: nama_lengkap,
@@ -113,7 +115,7 @@ const AddPasien = () => {
                   <Form.Label id='form-label'>NIK</Form.Label>
                   <Form.Control
                     id="form-control-input custom-search"
-                    type="text"
+                    type="number"
                     placeholder="Masukkan NIK"
                     value={nik}
                     onChange={(e) => setNik(e.target.value)}
@@ -128,7 +130,13 @@ const AddPasien = () => {
                     type="text"
                     placeholder="Tentukan Jenis Kelamin"
                     value={status_pernikahan}
-                    onChange={(e) => setStatusPernikahan(e.target.value)}
+                    onChange={(e) => {
+                      const input = e.target.value;
+                      if (input.length <= 16) {
+                        setNik(input);
+                      }
+                    }}
+                    maxLength={16}
                     required
                   >
                     <option>Pilih</option>
@@ -142,7 +150,7 @@ const AddPasien = () => {
                   <Form.Label id='form-label'>Nomor Telepon</Form.Label>
                   <Form.Control
                     id="form-control-input custom-search"
-                    type="text"
+                    type="number"
                     placeholder="Masukkan Nomor Telepon"
                     value={no_telepon}
                     onChange={(e) => setNoTelepon(e.target.value)}
@@ -180,7 +188,7 @@ const AddPasien = () => {
                   />
                 </Form.Group>
               </Card>
-              <Card className='mt-3'>
+              <Card>
                 <Form.Group>
                   <Form.Label id='form-label'>Alergi</Form.Label>
                   <Form.Control
@@ -194,7 +202,7 @@ const AddPasien = () => {
                   />
                 </Form.Group>
               </Card>
-              <Card className='mt-3'>
+              <Card>
                 <Form.Group>
                   <Form.Label id='form-label'>Nama Asuransi</Form.Label>
                   <Form.Control
@@ -226,6 +234,7 @@ const AddPasien = () => {
                   cancelMessage={"Data Pasien gagal diubah"}
                   buttonText={"Simpan"}
                   to={`/admin/daftarpasien/${id}`}
+                  disabled={!isNikValid}
                 />
           </div>
         </Form>
