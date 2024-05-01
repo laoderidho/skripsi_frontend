@@ -21,6 +21,7 @@ export default function DaftarBed() {
     const [lantai, setLantai] = useState([]);
     const [nama_fasilitas, setNamaFasilitas] = useState([]);
     const [jenis_ruangan, setJenisRuangan] = useState([]);
+    const [nokamar, setNoKamar] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
     
@@ -29,6 +30,7 @@ export default function DaftarBed() {
     const [newRuangan, setNewRuangan] = useState('');
     const [newFasilitas, setNewFasilitas]= useState('');
     const [newBed, setNewBed] = useState("");
+    const [newNoKamar, setNewNoKamar] = useState("");
     const {id} = useParams();
     const [showModalStatus, setShowModalStatus] = useState(false);
 
@@ -78,9 +80,7 @@ export default function DaftarBed() {
         try {
             const res = await axios.post(`/admin/bed/edit/${idBed}`, {
                 no_bed: newBed,
-                lantai: newLantai,
-                nama_fasilitas: newFasilitas,
-                jenis_ruangan: newRuangan
+                no_kamar: newNoKamar,
             }, 
             {
                 headers: { Authorization: `Bearer ${token}`}
@@ -132,19 +132,11 @@ export default function DaftarBed() {
     const filteredBed = () => {
         const filteredRoom = bed.filter((item) => {
             return (
-                item.nama_fasilitas
-                    .toString()
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase()) ||
-                item.lantai
+                item.no_kamar
                     .toString()
                     .toLowerCase()
                     .includes(inputValue.toLowerCase()) ||
                 item.no_bed
-                    .toString()
-                    .toLowerCase()
-                    .includes(inputValue.toLowerCase()) ||
-                item.jenis_ruangan
                     .toString()
                     .toLowerCase()
                     .includes(inputValue.toLowerCase()) ||
@@ -189,7 +181,12 @@ export default function DaftarBed() {
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
 
-    const handleShow = () => setShowModal(true);
+    const handleShow = () => {
+        setShowModal(true);
+        setNewNoKamar("");
+        setNewBed("");
+        setIsEditing(false);
+    }
     
     const handleClose = () => {
         setShowModal(false);
@@ -259,9 +256,7 @@ export default function DaftarBed() {
         try {
             await axios.post(`/admin/bed/tambah`, {
                 no_bed: newBed,
-                lantai: newLantai,
-                nama_fasilitas: newFasilitas,
-                jenis_ruangan: newRuangan
+                no_kamar: newNoKamar,
             },
             {
                 headers: { Authorization: `Bearer ${token}`}
@@ -345,14 +340,10 @@ export default function DaftarBed() {
         </React.Fragment>
     )
 
-    const editClick = (id, nama_fasilitas, lantai, no_bed, jenis_ruangan) => {
-        console.log(id, nama_fasilitas, lantai, no_bed, jenis_ruangan)  
-        
-        setNewFasilitas(nama_fasilitas);
-        setNewLantai(lantai);
-        setNewBed(no_bed);
-        setNewRuangan(jenis_ruangan);
+    const editClick = (no_kamar, no_bed, id) => { 
         setIdBed(id);
+        setNewNoKamar(no_kamar);
+        setNewBed(no_bed);
         setIsEditing(true);
         setShowModal(true);
     }
@@ -680,29 +671,17 @@ export default function DaftarBed() {
                             </Toolbar>
 
                             <DataTable value={loading ? dummyData : (inputValue ? filterBed : bed)}  showGridlines tableStyle={{ minWidth: '50rem' }} paginator rows={20} className='mt-3'>
-                                <Column 
+                              <Column 
                                     field="" 
-                                    header={loading ? <Skeleton width="120px" /> : 'Fasilitas Kesehatan'}
+                                    header={loading ? <Skeleton width="80px" /> : 'Nomor Kamar'}
                                     body={(rowData) => (
-                                        loading ? rowData.data : rowData.nama_fasilitas
+                                        loading ? rowData.data : rowData.no_kamar
                                     )}/>
                                 <Column 
                                     field="" 
-                                    header={loading ? <Skeleton width="50px" /> : 'Lantai'}
-                                    body={(rowData) => (
-                                        loading ? rowData.data : rowData.lantai
-                                    )}/>
-                                <Column 
-                                    field="" 
-                                    header={loading ? <Skeleton width="60px" /> : 'No Kamar'}
+                                    header={loading ? <Skeleton width="60px" /> : 'No Bed'}
                                     body={(rowData) => (
                                         loading ? rowData.data : rowData.no_bed
-                                    )}/>
-                                <Column 
-                                    field="" 
-                                    header={loading ? <Skeleton width="80px" /> : 'Jenis Ruangan'}
-                                    body={(rowData) => (
-                                        loading ? rowData.data : rowData.jenis_ruangan
                                     )}/>
                                 <Column 
                                     field="" 
@@ -717,7 +696,7 @@ export default function DaftarBed() {
                                 <Column header='' body={(rowData) => (
                                     <Link
                                         className="link-theme"
-                                        onClick={() => editClick(rowData.id, rowData.nama_fasilitas, rowData.lantai, rowData.no_bed, rowData.jenis_ruangan, rowData.status)}
+                                        onClick={() => editClick(rowData.no_kamar, rowData.no_bed, rowData.id)}
                                         >
                                             Edit
                                     </Link>
@@ -750,98 +729,19 @@ export default function DaftarBed() {
                                         <Modal.Body>
                                             <Row className="pt-1">
                                                 <Col md={8}>
-                                                    <Form.Group>
-                                                        <Form.Label id="form-label">Fasilitas Kesehatan</Form.Label>
-                                                        {showDropdownFacility && (
-                                                            <Form.Select
-                                                                value={newFasilitas}
-                                                                onChange={(e) => handleNewFasilitasChange(e, 'nama_fasilitas')}
-                                                            >
-                                                            <option 
-                                                                value="">-</option>
-                                                            {nama_fasilitas.map(item=>(
-                                                                <option value={item.nama_fasilitas}>{item.nama_fasilitas}</option>
-                                                            ))}
-                                                            </Form.Select>
-                                                        )}
-
-                                                        <div>
-                                                            {showOtherFacility && (
-                                                                <Form.Control
-                                                                    type="text"
-                                                                    placeholder="e.g. Fasilitas Lain"
-                                                                    value={newFasilitas}
-                                                                    onChange={(e) => setNewFasilitas(e.target.value)}
-                                                                    />
-                                                            )}
-                                                            <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'nama_fasilitas')}/>
-                                                            <Form.Label className="px-2" id="form-label">Fasilitas lainnya</Form.Label>
-                                                        </div>
-                                                    </Form.Group>
-                                                </Col>
-                                                <Col>
-                                                    <Form.Group>
-                                                        <Form.Label id="form-label">Lantai</Form.Label>
-                                                        {showDropdownLantai && (
-                                                            <Form.Select
-                                                                value={newLantai}
-                                                                onChange={(e) => setNewLantai(e.target.value)}
-                                                                >
-                                                                    <option value="">-</option>
-                                                                    {lantai.map(item=>(
-                                                                        <option value={item.lantai}>{item.lantai}</option>
-                                                                    ))}
-                                                            </Form.Select>
-                                                        )}
-
-                                                        <div>
-                                                            {showOtherFloor && (
-                                                                <Form.Control
-                                                                type="text"
-                                                                placeholder="e.g. Lantai 1"
-                                                                value={newLantai}
-                                                                onChange={(e) => setNewLantai(e.target.value)}
-                                                                />
-                                                            )}
-                                                            <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'lantai')}/>
-                                                            <Form.Label className="px-2" id="form-label">Lantai lainnya</Form.Label>
-                                                        </div>
-
-                                                        
-                                                    </Form.Group>
-                                                </Col>
-                                            </Row>
-                                            <Row className="pt-1">
-                                                <Col md={8}>
-                                                    <Form.Label id="form-label">Jenis Ruangan</Form.Label>
-                                                    {showDropdownRuangan && (
-                                                        <Form.Select
-                                                            value={newRuangan}
-                                                            onChange={(e) => setNewRuangan(e.target.value)}
-                                                                >
-                                                                <option value="">-</option>
-                                                                {jenis_ruangan.map(item=>(
-                                                                    <option value={item.jenis_ruangan}>{item.jenis_ruangan}</option>
-                                                                ))}
-                                                        </Form.Select>
-                                                    )}
-
+                                                    <Form.Label id="form-label">Nomor Kamar</Form.Label>
                                                     <div>
-                                                        {showOtherRoom && (
-                                                            <Form.Control
-                                                                type="text"
-                                                                placeholder="e.g. Ruangan Lain"
-                                                                value={newRuangan}
-                                                                onChange={(e) => setNewRuangan(e.target.value)}
-                                                                />
-                                                        )}
-                                                        <input className="form-check-input" type="checkbox" onChange={(e) => handleCheckboxChange(e, 'jenis_ruangan')}/>
-                                                        <Form.Label className="px-2" id="form-label">Ruangan lainnya</Form.Label>
+                                                        <Form.Control
+                                                            type="text"
+                                                            placeholder="e.g. Ruangan Lain"
+                                                            value={newNoKamar}
+                                                            onChange={(e) => setNewNoKamar(e.target.value)}
+                                                            />
                                                     </div>
                                                 </Col>
                                                 <Col md={4}>
                                                     <Form.Group>
-                                                        <Form.Label id="form-label">No Kamar</Form.Label>
+                                                        <Form.Label id="form-label">Nomor Bed</Form.Label>
                                                         <Form.Control
                                                             type="text"
                                                             placeholder="e.g. 205"

@@ -148,7 +148,7 @@ export default function ProfilPemeriksaan() {
                                         to={`/perawat/diagnostik/${date.id}`}
                                         className="btn box">
                                         <span className="">{date.updated_at}</span>
-                                        <span className=""></span>
+                                        <span className="">{date.jam}</span>
                                     </Link>
                                 </Col>
                             </Row>
@@ -220,7 +220,7 @@ export default function ProfilPemeriksaan() {
                                         to={`/perawat/diagnostik/${date.id}`}
                                         className="btn box">
                                         <span className="">{date.updated_at}</span>
-                                        <span className=""></span>
+                                        <span className="">{date.jam}</span>
                                     </Link>
                                 </Col>
                             </Row>

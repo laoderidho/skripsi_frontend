@@ -238,7 +238,7 @@ export default function DaftarPasienStatus() {
                                         )}/> */}
                                 <Column 
                                     field="" 
-                                    header={loading ? <Skeleton width="90px" /> : 'KAMAR'}
+                                    header={loading ? <Skeleton width="90px" /> : 'Bed'}
                                     body={(rowData) => (
                                         loading ? rowData.data : rowData.no_bed
                                         )}/>
@@ -337,25 +337,13 @@ export default function DaftarPasienStatus() {
                                         )}/>        
                                 <Column 
                                     field="" 
-                                    header={loading ? <Skeleton width="50px" /> : 'FASILITAS'}
+                                    header={loading ? <Skeleton width="90px" /> : 'Kamar'}
                                     body={(rowData) => (
-                                        loading ? rowData.data : rowData.nama_fasilitas
+                                        loading ? rowData.data : rowData.no_kamar
                                         )}/>
                                 <Column 
                                     field="" 
-                                    header={loading ? <Skeleton width="50px" /> : 'LANTAI'}
-                                    body={(rowData) => (
-                                        loading ? rowData.data : rowData.lantai
-                                        )}/> 
-                                <Column 
-                                    field="" 
-                                    header={loading ? <Skeleton width="90px" /> : 'JENIS RUANGAN'}
-                                    body={(rowData) => (
-                                        loading ? rowData.data : rowData.jenis_ruangan
-                                        )}/>
-                                <Column 
-                                    field="" 
-                                    header={loading ? <Skeleton width="90px" /> : 'KAMAR'}
+                                    header={loading ? <Skeleton width="90px" /> : 'BED'}
                                     body={(rowData) => (
                                         loading ? rowData.data : rowData.no_bed
                                         )}/>
