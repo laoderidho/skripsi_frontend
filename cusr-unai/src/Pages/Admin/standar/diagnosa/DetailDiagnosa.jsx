@@ -18,7 +18,11 @@ const DetailDiagnosa = () => {
   const [penyebab_psikologis, setPenyebabPsikologis] = useState("");
   const [gejala_mayor_subjektif, setGejalaMayorSubjektif] = useState("");
   const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState("");
-  
+  const [updated_at, setUpdateAt] = useState("");
+  const [jam, setJam] = useState("");
+  const [tanggal, setTanggal] = useState("");
+  const [action, setAction] = useState("");
+
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState("");
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState("");
   const [penyebab_umum, setPenyebabUmum] = useState("");
@@ -48,6 +52,7 @@ const DetailDiagnosa = () => {
         const res = await axios.post(`/admin/diagnosa/detail/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
+        setUpdateAt(res.data.data.updated_at)
         setKodeDiagnosa(res.data.data.kode_diagnosa)
         setNamaDiagnosa(res.data.data.nama_diagnosa)
         setFaktorRisiko(res.data.data.faktor_risiko)
@@ -110,7 +115,10 @@ const DetailDiagnosa = () => {
                     <span id="kode_diagnosa">{kode_diagnosa} - {""}</span>
                       <span>{nama_diagnosa}</span>
                     </h3>
-                
+                    
+                    <h1>
+                      <span id="update_at">{updated_at} </span>
+                    </h1>
                 </div>
 
               <Form className="container mt-5">
@@ -321,7 +329,7 @@ const DetailDiagnosa = () => {
                                                 </span>
                 </div>
               <div className="container">
-                
+
                   <h3>
                   <span id="kode_diagnosa">{kode_diagnosa} - {""}</span>
                     <span>{nama_diagnosa}</span>
