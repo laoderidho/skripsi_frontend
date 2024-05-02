@@ -75,11 +75,11 @@ const DetailDiagnostik = () => {
     try {
         const res = await axios.post(`/perawat/diagnostic/update/${id}`, {
             id_pasien: id,
-            keluhan_utama: handleKeluhanUtama,
-            riwayat_penyakit: handleRiwayatPenyakit,
-            riwayat_alergi: handleRiwayatAlergi,
-            risiko_jatuh: handleRisikoJatuh,
-            risiko_nyeri: handleRisikoNyeri,
+            // keluhan_utama: handleKeluhanUtama,
+            // riwayat_penyakit: handleRiwayatPenyakit,
+            // riwayat_alergi: handleRiwayatAlergi,
+            // risiko_jatuh: handleRisikoJatuh,
+            // risiko_nyeri: handleRisikoNyeri,
             suhu: handleSuhu,
             tekanan_darah: handleTekananDarah,
             sistolik: sistolik,
@@ -118,9 +118,9 @@ const DetailDiagnostik = () => {
       <h2>Form Diagnostik</h2>
     </div>
 
-    <Form className="container mt-5" onSubmit={submitForm}>
+    <Form className="container mt-2" onSubmit={submitForm}>
       <Row>
-        <Col xs={12} lg={6}>
+        {/* <Col xs={12} lg={6}>
           <Form.Group className="mb-3">
             <h4>Anamnesis</h4>
             <Form.Label>Keluhan Utama</Form.Label>
@@ -191,11 +191,11 @@ const DetailDiagnostik = () => {
               disabled={!isEditing}
             />
           </Form.Group>
-        </Col>
+        </Col> */}
 
-        <Col className='mt-5'>
+        <Col className=''>
           <Form.Group className="mb-3">
-            <h4>Vital</h4>
+            <h5>Vital</h5>
             <Form.Label>Suhu</Form.Label>
             <div class="input-group">
               <Form.Control
