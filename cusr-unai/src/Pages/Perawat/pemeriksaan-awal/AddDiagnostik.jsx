@@ -298,12 +298,16 @@ const AddDiagnostik = () => {
 
             <Form.Group className="mb-3">
               <Form.Label>Kesadaran</Form.Label>
-              <Dropdown
-                value={kesadaran}
-                options={kesadaranOptions}
-                onChange={(e) => setKesadaran(e.target.value)}
-                id="form-control-input custom-search"
-              />
+              <Form.Select
+                    id="form-control-input custom-search"
+                    value={kesadaran}
+                    onChange={(e) => setKesadaran(e.target.value)} 
+                    required
+                  >
+                    <option>Pilih</option>
+                    <option value="0">Sadar</option>
+                    <option value="1">Tidak Sadar</option>
+                  </Form.Select>
               {/* <Form.Control 
                 id="form-control-input custom-search"
                 type="text" 

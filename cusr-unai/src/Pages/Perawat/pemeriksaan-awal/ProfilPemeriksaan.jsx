@@ -21,7 +21,7 @@ export default function ProfilPemeriksaan() {
     const token = localStorage.getItem("token");
     const isMobile = window.innerWidth <=600;
     const [showAnamnesis, setShowAnamnesis] = useState(false);
-
+    
     const [keluhan_utama, setKeluhanUtama] = useState("");
     const [riwayat_penyakit, setRiwayatPenyakit] = useState("");
     const [riwayat_alergi, setRiwayatAlergi] = useState("");

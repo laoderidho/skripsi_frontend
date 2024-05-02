@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../../components/menu/Sidebar";
-import { Breadcrumb, Form, Col, Row, Button } from "react-bootstrap";
+import { Breadcrumb, Form, Col, Row, Button, Dropdown} from "react-bootstrap";
 import { useNavigate, useParams } from 'react-router-dom'
 import AuthorizationRoute from "../../../AuthorizationRoute";
 import axios from '../../../../src/axios'
 import ConfirmModal from "../../../components/menu/ConfirmModal";
+
 
 const DetailDiagnostik = () => {
 
@@ -56,6 +57,7 @@ const DetailDiagnostik = () => {
         setEye(res.data.data.eye)
         setMotor(res.data.data.motor)
         setVerbal(res.data.data.verbal)
+        console.log(res.data.data)
     } catch (error) {
 
     }
@@ -115,6 +117,11 @@ const DetailDiagnostik = () => {
 
     }
   };
+
+  const kesadaranOptions = [
+    { label: 'Sadar' },
+    { label: 'Tidak Sadar'}
+  ];
   
   return (
     <Sidebar title='DETAIL DX'>
@@ -269,15 +276,25 @@ const DetailDiagnostik = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Kesadaran</Form.Label>
-            <Form.Control 
-              id="form-control-input custom-search"
-              type="text" 
-              value={kesadaran}
-              onChange={(e) => setKesadaran(e.target.value)}
-              disabled={!isEditing}
-              />
-          </Form.Group>
+              <Form.Label>Kesadaran</Form.Label>
+              <Form.Select
+                    id="form-control-input custom-search"
+                    value={kesadaran}
+                    onChange={(e) => setKesadaran(e.target.value)} 
+                    required
+                    disabled={!isEditing}
+                    placeholder="Pilih"
+                  >
+                    <option value="0">Sadar</option>
+                    <option value="1">Tidak Sadar</option>
+                  </Form.Select>
+              {/* <Form.Control 
+                id="form-control-input custom-search"
+                type="text" 
+                value={kesadaran}
+                onChange={(e) => setKesadaran(e.target.value)}
+                /> */}
+            </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>GCS</Form.Label>
