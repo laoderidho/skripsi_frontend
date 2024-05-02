@@ -69,6 +69,7 @@ import AddDiagnostik from "../Pages/Perawat/pemeriksaan-awal/AddDiagnostik";
 import Askep from "../components/pdf/Askep";
 import PDF from "../components/pdf/PDF";
 
+
 export default function Router() {
   return (
     <BrowserRouter>
@@ -124,7 +125,8 @@ export default function Router() {
           <Route path="/pdf" element={<Askep />} />
           <Route path="/admin/pasien/askep/download-pdf/:id" element={<PDF />} />
 
-          {/* Admin | Laporan ASKEP */}
+          
+          
 
         
           {/* Admin */}

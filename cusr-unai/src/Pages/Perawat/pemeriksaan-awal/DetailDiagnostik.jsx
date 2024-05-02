@@ -20,6 +20,7 @@ const DetailDiagnostik = () => {
   const [sistolik, setSistolik] = useState("");
   const [diastolik, setDiastolik] = useState("")
   const [pemeriksaan_fisik, setPemeriksaanFisik] = useState("");
+  const [keluhan_tambahan, setKeluhanTambahan] = useState("");
   const [eye, setEye] = useState("");
   const [motor, setMotor] = useState("");
   const [verbal, setVerbal] = useState("");;
@@ -51,6 +52,7 @@ const DetailDiagnostik = () => {
         setSistolik(res.data.data.sistolik)
         setDiastolik(res.data.data.diastolik)
         setPemeriksaanFisik(res.data.data.pemeriksaan_fisik)
+        setKeluhanTambahan(res.data.data.keluhan_tambahan)
         setEye(res.data.data.eye)
         setMotor(res.data.data.motor)
         setVerbal(res.data.data.verbal)
@@ -61,11 +63,12 @@ const DetailDiagnostik = () => {
 
   const submitForm = async () => {
 
-        const handleKeluhanUtama = keluhan_utama.split("\n");
-        const handleRiwayatPenyakit = riwayat_penyakit.split("\n");
-        const handleRiwayatAlergi = riwayat_alergi.split("\n");
-        const handleRisikoJatuh = risiko_jatuh.split("\n");
-        const handleRisikoNyeri = risiko_nyeri.split("\n");
+        // const handleKeluhanUtama = keluhan_utama.split("\n");
+        // const handleRiwayatPenyakit = riwayat_penyakit.split("\n");
+        // const handleRiwayatAlergi = riwayat_alergi.split("\n");
+        // const handleRisikoJatuh = risiko_jatuh.split("\n");
+        // const handleRisikoNyeri = risiko_nyeri.split("\n");
+        const handleKeluhanTambahan = keluhan_tambahan.split("\n");
         const handlePemeriksaanFisik = pemeriksaan_fisik.split("\n");
         const handleSuhu = `${suhu} °C`;
         const handleNadi = `${nadi} x/menit`
@@ -90,7 +93,8 @@ const DetailDiagnostik = () => {
             eye: eye,
             motor: motor,
             verbal: verbal,
-            pemeriksaan_fisik: handlePemeriksaanFisik
+            pemeriksaan_fisik: handlePemeriksaanFisik,
+            keluhan_tambahan: handleKeluhanTambahan
         },
         {
             headers: { Authorization: `Bearer ${token}`}
@@ -313,6 +317,17 @@ const DetailDiagnostik = () => {
               type="text" 
               value={pemeriksaan_fisik}
               onChange={(e) => setPemeriksaanFisik(e.target.value)}
+              disabled={!isEditing}
+              required
+              />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Keluhan Tambahan</Form.Label>
+            <Form.Control 
+              id="form-control-input custom-search"
+              type="text" 
+              value={keluhan_tambahan}
+              onChange={(e) => setKeluhanTambahan(e.target.value)}
               disabled={!isEditing}
               required
               />

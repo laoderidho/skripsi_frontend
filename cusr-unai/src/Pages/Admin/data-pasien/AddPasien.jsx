@@ -8,6 +8,7 @@ import axios from '../../../axios'
 import { Card } from 'primereact/card';
 import "primereact/resources/themes/saga-blue/theme.css";
 import { Skeleton } from 'primereact/skeleton';
+import InputMask from 'react-input-mask';
 
 const AddPasien = () => {
 
@@ -25,8 +26,7 @@ const AddPasien = () => {
   const navigate = useNavigate();
   const {id} = useParams();
   const token=localStorage.getItem("token");
-
-  const isNikValid = nik.length === 16;
+  const [error, setError] = useState('');
 
   const submitForm = async () => {
 
@@ -52,6 +52,31 @@ const AddPasien = () => {
       AuthorizationRoute(error.response.status)
     }
     
+  };
+
+  const handleNikChange = (e) => {
+    const input = e.target.value;
+    // Menghapus karakter non-digit
+    const cleanedInput = input.replace(/\D/g, '');
+
+    if (cleanedInput.length <= 16) {
+      setNik(cleanedInput);
+      setError('');
+    } else {
+      setError('Type 16 digits only');
+    }
+  };
+
+  const handleNoTeleponChange = (e) => {
+    const input = e.target.value;
+    const cleanedInput = input.replace(/\D/g, ''); 
+
+    if (cleanedInput.length <= 16) {
+      setNoTelepon(cleanedInput);
+      setError('');
+    } else {
+      setError('Type 16 digits only');
+    }
   };
 
 
@@ -118,9 +143,10 @@ const AddPasien = () => {
                     type="number"
                     placeholder="Masukkan NIK"
                     value={nik}
-                    onChange={(e) => setNik(e.target.value)}
+                    onChange={handleNikChange}
                     required
                   />
+                  {error && <Form.Text id="form-label" className="text-danger">{error}</Form.Text>}
                 </Form.Group>
 
                 <Form.Group className="mt-2">
@@ -130,13 +156,7 @@ const AddPasien = () => {
                     type="text"
                     placeholder="Tentukan Jenis Kelamin"
                     value={status_pernikahan}
-                    onChange={(e) => {
-                      const input = e.target.value;
-                      if (input.length <= 16) {
-                        setNik(input);
-                      }
-                    }}
-                    maxLength={16}
+                    onChange={(e) => setStatusPernikahan(e.target.value)} 
                     required
                   >
                     <option>Pilih</option>
@@ -148,14 +168,18 @@ const AddPasien = () => {
               <Card className='mt-3'>
                 <Form.Group>
                   <Form.Label id='form-label'>Nomor Telepon</Form.Label>
-                  <Form.Control
+                  <InputMask
+                    mask="(99) 999-999-999999"
+                    maskChar="_"
                     id="form-control-input custom-search"
-                    type="number"
-                    placeholder="Masukkan Nomor Telepon"
+                    type="tel"
+                    placeholder="(62) xxx-xxx-xxxxx"
                     value={no_telepon}
-                    onChange={(e) => setNoTelepon(e.target.value)}
+                    onChange={handleNoTeleponChange}
                     required
-                  />
+                  >
+                    {(inputProps) => <Form.Control {...inputProps} />}
+                  </InputMask>
                 </Form.Group>
 
                 <Form.Group className="mt-2">
@@ -234,7 +258,6 @@ const AddPasien = () => {
                   cancelMessage={"Data Pasien gagal diubah"}
                   buttonText={"Simpan"}
                   to={`/admin/daftarpasien/${id}`}
-                  disabled={!isNikValid}
                 />
           </div>
         </Form>
@@ -242,4 +265,4 @@ const AddPasien = () => {
   );
 }
 
-export default AddPasien;
+export default AddPasien
