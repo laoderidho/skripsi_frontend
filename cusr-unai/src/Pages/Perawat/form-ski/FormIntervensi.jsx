@@ -151,6 +151,7 @@ export default function FormIntervensi() {
     setShowDataTerapeutik(true);
     setShowDataEdukasi(true);
     setSeeDataCondition(true);
+    window.scrollTo(0, 0);
   }
 
 

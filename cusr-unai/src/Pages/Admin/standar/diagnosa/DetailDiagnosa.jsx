@@ -17,11 +17,11 @@ const DetailDiagnosa = () => {
   const [penyebab_situasional, setPenyebabSituasional] = useState("");
   const [penyebab_psikologis, setPenyebabPsikologis] = useState("");
   const [gejala_mayor_subjektif, setGejalaMayorSubjektif] = useState("");
-  const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState("");
-  
+  const [gejala_mayor_objektif, setGejalaMayorObjektif] = useState(""); 
   const [gejala_minor_subjektif, setGejalaMinorSubjektif] = useState("");
   const [gejala_minor_objektif, setGejalaMinorObjektif] = useState("");
   const [penyebab_umum, setPenyebabUmum] = useState("");
+  const [tanggal, setTanggal] = useState("");
 
   const {id} = useParams();
   const navigate = useNavigate();
@@ -59,6 +59,8 @@ const DetailDiagnosa = () => {
         setGejalaMinorSubjektif(res.data.data.gejala_minor_subjektif)
         setGejalaMinorObjektif(res.data.data.gejala_minor_objektif)
         setPenyebabUmum(res.data.data.penyebab_umum)
+        setTanggal(res.data.data.updated_at)
+        console.log(res.data)
     } catch (error) {
         
     }
@@ -329,6 +331,10 @@ const DetailDiagnosa = () => {
                
               </div>
 
+              <div className="container pt-2">
+                <p>Last updated at <span style={{color: '#085b93', textDecoration: 'underline'}}>{tanggal.slice(0, 10)}</span></p>
+              </div>
+
               <Form className="container mt-5">
                 <Row>
                   <Form.Group as={Col}>
@@ -464,7 +470,7 @@ const DetailDiagnosa = () => {
                     </ul>
                   </Form.Group>
 
-                  {gejala_mayor_subjektif.length || gejala_mayor_objektif.length !==0 && <hr className="hr-askep"></hr>}
+                  <hr className="hr-askep"></hr>
                 </Row>
 
                 <Row>
@@ -495,7 +501,7 @@ const DetailDiagnosa = () => {
                     </ul>
                   </Form.Group>
 
-                  {gejala_minor_subjektif.length || gejala_minor_objektif.length !==0 && <hr className="hr-askep"></hr>}
+                  <hr className="hr-askep"></hr>
                 </Row>
 
                 <div className="d-flex justify-content-end mt-3">

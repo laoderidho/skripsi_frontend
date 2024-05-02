@@ -19,6 +19,7 @@ const DetailIntervensi = () => {
   const token=localStorage.getItem("token");
   const [submitted, setSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [tanggal, setTanggal] = useState('');
 
   const [array, setArray] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -56,6 +57,7 @@ const DetailIntervensi = () => {
         setObservasi(res.data.observasi)
         setTerapeutik(res.data.terapeutik)
         setEdukasi(res.data.edukasi)
+        setTanggal(res.data.data.updated_at)
     } catch (error) {
         
     }
@@ -106,6 +108,10 @@ const DetailIntervensi = () => {
                   <span id="kode_intervensi">{kode_intervensi}</span> -{" "}
                   <span>{nama_intervensi}</span>
                 </h3>
+              </div>
+
+              <div className="container pt-2">
+                <p>Last updated at <span style={{color: '#085b93', textDecoration: 'underline'}}>{tanggal.slice(0, 10)}</span></p>
               </div>
 
               <Form className="container mt-5">

@@ -271,6 +271,7 @@ export default function FormEvaluasi() {
   const handleShowAllData = () =>  {
     setKriteriaShowData(true);
     setSeeDataCondition(true);
+    window.scrollTo(0, 0);
 
   }
 
