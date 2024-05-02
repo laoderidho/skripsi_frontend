@@ -21,6 +21,7 @@ const AddDiagnostik = () => {
   const [sistolik, setSistolik] = useState("");
   const [diastolik, setDiastolik] = useState("")
   const [pemeriksaan_fisik, setPemeriksaanFisik] = useState("");
+  const [keluhan_tambahan, setKeluhanTambahan] = useState("");
   const [eye, setEye] = useState("");
   const [motor, setMotor] = useState("");
   const [verbal, setVerbal] = useState("");
@@ -39,6 +40,7 @@ const AddDiagnostik = () => {
     // const handleRisikoJatuh = risiko_jatuh ? risiko_jatuh.split("\n").join(",") : null;
     // const handleRisikoNyeri = risiko_nyeri ? risiko_nyeri.split("\n").join(",") : null;
     const handlePemeriksaanFisik = pemeriksaan_fisik ? pemeriksaan_fisik.split("\n").join(",") : null;
+    const handleKeluhanTambahan = keluhan_tambahan ? keluhan_tambahan.split("\n").join(",") : null;
     const handleSuhu = `${suhu} °C`;
     const handleNadi = `${nadi} x/menit`
     const handleLajuRespirasi = `${laju_respirasi} x/menit`;
@@ -65,7 +67,8 @@ const AddDiagnostik = () => {
         eye: eye,
         motor: motor,
         verbal: verbal,
-        pemeriksaan_fisik: handlePemeriksaanFisik
+        pemeriksaan_fisik: handlePemeriksaanFisik,
+        keluhan_tambahan: keluhan_tambahan
       },
       { 
         headers: { Authorization: `Bearer ${token}`}
@@ -346,6 +349,18 @@ const AddDiagnostik = () => {
                 style={{ height: "4rem" }}
                 value={pemeriksaan_fisik}
                 onChange={(e) => setPemeriksaanFisik(e.target.value)}
+                required
+                />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Keluhan Tambahan</Form.Label>
+              <Form.Control 
+                id="form-control-input custom-search"
+                type="text" 
+                as="textarea"
+                style={{ height: "4rem" }}
+                value={keluhan_tambahan}
+                onChange={(e) => setKeluhanTambahan(e.target.value)}
                 required
                 />
             </Form.Group>
