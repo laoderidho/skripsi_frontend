@@ -101,7 +101,8 @@ export default function FormDiagnosa() {
     setShowDataGejalaMayorObjektif(true);
     setShowDataGejalaMinorSubjektif(true);
     setShowDataGejalaMinorObjektif(true);
-    setSeeDataCondition(true)
+    setSeeDataCondition(true);
+    window.scrollTo(0, 0);
   }
 
 

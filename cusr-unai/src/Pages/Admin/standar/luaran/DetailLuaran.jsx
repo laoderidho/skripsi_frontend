@@ -18,6 +18,7 @@ const DetailLuaran = () => {
   const [submitted, setSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false)
   const isMobile = window.innerWidth <=600;
+  const [tanggal, setTanggal] = useState('');
 
   const [array, setArray] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -52,7 +53,8 @@ const DetailLuaran = () => {
         setKodeLuaran(res.data.data.kode_luaran)
         setNamaLuaran(res.data.data.nama_luaran)
         setNamaKriteriaLuaran(res.data.data.nama_kriteria_luaran)
-        console.log(res)
+
+        console.log(res.data)
     } catch (error) {
         
     }
