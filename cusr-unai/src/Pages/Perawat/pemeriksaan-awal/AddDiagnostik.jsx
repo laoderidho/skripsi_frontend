@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Sidebar from '../../../components/menu/Sidebar'
-import { Breadcrumb, Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
+import { Modal , Form, Row, Col, Button, InputGroup } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import AuthorizationRoute from '../../../AuthorizationRoute'
 import axios from '../../../axios'
@@ -26,16 +26,17 @@ const AddDiagnostik = () => {
   const navigate = useNavigate();
   const token=localStorage.getItem("token");
   const {id} = useParams();
+  const [showAnamnesis, setShowAnamnesis] = useState(false);
 
    
 
   const submitForm = async () => {
     
-    const handleKeluhanUtama = keluhan_utama ? keluhan_utama.split("\n").join(",") : null;
-    const handleRiwayatPenyakit = riwayat_penyakit ? riwayat_penyakit.split("\n").join(",") : null;
-    const handleRiwayatAlergi = riwayat_alergi ? riwayat_alergi.split("\n").join(",")  : null;
-    const handleRisikoJatuh = risiko_jatuh ? risiko_jatuh.split("\n").join(",") : null;
-    const handleRisikoNyeri = risiko_nyeri ? risiko_nyeri.split("\n").join(",") : null;
+    // const handleKeluhanUtama = keluhan_utama ? keluhan_utama.split("\n").join(",") : null;
+    // const handleRiwayatPenyakit = riwayat_penyakit ? riwayat_penyakit.split("\n").join(",") : null;
+    // const handleRiwayatAlergi = riwayat_alergi ? riwayat_alergi.split("\n").join(",")  : null;
+    // const handleRisikoJatuh = risiko_jatuh ? risiko_jatuh.split("\n").join(",") : null;
+    // const handleRisikoNyeri = risiko_nyeri ? risiko_nyeri.split("\n").join(",") : null;
     const handlePemeriksaanFisik = pemeriksaan_fisik ? pemeriksaan_fisik.split("\n").join(",") : null;
     const handleSuhu = `${suhu} °C`;
     const handleNadi = `${nadi} x/menit`
@@ -48,11 +49,11 @@ const AddDiagnostik = () => {
 
     try {
        await axios.post(`/perawat/diagnostic/add/${id}`, {
-        keluhan_utama: handleKeluhanUtama,
-        riwayat_penyakit: handleRiwayatPenyakit,
-        riwayat_alergi: handleRiwayatAlergi,
-        risiko_jatuh: handleRisikoJatuh,
-        risiko_nyeri: handleRisikoNyeri,
+        // keluhan_utama: handleKeluhanUtama,
+        // riwayat_penyakit: handleRiwayatPenyakit,
+        // riwayat_alergi: handleRiwayatAlergi,
+        // risiko_jatuh: handleRisikoJatuh,
+        // risiko_nyeri: handleRisikoNyeri,
         suhu: handleSuhu,
         tekanan_darah: handleTekananDarah,
         sistolik: handleSistolik,
@@ -74,16 +75,83 @@ const AddDiagnostik = () => {
     }    
   };
 
+  const handleShow = () => {
+      setShowAnamnesis(true);
+  }
+
+  const handleHide = () => {
+      setShowAnamnesis(false);
+  }
+
+  const getDataById = async () => {
+    try {
+      const res = await axios.post(`/amnanessa/detail/${id}`,
+    {
+        headers: { Authorization: `Bearer ${token}`}
+    });
+
+    setKeluhanUtama(res.data.data.keluhan_utama);
+    setRiwayatPenyakit(res.data.data.riwayat_penyakit);
+    setRiwayatAlergi(res.data.data.riwayat_alergi);
+    setRisikoJatuh(res.data.data.risiko_jatuh);
+    setRisikoNyeri(res.data.data.risiko_nyeri);
+    console.log(res.data.data)
+    } catch (error) {
+        
+    }
+  }
+
+  useEffect(() => {
+    getDataById();
+  },[])
+
 
   return (
     <Sidebar title='TAMBAH'>
-      <div className="container">
-        <h2>Form Diagnostik</h2>
+
+      <div className="container" style={{marginBottom: '1rem'}}>
+                        <button className="btn button-switch-verification" onClick={handleShow}>Lihat Anamnesis</button>
       </div>
+
+      <Modal show={showAnamnesis} onClick={() => setShowAnamnesis} onHide={handleHide} centered>
+                        <Modal.Body>
+                            <Form.Group className='mt-4'>
+                                <Form.Label  className="form-title">KELUHAN UTAMA</Form.Label>
+                                <p className='li-askep'>{keluhan_utama}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className=''>
+                                <Form.Label  className="form-title">RIWAYAT PENYAKIT</Form.Label>
+                                <p className='li-askep'>{riwayat_penyakit}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className=''>
+                                <Form.Label  className="form-title">RIWAYAT ALERGI</Form.Label>
+                                <p className='li-askep'>{riwayat_alergi}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className='mt-4'>
+                                <Form.Label  className="form-title">RISIKO JATUH</Form.Label>
+                                <p className='li-askep'>{risiko_jatuh}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className='mt-4'>
+                                <Form.Label  className="form-title">RISIKO NYERI</Form.Label>
+                                <p className='li-askep'>{risiko_nyeri}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+                            
+                        </Modal.Body>
+        </Modal>
+      
 
       <Form className="container mt-5" onSubmit={submitForm}>
         <Row>
-          <Col xs={12} lg={6}>
+          {/* <Col xs={12} lg={6}>
             <Form.Group className="mb-3">
               <h4>Anamnesis</h4>
               <Form.Label>Keluhan Utama</Form.Label>
@@ -149,11 +217,11 @@ const AddDiagnostik = () => {
                 required
               />
             </Form.Group>
-          </Col>
+          </Col> */}
 
-          <Col className='mt-5'>
+          <Col className=''>
             <Form.Group className="mb-3">
-              <h4>Vital</h4>
+              <h5>Vital</h5>
               <Form.Label>Suhu</Form.Label>
               <div class="input-group">
                 <Form.Control

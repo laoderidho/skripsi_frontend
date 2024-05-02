@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react";
 import Sidebar from "../../../components/menu/Sidebar";
-import { Form, Button, Table, Container, Row, Col, Breadcrumb } from "react-bootstrap";
+import { Form, Button, Table, Container, Row, Col, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from "../../../axios";
@@ -20,10 +20,26 @@ export default function ProfilPemeriksaan() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const isMobile = window.innerWidth <=600;
+    const [showAnamnesis, setShowAnamnesis] = useState(false);
+
+    const [keluhan_utama, setKeluhanUtama] = useState("");
+    const [riwayat_penyakit, setRiwayatPenyakit] = useState("");
+    const [riwayat_alergi, setRiwayatAlergi] = useState("");
+    const [risiko_jatuh, setRisikoJatuh] = useState("");
+    const [risiko_nyeri, setRisikoNyeri] = useState("");
+
+    const handleShow = () => {
+        setShowAnamnesis(true);
+    }
+
+    const handleHide = () => {
+        setShowAnamnesis(false);
+    }
 
     useEffect(() => {
         getDataById();
         handleAddBox();
+        getAnamnesis();
     },[]);
 
     const getDataById = async () => {
@@ -34,6 +50,24 @@ export default function ProfilPemeriksaan() {
             setNamaLengkap(res.data.data.nama_lengkap)
         } catch (error) {
 
+        }
+    };
+
+    const getAnamnesis = async () => {
+        try {
+            const res = await axios.post(`/amnanessa/detail/${id}`,
+        {
+            headers: { Authorization: `Bearer ${token}`}
+        });
+
+        setKeluhanUtama(res.data.data.keluhan_utama);
+        setRiwayatPenyakit(res.data.data.riwayat_penyakit);
+        setRiwayatAlergi(res.data.data.riwayat_alergi);
+        setRisikoJatuh(res.data.data.risiko_jatuh);
+        setRisikoNyeri(res.data.data.risiko_nyeri);
+        console.log(res.data.data)
+        } catch (error) {
+            
         }
     };
 
@@ -126,9 +160,49 @@ export default function ProfilPemeriksaan() {
                             </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
 
-                    <div className="container form-margin">
+
+                    <div className="container" style={{marginTop: '3rem'}}>
+                        <button className="btn button-switch-verification" onClick={handleShow}>Lihat Anamnesis</button>
+                    </div>
+
+                    <Modal show={showAnamnesis} onClick={() => setShowAnamnesis} onHide={handleHide} centered>
+                        <Modal.Body>
+                            <Form.Group className='mt-4'>
+                                <Form.Label  className="form-title">KELUHAN UTAMA</Form.Label>
+                                <p className='li-askep'>{keluhan_utama}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className=''>
+                                <Form.Label  className="form-title">RIWAYAT PENYAKIT</Form.Label>
+                                <p className='li-askep'>{riwayat_penyakit}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className=''>
+                                <Form.Label  className="form-title">RIWAYAT ALERGI</Form.Label>
+                                <p className='li-askep'>{riwayat_alergi}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className='mt-4'>
+                                <Form.Label  className="form-title">RISIKO JATUH</Form.Label>
+                                <p className='li-askep'>{risiko_jatuh}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+
+                            <Form.Group className='mt-4'>
+                                <Form.Label  className="form-title">RISIKO NYERI</Form.Label>
+                                <p className='li-askep'>{risiko_nyeri}</p>
+                            </Form.Group>
+                            <hr className='hr-askep'></hr>
+                            
+                        </Modal.Body>
+                    </Modal>
+
+                    <div className="container mt-3">
                     <span id='form-label' className="text-alert-search">Ketik untuk mencari data pasien</span>
                         <input
                             className="form-control custom-search"

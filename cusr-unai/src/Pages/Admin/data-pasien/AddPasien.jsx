@@ -242,4 +242,4 @@ const AddPasien = () => {
   );
 }
 
-export default AddPasien
+export default AddPasien;

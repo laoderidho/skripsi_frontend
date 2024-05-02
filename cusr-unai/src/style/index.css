@@ -2398,7 +2398,7 @@ ol , ul .p-breadcrumb-list {
         color: #085b93;
     }
 
-    .button-switch-verification {
+    .button-switch-verification, .button-switch-verification:hover {
         color: #085b93;
         width: 100%;
         max-width: 100%;
@@ -2406,8 +2406,6 @@ ol , ul .p-breadcrumb-list {
         border-radius: 0.2rem;
         margin-top: 1rem;
         font-size: 15px;
-
-
     }
 
     div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
