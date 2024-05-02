@@ -2393,6 +2393,10 @@ ol , ul .p-breadcrumb-list {
 
     }
 
+    span.p-dropdown-label.p-inputtext{
+        padding-top:0.8rem;
+    }
+
     .button-switch {
         font-size: 13px;
         color: #085b93;

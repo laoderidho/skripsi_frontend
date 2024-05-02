@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import AuthorizationRoute from '../../../AuthorizationRoute'
 import axios from '../../../axios'
 import ConfirmModal from '../../../components/menu/ConfirmModal';
+import { Dropdown } from 'primereact/dropdown';
 
 const AddDiagnostik = () => {
 
@@ -16,7 +17,7 @@ const AddDiagnostik = () => {
   const [suhu, setSuhu] = useState("");
   const [nadi, setNadi] = useState("");
   const [laju_respirasi, setLajuRespirasi] = useState("");
-  const [kesadaran, setKesadaran] = useState("");
+  const [kesadaran, setKesadaran] = useState([]);
   const [sistolik, setSistolik] = useState("");
   const [diastolik, setDiastolik] = useState("")
   const [pemeriksaan_fisik, setPemeriksaanFisik] = useState("");
@@ -69,11 +70,18 @@ const AddDiagnostik = () => {
       { 
         headers: { Authorization: `Bearer ${token}`}
       });
+      // console.log('Berhasil')
       navigate(`/perawat/profil/pemeriksaan/${id}`);
     } catch (error){
       // AuthorizationRoute(error.response.status)
+      // console.log('Error')
     }    
   };
+
+  const kesadaranOptions = [
+    { label: 'Sadar' },
+    { label: 'Tidak Sadar'}
+  ];
 
   const handleShow = () => {
       setShowAnamnesis(true);
@@ -287,12 +295,18 @@ const AddDiagnostik = () => {
 
             <Form.Group className="mb-3">
               <Form.Label>Kesadaran</Form.Label>
-              <Form.Control 
+              <Dropdown
+                value={kesadaran}
+                options={kesadaranOptions}
+                onChange={(e) => setKesadaran(e.target.value)}
+                id="form-control-input custom-search"
+              />
+              {/* <Form.Control 
                 id="form-control-input custom-search"
                 type="text" 
                 value={kesadaran}
                 onChange={(e) => setKesadaran(e.target.value)}
-                />
+                /> */}
             </Form.Group>
 
             <Form.Group className="mb-3">
