@@ -48,7 +48,6 @@ const DetailDiagnosa = () => {
         const res = await axios.post(`/admin/diagnosa/detail/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
-        setUpdateAt(res.data.data.updated_at)
         setKodeDiagnosa(res.data.data.kode_diagnosa)
         setNamaDiagnosa(res.data.data.nama_diagnosa)
         setFaktorRisiko(res.data.data.faktor_risiko)
@@ -114,9 +113,6 @@ const DetailDiagnosa = () => {
                       <span>{nama_diagnosa}</span>
                     </h3>
                     
-                    <h1>
-                      <span id="update_at">{updated_at} </span>
-                    </h1>
                 </div>
 
               <Form className="container mt-5">
